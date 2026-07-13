@@ -13,6 +13,9 @@ import {
   RefreshCw, RotateCw, PenTool, Droplet, Lock, Unlock, 
   FileCode, Cpu as NfcCpu, X, Sparkles, Check
 } from "lucide-react";
+// 🌐 CONFIGURATION KEYS (Replace with your actual keys)
+const RAZORPAY_KEY_ID = "rzp_test_mockkey12345"; // e.g. "rzp_live_xxxxxxxxxxxxxx"
+const GOOGLE_ADSENSE_PUB_ID = "ca-pub-5876595914883924"; // e.g. "ca-pub-xxxxxxxxxxxxxxxx"
 
 // 🛠 Master Tools Dataset with full detailed user explanations
 const toolsData = [
@@ -92,7 +95,12 @@ export default function Home() {
   const [activeTool, setActiveTool] = useState<Tool | null>(null);
   const [showSubscription, setShowSubscription] = useState(false);
   const [showAd, setShowAd] = useState(true);
-  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("resizer_pro_subscribed") === "true";
+    }
+    return false;
+  });
   const [paymentProgress, setPaymentProgress] = useState<string | null>(null);
 
   // States for interactive workspace utilities
@@ -199,15 +207,30 @@ export default function Home() {
 
   const [selectedPlan, setSelectedPlan] = useState<"monthly" | "yearly">("yearly");
 
-  // Load Razorpay Script dynamically on mount
+  // Load Scripts on Mount
   useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://checkout.razorpay.com/v1/checkout.js";
-    script.async = true;
-    document.body.appendChild(script);
+    // 1. Load Razorpay script
+    const rzScript = document.createElement("script");
+    rzScript.src = "https://checkout.razorpay.com/v1/checkout.js";
+    rzScript.async = true;
+    document.body.appendChild(rzScript);
+
+    // 3. Load Google AdSense script if publisher ID is declared
+    let adsScript: HTMLScriptElement | null = null;
+    if (GOOGLE_ADSENSE_PUB_ID && GOOGLE_ADSENSE_PUB_ID.startsWith("ca-pub-")) {
+      adsScript = document.createElement("script");
+      adsScript.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${GOOGLE_ADSENSE_PUB_ID}`;
+      adsScript.crossOrigin = "anonymous";
+      adsScript.async = true;
+      document.head.appendChild(adsScript);
+    }
+
     return () => {
-      if (document.body.contains(script)) {
-        document.body.removeChild(script);
+      if (document.body.contains(rzScript)) {
+        document.body.removeChild(rzScript);
+      }
+      if (adsScript && document.head.contains(adsScript)) {
+        document.head.removeChild(adsScript);
       }
     };
   }, []);
@@ -247,28 +270,81 @@ export default function Home() {
 
   const handleRazorpaySubscription = (planType: "monthly" | "yearly") => {
     const priceText = planType === "monthly" ? "Monthly Plan (₹199)" : "Yearly Plan (₹999)";
-    const amountVal = planType === "monthly" ? "199.00" : "999.00";
+    const amountVal = planType === "monthly" ? 19900 : 99900; // in paisa
+    const displayAmount = planType === "monthly" ? "199.00" : "999.00";
     
-    setPaymentProgress("Initializing Razorpay checkout...");
-    
-    setTimeout(() => {
-      setPaymentProgress("Connecting to secure payment gateway...");
-    }, 600);
+    // Fall back to clean simulation if using the placeholder key
+    if (RAZORPAY_KEY_ID === "rzp_test_mockkey12345") {
+      setPaymentProgress("Initializing Razorpay checkout...");
+      setTimeout(() => {
+        setPaymentProgress("Connecting to secure payment gateway...");
+      }, 600);
+      setTimeout(() => {
+        setPaymentProgress(`Processing test transaction of ₹${displayAmount}...`);
+      }, 1300);
+      setTimeout(() => {
+        setPaymentProgress("Payment approved! Unlocking Utilify Pro access...");
+      }, 2000);
+      setTimeout(() => {
+        setIsSubscribed(true);
+        localStorage.setItem("resizer_pro_subscribed", "true");
+        setPaymentProgress(null);
+        setShowSubscription(false);
+        alert(`Subscription activated successfully! [TEST GATEWAY] - Plan: ${priceText}. Ads removed.`);
+      }, 2700);
+      return;
+    }
 
-    setTimeout(() => {
-      setPaymentProgress(`Processing test transaction of ₹${amountVal}...`);
-    }, 1300);
+    // Otherwise, launch the real Razorpay transaction window
+    interface RazorpayResponse {
+      razorpay_payment_id: string;
+      razorpay_order_id?: string;
+      razorpay_signature?: string;
+    }
 
-    setTimeout(() => {
-      setPaymentProgress("Payment approved! Unlocking Utilify Pro access...");
-    }, 2000);
+    interface RazorpayInstance {
+      open: () => void;
+    }
 
-    setTimeout(() => {
-      setIsSubscribed(true);
-      setPaymentProgress(null);
-      setShowSubscription(false);
-      alert(`Subscription activated successfully! [TEST GATEWAY] - Plan: ${priceText}. Ads removed.`);
-    }, 2700);
+    interface WindowWithRazorpay {
+      Razorpay: new (options: unknown) => RazorpayInstance;
+    }
+
+    const win = window as unknown as WindowWithRazorpay;
+    if (!win.Razorpay) {
+      alert("Razorpay SDK is still loading. Please try again in a moment.");
+      return;
+    }
+
+    const options = {
+      key: RAZORPAY_KEY_ID,
+      amount: amountVal,
+      currency: "INR",
+      name: "Resizer Tools",
+      description: `Premium Subscription - ${priceText}`,
+      image: "/utilify-dashboard.jpg",
+      handler: function (response: RazorpayResponse) {
+        setIsSubscribed(true);
+        localStorage.setItem("resizer_pro_subscribed", "true");
+        setShowSubscription(false);
+        alert(`Subscription activated successfully! Payment ID: ${response.razorpay_payment_id}. Ads removed.`);
+      },
+      prefill: {
+        name: userName || "Premium User",
+        email: "user@example.com",
+      },
+      theme: {
+        color: "#D4AF37"
+      }
+    };
+
+    try {
+      const rzp = new win.Razorpay(options);
+      rzp.open();
+    } catch (err) {
+      console.error("Razorpay initiation failed:", err);
+      alert("Failed to open Razorpay payment window. Please check if your Key ID is correct.");
+    }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
