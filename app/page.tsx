@@ -1290,8 +1290,8 @@ export default function Home() {
           <ShieldCheck className="w-3.5 h-3.5" /> Fully Private & Apple Native
         </motion.div>
         <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-4xl md:text-7xl font-bold tracking-tight max-w-5xl leading-tight">
-          An Elite Matrix of <br />
-          <span className="bg-clip-text text-transparent bg-gold-gradient">{toolsData.length} Professional App Tools</span>
+          Resizer Tools: <br />
+          <span className="bg-clip-text text-transparent bg-gold-gradient">{toolsData.length} Free PDF & Image Web Utilities</span>
         </motion.h1>
         <p className="mt-6 text-brand-muted text-base md:text-xl max-w-2xl font-light">
           Your standalone platform for advanced graphics manipulation, secure encryption, and document automation. 
@@ -1340,7 +1340,7 @@ export default function Home() {
       <section id="studio" className="py-24 px-6 max-w-6xl mx-auto scroll-mt-16 border-t border-white/5">
         <div className="text-center mb-12">
           <p className="text-brand-gold font-mono tracking-widest text-xs uppercase mb-2">Centralized Command</p>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight">App Architecture Directory</h2>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight">Browse Free Web PDF & Image Tools</h2>
           <p className="text-brand-muted mt-3 max-w-lg mx-auto text-sm font-light">Hover over each standalone unit to unfold full operational engine blueprints.</p>
         </div>
 
