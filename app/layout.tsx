@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     "image to pdf doc", "image format converter webp png jpeg", "client-side web utility tools"
   ],
   alternates: {
-    canonical: "https://resizer-tools-website.vercel.app/",
+    canonical: "https://resizertools.com/",
   },
   robots: {
     index: true,
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Resizer Tools - 26 Free Web-Native Image & PDF Utilities",
     description: "Browser-native document & image manipulation with zero server latency. Private, secure, and 100% client-side.",
-    url: "https://resizer-tools-website.vercel.app/",
+    url: "https://resizertools.com/",
     siteName: "Resizer Tools",
     locale: "en_US",
     type: "website",
@@ -69,7 +69,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "WebApplication",
               "name": "Resizer Tools",
-              "url": "https://resizer-tools-website.vercel.app/",
+              "url": "https://resizertools.com/",
               "description": "Compress, resize, merge, split, rotate, watermark, lock, unlock, and sign PDF or image files 100% locally in your browser. Zero server uploads, private and secure.",
               "applicationCategory": "Utility",
               "operatingSystem": "All",
