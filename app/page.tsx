@@ -14,7 +14,7 @@ import {
   FileCode, Cpu as NfcCpu, X, Sparkles, Check
 } from "lucide-react";
 // 🌐 CONFIGURATION KEYS (Replace with your actual keys)
-const RAZORPAY_KEY_ID = "rzp_test_mockkey12345"; // e.g. "rzp_live_xxxxxxxxxxxxxx"
+const RAZORPAY_KEY_ID: string = "rzp_live_TFRpvE5UpoUDlC"; // e.g. "rzp_live_xxxxxxxxxxxxxx"
 const GOOGLE_ADSENSE_PUB_ID = "ca-pub-5876595914883924"; // e.g. "ca-pub-xxxxxxxxxxxxxxxx"
 
 // 🛠 Master Tools Dataset with full detailed user explanations
