@@ -2,6 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { PDFDocument, rgb, degrees } from "pdf-lib";
 import { encryptPDF } from "@pdfsmaller/pdf-encrypt-lite";
 import { decryptPDF } from "@pdfsmaller/pdf-decrypt-lite";
@@ -2830,8 +2831,16 @@ export default function Home({ initialToolId }: { initialToolId?: string } = {})
         )}
       </AnimatePresence>
 
-      <footer className="py-12 text-center text-xs text-brand-muted border-t border-white/5">
-        &copy; {new Date().getFullYear()} Resizer Tools. Engineered to perfection. All rights reserved.
+      <footer className="py-12 text-center text-xs text-brand-muted border-t border-white/5 space-y-4">
+        <div className="flex flex-wrap items-center justify-center gap-6 text-[11px] font-medium tracking-wide">
+          <Link href="/privacy" className="hover:text-brand-gold-light hover:underline transition-colors">Privacy Policy</Link>
+          <Link href="/terms" className="hover:text-brand-gold-light hover:underline transition-colors">Terms & Conditions</Link>
+          <Link href="/refund" className="hover:text-brand-gold-light hover:underline transition-colors">Refund & Cancellation</Link>
+          <Link href="/contact" className="hover:text-brand-gold-light hover:underline transition-colors">Contact Us</Link>
+        </div>
+        <p className="font-mono text-[10px] opacity-75">
+          &copy; {new Date().getFullYear()} Resizer Tools. Engineered to perfection. All rights reserved.
+        </p>
       </footer>
     </main>
   );
