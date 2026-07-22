@@ -67,19 +67,66 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "WebApplication",
-              "name": "Resizer Tools",
-              "url": "https://resizertools.com/",
-              "description": "Compress, resize, merge, split, rotate, watermark, lock, unlock, and sign PDF or image files 100% locally in your browser. Zero server uploads, private and secure.",
-              "applicationCategory": "Utility",
-              "operatingSystem": "All",
-              "browserRequirements": "Requires HTML5, WebCrypto API, Canvas API",
-              "softwareVersion": "1.0",
-              "offers": {
-                "@type": "Offer",
-                "price": "0.00",
-                "priceCurrency": "USD"
-              }
+              "@graph": [
+                {
+                  "@type": "WebApplication",
+                  "@id": "https://resizertools.com/#webapp",
+                  "name": "Resizer Tools",
+                  "url": "https://resizertools.com/",
+                  "description": "Compress, resize, merge, split, rotate, watermark, lock, unlock, and sign PDF or image files 100% locally in your browser. Zero server uploads, private and secure.",
+                  "applicationCategory": "Utility",
+                  "operatingSystem": "All",
+                  "browserRequirements": "Requires HTML5, WebCrypto API, Canvas API",
+                  "softwareVersion": "1.0",
+                  "offers": {
+                    "@type": "Offer",
+                    "price": "0.00",
+                    "priceCurrency": "USD"
+                  },
+                  "featureList": [
+                    "Offline Image Compressor",
+                    "Browser-native Image Resizer",
+                    "Merge PDF files locally",
+                    "Split PDF files locally",
+                    "Draw and Sign PDF documents",
+                    "Client-side PDF Watermark creator",
+                    "Format Converter HEIC, PNG, JPEG, WebP",
+                    "Offline QR Code Scanner & Generator",
+                    "NFC Tag Writer & Reader",
+                    "Document Camera Scanner"
+                  ]
+                },
+                {
+                  "@type": "FAQPage",
+                  "@id": "https://resizertools.com/#faq",
+                  "mainEntity": [
+                    {
+                      "@type": "Question",
+                      "name": "Does Resizer Tools upload my files to any server?",
+                      "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "No, Resizer Tools processes all files 100% locally inside your web browser. Your private PDFs, signatures, and images never leave your device."
+                      }
+                    },
+                    {
+                      "@type": "Question",
+                      "name": "Is Resizer Tools free to use?",
+                      "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Yes, Resizer Tools provides free access to all its native web utilities. There is also an optional premium tier to support development and remove ads."
+                      }
+                    },
+                    {
+                      "@type": "Question",
+                      "name": "How does offline PDF and image processing work?",
+                      "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "It leverages client-side Web APIs (Canvas API, WebCrypto API) and local libraries (pdf-lib) to modify files directly in the browser memory, offering zero latency and maximum security."
+                      }
+                    }
+                  ]
+                }
+              ]
             })
           }}
         />
