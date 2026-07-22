@@ -10,8 +10,9 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
-  const tool = toolsData.find((t) => t.id === params.id);
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params;
+  const tool = toolsData.find((t) => t.id === id);
   if (!tool) {
     return {
       title: "Tool Not Found - Resizer Tools",
@@ -51,8 +52,9 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   };
 }
 
-export default function ToolPage({ params }: { params: { id: string } }) {
-  const tool = toolsData.find((t) => t.id === params.id);
+export default async function ToolPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const tool = toolsData.find((t) => t.id === id);
 
   if (!tool) return <Home />;
 
@@ -111,7 +113,7 @@ export default function ToolPage({ params }: { params: { id: string } }) {
           })
         }}
       />
-      <Home initialToolId={params.id} />
+      <Home initialToolId={id} />
       
       {/* 📝 SEO Structured Text Section (For Google and AI Crawler Indexability) */}
       <section className="bg-brand-black/95 border-t border-white/5 py-20 px-6 text-left relative z-10">
