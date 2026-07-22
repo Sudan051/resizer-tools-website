@@ -1243,8 +1243,9 @@ export default function Home({ initialToolId }: { initialToolId?: string } = {})
           Resizer Tools: <br />
           <span className="bg-clip-text text-transparent bg-gold-gradient">{toolsData.length} Free PDF & Image Web Utilities</span>
         </motion.h1>
-        <p className="mt-6 text-brand-muted text-base md:text-xl max-w-2xl font-light">
-          Your standalone platform for advanced graphics manipulation, secure encryption, and document automation. 
+        <p className="mt-6 text-brand-muted text-base md:text-xl max-w-3xl font-light leading-relaxed">
+          Your standalone platform for advanced graphics manipulation, secure encryption, and document automation. <br />
+          <span className="font-semibold text-white">🔒 100% Client-Side Processing:</span> Your files are processed entirely in your browser using local resources. <span className="text-brand-gold font-semibold underline decoration-brand-gold/30">Zero server uploads. Absolute data privacy.</span>
         </p>
         
         {/* HERO SMARTPHONE MOCKUP */}
@@ -1261,6 +1262,36 @@ export default function Home({ initialToolId }: { initialToolId?: string } = {})
             />
           </div>
         </motion.div>
+      </section>
+
+      {/* 🔒 2.5 Security Assurance Section (High Conversion Trust Banner) */}
+      <section className="py-10 px-6 max-w-5xl mx-auto">
+        <div className="relative rounded-3xl bg-gradient-to-br from-brand-obsidian/80 to-brand-obsidian/30 border border-brand-gold/20 p-8 md:p-12 overflow-hidden shadow-2xl flex flex-col md:flex-row items-center justify-between gap-8 backdrop-blur-md">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-brand-gold/5 rounded-full blur-3xl pointer-events-none" />
+          <div className="space-y-4 text-left max-w-xl">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-gold/10 border border-brand-gold/20 text-xs font-mono font-bold tracking-wider text-brand-gold uppercase">
+              🛡️ Privacy First Guarantee
+            </span>
+            <h3 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
+              Your Files Never Leave Your Device. Period.
+            </h3>
+            <p className="text-sm text-brand-muted leading-relaxed font-light">
+              Unlike online PDF converters that upload your sensitive documents (invoices, credentials, visual templates) to external databases, Resizer Tools operates <strong className="text-white font-semibold">100% locally in browser memory</strong>. Zero server latency, absolute data privacy.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 gap-4 w-full md:w-auto shrink-0">
+            <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4 text-left flex flex-col justify-between max-w-[200px]">
+              <span className="text-2xl mb-1">🔌</span>
+              <h4 className="text-xs font-bold text-white uppercase tracking-wider">Works Offline</h4>
+              <p className="text-[10px] text-brand-muted mt-1 leading-normal">Disconnect your internet and keep editing, compressing, or watermarking files flawlessly.</p>
+            </div>
+            <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4 text-left flex flex-col justify-between max-w-[200px]">
+              <span className="text-2xl mb-1">🚀</span>
+              <h4 className="text-xs font-bold text-white uppercase tracking-wider">Zero Upload Lag</h4>
+              <p className="text-[10px] text-brand-muted mt-1 leading-normal">Skip uploading massive documents. Process gigabyte files instantly utilizing local CPU speeds.</p>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* 📊 3. Interactive Slider Demo */}

@@ -1,4 +1,3 @@
-import React from "react";
 import { 
   ArrowDownCircle, Crop, Image as ImageIcon, RefreshCw, 
   Camera, Grid, QrCode, FileText, Copy, FileCode, Percent, 
@@ -11,6 +10,7 @@ export interface Tool {
   title: string;
   subtitle?: string;
   desc?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   icon?: any;
   category?: string;
   src?: string;
