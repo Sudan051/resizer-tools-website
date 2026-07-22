@@ -59,3 +59,72 @@ export const categories = [
   { id: "generator", label: "Generators" },
   { id: "nfc", label: "NFC" }
 ];
+
+export interface SEOContent {
+  steps: string[];
+  faq: { q: string; a: string }[];
+}
+
+export function getToolSEOContent(tool: { id: string; title: string; subtitle?: string; desc?: string }): SEOContent {
+  let steps: string[] = [];
+  let faq: { q: string; a: string }[] = [];
+
+  switch(tool.id) {
+    case "img_comp":
+      steps = [
+        "Click the upload area or drop your image files (JPEG, PNG, WebP) directly into the browser.",
+        "Adjust the quality slider to control the balance between image size and visual fidelity.",
+        "Verify the real-time compressed size computation and download your optimized image instantly."
+      ];
+      faq = [
+        { q: "Is the Image Compressor secure?", a: "Yes, it runs 100% locally in your browser memory. Your private images are never uploaded to any remote server." },
+        { q: "Can I use it offline?", a: "Absolutely. Once the page is loaded, you can turn off your Wi-Fi and compress files completely offline." }
+      ];
+      break;
+    case "img_res":
+      steps = [
+        "Upload the target graphic or photo you wish to resize.",
+        "Input your custom width and height coordinate values in pixels.",
+        "Maintain or unlock the original aspect ratio and download the resized image instantly."
+      ];
+      faq = [
+        { q: "Will resizing reduce image quality?", a: "No, we use advanced canvas resampling filters to ensure your resized graphics remain crisp and clean." },
+        { q: "Does the Image Resizer upload my photos?", a: "No, all dimensions are processed locally inside your web browser. No server uploads occur." }
+      ];
+      break;
+    case "mrg_pdf":
+      steps = [
+        "Select and upload multiple PDF documents from your local filesystem.",
+        "Arrange or drag the document array order to define the merged sequence.",
+        "Click the compilation trigger button to stitch files together and download the merged PDF instantly."
+      ];
+      faq = [
+        { q: "Is there a file limit on merging PDFs?", a: "No, since it runs locally on your computer, you can merge massive files without hitches, limited only by your device RAM." },
+        { q: "Are my sensitive PDF contracts uploaded?", a: "Never. Resizer Tools runs entirely client-side using JavaScript libraries. Your files remain on your device." }
+      ];
+      break;
+    case "sgn_pdf":
+      steps = [
+        "Upload your PDF document to the visual canvas viewer.",
+        "Use your touch device or mouse pointer to draw a custom signature in the signature creator pad.",
+        "Position, scale, and stamp the digital signature onto your document pages, and save the signed PDF."
+      ];
+      faq = [
+        { q: "Is my signature saved securely?", a: "Yes, your signature is stamped directly onto the PDF file in your local browser memory. We never store or upload your signatures." },
+        { q: "Is it legally binding?", a: "Yes, visual signatures applied locally are valid for standard applications and standard digital declarations." }
+      ];
+      break;
+    default:
+      steps = [
+        `Select and upload your local files into the specialized ${tool.title} workspace interface.`,
+        "Adjust the visual parameters, metadata properties, or action triggers using our integrated controls.",
+        `Run browser-native compiling to download your finalized ${tool.title} file with zero upload delay.`
+      ];
+      faq = [
+        { q: `Does this ${tool.title} upload my personal data?`, a: `No, just like all our resources, the ${tool.title} runs 100% client-side in your browser. No files are ever sent to our servers.` },
+        { q: "Does this utility work on mobile devices?", a: "Yes, Resizer Tools is fully responsive and supports all mobile, tablet, and desktop browser environments." }
+      ];
+  }
+
+  return { steps, faq };
+}

@@ -13,7 +13,7 @@ import {
 const RAZORPAY_KEY_ID: string = "rzp_live_TFRpvE5UpoUDlC"; // e.g. "rzp_live_xxxxxxxxxxxxxx"
 const GOOGLE_ADSENSE_PUB_ID = "ca-pub-5876595914883924"; // e.g. "ca-pub-xxxxxxxxxxxxxxxx"
 
-import { toolsData, categories, Tool } from "./data/tools";
+import { toolsData, categories, Tool, getToolSEOContent } from "./data/tools";
 
 const realScreenshots = [
   { src: "/Home.png", headline: "Ultimate All-In-One Utilities", sub: "Image, PDF, QR, NFC Integrated" },
@@ -2776,6 +2776,38 @@ export default function Home({ initialToolId }: { initialToolId?: string } = {})
                         )}
                       </div>
                     )}
+                  </div>
+                )}
+
+                {/* 🔒 Browser-Native Trust & Security Guide inside the active Workspace */}
+                {activeTool && (
+                  <div className="mt-8 pt-6 border-t border-white/5 space-y-6 text-left">
+                    <div className="space-y-3">
+                      <h4 className="text-xs font-bold text-white tracking-wider uppercase flex items-center gap-1.5">
+                        <span className="text-brand-gold">📖</span> How to use {activeTool.title}
+                      </h4>
+                      <ol className="list-decimal pl-4 space-y-1.5 text-[11px] text-brand-muted font-light">
+                        {getToolSEOContent(activeTool).steps.map((step, idx) => (
+                          <li key={idx} className="leading-relaxed">
+                            {step}
+                          </li>
+                        ))}
+                      </ol>
+                    </div>
+
+                    <div className="space-y-3">
+                      <h4 className="text-xs font-bold text-white tracking-wider uppercase flex items-center gap-1.5">
+                        <span className="text-brand-gold">🛡️</span> Privacy Assurance FAQ
+                      </h4>
+                      <div className="space-y-3 pl-1">
+                        {getToolSEOContent(activeTool).faq.map((item, idx) => (
+                          <div key={idx} className="space-y-0.5 border-l border-brand-gold/30 pl-3">
+                            <h5 className="text-[11px] font-bold text-white">{item.q}</h5>
+                            <p className="text-[10px] text-brand-muted font-light leading-relaxed">{item.a}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 )}
 
