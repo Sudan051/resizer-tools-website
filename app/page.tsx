@@ -1597,6 +1597,19 @@ export default function Home({ initialToolId }: { initialToolId?: string } = {})
               <p className="text-xs text-brand-muted font-light mb-4">Submit tool reviews, engine logs, or custom feature inquiries instantly.</p>
               
               <div className="space-y-3.5 text-left">
+                {/* 🚀 Upcoming Feature Announcement */}
+                <div className="p-3.5 rounded-2xl bg-brand-gold/[0.03] border border-brand-gold/15 text-left">
+                  <div className="flex items-center gap-2 text-brand-gold text-[10px] font-mono font-bold uppercase tracking-wider mb-1">
+                    <span>🚀</span> Upcoming Features Roadmap
+                  </div>
+                  <p className="text-[11px] text-brand-muted leading-relaxed font-light">
+                    We are planning to add **Audio & Video tools** (compressors, cutters, and format converters) in the next release.
+                  </p>
+                  <p className="text-[10px] text-brand-gold-light mt-1.5 font-medium">
+                    💬 What specific audio/video tools do you want? Let us know in your feedback below!
+                  </p>
+                </div>
+
                 <div>
                   <label className="block text-[10px] font-mono uppercase tracking-wider text-brand-muted mb-1">User Identifier</label>
                   <input type="text" value={userName} onChange={(e) => setUserName(e.target.value)} placeholder="Enter your name" className="w-full bg-black/40 border border-white/10 rounded-xl px-3 py-2 text-xs text-white placeholder:text-neutral-600 focus:outline-none focus:border-brand-gold/40 transition-colors" />
