@@ -1,18 +1,38 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { 
-  ShieldCheck, ExternalLink, Download, Mail, Globe, Play, 
-  Sparkles, Layers, Smartphone, CheckCircle2 
+  ShieldCheck, ExternalLink, Mail, Globe, Play, 
+  Sparkles, Layers, Smartphone, CheckCircle2, X, Smile, Apple 
 } from "lucide-react";
 
-export const dynamic = "force-static";
-
-export const metadata = {
-  title: "Saurabh Kumar Sharma - Resizer Tools Creator Card",
-  description: "Official digital business card for Resizer Tools. 26 browser-native offline PDF & image utilities.",
-};
-
 export default function DigitalCardPage() {
+  const [showAndroidModal, setShowAndroidModal] = useState(false);
+
+  // Default iOS App Store link
+  const iosAppUrl = "https://apps.apple.com/app/id6742385150";
+
+  const handleAppDownloadClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (typeof window === "undefined") return;
+
+    const userAgent = navigator.userAgent || navigator.vendor || (window as unknown as { opera?: string }).opera || "";
+
+    const isIOS = /iPad|iPhone|iPod|Macintosh/i.test(userAgent) && !("MSStream" in window);
+    const isAndroid = /android/i.test(userAgent);
+
+    if (isIOS) {
+      window.open(iosAppUrl, "_blank", "noopener,noreferrer");
+    } else if (isAndroid) {
+      setShowAndroidModal(true);
+    } else {
+      // Fallback for Desktop/Others: default to iOS link or show options
+      window.open(iosAppUrl, "_blank", "noopener,noreferrer");
+    }
+  };
+
   return (
     <main className="min-h-screen bg-[#080808] text-white selection:bg-brand-gold/30 selection:text-brand-gold-light py-12 px-4 flex flex-col items-center justify-center relative overflow-hidden">
       
@@ -78,15 +98,17 @@ export default function DigitalCardPage() {
           </Link>
 
           {/* Mobile App Download Button */}
-          <a 
-            href="#download"
-            className="flex items-center justify-between w-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-white font-bold text-xs py-3.5 px-5 rounded-2xl hover:border-brand-gold/40 transition-all cursor-pointer"
+          <button 
+            onClick={handleAppDownloadClick}
+            className="flex items-center justify-between w-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-white font-bold text-xs py-3.5 px-5 rounded-2xl hover:border-brand-gold/40 transition-all cursor-pointer group"
           >
             <span className="flex items-center gap-2.5">
-              <Smartphone className="w-4 h-4 text-brand-gold" /> Download Mobile App
+              <Smartphone className="w-4 h-4 text-brand-gold group-hover:scale-110 transition-transform" /> Download Mobile App
             </span>
-            <Download className="w-4 h-4 text-brand-gold" />
-          </a>
+            <div className="flex items-center gap-1.5 text-[10px] font-mono text-brand-gold">
+              <Apple className="w-3.5 h-3.5" /> iOS Link
+            </div>
+          </button>
 
           {/* Social Links */}
           <div className="grid grid-cols-3 gap-2.5 pt-2">
@@ -131,6 +153,53 @@ export default function DigitalCardPage() {
         </div>
 
       </div>
+
+      {/* ANDROID COMING SOON MODAL */}
+      {showAndroidModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
+          <div className="w-full max-w-sm bg-[#121212] border border-brand-gold/40 rounded-3xl p-6 shadow-2xl text-center space-y-5 relative">
+            
+            <button 
+              onClick={() => setShowAndroidModal(false)}
+              className="absolute top-4 right-4 text-brand-muted hover:text-white transition-colors p-1"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="w-16 h-16 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-brand-gold flex items-center justify-center mx-auto shadow-inner">
+              <Smile className="w-9 h-9 text-brand-gold animate-bounce" />
+            </div>
+
+            <div className="space-y-2">
+              <h3 className="text-lg font-bold text-white tracking-tight flex items-center justify-center gap-2">
+                Android App Coming Soon! 😊
+              </h3>
+              <p className="text-xs text-brand-muted leading-relaxed font-light">
+                We are currently crafting a super-fast, 100% private native Android app just for you! Please stay tuned, it will be available on the Google Play Store very soon. ✨
+              </p>
+            </div>
+
+            <div className="pt-2 space-y-2">
+              <Link
+                href="/"
+                onClick={() => setShowAndroidModal(false)}
+                className="block w-full bg-brand-gold text-black font-bold text-xs py-3 rounded-xl hover:bg-brand-gold-light transition-all"
+              >
+                Use Web App in Browser Now 🚀
+              </Link>
+
+              <button
+                onClick={() => setShowAndroidModal(false)}
+                className="w-full text-xs text-brand-muted hover:text-white py-1 transition-colors"
+              >
+                Close
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
+
     </main>
   );
 }
