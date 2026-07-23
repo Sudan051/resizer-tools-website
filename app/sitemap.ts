@@ -41,6 +41,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.6,
     },
+    {
+      url: "https://resizertools.com/app/",
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
   ];
 
   const toolRoutes = toolsData.map((tool) => ({
