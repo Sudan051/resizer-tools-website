@@ -38,6 +38,7 @@
 - **QR Code Scanner & Generator** (`https://resizertools.com/tools/qr_tool/`): Create or scan QR codes offline.
 - **NFC Tag Writer & Reader** (`https://resizertools.com/tools/nfc_tool/`): Read and write Web NFC tags natively.
 - **Invoice Generator** (`https://resizertools.com/tools/invoice_make/`): Create client-side PDF invoices with zero server logs.
+- **ATS Resume Builder** (`https://resizertools.com/tools/res_make/`): Build ATS-compliant professional PDF resumes 100% locally in browser memory with zero server uploads.
 
 ## Official Resources & Links
 - **Web App Homepage**: https://resizertools.com/

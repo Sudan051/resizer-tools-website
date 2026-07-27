@@ -100,6 +100,22 @@ export default function Home({ initialToolId }: { initialToolId?: string } = {})
   ]);
   const [invoiceTax, setInvoiceTax] = useState(18);
 
+  // ATS Resume Builder States
+  const [resName, setResName] = useState("Saurabh Kumar Sharma");
+  const [resRole, setResRole] = useState("Senior iOS & Full-Stack Engineer");
+  const [resEmail, setResEmail] = useState("saurabh@example.com");
+  const [resPhone, setResPhone] = useState("+91 9876543210");
+  const [resLocation, setResLocation] = useState("Haridwar, India");
+  const [resSummary, setResSummary] = useState("Results-driven developer with 5+ years of experience building high-performance, client-side web utilities, iOS native applications, and scalable software solutions with zero server latency.");
+  const [resSkills, setResSkills] = useState("Swift, SwiftUI, React, Next.js, TypeScript, Canvas API, PDF-lib, Node.js, WebCrypto, UI/UX Design");
+  const [resCompany, setResCompany] = useState("Resizer Tools / Tech Studio");
+  const [resExpTitle, setResExpTitle] = useState("Lead Developer & Creator");
+  const [resExpDates, setResExpDates] = useState("2022 - Present");
+  const [resExpDesc, setResExpDesc] = useState("Engineered 26+ browser-native offline PDF & image utilities, achieving zero server uploads, 100% client-side privacy, and ranking on Product Hunt.");
+  const [resDegree, setResDegree] = useState("Bachelor of Technology (Computer Science)");
+  const [resSchool, setResSchool] = useState("Uttarakhand Technical University");
+  const [resEduDates, setResEduDates] = useState("2018 - 2022");
+
   // Extended PDF tools states
   const [deletePagesInput, setDeletePagesInput] = useState("");
   const [extractPagesInput, setExtractPagesInput] = useState("");
@@ -643,6 +659,135 @@ export default function Home({ initialToolId }: { initialToolId?: string } = {})
     } catch (err) {
       console.error(err);
       alert("Failed to compile invoice PDF document.");
+    }
+    setIsLoading(false);
+  };
+
+  // 📝 ATS Resume Builder Compiler
+  const compileResumePDF = async () => {
+    setIsLoading(true);
+    try {
+      const pdfDoc = await PDFDocument.create();
+      const page = pdfDoc.addPage([595, 842]);
+      const { width, height } = page.getSize();
+
+      // Top golden accent bar
+      page.drawRectangle({
+        x: 0,
+        y: height - 12,
+        width: width,
+        height: 12,
+        color: rgb(0.83, 0.68, 0.21),
+      });
+
+      // Name Header
+      page.drawText((resName || "YOUR NAME").toUpperCase(), {
+        x: 40,
+        y: height - 45,
+        size: 18,
+        color: rgb(0.1, 0.1, 0.1),
+      });
+
+      // Role / Headline
+      page.drawText(resRole || "Professional Headline", {
+        x: 40,
+        y: height - 63,
+        size: 11,
+        color: rgb(0.83, 0.68, 0.21),
+      });
+
+      // Contact Line
+      page.drawText(`${resEmail}  |  ${resPhone}  |  ${resLocation}`, {
+        x: 40,
+        y: height - 80,
+        size: 9,
+        color: rgb(0.4, 0.4, 0.4),
+      });
+
+      // Divider Line 1
+      page.drawLine({
+        start: { x: 40, y: height - 92 },
+        end: { x: width - 40, y: height - 92 },
+        thickness: 1,
+        color: rgb(0.85, 0.85, 0.85),
+      });
+
+      let y = height - 115;
+
+      // Section 1: PROFESSIONAL SUMMARY
+      if (resSummary) {
+        page.drawText("PROFESSIONAL SUMMARY", { x: 40, y, size: 10, color: rgb(0.83, 0.68, 0.21) });
+        y -= 16;
+
+        const summaryLines = resSummary.match(/.{1,85}(\s|$)/g) || [resSummary];
+        summaryLines.forEach((line) => {
+          page.drawText(line.trim(), { x: 40, y, size: 9, color: rgb(0.2, 0.2, 0.2) });
+          y -= 14;
+        });
+        y -= 10;
+      }
+
+      // Section 2: WORK EXPERIENCE
+      if (resCompany || resExpTitle) {
+        page.drawText("WORK EXPERIENCE", { x: 40, y, size: 10, color: rgb(0.83, 0.68, 0.21) });
+        y -= 16;
+        page.drawText(`${resExpTitle} - ${resCompany}`, { x: 40, y, size: 10, color: rgb(0.1, 0.1, 0.1) });
+        if (resExpDates) {
+          page.drawText(resExpDates, { x: width - 150, y, size: 9, color: rgb(0.5, 0.5, 0.5) });
+        }
+        y -= 14;
+
+        if (resExpDesc) {
+          const expLines = resExpDesc.match(/.{1,85}(\s|$)/g) || [resExpDesc];
+          expLines.forEach((line) => {
+            page.drawText(`• ${line.trim()}`, { x: 45, y, size: 9, color: rgb(0.3, 0.3, 0.3) });
+            y -= 14;
+          });
+        }
+        y -= 10;
+      }
+
+      // Section 3: EDUCATION
+      if (resDegree || resSchool) {
+        page.drawText("EDUCATION", { x: 40, y, size: 10, color: rgb(0.83, 0.68, 0.21) });
+        y -= 16;
+        page.drawText(resDegree, { x: 40, y, size: 10, color: rgb(0.1, 0.1, 0.1) });
+        if (resEduDates) {
+          page.drawText(resEduDates, { x: width - 150, y, size: 9, color: rgb(0.5, 0.5, 0.5) });
+        }
+        y -= 14;
+        if (resSchool) {
+          page.drawText(resSchool, { x: 40, y, size: 9, color: rgb(0.4, 0.4, 0.4) });
+          y -= 14;
+        }
+        y -= 10;
+      }
+
+      // Section 4: TECHNICAL SKILLS
+      if (resSkills) {
+        page.drawText("SKILLS & COMPETENCIES", { x: 40, y, size: 10, color: rgb(0.83, 0.68, 0.21) });
+        y -= 16;
+        const skillLines = resSkills.match(/.{1,85}(\s|$)/g) || [resSkills];
+        skillLines.forEach((line) => {
+          page.drawText(line.trim(), { x: 40, y, size: 9, color: rgb(0.2, 0.2, 0.2) });
+          y -= 14;
+        });
+      }
+
+      // Footer stamp
+      page.drawText("Generated 100% Client-Side via Resizer Tools (resizertools.com)", {
+        x: 40,
+        y: 25,
+        size: 7,
+        color: rgb(0.6, 0.6, 0.6),
+      });
+
+      const pdfBytes = await pdfDoc.save();
+      const blob = new Blob([pdfBytes] as BlobPart[], { type: "application/pdf" });
+      setDownloadUrl(URL.createObjectURL(blob));
+    } catch (err) {
+      console.error(err);
+      alert("Failed to compile Resume PDF.");
     }
     setIsLoading(false);
   };
@@ -1927,7 +2072,7 @@ export default function Home({ initialToolId }: { initialToolId?: string } = {})
               <div className="flex-1 overflow-y-auto pr-1 scrollbar-none space-y-6">
                 
                 {/* 📳 CASE A: App Download / App-Level Redirect prompt */}
-                {(activeTool.isAppDownload || !["img_comp", "img_res", "doc_scan", "sig_cr", "qr_gen", "mrg_pdf", "spl_pdf", "rot_pdf", "num_pdf", "wtrmk_pdf", "inv_mk", "red_pdf", "del_pdf", "ext_pdf", "ord_pdf", "sgn_pdf", "pdf_imgs", "prt_pdf", "unl_pdf", "img_pdf", "img_conv", "prnt_sheet", "mk_pdf"].includes(activeTool.id)) ? (
+                {(activeTool.isAppDownload || !["img_comp", "img_res", "doc_scan", "sig_cr", "qr_gen", "mrg_pdf", "spl_pdf", "rot_pdf", "num_pdf", "wtrmk_pdf", "inv_mk", "res_make", "red_pdf", "del_pdf", "ext_pdf", "ord_pdf", "sgn_pdf", "pdf_imgs", "prt_pdf", "unl_pdf", "img_pdf", "img_conv", "prnt_sheet", "mk_pdf"].includes(activeTool.id)) ? (
                   <div className="text-center py-6 space-y-6">
                     <div className="w-16 h-16 rounded-2xl bg-brand-gold/10 border border-brand-gold/25 flex items-center justify-center mx-auto text-brand-gold animate-pulse">
                       {activeTool.isAppDownload ? <Download className="w-8 h-8" /> : <Smartphone className="w-8 h-8" />}
@@ -2472,6 +2617,100 @@ export default function Home({ initialToolId }: { initialToolId?: string } = {})
                         {downloadUrl && (
                           <a href={downloadUrl} onClick={(e) => triggerAdDownload(e, downloadUrl, `${invoiceNum || "invoice"}.pdf`)} download={`${invoiceNum || "invoice"}.pdf`} className="block w-full bg-emerald-500 text-white font-extrabold text-xs py-3 rounded-xl text-center shadow-lg hover:bg-emerald-600 transition-colors cursor-pointer animate-pulse">
                             Download Invoice PDF
+                          </a>
+                        )}
+                      </div>
+                    )}
+
+                    {/* 11.5 ATS RESUME BUILDER */}
+                    {activeTool.id === "res_make" && (
+                      <div className="space-y-4 text-left">
+                        
+                        {/* Personal Header Info */}
+                        <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4 space-y-3">
+                          <h4 className="text-xs font-mono uppercase tracking-wider text-brand-gold">1. Contact & Personal Info</h4>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div>
+                              <label className="block text-[10px] text-brand-muted mb-1">Full Name</label>
+                              <input type="text" value={resName} onChange={(e) => setResName(e.target.value)} placeholder="e.g. Saurabh Kumar Sharma" className="w-full bg-black/40 border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-brand-gold/40" />
+                            </div>
+                            <div>
+                              <label className="block text-[10px] text-brand-muted mb-1">Professional Title / Headline</label>
+                              <input type="text" value={resRole} onChange={(e) => setResRole(e.target.value)} placeholder="e.g. Senior iOS Engineer" className="w-full bg-black/40 border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-brand-gold/40" />
+                            </div>
+                            <div>
+                              <label className="block text-[10px] text-brand-muted mb-1">Email Address</label>
+                              <input type="email" value={resEmail} onChange={(e) => setResEmail(e.target.value)} placeholder="saurabh@example.com" className="w-full bg-black/40 border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-brand-gold/40" />
+                            </div>
+                            <div>
+                              <label className="block text-[10px] text-brand-muted mb-1">Phone Number</label>
+                              <input type="text" value={resPhone} onChange={(e) => setResPhone(e.target.value)} placeholder="+91 9876543210" className="w-full bg-black/40 border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-brand-gold/40" />
+                            </div>
+                            <div>
+                              <label className="block text-[10px] text-brand-muted mb-1">Location / City</label>
+                              <input type="text" value={resLocation} onChange={(e) => setResLocation(e.target.value)} placeholder="Haridwar, India" className="w-full bg-black/40 border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-brand-gold/40" />
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Professional Summary */}
+                        <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4 space-y-2">
+                          <h4 className="text-xs font-mono uppercase tracking-wider text-brand-gold">2. Professional Summary</h4>
+                          <textarea value={resSummary} onChange={(e) => setResSummary(e.target.value)} rows={3} placeholder="Brief summary of your achievements and skills..." className="w-full bg-black/40 border border-white/10 rounded-lg p-2 text-xs text-white focus:outline-none focus:border-brand-gold/40" />
+                        </div>
+
+                        {/* Work Experience */}
+                        <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4 space-y-3">
+                          <h4 className="text-xs font-mono uppercase tracking-wider text-brand-gold">3. Work Experience</h4>
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <div>
+                              <label className="block text-[10px] text-brand-muted mb-1">Job Title / Role</label>
+                              <input type="text" value={resExpTitle} onChange={(e) => setResExpTitle(e.target.value)} className="w-full bg-black/40 border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none" />
+                            </div>
+                            <div>
+                              <label className="block text-[10px] text-brand-muted mb-1">Company Name</label>
+                              <input type="text" value={resCompany} onChange={(e) => setResCompany(e.target.value)} className="w-full bg-black/40 border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none" />
+                            </div>
+                            <div>
+                              <label className="block text-[10px] text-brand-muted mb-1">Dates (e.g. 2022 - Present)</label>
+                              <input type="text" value={resExpDates} onChange={(e) => setResExpDates(e.target.value)} className="w-full bg-black/40 border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none" />
+                            </div>
+                          </div>
+                          <div>
+                            <label className="block text-[10px] text-brand-muted mb-1">Responsibilities & Key Achievements</label>
+                            <textarea value={resExpDesc} onChange={(e) => setResExpDesc(e.target.value)} rows={2} className="w-full bg-black/40 border border-white/10 rounded-lg p-2 text-xs text-white focus:outline-none" />
+                          </div>
+                        </div>
+
+                        {/* Education & Skills */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4 space-y-2">
+                            <h4 className="text-xs font-mono uppercase tracking-wider text-brand-gold">4. Education</h4>
+                            <input type="text" value={resDegree} onChange={(e) => setResDegree(e.target.value)} placeholder="Degree / Program" className="w-full bg-black/40 border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none mb-2" />
+                            <input type="text" value={resSchool} onChange={(e) => setResSchool(e.target.value)} placeholder="School / University" className="w-full bg-black/40 border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none mb-2" />
+                            <input type="text" value={resEduDates} onChange={(e) => setResEduDates(e.target.value)} placeholder="Dates" className="w-full bg-black/40 border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none" />
+                          </div>
+
+                          <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4 space-y-2">
+                            <h4 className="text-xs font-mono uppercase tracking-wider text-brand-gold">5. Technical Skills</h4>
+                            <textarea value={resSkills} onChange={(e) => setResSkills(e.target.value)} rows={4} placeholder="Comma-separated skills (e.g. Swift, React, Node.js)" className="w-full bg-black/40 border border-white/10 rounded-lg p-2 text-xs text-white focus:outline-none" />
+                          </div>
+                        </div>
+
+                        {/* Compile Trigger CTA */}
+                        <div className="bg-black/40 border border-white/5 rounded-2xl p-4 flex justify-between items-center">
+                          <div className="text-left font-mono">
+                            <span className="text-[10px] text-brand-gold block uppercase font-bold">100% Client-Side Compiler</span>
+                            <span className="text-xs text-brand-muted">ATS Compliant Layout</span>
+                          </div>
+                          <button onClick={compileResumePDF} className="bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-premium-gold cursor-pointer">
+                            {isLoading ? "Compiling Resume..." : "Compile Resume PDF"}
+                          </button>
+                        </div>
+
+                        {downloadUrl && (
+                          <a href={downloadUrl} onClick={(e) => triggerAdDownload(e, downloadUrl, `resume_${resName.toLowerCase().replace(/\s+/g, '_') || "ats"}.pdf`)} download={`resume_${resName.toLowerCase().replace(/\s+/g, '_') || "ats"}.pdf`} className="block w-full bg-emerald-500 text-white font-extrabold text-xs py-3 rounded-xl text-center shadow-lg hover:bg-emerald-600 transition-colors cursor-pointer animate-pulse">
+                            Download ATS Resume PDF
                           </a>
                         )}
                       </div>
