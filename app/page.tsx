@@ -1003,33 +1003,65 @@ export default function Home({ initialToolId }: { initialToolId?: string } = {})
 
   // 🖼 Image to PDF Converter
   const convertImageToPDF = async () => {
-    if (!uploadFile) return;
+    const filesToConvert = uploadFiles.length > 0 ? uploadFiles : (uploadFile ? [uploadFile] : []);
+    if (filesToConvert.length === 0) {
+      alert("Please select at least one image file.");
+      return;
+    }
     setIsLoading(true);
     try {
-      const imageBytes = await uploadFile.arrayBuffer();
       const pdfDoc = await PDFDocument.create();
-      
-      let embeddedImage;
-      if (uploadFile.type === "image/png") {
-        embeddedImage = await pdfDoc.embedPng(imageBytes);
-      } else {
-        embeddedImage = await pdfDoc.embedJpg(imageBytes);
+
+      for (const file of filesToConvert) {
+        let embeddedImage;
+        const arrayBuffer = await file.arrayBuffer();
+
+        if (file.type === "image/png") {
+          embeddedImage = await pdfDoc.embedPng(arrayBuffer);
+        } else if (file.type === "image/jpeg" || file.type === "image/jpg") {
+          embeddedImage = await pdfDoc.embedJpg(arrayBuffer);
+        } else {
+          // Fallback for WebP/HEIC/GIF or other image types via Canvas conversion
+          const pngBuffer = await new Promise<ArrayBuffer>((resolve, reject) => {
+            const img = new window.Image();
+            const url = URL.createObjectURL(file);
+            img.onload = () => {
+              const canvas = document.createElement("canvas");
+              canvas.width = img.width;
+              canvas.height = img.height;
+              const ctx = canvas.getContext("2d");
+              if (!ctx) return reject("Canvas context error");
+              ctx.drawImage(img, 0, 0);
+              canvas.toBlob((blob) => {
+                if (blob) {
+                  blob.arrayBuffer().then(resolve).catch(reject);
+                } else {
+                  reject("Blob creation failed");
+                }
+              }, "image/png");
+              URL.revokeObjectURL(url);
+            };
+            img.onerror = () => reject("Image load error");
+            img.src = url;
+          });
+          embeddedImage = await pdfDoc.embedPng(pngBuffer);
+        }
+
+        const page = pdfDoc.addPage([embeddedImage.width, embeddedImage.height]);
+        page.drawImage(embeddedImage, {
+          x: 0,
+          y: 0,
+          width: embeddedImage.width,
+          height: embeddedImage.height,
+        });
       }
-      
-      const page = pdfDoc.addPage([embeddedImage.width, embeddedImage.height]);
-      page.drawImage(embeddedImage, {
-        x: 0,
-        y: 0,
-        width: embeddedImage.width,
-        height: embeddedImage.height,
-      });
-      
+
       const pdfBytes = await pdfDoc.save();
       const blob = new Blob([pdfBytes] as BlobPart[], { type: "application/pdf" });
       setDownloadUrl(URL.createObjectURL(blob));
     } catch (err) {
       console.error(err);
-      alert("Failed to convert image to PDF document.");
+      alert("Failed to convert image(s) to PDF document.");
     }
     setIsLoading(false);
   };
@@ -2930,18 +2962,57 @@ export default function Home({ initialToolId }: { initialToolId?: string } = {})
                     {activeTool.id === "img_pdf" && (
                       <div className="space-y-4 text-left">
                         <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4">
-                          <label className="block text-xs font-mono uppercase tracking-wider text-brand-muted mb-2">1. Upload Image file</label>
-                          <input type="file" accept="image/png, image/jpeg" onChange={handleFileChange} className="text-xs text-neutral-400 file:mr-4 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-brand-gold/15 file:text-brand-gold hover:file:bg-brand-gold/25 file:cursor-pointer" />
+                          <label className="block text-xs font-mono uppercase tracking-wider text-brand-muted mb-2">
+                            1. Select Image Files (Multiple Images Supported)
+                          </label>
+                          <input 
+                            type="file" 
+                            accept="image/*" 
+                            multiple 
+                            onChange={handleMultipleFilesChange} 
+                            className="text-xs text-neutral-400 file:mr-4 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-brand-gold/15 file:text-brand-gold hover:file:bg-brand-gold/25 file:cursor-pointer" 
+                          />
                         </div>
-                        {uploadFile && (
+
+                        {uploadFiles.length > 0 && (
+                          <div className="bg-black/40 border border-white/5 rounded-2xl p-4 space-y-3">
+                            <div className="flex justify-between items-center">
+                              <span className="text-[10px] font-mono text-brand-muted uppercase tracking-wider">
+                                Selected Images Queue ({uploadFiles.length})
+                              </span>
+                              <button 
+                                onClick={() => setUploadFiles([])} 
+                                className="text-[10px] text-red-400 hover:underline font-mono cursor-pointer"
+                              >
+                                Clear All
+                              </button>
+                            </div>
+
+                            <div className="max-h-40 overflow-y-auto space-y-1.5 pr-1 font-mono text-[11px]">
+                              {uploadFiles.map((file, idx) => (
+                                <div key={idx} className="flex justify-between items-center bg-white/5 px-3 py-1.5 rounded-lg border border-white/5">
+                                  <span className="truncate text-white max-w-[200px]">{file.name}</span>
+                                  <span className="text-[10px] text-brand-gold">{(file.size / 1024).toFixed(0)} KB</span>
+                                </div>
+                              ))}
+                            </div>
+
+                            <button onClick={convertImageToPDF} className="w-full bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-extrabold text-xs py-2.5 rounded-xl text-center shadow-premium-gold cursor-pointer">
+                              {isLoading ? "Generating Multi-Page PDF..." : `Convert ${uploadFiles.length} Image${uploadFiles.length > 1 ? "s" : ""} to PDF`}
+                            </button>
+                          </div>
+                        )}
+
+                        {uploadFiles.length === 0 && uploadFile && (
                           <div className="bg-black/40 border border-white/5 rounded-2xl p-4 space-y-4">
                             <button onClick={convertImageToPDF} className="w-full bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-extrabold text-xs py-2.5 rounded-xl text-center shadow-premium-gold cursor-pointer">
                               {isLoading ? "Generating..." : "Generate PDF Document"}
                             </button>
                           </div>
                         )}
+
                         {downloadUrl && (
-                          <a href={downloadUrl} onClick={(e) => triggerAdDownload(e, downloadUrl, "document_converted.pdf")} download="document_converted.pdf" className="block w-full bg-emerald-500 text-white font-extrabold text-xs py-3 rounded-xl text-center shadow-lg hover:bg-emerald-600 transition-colors cursor-pointer animate-pulse">
+                          <a href={downloadUrl} onClick={(e) => triggerAdDownload(e, downloadUrl, "images_converted.pdf")} download="images_converted.pdf" className="block w-full bg-emerald-500 text-white font-extrabold text-xs py-3 rounded-xl text-center shadow-lg hover:bg-emerald-600 transition-colors cursor-pointer animate-pulse">
                             Download PDF File
                           </a>
                         )}
