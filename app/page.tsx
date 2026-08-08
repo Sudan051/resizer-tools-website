@@ -3156,6 +3156,7 @@ export default function Home({ initialToolId }: { initialToolId?: string } = {})
 
       <footer className="py-12 text-center text-xs text-brand-muted border-t border-white/5 space-y-4">
         <div className="flex flex-wrap items-center justify-center gap-6 text-[11px] font-medium tracking-wide">
+          <Link href="/blog" className="hover:text-brand-gold-light hover:underline transition-colors">Blog & Guides</Link>
           <Link href="/privacy" className="hover:text-brand-gold-light hover:underline transition-colors">Privacy Policy</Link>
           <Link href="/terms" className="hover:text-brand-gold-light hover:underline transition-colors">Terms & Conditions</Link>
           <Link href="/refund" className="hover:text-brand-gold-light hover:underline transition-colors">Refund & Cancellation</Link>

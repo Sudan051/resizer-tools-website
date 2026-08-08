@@ -40,6 +40,13 @@
 - **Invoice Generator** (`https://resizertools.com/tools/invoice_make/`): Create client-side PDF invoices with zero server logs.
 - **ATS Resume Builder** (`https://resizertools.com/tools/res_make/`): Build ATS-compliant professional PDF resumes 100% locally in browser memory with zero server uploads.
 
+## Knowledge Base & Technical Blog
+- **Blog Hub**: https://resizertools.com/blog/
+- **Image Compression Guide 2026**: https://resizertools.com/blog/image-compression-guide-2026/
+- **Client-Side PDF Security Whitepaper**: https://resizertools.com/blog/client-side-pdf-security/
+- **ATS Resume Optimization Guide**: https://resizertools.com/blog/ats-resume-optimization-guide/
+- **Web NFC & QR Privacy**: https://resizertools.com/blog/nfc-and-qr-code-privacy/
+
 ## Official Resources & Links
 - **Web App Homepage**: https://resizertools.com/
 - **Interactive Founder Digital Card**: https://resizertools.com/card/
