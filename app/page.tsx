@@ -1131,83 +1131,136 @@ export default function Home({ initialToolId }: { initialToolId?: string } = {})
     reader.readAsDataURL(uploadFile);
   };
 
-  // 📝 PDF Text Maker
+  // 📝 Universal Multi-Language PDF Text Maker (Supports Hindi, Devanagari, Emojis, ChatGPT Text)
   const compileCustomPDF = async () => {
+    if (!pdfMakerText.trim()) {
+      alert("Please enter or paste text content to generate PDF.");
+      return;
+    }
     setIsLoading(true);
     try {
       const pdfDoc = await PDFDocument.create();
-      
-      const margin = 50;
-      const pageWidth = 595;
-      const pageHeight = 842;
-      const fontSize = 10;
-      const lineHeight = 14;
 
-      let currentPage = pdfDoc.addPage([pageWidth, pageHeight]);
-      let currentY = pageHeight - margin - fontSize; // Start near top
+      // High-DPI Canvas A4 dimensions for sharp vector-quality text rendering
+      const canvasWidth = 1240; // A4 width at 150 DPI
+      const canvasHeight = 1754; // A4 height at 150 DPI
+      const padding = 80;
+      const contentWidth = canvasWidth - padding * 2;
+      const fontSize = 26;
+      const lineHeight = 40;
 
-      // Helper function to split a string into lines that fit the width
-      const wrapText = (text: string, maxCharsPerLine: number): string[] => {
+      const dummyCanvas = document.createElement("canvas");
+      dummyCanvas.width = canvasWidth;
+      dummyCanvas.height = canvasHeight;
+      const ctx = dummyCanvas.getContext("2d");
+
+      if (!ctx) throw new Error("Could not initialize canvas context.");
+
+      ctx.font = `${fontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Devanagari", "Hind", "Mangal", "Arial Unicode MS", sans-serif`;
+
+      // Line wrapping helper that measures exact pixel width for any language (Hindi, Emojis, ChatGPT text)
+      const wrapLine = (text: string): string[] => {
         const words = text.split(" ");
         const lines: string[] = [];
         let currentLine = "";
 
         for (const word of words) {
-          if ((currentLine + word).length > maxCharsPerLine) {
-            lines.push(currentLine.trim());
-            currentLine = word + " ";
+          const testLine = currentLine ? `${currentLine} ${word}` : word;
+          const metrics = ctx.measureText(testLine);
+          if (metrics.width > contentWidth && currentLine) {
+            lines.push(currentLine);
+            currentLine = word;
           } else {
-            currentLine += word + " ";
+            currentLine = testLine;
           }
         }
-        if (currentLine.trim()) {
-          lines.push(currentLine.trim());
+        if (currentLine) {
+          lines.push(currentLine);
         }
         return lines;
       };
 
-      // Split original text by raw line breaks first
-      const rawLines = pdfMakerText.split("\n");
-      const processedLines: string[] = [];
+      // Split raw input text by line breaks
+      const rawParagraphs = pdfMakerText.split("\n");
+      const allWrappedLines: string[] = [];
 
-      // Helvetica size 10 average character width approximation yields ~82 characters per line for 495px usable width
-      const maxChars = 82;
-
-      for (const line of rawLines) {
-        if (line.trim() === "") {
-          processedLines.push("");
+      for (const paragraph of rawParagraphs) {
+        if (paragraph.trim() === "") {
+          allWrappedLines.push("");
         } else {
-          const wrapped = wrapText(line, maxChars);
-          processedLines.push(...wrapped);
+          allWrappedLines.push(...wrapLine(paragraph));
         }
       }
 
-      // Draw lines onto pages
-      for (const line of processedLines) {
-        // If we reach the bottom of the page, add a new page
-        if (currentY < margin + lineHeight) {
-          currentPage = pdfDoc.addPage([pageWidth, pageHeight]);
-          currentY = pageHeight - margin - fontSize;
+      // Group wrapped lines into pages
+      const linesPerPage = Math.floor((canvasHeight - padding * 2) / lineHeight);
+      const pageGroups: string[][] = [];
+      let currentGroup: string[] = [];
+
+      for (const line of allWrappedLines) {
+        if (currentGroup.length >= linesPerPage) {
+          pageGroups.push(currentGroup);
+          currentGroup = [];
+        }
+        currentGroup.push(line);
+      }
+      if (currentGroup.length > 0) {
+        pageGroups.push(currentGroup);
+      }
+
+      // Render each page group to an offscreen canvas and embed into pdf-lib
+      for (const pageLines of pageGroups) {
+        const pageCanvas = document.createElement("canvas");
+        pageCanvas.width = canvasWidth;
+        pageCanvas.height = canvasHeight;
+        const pageCtx = pageCanvas.getContext("2d");
+        if (!pageCtx) continue;
+
+        // White background
+        pageCtx.fillStyle = "#FFFFFF";
+        pageCtx.fillRect(0, 0, canvasWidth, canvasHeight);
+
+        // Gold top accent line
+        pageCtx.fillStyle = "#D4AF37";
+        pageCtx.fillRect(0, 0, canvasWidth, 16);
+
+        // Text settings
+        pageCtx.fillStyle = "#111111";
+        pageCtx.font = `${fontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Devanagari", "Hind", "Mangal", "Arial Unicode MS", sans-serif`;
+        pageCtx.textBaseline = "top";
+
+        let yOffset = padding;
+        for (const line of pageLines) {
+          if (line !== "") {
+            pageCtx.fillText(line, padding, yOffset);
+          }
+          yOffset += lineHeight;
         }
 
-        if (line !== "") {
-          currentPage.drawText(line, {
-            x: margin,
-            y: currentY,
-            size: fontSize,
-            color: rgb(0.1, 0.1, 0.1),
-          });
-        }
-        currentY -= lineHeight;
+        // Footer brand stamp
+        pageCtx.fillStyle = "#888888";
+        pageCtx.font = '16px monospace';
+        pageCtx.fillText("Generated 100% Client-Side via Resizer Tools (resizertools.com)", padding, canvasHeight - 50);
+
+        // Convert page canvas to PNG data URL and embed
+        const pageDataUrl = pageCanvas.toDataURL("image/png");
+        const embeddedPng = await pdfDoc.embedPng(pageDataUrl);
+
+        const pdfPage = pdfDoc.addPage([595, 842]);
+        pdfPage.drawImage(embeddedPng, {
+          x: 0,
+          y: 0,
+          width: 595,
+          height: 842,
+        });
       }
 
       const pdfBytes = await pdfDoc.save();
       const blob = new Blob([pdfBytes] as BlobPart[], { type: "application/pdf" });
       setDownloadUrl(URL.createObjectURL(blob));
-      alert("PDF generated with margins and word-wrapped flow!");
     } catch (err) {
-      console.error(err);
-      alert("Failed to build PDF.");
+      console.error("PDF Compilation Error:", err);
+      alert("Failed to build PDF. Please check your text input.");
     }
     setIsLoading(false);
   };
