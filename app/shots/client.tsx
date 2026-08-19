@@ -429,9 +429,14 @@ export default function ScreenshotStudioClient() {
           const srcH = (slide.cropStatusBar !== false) ? img.height * 0.96 : img.height;
           const srcW = img.width;
 
-          const scale = Math.max(innerW / srcW, innerH / srcH);
-          const imgX = innerX + (innerW - srcW * scale) / 2;
-          const imgY = innerY;
+          // 1px padding gap around screenshot image inside device frame
+          const paddingGap = Math.max(2, Math.round(width * 0.0015)); // High-DPI 1-2px gap
+          const paddedW = innerW - paddingGap * 2;
+          const paddedH = innerH - paddingGap * 2;
+
+          const scale = Math.max(paddedW / srcW, paddedH / srcH);
+          const imgX = (innerX + paddingGap) + (paddedW - srcW * scale) / 2;
+          const imgY = innerY + paddingGap;
           ctx.drawImage(img, 0, srcY, srcW, srcH, imgX, imgY, srcW * scale, srcH * scale);
 
           // Notch / Dynamic Island
