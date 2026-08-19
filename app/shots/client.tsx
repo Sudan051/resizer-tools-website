@@ -63,6 +63,7 @@ export interface ScreenshotSlide {
   mockupScale: number;
   mockupPositionY: number;
   mockupRotation: number;
+  cropStatusBar: boolean;
 }
 
 export const DEFAULT_SLIDES: ScreenshotSlide[] = [
@@ -97,6 +98,7 @@ export const DEFAULT_SLIDES: ScreenshotSlide[] = [
     mockupScale: 1.0,
     mockupPositionY: 0,
     mockupRotation: 0,
+    cropStatusBar: true,
   },
   {
     id: "slide-2",
@@ -129,6 +131,7 @@ export const DEFAULT_SLIDES: ScreenshotSlide[] = [
     mockupScale: 1.0,
     mockupPositionY: 0,
     mockupRotation: 0,
+    cropStatusBar: true,
   },
   {
     id: "slide-3",
@@ -161,6 +164,7 @@ export const DEFAULT_SLIDES: ScreenshotSlide[] = [
     mockupScale: 1.0,
     mockupPositionY: 0,
     mockupRotation: 0,
+    cropStatusBar: true,
   }
 ];
 
@@ -420,10 +424,15 @@ export default function ScreenshotStudioClient() {
         const img = new Image();
         img.crossOrigin = "anonymous";
         img.onload = () => {
-          const scale = Math.max(innerW / img.width, innerH / img.height);
-          const imgX = innerX + (innerW - img.width * scale) / 2;
+          // Crop out top 4% status bar (battery, time, wifi icons) if cropStatusBar is enabled
+          const srcY = (slide.cropStatusBar !== false) ? img.height * 0.04 : 0;
+          const srcH = (slide.cropStatusBar !== false) ? img.height * 0.96 : img.height;
+          const srcW = img.width;
+
+          const scale = Math.max(innerW / srcW, innerH / srcH);
+          const imgX = innerX + (innerW - srcW * scale) / 2;
           const imgY = innerY;
-          ctx.drawImage(img, imgX, imgY, img.width * scale, img.height * scale);
+          ctx.drawImage(img, 0, srcY, srcW, srcH, imgX, imgY, srcW * scale, srcH * scale);
 
           // Notch / Dynamic Island
           if (slide.frameStyle === "island" && preset.deviceType === "Phone") {
@@ -525,7 +534,7 @@ export default function ScreenshotStudioClient() {
 
   const presetSlug = (str: string) => str.toLowerCase().replace(/[^a-z0-9]/g, "_");
 
-  const updateActiveSlide = (field: keyof ScreenshotSlide, value: string | number | null) => {
+  const updateActiveSlide = (field: keyof ScreenshotSlide, value: string | number | boolean | null) => {
     if (activeSlideIndex >= slides.length) return;
     const updated = [...slides];
     updated[activeSlideIndex] = { ...updated[activeSlideIndex], [field]: value };
@@ -591,6 +600,7 @@ export default function ScreenshotStudioClient() {
       mockupScale: 1.0,
       mockupPositionY: 0,
       mockupRotation: 0,
+      cropStatusBar: true,
     };
     setSlides([...slides, newSlide]);
     setActiveSlideIndex(slides.length);
@@ -1065,6 +1075,18 @@ export default function ScreenshotStudioClient() {
                       <option value="borderless">Borderless Modern</option>
                     </select>
                   </div>
+                </div>
+
+                <div className="pt-2 flex items-center justify-between bg-white/[0.02] p-3 rounded-xl border border-white/5">
+                  <label className="text-xs text-white font-medium flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={activeSlide.cropStatusBar !== false}
+                      onChange={(e) => updateActiveSlide("cropStatusBar", e.target.checked)}
+                      className="w-4 h-4 accent-brand-gold rounded cursor-pointer"
+                    />
+                    <span>Auto-Erase Top Status Bar (Battery / Time / Wi-Fi Icons)</span>
+                  </label>
                 </div>
               </div>
 
