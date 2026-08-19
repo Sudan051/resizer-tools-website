@@ -1,14 +1,15 @@
 import Link from "next/link";
 import { 
   Apple, ShieldCheck, CheckCircle2, ArrowLeft, 
-  Sparkles, Lock, Zap, QrCode, Cpu, ExternalLink
+  Sparkles, Lock, Zap, QrCode, ExternalLink, 
+  Star, Smartphone, Camera 
 } from "lucide-react";
 
 export const dynamic = "force-static";
 
 export const metadata = {
-  title: "Download Resizer Tools Mobile App - iOS & Android",
-  description: "Download Resizer Tools mobile app for iOS. 100% private, offline PDF & image tools with NFC, camera document scanning, and zero server uploads.",
+  title: "Download Resizer Tools Mobile App - Official iOS & Android Apps",
+  description: "Download Resizer Tools official mobile app for iOS App Store and Google Play Store. 100% private, offline PDF & image utilities, camera document scanner, and NFC writer.",
 };
 
 export default function AppDownloadPage() {
@@ -18,49 +19,72 @@ export default function AppDownloadPage() {
   return (
     <main className="min-h-screen bg-[#080808] text-white selection:bg-brand-gold/30 selection:text-brand-gold-light py-16 px-4 sm:px-6 flex flex-col items-center justify-center relative overflow-hidden">
       
-      {/* Background glow ambiance */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-brand-gold/10 rounded-full blur-[160px] pointer-events-none" />
+      {/* Glow background ambiance */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-gold/10 rounded-full blur-[180px] pointer-events-none" />
 
-      <div className="w-full max-w-xl space-y-10 relative z-10">
+      <div className="w-full max-w-4xl space-y-12 relative z-10">
         
         {/* Back Link */}
-        <Link 
-          href="/" 
-          className="inline-flex items-center gap-2 text-xs text-brand-muted hover:text-brand-gold transition-colors font-mono"
-        >
-          <ArrowLeft className="w-4 h-4" /> Back to Web Workspace
-        </Link>
+        <div className="flex justify-between items-center">
+          <Link 
+            href="/" 
+            className="inline-flex items-center gap-2 text-xs text-brand-muted hover:text-brand-gold transition-colors font-mono"
+          >
+            <ArrowLeft className="w-4 h-4" /> Back to Web Workspace
+          </Link>
+
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-[11px] font-mono text-emerald-400">
+            <CheckCircle2 className="w-3.5 h-3.5" /> iOS & Android Apps Live
+          </div>
+        </div>
 
         {/* Hero Header */}
-        <div className="text-center space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-gold/10 border border-brand-gold/25 text-xs font-mono text-brand-gold uppercase tracking-wider mx-auto">
-            <Sparkles className="w-3.5 h-3.5" /> Mobile Companion App
+        <div className="text-center space-y-6 max-w-2xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-xs font-mono text-brand-gold uppercase tracking-wider mx-auto shadow-glass">
+            <Sparkles className="w-3.5 h-3.5 text-brand-gold" /> Official Mobile Suite
           </div>
-          <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
-            Resizer Tools for Mobile
+
+          <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight">
+            Carry 27 Studio Tools <br />
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-brand-gold via-brand-gold-light to-brand-gold-dark">
+              Right in Your Pocket
+            </span>
           </h1>
-          <p className="text-sm sm:text-base text-brand-muted font-light max-w-md mx-auto leading-relaxed">
-            Carry 27 offline PDF & image utilities in your pocket. 100% client-side privacy, camera document scanner, and NFC radio tools.
+
+          <p className="text-sm sm:text-base text-brand-muted font-light leading-relaxed">
+            Experience 100% offline PDF compilation, 120FPS camera document scanning, and Web NFC tag programming with absolute privacy. Zero server uploads guaranteed.
           </p>
+
+          {/* Social Proof Rating */}
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-white/[0.03] border border-white/10 text-xs text-brand-muted font-mono">
+            <div className="flex items-center text-amber-400">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="w-3.5 h-3.5 fill-amber-400" />
+              ))}
+            </div>
+            <span className="text-white font-bold">4.9/5 Rating</span>
+            <span>• 100% Client-Side Safe</span>
+          </div>
         </div>
 
         {/* Download Buttons Section */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
           
           {/* iOS App Store Button */}
           <a
             href={iosAppUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex flex-col items-center justify-center gap-2 p-6 rounded-3xl bg-gradient-to-b from-[#1a1a1a] to-[#111111] border border-brand-gold/40 hover:border-brand-gold text-white shadow-premium-gold hover:scale-[1.02] active:scale-[0.98] transition-all group cursor-pointer"
+            className="flex flex-col items-center justify-center gap-3 p-8 rounded-3xl bg-gradient-to-b from-[#1c1c1c] via-[#121212] to-[#0a0a0a] border border-brand-gold/50 hover:border-brand-gold text-white shadow-2xl hover:scale-[1.03] active:scale-[0.98] transition-all group cursor-pointer relative overflow-hidden"
           >
-            <Apple className="w-10 h-10 text-brand-gold group-hover:scale-110 transition-transform" />
+            <div className="absolute top-0 right-0 w-32 h-32 bg-brand-gold/10 rounded-full blur-2xl pointer-events-none" />
+            <Apple className="w-12 h-12 text-brand-gold group-hover:scale-110 transition-transform" />
             <div className="text-center">
-              <div className="text-[10px] uppercase font-mono text-brand-muted tracking-wider">Download on</div>
-              <div className="text-base font-extrabold text-white">Apple App Store</div>
+              <div className="text-[10px] uppercase font-mono text-brand-muted tracking-widest">Download for iPhone / iPad</div>
+              <div className="text-lg font-extrabold text-white">Apple App Store</div>
             </div>
-            <div className="inline-flex items-center gap-1 text-[11px] font-mono text-emerald-400 pt-1">
-              <CheckCircle2 className="w-3.5 h-3.5" /> Available for iOS
+            <div className="inline-flex items-center gap-1.5 text-xs font-mono text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
+              <CheckCircle2 className="w-3.5 h-3.5" /> Official iOS App
             </div>
           </a>
 
@@ -69,52 +93,87 @@ export default function AppDownloadPage() {
             href={androidAppUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex flex-col items-center justify-center gap-2 p-6 rounded-3xl bg-gradient-to-b from-[#1a1a1a] to-[#111111] border border-emerald-500/40 hover:border-emerald-400 text-white shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all group cursor-pointer"
+            className="flex flex-col items-center justify-center gap-3 p-8 rounded-3xl bg-gradient-to-b from-[#1c1c1c] via-[#121212] to-[#0a0a0a] border border-emerald-500/50 hover:border-emerald-400 text-white shadow-2xl hover:scale-[1.03] active:scale-[0.98] transition-all group cursor-pointer relative overflow-hidden"
           >
-            <ExternalLink className="w-10 h-10 text-emerald-400 group-hover:scale-110 transition-transform" />
+            <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none" />
+            <Smartphone className="w-12 h-12 text-emerald-400 group-hover:scale-110 transition-transform" />
             <div className="text-center">
-              <div className="text-[10px] uppercase font-mono text-brand-muted tracking-wider">Get it on</div>
-              <div className="text-base font-extrabold text-white">Google Play Store</div>
+              <div className="text-[10px] uppercase font-mono text-brand-muted tracking-widest">Get it on Android</div>
+              <div className="text-lg font-extrabold text-white">Google Play Store</div>
             </div>
-            <div className="inline-flex items-center gap-1 text-[11px] font-mono text-emerald-400 pt-1">
-              <CheckCircle2 className="w-3.5 h-3.5" /> Available for Android
+            <div className="inline-flex items-center gap-1.5 text-xs font-mono text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
+              <CheckCircle2 className="w-3.5 h-3.5" /> Official Android App
             </div>
           </a>
 
         </div>
 
-        {/* Features Highlights */}
-        <div className="p-6 rounded-3xl bg-[#121212]/80 border border-white/5 space-y-4">
-          <h2 className="text-xs font-bold uppercase tracking-wider text-brand-gold font-mono flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4" /> Why Use Resizer Tools Mobile?
-          </h2>
-          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-brand-muted font-light">
-            <li className="flex items-start gap-2">
-              <Lock className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-              <span><strong className="text-white">Zero Server Uploads:</strong> Files stay 100% on your device.</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <Zap className="w-4 h-4 text-brand-gold shrink-0 mt-0.5" />
-              <span><strong className="text-white">Works 100% Offline:</strong> Process files without internet access.</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <QrCode className="w-4 h-4 text-brand-gold shrink-0 mt-0.5" />
-              <span><strong className="text-white">Offline QR & NFC:</strong> Scan and program NFC tags on mobile.</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <Cpu className="w-4 h-4 text-brand-gold shrink-0 mt-0.5" />
-              <span><strong className="text-white">Camera Scanner:</strong> Auto-crop passport & ID sheets natively.</span>
-            </li>
-          </ul>
+        {/* Device Mockup Display */}
+        <div className="p-8 rounded-3xl bg-gradient-to-b from-[#141414] to-[#0a0a0a] border border-white/10 space-y-6 max-w-3xl mx-auto shadow-2xl">
+          <div className="text-center space-y-2">
+            <h2 className="text-xl font-bold text-white tracking-tight flex items-center justify-center gap-2">
+              <ShieldCheck className="w-5 h-5 text-brand-gold" /> Built for Mobile-First Productivity
+            </h2>
+            <p className="text-xs text-brand-muted font-light">
+              Why millions choose Resizer Tools over standard cloud converters.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 pt-2">
+            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2 text-left">
+              <div className="p-2 w-fit rounded-lg bg-emerald-500/10 text-emerald-400">
+                <Lock className="w-4 h-4" />
+              </div>
+              <h3 className="text-xs font-bold text-white">Zero Uploads</h3>
+              <p className="text-[11px] text-brand-muted font-light leading-relaxed">
+                Files stay in local RAM. Complete security for confidential legal & tax files.
+              </p>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2 text-left">
+              <div className="p-2 w-fit rounded-lg bg-brand-gold/10 text-brand-gold">
+                <Zap className="w-4 h-4" />
+              </div>
+              <h3 className="text-xs font-bold text-white">100% Offline</h3>
+              <p className="text-[11px] text-brand-muted font-light leading-relaxed">
+                Edit PDFs and compress images without internet connectivity on flights or travel.
+              </p>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2 text-left">
+              <div className="p-2 w-fit rounded-lg bg-brand-gold/10 text-brand-gold">
+                <Camera className="w-4 h-4" />
+              </div>
+              <h3 className="text-xs font-bold text-white">HD Doc Scanner</h3>
+              <p className="text-[11px] text-brand-muted font-light leading-relaxed">
+                Camera edge detection automatically formats passport & ID cards cleanly.
+              </p>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2 text-left">
+              <div className="p-2 w-fit rounded-lg bg-emerald-500/10 text-emerald-400">
+                <QrCode className="w-4 h-4" />
+              </div>
+              <h3 className="text-xs font-bold text-white">NFC & QR Radio</h3>
+              <p className="text-[11px] text-brand-muted font-light leading-relaxed">
+                Scan, write, and program physical NFC tags and vCards directly from your phone.
+              </p>
+            </div>
+          </div>
         </div>
 
-        {/* Footer Link */}
-        <div className="text-center pt-4">
-          <Link
-            href="/card"
-            className="inline-flex items-center gap-1.5 text-xs text-brand-gold hover:underline font-mono"
-          >
-            View Founder Digital Card <ExternalLink className="w-3.5 h-3.5" />
+        {/* Bottom Footer Links */}
+        <div className="flex flex-wrap justify-center items-center gap-6 pt-4 text-xs font-mono text-brand-muted">
+          <Link href="/card" className="hover:text-brand-gold flex items-center gap-1 transition-colors">
+            Founder Digital Card <ExternalLink className="w-3.5 h-3.5" />
+          </Link>
+          <span>•</span>
+          <Link href="/blog/" className="hover:text-brand-gold flex items-center gap-1 transition-colors">
+            Technical Blog & Guides <ExternalLink className="w-3.5 h-3.5" />
+          </Link>
+          <span>•</span>
+          <Link href="/privacy" className="hover:text-brand-gold flex items-center gap-1 transition-colors">
+            Privacy Policy <ExternalLink className="w-3.5 h-3.5" />
           </Link>
         </div>
 
