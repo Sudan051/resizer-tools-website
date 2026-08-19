@@ -69,30 +69,30 @@ export const DEFAULT_SLIDES: ScreenshotSlide[] = [
   {
     id: "slide-1",
     badgeText: "SCREENSHOT 1",
-    badgeBgColor: "#d4af37",
+    badgeBgColor: "#F59E0B",
     badgeTextColor: "#000000",
     badgeStyle: "pill_filled",
     header: "YOUR APP TITLE #1",
-    headerColor: "#ffffff",
+    headerColor: "#F59E0B",
     headerFontSize: 1.0,
     fontFamily: "sans",
     textAlign: "center",
     letterSpacing: 0,
     subtext: "Add a short description of your feature here",
-    subtextColor: "rgba(255, 255, 255, 0.75)",
+    subtextColor: "#E2E8F0",
     subtextFontSize: 1.0,
     imageSrc: null,
     logoSrc: null,
-    bgType: "preset",
+    bgType: "custom_solid",
     bgPreset: "gold_dark",
-    bgColorPrimary: "#080808",
-    bgColorSecondary: "#1c1917",
+    bgColorPrimary: "#0F172A",
+    bgColorSecondary: "#1E293B",
     bgPattern: "none",
     frameStyle: "island",
-    frameColor: "#d4af37",
+    frameColor: "#F59E0B",
     frameInnerBgColor: "#0a0a0a",
     frameBorderWidth: 8,
-    frameShadowColor: "rgba(212, 175, 55, 0.35)",
+    frameShadowColor: "rgba(245, 158, 11, 0.35)",
     frameShadowBlur: 40,
     mockupScale: 1.0,
     mockupPositionY: 0,
@@ -101,30 +101,30 @@ export const DEFAULT_SLIDES: ScreenshotSlide[] = [
   {
     id: "slide-2",
     badgeText: "SCREENSHOT 2",
-    badgeBgColor: "#d4af37",
+    badgeBgColor: "#F59E0B",
     badgeTextColor: "#000000",
     badgeStyle: "pill_filled",
     header: "YOUR APP TITLE #2",
-    headerColor: "#ffffff",
+    headerColor: "#F59E0B",
     headerFontSize: 1.0,
     fontFamily: "sans",
     textAlign: "center",
     letterSpacing: 0,
     subtext: "Add a short description of your feature here",
-    subtextColor: "rgba(255, 255, 255, 0.75)",
+    subtextColor: "#E2E8F0",
     subtextFontSize: 1.0,
     imageSrc: null,
     logoSrc: null,
-    bgType: "preset",
+    bgType: "custom_solid",
     bgPreset: "gold_dark",
-    bgColorPrimary: "#080808",
-    bgColorSecondary: "#1c1917",
+    bgColorPrimary: "#0F172A",
+    bgColorSecondary: "#1E293B",
     bgPattern: "none",
     frameStyle: "island",
-    frameColor: "#d4af37",
+    frameColor: "#F59E0B",
     frameInnerBgColor: "#0a0a0a",
     frameBorderWidth: 8,
-    frameShadowColor: "rgba(212, 175, 55, 0.35)",
+    frameShadowColor: "rgba(245, 158, 11, 0.35)",
     frameShadowBlur: 40,
     mockupScale: 1.0,
     mockupPositionY: 0,
@@ -133,30 +133,30 @@ export const DEFAULT_SLIDES: ScreenshotSlide[] = [
   {
     id: "slide-3",
     badgeText: "SCREENSHOT 3",
-    badgeBgColor: "#d4af37",
+    badgeBgColor: "#F59E0B",
     badgeTextColor: "#000000",
     badgeStyle: "pill_filled",
     header: "YOUR APP TITLE #3",
-    headerColor: "#ffffff",
+    headerColor: "#F59E0B",
     headerFontSize: 1.0,
     fontFamily: "sans",
     textAlign: "center",
     letterSpacing: 0,
     subtext: "Add a short description of your feature here",
-    subtextColor: "rgba(255, 255, 255, 0.75)",
+    subtextColor: "#E2E8F0",
     subtextFontSize: 1.0,
     imageSrc: null,
     logoSrc: null,
-    bgType: "preset",
+    bgType: "custom_solid",
     bgPreset: "gold_dark",
-    bgColorPrimary: "#080808",
-    bgColorSecondary: "#1c1917",
+    bgColorPrimary: "#0F172A",
+    bgColorSecondary: "#1E293B",
     bgPattern: "none",
     frameStyle: "island",
-    frameColor: "#d4af37",
+    frameColor: "#F59E0B",
     frameInnerBgColor: "#0a0a0a",
     frameBorderWidth: 8,
-    frameShadowColor: "rgba(212, 175, 55, 0.35)",
+    frameShadowColor: "rgba(245, 158, 11, 0.35)",
     frameShadowBlur: 40,
     mockupScale: 1.0,
     mockupPositionY: 0,
@@ -794,6 +794,57 @@ export default function ScreenshotStudioClient() {
                 <h4 className="text-xs font-bold uppercase tracking-wider text-brand-gold font-mono flex items-center gap-2">
                   <Palette className="w-4 h-4" /> ASO Background Studio &amp; Color Pickers
                 </h4>
+
+                {/* 1-Click ASO Palette Presets */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pb-1">
+                  <button
+                    onClick={() => {
+                      updateActiveSlide("bgType", "custom_solid");
+                      updateActiveSlide("bgColorPrimary", "#0F172A");
+                      updateActiveSlide("headerColor", "#F59E0B");
+                      updateActiveSlide("subtextColor", "#E2E8F0");
+                      updateActiveSlide("badgeBgColor", "#F59E0B");
+                      updateActiveSlide("badgeTextColor", "#000000");
+                      updateActiveSlide("frameColor", "#F59E0B");
+                    }}
+                    className="p-2 rounded-xl bg-[#0F172A] border border-[#F59E0B]/40 hover:border-[#F59E0B] text-left transition-all cursor-pointer"
+                  >
+                    <div className="text-[10px] font-bold text-[#F59E0B]">⭐ Option 1: Dark Slate</div>
+                    <div className="text-[9px] text-[#E2E8F0]">Executive &amp; Secure</div>
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      updateActiveSlide("bgType", "custom_solid");
+                      updateActiveSlide("bgColorPrimary", "#F59E0B");
+                      updateActiveSlide("headerColor", "#111827");
+                      updateActiveSlide("subtextColor", "#374151");
+                      updateActiveSlide("badgeBgColor", "#111827");
+                      updateActiveSlide("badgeTextColor", "#FFFFFF");
+                      updateActiveSlide("frameColor", "#111827");
+                    }}
+                    className="p-2 rounded-xl bg-[#F59E0B] border border-black/20 hover:border-black text-left transition-all cursor-pointer"
+                  >
+                    <div className="text-[10px] font-bold text-[#111827]">Option 2: Golden Yellow</div>
+                    <div className="text-[9px] text-[#374151]">High Contrast CAT</div>
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      updateActiveSlide("bgType", "custom_solid");
+                      updateActiveSlide("bgColorPrimary", "#1E1B4B");
+                      updateActiveSlide("headerColor", "#FDE047");
+                      updateActiveSlide("subtextColor", "#E0E7FF");
+                      updateActiveSlide("badgeBgColor", "#FDE047");
+                      updateActiveSlide("badgeTextColor", "#000000");
+                      updateActiveSlide("frameColor", "#FDE047");
+                    }}
+                    className="p-2 rounded-xl bg-[#1E1B4B] border border-[#FDE047]/40 hover:border-[#FDE047] text-left transition-all cursor-pointer"
+                  >
+                    <div className="text-[10px] font-bold text-[#FDE047]">Option 3: Indigo & Neon</div>
+                    <div className="text-[9px] text-[#E0E7FF]">Modern Tech Feel</div>
+                  </button>
+                </div>
 
                 <div className="grid grid-cols-3 gap-3 text-left">
                   <div>
