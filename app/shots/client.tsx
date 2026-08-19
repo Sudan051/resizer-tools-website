@@ -934,7 +934,7 @@ export default function ScreenshotStudioClient() {
                   <Type className="w-4 h-4" /> Typography &amp; Font Studio
                 </h4>
 
-                <div className="grid grid-cols-3 gap-3 text-left">
+                <div className="grid grid-cols-4 gap-2.5 text-left">
                   <div>
                     <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Font Family</label>
                     <select
@@ -963,22 +963,64 @@ export default function ScreenshotStudioClient() {
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Header Hex Color</label>
-                    <div className="flex items-center gap-2 pt-0.5">
+                    <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Title Color</label>
+                    <div className="flex items-center gap-1.5 pt-0.5">
                       <input
                         type="color"
                         value={activeSlide.headerColor.startsWith("#") ? activeSlide.headerColor : "#ffffff"}
                         onChange={(e) => updateActiveSlide("headerColor", e.target.value)}
-                        className="w-8 h-7 rounded cursor-pointer bg-transparent border-0"
+                        className="w-7 h-7 rounded cursor-pointer bg-transparent border-0"
                       />
-                      <span className="text-[10px] font-mono text-brand-muted">Pick Hex</span>
+                      <span className="text-[9px] font-mono text-brand-muted">Title Hex</span>
                     </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Subtext Color</label>
+                    <div className="flex items-center gap-1.5 pt-0.5">
+                      <input
+                        type="color"
+                        value={activeSlide.subtextColor.startsWith("#") ? activeSlide.subtextColor : "#e2e8f0"}
+                        onChange={(e) => updateActiveSlide("subtextColor", e.target.value)}
+                        className="w-7 h-7 rounded cursor-pointer bg-transparent border-0"
+                      />
+                      <span className="text-[9px] font-mono text-brand-muted">Sub Hex</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Font Size Sliders */}
+                <div className="grid grid-cols-2 gap-3 text-left pt-1">
+                  <div>
+                    <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Title Size ({activeSlide.headerFontSize || 1.0}x)</label>
+                    <input
+                      type="range"
+                      min="0.6"
+                      max="1.8"
+                      step="0.1"
+                      value={activeSlide.headerFontSize || 1.0}
+                      onChange={(e) => updateActiveSlide("headerFontSize", parseFloat(e.target.value))}
+                      className="w-full accent-brand-gold bg-white/10 rounded-lg h-1.5 cursor-pointer"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Subtitle Size ({activeSlide.subtextFontSize || 1.0}x)</label>
+                    <input
+                      type="range"
+                      min="0.6"
+                      max="1.8"
+                      step="0.1"
+                      value={activeSlide.subtextFontSize || 1.0}
+                      onChange={(e) => updateActiveSlide("subtextFontSize", parseFloat(e.target.value))}
+                      className="w-full accent-brand-gold bg-white/10 rounded-lg h-1.5 cursor-pointer"
+                    />
                   </div>
                 </div>
 
                 {/* Header Title Input */}
                 <div>
-                  <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Header Title</label>
+                  <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Header Title (2-3 Words Recommended)</label>
                   <input
                     type="text"
                     value={activeSlide.header}
@@ -990,7 +1032,7 @@ export default function ScreenshotStudioClient() {
 
                 {/* Subtext Input */}
                 <div>
-                  <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Subtext Description</label>
+                  <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Subtext Description (Single Sentence)</label>
                   <input
                     type="text"
                     value={activeSlide.subtext}
