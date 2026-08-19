@@ -2171,31 +2171,30 @@ export default function Home({ initialToolId }: { initialToolId?: string } = {})
                     {/* Appstore badging */}
                     <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-2">
                       <a 
-                        href="https://apps.apple.com/in/app/resizer-tools/id6785073828" 
+                        href="https://apps.apple.com/app/id6742385150" 
                         target="_blank" 
                         rel="noopener noreferrer" 
                         className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-2xl px-5 py-3 hover:border-brand-gold/40 hover:bg-white/[0.08] transition-all duration-300 w-full sm:w-48 text-left"
                       >
-                        <Smartphone className="w-6 h-6 text-white" />
+                        <Smartphone className="w-6 h-6 text-brand-gold" />
                         <div>
                           <p className="text-[9px] text-brand-muted font-mono uppercase leading-none">Download for</p>
                           <p className="text-xs font-bold text-white">iOS App Store</p>
                         </div>
                       </a>
-                      {/*
+
                       <a 
-                        href="https://play.google.com" 
+                        href="https://play.google.com/store/apps/details?id=com.resizertools.app" 
                         target="_blank" 
                         rel="noopener noreferrer" 
-                        className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-2xl px-5 py-3 hover:border-brand-gold/40 hover:bg-white/[0.08] transition-all duration-300 w-full sm:w-48 text-left"
+                        className="flex items-center gap-3 bg-white/5 border border-emerald-500/30 rounded-2xl px-5 py-3 hover:border-emerald-400 hover:bg-white/[0.08] transition-all duration-300 w-full sm:w-48 text-left"
                       >
-                        <Cpu className="w-6 h-6 text-white" />
+                        <Cpu className="w-6 h-6 text-emerald-400" />
                         <div>
-                          <p className="text-[9px] text-brand-muted font-mono uppercase leading-none">Download for</p>
-                          <p className="text-xs font-bold text-white">Android Play Store</p>
+                          <p className="text-[9px] text-brand-muted font-mono uppercase leading-none">Get it on</p>
+                          <p className="text-xs font-bold text-white">Google Play Store</p>
                         </div>
                       </a>
-                      */}
                     </div>
 
                     <div className="pt-4 border-t border-white/5 max-w-sm mx-auto text-[10px] text-brand-muted">
