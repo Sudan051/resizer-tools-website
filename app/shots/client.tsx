@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { 
   Download, Layers, Sliders, Smartphone, 
-  Tablet, Eye, Plus, Upload, Palette, MoveVertical, Type
+  Tablet, Eye, Plus, Upload, Palette, MoveVertical, Type, Image as ImageIcon
 } from "lucide-react";
 
 export interface PresetSize {
@@ -38,20 +38,27 @@ export interface ScreenshotSlide {
   headerFontSize: number;
   fontFamily: "sans" | "serif" | "mono" | "display";
   textAlign: "center" | "left" | "right";
+  letterSpacing: number;
   
   subtext: string;
   subtextColor: string;
   subtextFontSize: number;
 
   imageSrc: string | null;
+  logoSrc: string | null;
 
   bgType: "preset" | "custom_solid" | "custom_gradient";
   bgPreset: "gold_dark" | "pure_black" | "deep_navy" | "cyber_purple" | "luxury_emerald" | "sunset_amber" | "clean_white";
   bgColorPrimary: string;
   bgColorSecondary: string;
+  bgPattern: "none" | "grid" | "dots" | "stripes";
 
-  frameStyle: "island" | "notch" | "pixel_hole" | "clay_light" | "clay_dark" | "borderless";
+  frameStyle: "island" | "notch" | "pixel_hole" | "borderless";
   frameColor: string;
+  frameInnerBgColor: string;
+  frameBorderWidth: number;
+  frameShadowColor: string;
+  frameShadowBlur: number;
   
   mockupScale: number;
   mockupPositionY: number;
@@ -70,16 +77,23 @@ export const DEFAULT_SLIDES: ScreenshotSlide[] = [
     headerFontSize: 1.0,
     fontFamily: "sans",
     textAlign: "center",
+    letterSpacing: 0,
     subtext: "Add a short description of your feature here",
     subtextColor: "rgba(255, 255, 255, 0.75)",
     subtextFontSize: 1.0,
     imageSrc: null,
+    logoSrc: null,
     bgType: "preset",
     bgPreset: "gold_dark",
     bgColorPrimary: "#080808",
     bgColorSecondary: "#1c1917",
+    bgPattern: "none",
     frameStyle: "island",
     frameColor: "#d4af37",
+    frameInnerBgColor: "#0a0a0a",
+    frameBorderWidth: 8,
+    frameShadowColor: "rgba(212, 175, 55, 0.35)",
+    frameShadowBlur: 40,
     mockupScale: 1.0,
     mockupPositionY: 0,
     mockupRotation: 0,
@@ -95,16 +109,23 @@ export const DEFAULT_SLIDES: ScreenshotSlide[] = [
     headerFontSize: 1.0,
     fontFamily: "sans",
     textAlign: "center",
+    letterSpacing: 0,
     subtext: "Add a short description of your feature here",
     subtextColor: "rgba(255, 255, 255, 0.75)",
     subtextFontSize: 1.0,
     imageSrc: null,
+    logoSrc: null,
     bgType: "preset",
     bgPreset: "gold_dark",
     bgColorPrimary: "#080808",
     bgColorSecondary: "#1c1917",
+    bgPattern: "none",
     frameStyle: "island",
     frameColor: "#d4af37",
+    frameInnerBgColor: "#0a0a0a",
+    frameBorderWidth: 8,
+    frameShadowColor: "rgba(212, 175, 55, 0.35)",
+    frameShadowBlur: 40,
     mockupScale: 1.0,
     mockupPositionY: 0,
     mockupRotation: 0,
@@ -120,16 +141,23 @@ export const DEFAULT_SLIDES: ScreenshotSlide[] = [
     headerFontSize: 1.0,
     fontFamily: "sans",
     textAlign: "center",
+    letterSpacing: 0,
     subtext: "Add a short description of your feature here",
     subtextColor: "rgba(255, 255, 255, 0.75)",
     subtextFontSize: 1.0,
     imageSrc: null,
+    logoSrc: null,
     bgType: "preset",
     bgPreset: "gold_dark",
     bgColorPrimary: "#080808",
     bgColorSecondary: "#1c1917",
+    bgPattern: "none",
     frameStyle: "island",
     frameColor: "#d4af37",
+    frameInnerBgColor: "#0a0a0a",
+    frameBorderWidth: 8,
+    frameShadowColor: "rgba(212, 175, 55, 0.35)",
+    frameShadowBlur: 40,
     mockupScale: 1.0,
     mockupPositionY: 0,
     mockupRotation: 0,
@@ -145,7 +173,7 @@ export default function ScreenshotStudioClient() {
 
   const activeSlide = slides[activeSlideIndex] || slides[0];
 
-  // Helper to map font family to canvas font string
+  // Map font family
   const getCanvasFont = (fontFamily: string, weight: number, size: number) => {
     let fontName = "sans-serif";
     if (fontFamily === "serif") fontName = "Georgia, serif";
@@ -226,6 +254,35 @@ export default function ScreenshotStudioClient() {
         }
       }
 
+      // BACKGROUND PATTERN OVERLAY
+      if (slide.bgPattern === "grid") {
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.05)";
+        ctx.lineWidth = 1;
+        const gridSize = 60;
+        for (let x = 0; x < width; x += gridSize) {
+          ctx.beginPath();
+          ctx.moveTo(x, 0);
+          ctx.lineTo(x, height);
+          ctx.stroke();
+        }
+        for (let y = 0; y < height; y += gridSize) {
+          ctx.beginPath();
+          ctx.moveTo(0, y);
+          ctx.lineTo(width, y);
+          ctx.stroke();
+        }
+      } else if (slide.bgPattern === "dots") {
+        ctx.fillStyle = "rgba(255, 255, 255, 0.08)";
+        const dotSpacing = 50;
+        for (let x = 20; x < width; x += dotSpacing) {
+          for (let y = 20; y < height; y += dotSpacing) {
+            ctx.beginPath();
+            ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+      }
+
       // 2. TEXT ALIGNMENT POSITIONING
       let textX = width / 2;
       let alignMode: CanvasTextAlign = "center";
@@ -237,14 +294,33 @@ export default function ScreenshotStudioClient() {
         alignMode = "right";
       }
 
-      // 3. TOP BADGE RENDER
+      // 3. LOGO WATERMARK STAMP (IF UPLOADED)
+      if (slide.logoSrc) {
+        const logoImg = new Image();
+        logoImg.crossOrigin = "anonymous";
+        logoImg.onload = () => {
+          const logoSize = Math.round(height * 0.04);
+          let logoX = width / 2 - logoSize / 2;
+          if (slide.textAlign === "left") logoX = width * 0.1;
+          if (slide.textAlign === "right") logoX = width * 0.9 - logoSize;
+          
+          ctx.save();
+          ctx.beginPath();
+          ctx.roundRect(logoX, height * 0.02, logoSize, logoSize, 12);
+          ctx.clip();
+          ctx.drawImage(logoImg, logoX, height * 0.02, logoSize, logoSize);
+          ctx.restore();
+        };
+        logoImg.src = slide.logoSrc;
+      }
+
+      // 4. TOP BADGE RENDER
       if (slide.badgeText && slide.badgeStyle !== "none") {
         const badgeFontSize = Math.round(height * 0.012 * slide.headerFontSize);
         ctx.font = getCanvasFont(slide.fontFamily, 700, badgeFontSize);
         ctx.textAlign = alignMode;
 
         if (slide.badgeStyle === "pill_filled") {
-          // Pill background badge
           const metrics = ctx.measureText(slide.badgeText.toUpperCase());
           const badgeW = metrics.width + 30;
           const badgeH = badgeFontSize + 16;
@@ -254,35 +330,25 @@ export default function ScreenshotStudioClient() {
 
           ctx.fillStyle = slide.badgeBgColor || "#d4af37";
           ctx.beginPath();
-          ctx.roundRect(badgeX, height * 0.05, badgeW, badgeH, 20);
+          ctx.roundRect(badgeX, height * 0.055, badgeW, badgeH, 20);
           ctx.fill();
 
           ctx.fillStyle = slide.badgeTextColor || "#000000";
-          ctx.fillText(slide.badgeText.toUpperCase(), badgeX + badgeW / 2, height * 0.05 + badgeH * 0.7);
+          ctx.fillText(slide.badgeText.toUpperCase(), badgeX + badgeW / 2, height * 0.055 + badgeH * 0.7);
         } else {
-          // Bordered / Text Badge
           ctx.fillStyle = slide.badgeBgColor || "#d4af37";
-          ctx.fillText(slide.badgeText.toUpperCase(), textX, height * 0.06);
+          ctx.fillText(slide.badgeText.toUpperCase(), textX, height * 0.065);
         }
       }
 
-      // 4. HEADER TITLE RENDER
+      // 5. HEADER TITLE RENDER
       const headerFontSize = Math.round(height * 0.036 * slide.headerFontSize);
       ctx.font = getCanvasFont(slide.fontFamily, 900, headerFontSize);
       ctx.textAlign = alignMode;
-
-      if (slide.headerColor === "gold_gradient") {
-        const textGrad = ctx.createLinearGradient(0, height * 0.08, 0, height * 0.14);
-        textGrad.addColorStop(0, "#ffffff");
-        textGrad.addColorStop(0.5, "#fef3c7");
-        textGrad.addColorStop(1, "#d4af37");
-        ctx.fillStyle = textGrad;
-      } else {
-        ctx.fillStyle = slide.headerColor || "#ffffff";
-      }
+      ctx.fillStyle = slide.headerColor || "#ffffff";
       ctx.fillText(slide.header, textX, height * 0.115);
 
-      // 5. SUBTEXT RENDER
+      // 6. SUBTEXT RENDER
       if (slide.subtext) {
         const subfontSize = Math.round(height * 0.017 * slide.subtextFontSize);
         ctx.font = getCanvasFont(slide.fontFamily, 400, subfontSize);
@@ -291,16 +357,14 @@ export default function ScreenshotStudioClient() {
         ctx.fillText(slide.subtext, textX, height * 0.155);
       }
 
-      // 6. DEVICE MOCKUP POSITION & ROTATION RENDER
+      // 7. DEVICE MOCKUP POSITION, SHADOW & ROTATION RENDER
       ctx.save();
 
-      // Mockup scale, position Y & rotation parameters
       const baseFrameWidth = (width * 0.8) * (slide.mockupScale || 1.0);
       const baseFrameHeight = (height * 0.82) * (slide.mockupScale || 1.0);
       const frameX = width / 2;
       const frameY = height * 0.58 + (slide.mockupPositionY || 0);
 
-      // Apply Center Pivot Rotation & Translation
       ctx.translate(frameX, frameY);
       if (slide.mockupRotation) {
         ctx.rotate((slide.mockupRotation * Math.PI) / 180);
@@ -313,18 +377,19 @@ export default function ScreenshotStudioClient() {
 
       const cornerRadius = preset.deviceType === "Tablet" ? 36 : 52;
 
-      // Outer Frame Bezel
-      ctx.shadowColor = "rgba(0, 0, 0, 0.4)";
-      ctx.shadowBlur = 40;
+      // Outer Frame Shadow & Glow
+      ctx.shadowColor = slide.frameShadowColor || "rgba(0, 0, 0, 0.4)";
+      ctx.shadowBlur = slide.frameShadowBlur !== undefined ? slide.frameShadowBlur : 40;
       ctx.shadowOffsetY = 20;
 
+      // Draw Outer Bezel Body
       ctx.beginPath();
       ctx.roundRect(drawX, drawY, drawW, drawH, cornerRadius);
       ctx.fillStyle = "#161616";
       ctx.fill();
 
-      // Bezel Border Stroke
-      ctx.lineWidth = Math.max(4, Math.round(width * 0.008));
+      // Custom Border Width & Bezel Color
+      ctx.lineWidth = slide.frameBorderWidth !== undefined ? Math.max(2, slide.frameBorderWidth) : Math.max(4, Math.round(width * 0.008));
       ctx.strokeStyle = slide.frameColor || "#d4af37";
       ctx.stroke();
       ctx.restore();
@@ -347,8 +412,8 @@ export default function ScreenshotStudioClient() {
       ctx.roundRect(innerX, innerY, innerW, innerH, innerRadius);
       ctx.clip();
 
-      // Default inner screen bg
-      ctx.fillStyle = "#0a0a0a";
+      // Inner Screen Custom Background Color
+      ctx.fillStyle = slide.frameInnerBgColor || "#0a0a0a";
       ctx.fillRect(innerX, innerY, innerW, innerH);
 
       if (slide.imageSrc) {
@@ -360,7 +425,7 @@ export default function ScreenshotStudioClient() {
           const imgY = innerY;
           ctx.drawImage(img, imgX, imgY, img.width * scale, img.height * scale);
 
-          // Draw Notch / Dynamic Island
+          // Notch / Dynamic Island
           if (slide.frameStyle === "island" && preset.deviceType === "Phone") {
             ctx.fillStyle = "#000000";
             const islandW = innerW * 0.28;
@@ -480,6 +545,19 @@ export default function ScreenshotStudioClient() {
     }
   };
 
+  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        if (event.target?.result) {
+          updateActiveSlide("logoSrc", event.target.result as string);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleAddNewSlide = () => {
     const newId = `slide-${Date.now()}`;
     const newSlide: ScreenshotSlide = {
@@ -493,16 +571,23 @@ export default function ScreenshotStudioClient() {
       headerFontSize: 1.0,
       fontFamily: "sans",
       textAlign: "center",
+      letterSpacing: 0,
       subtext: "Add a short description of your feature here",
       subtextColor: "rgba(255, 255, 255, 0.75)",
       subtextFontSize: 1.0,
       imageSrc: null,
+      logoSrc: null,
       bgType: "preset",
       bgPreset: "gold_dark",
       bgColorPrimary: "#080808",
       bgColorSecondary: "#1c1917",
+      bgPattern: "none",
       frameStyle: "island",
       frameColor: "#d4af37",
+      frameInnerBgColor: "#0a0a0a",
+      frameBorderWidth: 8,
+      frameShadowColor: "rgba(212, 175, 55, 0.35)",
+      frameShadowBlur: 40,
       mockupScale: 1.0,
       mockupPositionY: 0,
       mockupRotation: 0,
@@ -629,23 +714,37 @@ export default function ScreenshotStudioClient() {
           {activeSlide && (
             <div className="p-6 rounded-3xl bg-[#121212] border border-white/10 space-y-6 shadow-2xl">
               
-              {/* SECTION A: UPLOAD SCREENSHOT */}
-              <div className="p-4 rounded-2xl bg-white/[0.02] border border-brand-gold/40 space-y-2">
-                <label className="block text-xs font-mono font-bold text-white uppercase flex items-center gap-2">
-                  <Upload className="w-4 h-4 text-brand-gold" /> Upload App Screenshot Image
-                </label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageUpload}
-                  className="w-full text-xs text-neutral-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-brand-gold/20 file:text-brand-gold hover:file:bg-brand-gold/30 file:cursor-pointer"
-                />
+              {/* SECTION A: UPLOAD SCREENSHOT & LOGO */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="p-3.5 rounded-2xl bg-white/[0.02] border border-brand-gold/40 space-y-1.5">
+                  <label className="block text-[11px] font-mono font-bold text-white uppercase flex items-center gap-1.5">
+                    <Upload className="w-3.5 h-3.5 text-brand-gold" /> App Screenshot
+                  </label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    className="w-full text-[11px] text-neutral-400 file:mr-2 file:py-1.5 file:px-2.5 file:rounded-lg file:border-0 file:text-[10px] file:font-semibold file:bg-brand-gold/20 file:text-brand-gold file:cursor-pointer"
+                  />
+                </div>
+
+                <div className="p-3.5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-1.5">
+                  <label className="block text-[11px] font-mono font-bold text-white uppercase flex items-center gap-1.5">
+                    <ImageIcon className="w-3.5 h-3.5 text-brand-gold" /> App Icon / Logo
+                  </label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleLogoUpload}
+                    className="w-full text-[11px] text-neutral-400 file:mr-2 file:py-1.5 file:px-2.5 file:rounded-lg file:border-0 file:text-[10px] file:font-semibold file:bg-white/10 file:text-white file:cursor-pointer"
+                  />
+                </div>
               </div>
 
               {/* SECTION B: SCREENSHOT POSITION, ZOOM & TILT */}
               <div className="space-y-3 pt-2 border-t border-white/5">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-brand-gold font-mono flex items-center gap-2">
-                  <MoveVertical className="w-4 h-4" /> Screenshot Position, Zoom &amp; Tilt
+                  <MoveVertical className="w-4 h-4" /> Position, Zoom &amp; 3D Tilt
                 </h4>
 
                 <div className="grid grid-cols-3 gap-3 text-left">
@@ -690,19 +789,19 @@ export default function ScreenshotStudioClient() {
                 </div>
               </div>
 
-              {/* SECTION C: ASO COLOR PICKER & BACKGROUND STUDIO */}
+              {/* SECTION C: ASO COLOR PICKERS & BACKGROUND PATTERNS */}
               <div className="space-y-3 pt-2 border-t border-white/5">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-brand-gold font-mono flex items-center gap-2">
                   <Palette className="w-4 h-4" /> ASO Background Studio &amp; Color Pickers
                 </h4>
 
-                <div className="grid grid-cols-2 gap-3 text-left">
+                <div className="grid grid-cols-3 gap-3 text-left">
                   <div>
                     <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Background Mode</label>
                     <select
                       value={activeSlide.bgType}
                       onChange={(e) => updateActiveSlide("bgType", e.target.value)}
-                      className="w-full bg-black/50 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-white focus:outline-none focus:border-brand-gold"
+                      className="w-full bg-black/50 border border-white/10 rounded-xl px-2 py-2 text-xs text-white focus:outline-none focus:border-brand-gold"
                     >
                       <option value="preset">Preset Theme</option>
                       <option value="custom_solid">Custom Solid Hex</option>
@@ -716,7 +815,7 @@ export default function ScreenshotStudioClient() {
                       <select
                         value={activeSlide.bgPreset}
                         onChange={(e) => updateActiveSlide("bgPreset", e.target.value)}
-                        className="w-full bg-black/50 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-white focus:outline-none focus:border-brand-gold"
+                        className="w-full bg-black/50 border border-white/10 rounded-xl px-2 py-2 text-xs text-white focus:outline-none focus:border-brand-gold"
                       >
                         <option value="gold_dark">Luxury Gold-Dark</option>
                         <option value="pure_black">OLED Pure Black</option>
@@ -734,9 +833,9 @@ export default function ScreenshotStudioClient() {
                           type="color"
                           value={activeSlide.bgColorPrimary}
                           onChange={(e) => updateActiveSlide("bgColorPrimary", e.target.value)}
-                          className="w-8 h-8 rounded-lg cursor-pointer bg-transparent border-0"
+                          className="w-7 h-7 rounded cursor-pointer bg-transparent border-0"
                         />
-                        <span className="text-[10px] font-mono text-brand-muted">Color #1</span>
+                        <span className="text-[9px] font-mono text-brand-muted">Color #1</span>
                       </div>
 
                       {activeSlide.bgType === "custom_gradient" && (
@@ -745,13 +844,26 @@ export default function ScreenshotStudioClient() {
                             type="color"
                             value={activeSlide.bgColorSecondary}
                             onChange={(e) => updateActiveSlide("bgColorSecondary", e.target.value)}
-                            className="w-8 h-8 rounded-lg cursor-pointer bg-transparent border-0"
+                            className="w-7 h-7 rounded cursor-pointer bg-transparent border-0"
                           />
-                          <span className="text-[10px] font-mono text-brand-muted">Color #2</span>
+                          <span className="text-[9px] font-mono text-brand-muted">Color #2</span>
                         </div>
                       )}
                     </div>
                   )}
+
+                  <div>
+                    <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Overlay Pattern</label>
+                    <select
+                      value={activeSlide.bgPattern}
+                      onChange={(e) => updateActiveSlide("bgPattern", e.target.value)}
+                      className="w-full bg-black/50 border border-white/10 rounded-xl px-2 py-2 text-xs text-white focus:outline-none focus:border-brand-gold"
+                    >
+                      <option value="none">None (Smooth)</option>
+                      <option value="grid">Grid Wireframe</option>
+                      <option value="dots">Dots Polka Mesh</option>
+                    </select>
+                  </div>
                 </div>
               </div>
 
@@ -790,7 +902,7 @@ export default function ScreenshotStudioClient() {
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Header Color</label>
+                    <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Header Hex Color</label>
                     <div className="flex items-center gap-2 pt-0.5">
                       <input
                         type="color"
@@ -828,50 +940,65 @@ export default function ScreenshotStudioClient() {
                 </div>
               </div>
 
-              {/* SECTION E: ASO BADGE & FRAME BEZEL */}
+              {/* SECTION E: DEVICE FRAME COLOR, INNER BG & BORDER WIDTH */}
               <div className="space-y-3 pt-2 border-t border-white/5">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-brand-gold font-mono flex items-center gap-2">
-                  <Smartphone className="w-4 h-4" /> ASO Badge &amp; Device Frame Bezel
+                  <Smartphone className="w-4 h-4" /> Device Frame Bezel &amp; Inner Screen Customizer
                 </h4>
 
-                <div className="grid grid-cols-2 gap-3 text-left">
+                <div className="grid grid-cols-3 gap-3 text-left">
                   <div>
-                    <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Badge Text</label>
-                    <input
-                      type="text"
-                      value={activeSlide.badgeText}
-                      onChange={(e) => updateActiveSlide("badgeText", e.target.value)}
-                      placeholder="e.g. SCREENSHOT 1"
-                      className="w-full bg-black/50 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-gold"
-                    />
+                    <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Bezel Color</label>
+                    <div className="flex items-center gap-1.5 pt-0.5">
+                      <input
+                        type="color"
+                        value={activeSlide.frameColor.startsWith("#") ? activeSlide.frameColor : "#d4af37"}
+                        onChange={(e) => updateActiveSlide("frameColor", e.target.value)}
+                        className="w-7 h-7 rounded cursor-pointer bg-transparent border-0"
+                      />
+                      <span className="text-[9px] font-mono text-brand-muted">Bezel Hex</span>
+                    </div>
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Badge Color</label>
-                    <div className="flex items-center gap-2 pt-0.5">
+                    <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Screen Inner BG</label>
+                    <div className="flex items-center gap-1.5 pt-0.5">
                       <input
                         type="color"
-                        value={activeSlide.badgeBgColor || "#d4af37"}
-                        onChange={(e) => updateActiveSlide("badgeBgColor", e.target.value)}
-                        className="w-8 h-7 rounded cursor-pointer bg-transparent border-0"
+                        value={activeSlide.frameInnerBgColor || "#0a0a0a"}
+                        onChange={(e) => updateActiveSlide("frameInnerBgColor", e.target.value)}
+                        className="w-7 h-7 rounded cursor-pointer bg-transparent border-0"
                       />
-                      <span className="text-[10px] font-mono text-brand-muted">Pick Hex</span>
+                      <span className="text-[9px] font-mono text-brand-muted">Screen Hex</span>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Glow Shadow Color</label>
+                    <div className="flex items-center gap-1.5 pt-0.5">
+                      <input
+                        type="color"
+                        value={activeSlide.frameShadowColor.startsWith("#") ? activeSlide.frameShadowColor : "#d4af37"}
+                        onChange={(e) => updateActiveSlide("frameShadowColor", e.target.value)}
+                        className="w-7 h-7 rounded cursor-pointer bg-transparent border-0"
+                      />
+                      <span className="text-[9px] font-mono text-brand-muted">Glow Hex</span>
                     </div>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3 text-left pt-1">
                   <div>
-                    <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Device Frame Color</label>
-                    <div className="flex items-center gap-2 pt-0.5">
-                      <input
-                        type="color"
-                        value={activeSlide.frameColor.startsWith("#") ? activeSlide.frameColor : "#d4af37"}
-                        onChange={(e) => updateActiveSlide("frameColor", e.target.value)}
-                        className="w-8 h-7 rounded cursor-pointer bg-transparent border-0"
-                      />
-                      <span className="text-[10px] font-mono text-brand-muted">Pick Bezel Hex</span>
-                    </div>
+                    <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Border Width ({activeSlide.frameBorderWidth}px)</label>
+                    <input
+                      type="range"
+                      min="2"
+                      max="20"
+                      step="1"
+                      value={activeSlide.frameBorderWidth || 8}
+                      onChange={(e) => updateActiveSlide("frameBorderWidth", parseInt(e.target.value))}
+                      className="w-full accent-brand-gold bg-white/10 rounded-lg h-1.5 cursor-pointer"
+                    />
                   </div>
 
                   <div>
