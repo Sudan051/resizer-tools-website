@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { 
   Download, Sparkles, Layers, Sliders, Smartphone, 
-  Tablet, Eye
+  Tablet, Eye, Plus, Trash2, Upload
 } from "lucide-react";
 
 export interface PresetSize {
@@ -27,75 +27,85 @@ export const PRESET_SIZES: PresetSize[] = [
 ];
 
 export interface ScreenshotSlide {
-  id: number;
+  id: string;
+  badgeText: string;
   header: string;
   subtext: string;
   imageSrc: string | null;
-  bgStyle: "gold_dark" | "pure_black" | "deep_navy" | "cyber_purple" | "luxury_emerald";
-  titleColor: "gold" | "white" | "amber";
+  bgTheme: "gold_dark" | "pure_black" | "deep_navy" | "cyber_purple" | "luxury_emerald" | "sunset_amber";
+  titleColor: "gold" | "white" | "emerald" | "cyan" | "amber";
+  frameColor: "gold" | "titanium" | "black" | "emerald" | "blue";
+  frameType: "island" | "notch" | "tablet" | "borderless";
 }
 
-export const INITIAL_SLIDES: ScreenshotSlide[] = [
+export const DEFAULT_SLIDES: ScreenshotSlide[] = [
   {
-    id: 1,
-    header: "ALL-IN-ONE OFFLINE TOOLS",
-    subtext: "Image Resizer, PDF Tools, QR & NFC Scanner",
-    imageSrc: "/Home.png",
-    bgStyle: "gold_dark",
+    id: "slide-1",
+    badgeText: "NEXT-GEN MOBILE SUITE",
+    header: "ALL-IN-ONE APP UTILITIES",
+    subtext: "Experience Ultra-Fast Processing & High Efficiency",
+    imageSrc: null,
+    bgTheme: "gold_dark",
     titleColor: "gold",
+    frameColor: "gold",
+    frameType: "island"
   },
   {
-    id: 2,
-    header: "PHOTO COMPRESSOR",
-    subtext: "Reduce Photo Size in KB Instantly",
-    imageSrc: "/Pro.png",
-    bgStyle: "gold_dark",
+    id: "slide-2",
+    badgeText: "IMAGE MASTER STUDIO",
+    header: "PHOTO COMPRESSOR & RESIZER",
+    subtext: "Reduce KB File Size Instantly Without Quality Loss",
+    imageSrc: null,
+    bgTheme: "gold_dark",
     titleColor: "gold",
+    frameColor: "gold",
+    frameType: "island"
   },
   {
-    id: 3,
-    header: "IMAGE RESIZER",
-    subtext: "Change Dimensions (Width & Height) Easily",
-    imageSrc: "/utilify-image.jpg",
-    bgStyle: "gold_dark",
-    titleColor: "gold",
-  },
-  {
-    id: 4,
+    id: "slide-3",
+    badgeText: "DOCUMENT SUITE",
     header: "COMPREHENSIVE PDF TOOLS",
-    subtext: "Merge, Split, Compress & Edit PDF Files",
-    imageSrc: "/utilify-pdf.jpg",
-    bgStyle: "gold_dark",
+    subtext: "Merge, Split, Protect & Edit PDF Files Offline",
+    imageSrc: null,
+    bgTheme: "gold_dark",
     titleColor: "gold",
+    frameColor: "gold",
+    frameType: "island"
   },
   {
-    id: 5,
-    header: "QR & NFC UTILITIES",
-    subtext: "Scan QR Codes & Write Smart NFC Tags",
-    imageSrc: "/QRPowerScan.png",
-    bgStyle: "gold_dark",
+    id: "slide-4",
+    badgeText: "HARDWARE INTEGRATION",
+    header: "OFFLINE QR & NFC UTILITIES",
+    subtext: "Scan QR Codes & Program Contactless NFC Cards",
+    imageSrc: null,
+    bgTheme: "gold_dark",
     titleColor: "gold",
+    frameColor: "gold",
+    frameType: "island"
   },
   {
-    id: 6,
+    id: "slide-5",
+    badgeText: "CAMERA UTILITY",
     header: "PASSPORT PHOTO CAMERA",
-    subtext: "Generate Print-Ready Passport Sheets",
-    imageSrc: "/utilify-camera.jpg",
-    bgStyle: "gold_dark",
+    subtext: "Generate Official Print-Ready ID Photo Sheets",
+    imageSrc: null,
+    bgTheme: "gold_dark",
     titleColor: "gold",
-  },
+    frameColor: "gold",
+    frameType: "island"
+  }
 ];
 
 export default function ScreenshotStudioClient() {
   const [selectedPreset, setSelectedPreset] = useState<PresetSize>(PRESET_SIZES[0]);
-  const [slides, setSlides] = useState<ScreenshotSlide[]>(INITIAL_SLIDES);
+  const [slides, setSlides] = useState<ScreenshotSlide[]>(DEFAULT_SLIDES);
   const [activeSlideIndex, setActiveSlideIndex] = useState<number>(0);
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  const activeSlide = slides[activeSlideIndex];
+  const activeSlide = slides[activeSlideIndex] || slides[0];
 
-  // Helper to draw single slide onto canvas
+  // Draw single slide onto canvas
   const renderSlideToCanvas = (
     canvas: HTMLCanvasElement, 
     slide: ScreenshotSlide, 
@@ -110,81 +120,94 @@ export default function ScreenshotStudioClient() {
       const { width, height } = preset;
 
       // 1. Draw Background Gradient
-      if (slide.bgStyle === "gold_dark") {
+      if (slide.bgTheme === "gold_dark") {
         const grad = ctx.createLinearGradient(0, 0, width, height);
         grad.addColorStop(0, "#080808");
-        grad.addColorStop(0.5, "#14120c");
+        grad.addColorStop(0.5, "#15130d");
         grad.addColorStop(1, "#030303");
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, width, height);
 
-        // Gold radial accent
-        const radGrad = ctx.createRadialGradient(width / 2, height * 0.25, 10, width / 2, height * 0.25, width * 0.7);
-        radGrad.addColorStop(0, "rgba(212, 175, 55, 0.15)");
+        const radGrad = ctx.createRadialGradient(width / 2, height * 0.22, 10, width / 2, height * 0.22, width * 0.75);
+        radGrad.addColorStop(0, "rgba(212, 175, 55, 0.16)");
         radGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
         ctx.fillStyle = radGrad;
         ctx.fillRect(0, 0, width, height);
-      } else if (slide.bgStyle === "pure_black") {
+      } else if (slide.bgTheme === "pure_black") {
         ctx.fillStyle = "#000000";
         ctx.fillRect(0, 0, width, height);
-      } else if (slide.bgStyle === "deep_navy") {
+      } else if (slide.bgTheme === "deep_navy") {
         const grad = ctx.createLinearGradient(0, 0, width, height);
-        grad.addColorStop(0, "#0a1118");
-        grad.addColorStop(1, "#030609");
+        grad.addColorStop(0, "#09121a");
+        grad.addColorStop(1, "#020508");
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, width, height);
-      } else if (slide.bgStyle === "cyber_purple") {
+      } else if (slide.bgTheme === "cyber_purple") {
         const grad = ctx.createLinearGradient(0, 0, width, height);
-        grad.addColorStop(0, "#120a1c");
-        grad.addColorStop(1, "#050209");
+        grad.addColorStop(0, "#150b24");
+        grad.addColorStop(1, "#05020a");
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, width, height);
-      } else if (slide.bgStyle === "luxury_emerald") {
+      } else if (slide.bgTheme === "luxury_emerald") {
         const grad = ctx.createLinearGradient(0, 0, width, height);
-        grad.addColorStop(0, "#081812");
-        grad.addColorStop(1, "#020805");
+        grad.addColorStop(0, "#071c14");
+        grad.addColorStop(1, "#020a06");
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, width, height);
+      } else if (slide.bgTheme === "sunset_amber") {
+        const grad = ctx.createLinearGradient(0, 0, width, height);
+        grad.addColorStop(0, "#1f1207");
+        grad.addColorStop(1, "#080401");
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, width, height);
       }
 
-      // Decorative top badge
-      const badgeText = "RESIZER TOOLS • 100% PRIVATE & OFFLINE";
-      ctx.font = `600 ${Math.round(height * 0.013)}px monospace`;
-      ctx.textAlign = "center";
-      ctx.fillStyle = slide.titleColor === "gold" ? "rgba(212, 175, 55, 0.85)" : "rgba(255, 255, 255, 0.6)";
-      ctx.fillText(badgeText, width / 2, height * 0.06);
+      // 2. Draw Decorative Top Badge
+      if (slide.badgeText) {
+        ctx.font = `700 ${Math.round(height * 0.012)}px sans-serif`;
+        ctx.textAlign = "center";
+        ctx.fillStyle = slide.titleColor === "gold" ? "rgba(212, 175, 55, 0.9)" : "rgba(255, 255, 255, 0.7)";
+        ctx.fillText(slide.badgeText.toUpperCase(), width / 2, height * 0.06);
+      }
 
-      // 2. Draw Header Title
-      ctx.font = `900 ${Math.round(height * 0.038)}px sans-serif`;
+      // 3. Draw Header Title
+      ctx.font = `900 ${Math.round(height * 0.036)}px sans-serif`;
       ctx.textAlign = "center";
+
       if (slide.titleColor === "gold") {
         const textGrad = ctx.createLinearGradient(0, height * 0.08, 0, height * 0.14);
         textGrad.addColorStop(0, "#ffffff");
-        textGrad.addColorStop(0.6, "#fef3c7");
+        textGrad.addColorStop(0.5, "#fef3c7");
         textGrad.addColorStop(1, "#d4af37");
         ctx.fillStyle = textGrad;
+      } else if (slide.titleColor === "emerald") {
+        ctx.fillStyle = "#34d399";
+      } else if (slide.titleColor === "cyan") {
+        ctx.fillStyle = "#38bdf8";
       } else if (slide.titleColor === "amber") {
-        ctx.fillStyle = "#f59e0b";
+        ctx.fillStyle = "#fbbf24";
       } else {
         ctx.fillStyle = "#ffffff";
       }
       ctx.fillText(slide.header, width / 2, height * 0.11);
 
-      // 3. Draw Subtext
-      ctx.font = `400 ${Math.round(height * 0.018)}px sans-serif`;
-      ctx.fillStyle = "rgba(255, 255, 255, 0.75)";
-      ctx.fillText(slide.subtext, width / 2, height * 0.145);
+      // 4. Draw Subtext
+      if (slide.subtext) {
+        ctx.font = `400 ${Math.round(height * 0.017)}px sans-serif`;
+        ctx.fillStyle = "rgba(255, 255, 255, 0.75)";
+        ctx.fillText(slide.subtext, width / 2, height * 0.145);
+      }
 
-      // 4. Draw Device Mockup Frame
+      // 5. Draw Device Mockup Frame
       const frameMarginX = width * 0.1;
-      const frameTop = height * 0.18;
+      const frameTop = height * 0.185;
       const frameWidth = width - frameMarginX * 2;
-      const frameHeight = height * 0.85; // extends below canvas for realistic overhang
+      const frameHeight = height * 0.85; // Overhang
       const cornerRadius = preset.deviceType === "Tablet" ? 36 : 56;
 
-      // Outer Gold Frame Glow & Border
+      // Outer Frame Glow & Border
       ctx.save();
-      ctx.shadowColor = "rgba(212, 175, 55, 0.3)";
+      ctx.shadowColor = slide.frameColor === "gold" ? "rgba(212, 175, 55, 0.35)" : "rgba(255, 255, 255, 0.15)";
       ctx.shadowBlur = 40;
       ctx.shadowOffsetY = 20;
 
@@ -194,9 +217,15 @@ export default function ScreenshotStudioClient() {
       ctx.fillStyle = "#161616";
       ctx.fill();
 
-      // Border stroke
+      // Border Stroke Color
+      let strokeColor = "#d4af37";
+      if (slide.frameColor === "titanium") strokeColor = "#94a3b8";
+      if (slide.frameColor === "black") strokeColor = "#333333";
+      if (slide.frameColor === "emerald") strokeColor = "#10b981";
+      if (slide.frameColor === "blue") strokeColor = "#3b82f6";
+
       ctx.lineWidth = Math.max(6, Math.round(width * 0.008));
-      ctx.strokeStyle = slide.titleColor === "gold" ? "#d4af37" : "#333333";
+      ctx.strokeStyle = strokeColor;
       ctx.stroke();
       ctx.restore();
 
@@ -217,19 +246,18 @@ export default function ScreenshotStudioClient() {
       ctx.fillStyle = "#0c0c0c";
       ctx.fillRect(innerX, innerY, innerW, innerH);
 
-      // If custom image loaded, draw image
+      // If user uploaded screenshot image
       if (slide.imageSrc) {
         const img = new Image();
         img.crossOrigin = "anonymous";
         img.onload = () => {
-          // Draw image aspect fill
           const scale = Math.max(innerW / img.width, innerH / img.height);
           const x = innerX + (innerW - img.width * scale) / 2;
           const y = innerY;
           ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
 
-          // Top Notch or Dynamic Island (for Phones)
-          if (preset.deviceType === "Phone") {
+          // Draw Dynamic Island / Notch
+          if (slide.frameType === "island" && preset.deviceType === "Phone") {
             ctx.fillStyle = "#000000";
             const islandW = innerW * 0.28;
             const islandH = innerH * 0.024;
@@ -244,27 +272,62 @@ export default function ScreenshotStudioClient() {
           resolve();
         };
         img.onerror = () => {
-          // Fallback UI text inside mockup
-          ctx.fillStyle = "#1e1e1e";
-          ctx.fillRect(innerX, innerY, innerW, innerH);
-          ctx.font = `600 ${Math.round(innerW * 0.05)}px sans-serif`;
-          ctx.fillStyle = "#d4af37";
-          ctx.textAlign = "center";
-          ctx.fillText("Resizer Tools Mobile", innerX + innerW / 2, innerY + innerH * 0.3);
+          drawPlaceholderUI(ctx, innerX, innerY, innerW, innerH, slide.header);
           ctx.restore();
           resolve();
         };
         img.src = slide.imageSrc;
       } else {
+        // Draw Clean Wireframe Mockup Placeholder
+        drawPlaceholderUI(ctx, innerX, innerY, innerW, innerH, slide.header);
         ctx.restore();
         resolve();
       }
     });
   };
 
-  // Re-render active canvas on state change
+  // Helper to draw clean placeholder UI inside device frame
+  const drawPlaceholderUI = (
+    ctx: CanvasRenderingContext2D, 
+    x: number, y: number, w: number, h: number, 
+    title: string
+  ) => {
+    // Screen bg
+    const bgGrad = ctx.createLinearGradient(x, y, x, y + h);
+    bgGrad.addColorStop(0, "#1a1a1a");
+    bgGrad.addColorStop(1, "#0d0d0d");
+    ctx.fillStyle = bgGrad;
+    ctx.fillRect(x, y, w, h);
+
+    // Grid wireframe
+    ctx.fillStyle = "#222222";
+    const headerBarH = h * 0.08;
+    ctx.fillRect(x, y, w, headerBarH);
+
+    ctx.fillStyle = "#d4af37";
+    ctx.font = `bold ${Math.round(w * 0.045)}px sans-serif`;
+    ctx.textAlign = "center";
+    ctx.fillText(title, x + w / 2, y + headerBarH * 0.6);
+
+    // Dashed Dropzone Box
+    ctx.strokeStyle = "rgba(212, 175, 55, 0.4)";
+    ctx.lineWidth = 3;
+    ctx.setLineDash([8, 8]);
+    ctx.strokeRect(x + w * 0.1, y + h * 0.25, w * 0.8, h * 0.4);
+    ctx.setLineDash([]);
+
+    ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+    ctx.font = `600 ${Math.round(w * 0.04)}px sans-serif`;
+    ctx.fillText("Upload Your App Screenshot", x + w / 2, y + h * 0.43);
+
+    ctx.fillStyle = "rgba(212, 175, 55, 0.7)";
+    ctx.font = `400 ${Math.round(w * 0.03)}px sans-serif`;
+    ctx.fillText("(Click 'Upload Image' on the left panel)", x + w / 2, y + h * 0.48);
+  };
+
+  // Render canvas on state change
   useEffect(() => {
-    if (canvasRef.current) {
+    if (canvasRef.current && activeSlide) {
       renderSlideToCanvas(canvasRef.current, activeSlide, selectedPreset);
     }
   }, [activeSlide, selectedPreset]);
@@ -279,7 +342,7 @@ export default function ScreenshotStudioClient() {
     link.click();
   };
 
-  // Batch download all 6 screenshots
+  // Batch download all screenshots
   const downloadAllScreenshots = async () => {
     setIsGenerating(true);
     for (let i = 0; i < slides.length; i++) {
@@ -292,6 +355,7 @@ export default function ScreenshotStudioClient() {
   const presetSlug = (str: string) => str.toLowerCase().replace(/[^a-z0-9]/g, "_");
 
   const updateActiveSlide = (field: keyof ScreenshotSlide, value: string | null) => {
+    if (activeSlideIndex >= slides.length) return;
     const updated = [...slides];
     updated[activeSlideIndex] = { ...updated[activeSlideIndex], [field]: value };
     setSlides(updated);
@@ -310,29 +374,66 @@ export default function ScreenshotStudioClient() {
     }
   };
 
+  // Add New Slide
+  const handleAddNewSlide = () => {
+    const newId = `slide-${Date.now()}`;
+    const newSlide: ScreenshotSlide = {
+      id: newId,
+      badgeText: "NEW FEATURE SHOWCASE",
+      header: "YOUR CUSTOM HEADER TITLE",
+      subtext: "Add a compelling subtitle describing your app feature",
+      imageSrc: null,
+      bgTheme: "gold_dark",
+      titleColor: "gold",
+      frameColor: "gold",
+      frameType: "island"
+    };
+    setSlides([...slides, newSlide]);
+    setActiveSlideIndex(slides.length);
+  };
+
+  // Delete Slide
+  const handleDeleteSlide = (indexToDelete: number) => {
+    if (slides.length <= 1) return;
+    const filtered = slides.filter((_, idx) => idx !== indexToDelete);
+    setSlides(filtered);
+    if (activeSlideIndex >= filtered.length) {
+      setActiveSlideIndex(filtered.length - 1);
+    }
+  };
+
   return (
     <div className="space-y-8">
       
-      {/* PRESET SELECTOR TABS */}
-      <div className="bg-[#121212] border border-white/10 rounded-3xl p-6 space-y-4">
+      {/* PRESET RESOLUTION SELECTOR TABS */}
+      <div className="bg-[#121212] border border-white/10 rounded-3xl p-6 space-y-4 shadow-2xl">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h2 className="text-sm font-bold uppercase tracking-wider text-brand-gold font-mono flex items-center gap-2">
-              <Sliders className="w-4 h-4" /> Select App Store Preset & Resolution
+              <Sliders className="w-4 h-4" /> Production App Store & Play Store Resolutions
             </h2>
             <p className="text-xs text-brand-muted font-light mt-0.5">
-              Choose required dimensions for Apple App Store (Connect) or Google Play Console.
+              Select Apple App Store (Connect) or Google Play Console target specifications.
             </p>
           </div>
 
-          <button
-            onClick={downloadAllScreenshots}
-            disabled={isGenerating}
-            className="flex items-center gap-2 bg-gradient-to-r from-brand-gold via-brand-gold-light to-brand-gold-dark text-black font-extrabold text-xs px-6 py-3 rounded-2xl shadow-premium-gold hover:scale-105 transition-transform cursor-pointer disabled:opacity-50"
-          >
-            <Download className="w-4 h-4 stroke-[3]" />
-            {isGenerating ? "Generating Batch PNGs..." : "Batch Download All 6 Screenshots (PNG)"}
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={handleAddNewSlide}
+              className="flex items-center gap-1.5 bg-white/5 border border-white/10 hover:border-brand-gold/40 text-white font-semibold text-xs px-4 py-3 rounded-2xl transition-all cursor-pointer"
+            >
+              <Plus className="w-4 h-4 text-brand-gold" /> Add Screenshot Slide
+            </button>
+
+            <button
+              onClick={downloadAllScreenshots}
+              disabled={isGenerating}
+              className="flex items-center gap-2 bg-gradient-to-r from-brand-gold via-brand-gold-light to-brand-gold-dark text-black font-extrabold text-xs px-6 py-3 rounded-2xl shadow-premium-gold hover:scale-105 transition-transform cursor-pointer disabled:opacity-50"
+            >
+              <Download className="w-4 h-4 stroke-[3]" />
+              {isGenerating ? "Generating PNGs..." : `Export All ${slides.length} Screenshots (PNG)`}
+            </button>
+          </div>
         </div>
 
         {/* Preset Cards Grid */}
@@ -365,17 +466,17 @@ export default function ScreenshotStudioClient() {
       {/* WORKSPACE & CANVAS PREVIEW GRID */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
-        {/* LEFT COLUMN: 6 SCREENSHOT SEQUENCES BUILDER */}
+        {/* LEFT COLUMN: SCREENSHOT SEQUENCE BUILDER */}
         <div className="lg:col-span-5 space-y-6">
           <div className="flex items-center justify-between">
             <h3 className="text-xs font-bold uppercase tracking-wider text-white font-mono flex items-center gap-2">
-              <Layers className="w-4 h-4 text-brand-gold" /> Screenshot Sequence (6 Cards)
+              <Layers className="w-4 h-4 text-brand-gold" /> Slides Sequence ({slides.length} Cards)
             </h3>
-            <span className="text-[11px] text-brand-muted font-mono">Active: Slide #{activeSlideIndex + 1}</span>
+            <span className="text-[11px] text-brand-muted font-mono">Editing Slide #{activeSlideIndex + 1}</span>
           </div>
 
           {/* Sequence Thumbnails */}
-          <div className="space-y-3">
+          <div className="space-y-3 max-h-[300px] overflow-y-auto pr-1 scrollbar-none">
             {slides.map((slide, idx) => (
               <div
                 key={slide.id}
@@ -398,7 +499,7 @@ export default function ScreenshotStudioClient() {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 shrink-0">
+                <div className="flex items-center gap-1 shrink-0">
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
@@ -409,114 +510,182 @@ export default function ScreenshotStudioClient() {
                   >
                     <Download className="w-3.5 h-3.5" />
                   </button>
+
+                  {slides.length > 1 && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteSlide(idx);
+                      }}
+                      title="Delete Slide"
+                      className="p-1.5 rounded-lg bg-white/5 hover:bg-rose-500 hover:text-white text-neutral-400 transition-colors"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  )}
                 </div>
               </div>
             ))}
           </div>
 
-          {/* EDIT ACTIVE SLIDE INPUTS */}
-          <div className="p-6 rounded-3xl bg-[#121212] border border-white/10 space-y-4">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-brand-gold font-mono flex items-center gap-2">
-              <Sparkles className="w-4 h-4" /> Edit Screenshot #{activeSlideIndex + 1} Metadata
-            </h4>
+          {/* EDIT ACTIVE SLIDE METADATA PANEL */}
+          {activeSlide && (
+            <div className="p-6 rounded-3xl bg-[#121212] border border-white/10 space-y-4 shadow-2xl">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-brand-gold font-mono flex items-center gap-2">
+                <Sparkles className="w-4 h-4" /> Customize Slide #{activeSlideIndex + 1}
+              </h4>
 
-            {/* Header Text Input */}
-            <div>
-              <label className="block text-[11px] font-mono text-brand-muted uppercase mb-1">Header Title</label>
-              <input
-                type="text"
-                value={activeSlide.header}
-                onChange={(e) => updateActiveSlide("header", e.target.value)}
-                className="w-full bg-black/50 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-gold"
-              />
-            </div>
-
-            {/* Subtext Input */}
-            <div>
-              <label className="block text-[11px] font-mono text-brand-muted uppercase mb-1">Subtext Description</label>
-              <input
-                type="text"
-                value={activeSlide.subtext}
-                onChange={(e) => updateActiveSlide("subtext", e.target.value)}
-                className="w-full bg-black/50 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-gold"
-              />
-            </div>
-
-            {/* Background Style & Title Color */}
-            <div className="grid grid-cols-2 gap-3 pt-1">
-              <div>
-                <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Background Theme</label>
-                <select
-                  value={activeSlide.bgStyle}
-                  onChange={(e) => updateActiveSlide("bgStyle", e.target.value)}
-                  className="w-full bg-black/50 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-white focus:outline-none focus:border-brand-gold"
-                >
-                  <option value="gold_dark">Luxury Gold-Dark</option>
-                  <option value="pure_black">OLED Pure Black</option>
-                  <option value="deep_navy">Deep Navy Blue</option>
-                  <option value="cyber_purple">Cyber Purple</option>
-                  <option value="luxury_emerald">Emerald Dark</option>
-                </select>
+              {/* Upload App Screenshot Image */}
+              <div className="p-4 rounded-2xl bg-white/[0.02] border border-brand-gold/30 space-y-2">
+                <label className="block text-xs font-mono font-bold text-white uppercase flex items-center gap-2">
+                  <Upload className="w-4 h-4 text-brand-gold" /> Upload App Screenshot Image
+                </label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  className="w-full text-xs text-neutral-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-brand-gold/20 file:text-brand-gold hover:file:bg-brand-gold/30 file:cursor-pointer"
+                />
+                <p className="text-[10px] text-brand-muted font-light">
+                  Upload raw screenshot from your iPhone, iPad, or Android phone.
+                </p>
               </div>
 
+              {/* Top Badge Text */}
               <div>
-                <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Title Accent</label>
-                <select
-                  value={activeSlide.titleColor}
-                  onChange={(e) => updateActiveSlide("titleColor", e.target.value)}
-                  className="w-full bg-black/50 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-white focus:outline-none focus:border-brand-gold"
-                >
-                  <option value="gold">Gold Gradient</option>
-                  <option value="white">Pure White</option>
-                  <option value="amber">Warm Amber</option>
-                </select>
+                <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Top Badge Text</label>
+                <input
+                  type="text"
+                  value={activeSlide.badgeText}
+                  onChange={(e) => updateActiveSlide("badgeText", e.target.value)}
+                  placeholder="e.g. VERSION 2.0 • OFFLINE FIRST"
+                  className="w-full bg-black/50 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-gold"
+                />
               </div>
-            </div>
 
-            {/* Upload Custom Mobile Screenshot */}
-            <div className="pt-2">
-              <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Replace App Screenshot Image</label>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageUpload}
-                className="w-full text-xs text-neutral-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-brand-gold/15 file:text-brand-gold hover:file:bg-brand-gold/25 file:cursor-pointer"
-              />
+              {/* Header Title */}
+              <div>
+                <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Header Title</label>
+                <input
+                  type="text"
+                  value={activeSlide.header}
+                  onChange={(e) => updateActiveSlide("header", e.target.value)}
+                  placeholder="e.g. FASTEST PHOTO COMPRESSOR"
+                  className="w-full bg-black/50 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-gold font-bold"
+                />
+              </div>
+
+              {/* Subtext */}
+              <div>
+                <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Subtext Description</label>
+                <input
+                  type="text"
+                  value={activeSlide.subtext}
+                  onChange={(e) => updateActiveSlide("subtext", e.target.value)}
+                  placeholder="e.g. Compress high-resolution photos 80% without losing quality"
+                  className="w-full bg-black/50 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-gold"
+                />
+              </div>
+
+              {/* Theme & Frame Controls */}
+              <div className="grid grid-cols-2 gap-3 pt-1">
+                <div>
+                  <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Background Theme</label>
+                  <select
+                    value={activeSlide.bgTheme}
+                    onChange={(e) => updateActiveSlide("bgTheme", e.target.value)}
+                    className="w-full bg-black/50 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-white focus:outline-none focus:border-brand-gold"
+                  >
+                    <option value="gold_dark">Luxury Dark Gold</option>
+                    <option value="pure_black">OLED Pure Black</option>
+                    <option value="deep_navy">Deep Navy Blue</option>
+                    <option value="cyber_purple">Cyberpunk Purple</option>
+                    <option value="luxury_emerald">Emerald Dark</option>
+                    <option value="sunset_amber">Sunset Amber</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Title Accent</label>
+                  <select
+                    value={activeSlide.titleColor}
+                    onChange={(e) => updateActiveSlide("titleColor", e.target.value)}
+                    className="w-full bg-black/50 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-white focus:outline-none focus:border-brand-gold"
+                  >
+                    <option value="gold">Gold Gradient</option>
+                    <option value="white">Pure White</option>
+                    <option value="emerald">Emerald Green</option>
+                    <option value="cyan">Cyan Blue</option>
+                    <option value="amber">Warm Amber</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3 pt-1">
+                <div>
+                  <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Device Frame Bezel</label>
+                  <select
+                    value={activeSlide.frameColor}
+                    onChange={(e) => updateActiveSlide("frameColor", e.target.value)}
+                    className="w-full bg-black/50 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-white focus:outline-none focus:border-brand-gold"
+                  >
+                    <option value="gold">Luxury Gold</option>
+                    <option value="titanium">Titanium Silver</option>
+                    <option value="black">Space Black</option>
+                    <option value="emerald">Emerald Green</option>
+                    <option value="blue">Royal Blue</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Display Notch</label>
+                  <select
+                    value={activeSlide.frameType}
+                    onChange={(e) => updateActiveSlide("frameType", e.target.value)}
+                    className="w-full bg-black/50 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-white focus:outline-none focus:border-brand-gold"
+                  >
+                    <option value="island">Dynamic Island</option>
+                    <option value="notch">Classic Notch</option>
+                    <option value="borderless">Borderless Modern</option>
+                  </select>
+                </div>
+              </div>
+
             </div>
-          </div>
+          )}
         </div>
 
-        {/* RIGHT COLUMN: LIVE CANVAS PREVIEW & DOWNLOAD CARD */}
+        {/* RIGHT COLUMN: LIVE CANVAS PREVIEW */}
         <div className="lg:col-span-7 space-y-6 flex flex-col items-center">
-          <div className="w-full flex items-center justify-between bg-[#121212] border border-white/10 rounded-2xl px-5 py-3">
-            <div className="flex items-center gap-2 text-xs text-brand-muted font-mono">
-              <Eye className="w-4 h-4 text-brand-gold" /> Previewing Preset: <strong className="text-white">{selectedPreset.name}</strong> ({selectedPreset.width}×{selectedPreset.height}px)
+          <div className="w-full flex items-center justify-between bg-[#121212] border border-white/10 rounded-2xl px-5 py-3 shadow-lg">
+            <div className="flex items-center gap-2 text-xs text-brand-muted font-mono truncate">
+              <Eye className="w-4 h-4 text-brand-gold shrink-0" /> Target Preset: <strong className="text-white truncate">{selectedPreset.name}</strong> ({selectedPreset.width}×{selectedPreset.height}px)
             </div>
 
             <button
               onClick={() => downloadSingleScreenshot(activeSlide, activeSlideIndex)}
-              className="flex items-center gap-1.5 text-xs font-bold text-brand-gold hover:underline cursor-pointer"
+              className="flex items-center gap-1.5 text-xs font-bold text-brand-gold hover:underline cursor-pointer shrink-0"
             >
-              <Download className="w-3.5 h-3.5" /> Download Screenshot #{activeSlideIndex + 1}
+              <Download className="w-3.5 h-3.5" /> Export PNG
             </button>
           </div>
 
           {/* HTML5 Canvas Render Box */}
-          <div className="w-full bg-[#030303] border border-white/10 rounded-3xl p-6 flex flex-col items-center justify-center min-h-[500px] relative overflow-hidden shadow-2xl">
+          <div className="w-full bg-[#030303] border border-white/10 rounded-3xl p-6 flex flex-col items-center justify-center min-h-[520px] relative overflow-hidden shadow-2xl">
             <div className="absolute inset-0 bg-brand-gold/5 blur-3xl pointer-events-none" />
 
             <div className="relative z-10 flex flex-col items-center">
               <canvas
                 ref={canvasRef}
-                className="max-h-[620px] w-auto rounded-2xl border border-white/10 shadow-2xl transition-all duration-300"
+                className="max-h-[640px] w-auto rounded-2xl border border-white/10 shadow-2xl transition-all duration-300"
                 style={{
-                  maxHeight: selectedPreset.deviceType === "Tablet" ? "520px" : "620px",
+                  maxHeight: selectedPreset.deviceType === "Tablet" ? "520px" : "640px",
                 }}
               />
 
               <div className="mt-4 text-center">
                 <span className="text-[11px] font-mono text-brand-muted">
-                  High-DPI Canvas • {selectedPreset.width} × {selectedPreset.height} pixels (Apple/Google Spec)
+                  Client-Side Render • {selectedPreset.width} × {selectedPreset.height} pixels (Ready for App Store Connect &amp; Google Play Console)
                 </span>
               </div>
             </div>
