@@ -48,8 +48,8 @@ export const toolsData: Tool[] = [
   
   { id: "qr_gen", title: "QR Generator", subtitle: "Create QR codes instantly", desc: "Generate customized high-density vector matrix codes using custom tracking hyperlinks, text strings, or credentials.", icon: QrCode, category: "generator", src: "/scan and Generate QR.png", isAppOnly: false },
   { id: "sig_cr", title: "Signature Creator", subtitle: "Draw and save signature", desc: "Smooth vector canvas capturing utility transforms touch/stylus paths into anti-aliased alpha-channel graphics.", icon: PenTool, category: "generator", src: "/utilify-dashboard.jpg", isAppOnly: false },
-  
-  { id: "nfc_tl", title: "NFC Tools", subtitle: "Read and write NFC tags", desc: "Access native radio frequencies to write customized NDEF instructions or query contactless chip assets effortlessly.", icon: NfcCpu, category: "nfc", src: "/NFC Command.png", isAppOnly: true }
+  { id: "nfc_tl", title: "NFC Tools", subtitle: "Read and write NFC tags", desc: "Access native radio frequencies to write customized NDEF instructions or query contactless chip assets effortlessly.", icon: NfcCpu, category: "nfc", src: "/NFC Command.png", isAppOnly: true },
+  { id: "shot_gen", title: "App Store Screenshot Studio", subtitle: "Generate iOS & Android App Store Screenshots", desc: "Generate pixel-perfect Apple App Store (6.7\", 6.5\", 5.5\", iPad 13\") & Google Play Store (Phone, 7\" & 10\" Tablet) marketing screenshots with dark-gold luxury frames, customizable headers, and instant batch ZIP/PNG download.", icon: Sliders, category: "generator", src: "/utilify-dashboard.jpg", isAppOnly: false }
 ];
 
 export const categories = [

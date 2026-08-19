@@ -2156,7 +2156,7 @@ export default function Home({ initialToolId }: { initialToolId?: string } = {})
               <div className="flex-1 overflow-y-auto pr-1 scrollbar-none space-y-6">
                 
                 {/* 📳 CASE A: App Download / App-Level Redirect prompt */}
-                {(activeTool.isAppDownload || !["img_comp", "img_res", "doc_scan", "sig_cr", "qr_gen", "mrg_pdf", "spl_pdf", "rot_pdf", "num_pdf", "wtrmk_pdf", "inv_mk", "res_make", "red_pdf", "del_pdf", "ext_pdf", "ord_pdf", "sgn_pdf", "pdf_imgs", "prt_pdf", "unl_pdf", "img_pdf", "img_conv", "prnt_sheet", "mk_pdf"].includes(activeTool.id)) ? (
+                {(activeTool.isAppDownload || !["img_comp", "img_res", "doc_scan", "sig_cr", "qr_gen", "mrg_pdf", "spl_pdf", "rot_pdf", "num_pdf", "wtrmk_pdf", "inv_mk", "res_make", "red_pdf", "del_pdf", "ext_pdf", "ord_pdf", "sgn_pdf", "pdf_imgs", "prt_pdf", "unl_pdf", "img_pdf", "img_conv", "prnt_sheet", "mk_pdf", "shot_gen"].includes(activeTool.id)) ? (
                   <div className="text-center py-6 space-y-6">
                     <div className="w-16 h-16 rounded-2xl bg-brand-gold/10 border border-brand-gold/25 flex items-center justify-center mx-auto text-brand-gold animate-pulse">
                       {activeTool.isAppDownload ? <Download className="w-8 h-8" /> : <Smartphone className="w-8 h-8" />}
@@ -3149,6 +3149,24 @@ export default function Home({ initialToolId }: { initialToolId?: string } = {})
                             Download Generated PDF
                           </a>
                         )}
+                      </div>
+                    )}
+
+                    {/* 28. APP STORE SCREENSHOT STUDIO */}
+                    {activeTool.id === "shot_gen" && (
+                      <div className="space-y-4 text-center py-4">
+                        <div className="p-6 rounded-2xl bg-brand-gold/10 border border-brand-gold/30 space-y-3">
+                          <h4 className="text-base font-bold text-white">App Store & Play Store Screenshot Studio</h4>
+                          <p className="text-xs text-brand-muted font-light leading-relaxed">
+                            Generate pixel-perfect Apple App Store (6.7&quot;, 6.5&quot;, 5.5&quot;, iPad 13&quot;) &amp; Google Play Store screenshots with dark-gold luxury device frames, custom titles, and batch PNG export.
+                          </p>
+                          <Link 
+                            href="/shots/" 
+                            className="inline-flex items-center gap-2 bg-gradient-to-r from-brand-gold via-brand-gold-light to-brand-gold-dark text-black font-extrabold text-xs px-6 py-3 rounded-xl shadow-premium-gold hover:scale-105 transition-transform"
+                          >
+                            Open Fullscreen Screenshot Studio 🚀
+                          </Link>
+                        </div>
                       </div>
                     )}
                   </div>
