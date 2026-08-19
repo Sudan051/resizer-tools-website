@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { 
   Download, Layers, Sliders, Smartphone, 
-  Tablet, Eye, Plus, Upload, Palette, MoveVertical, Type, Image as ImageIcon
+  Tablet, Eye, Plus, Upload, Palette, MoveVertical, Type, Image as ImageIcon, Sparkles
 } from "lucide-react";
 
 export interface PresetSize {
@@ -618,6 +618,30 @@ export default function ScreenshotStudioClient() {
     }
   };
 
+  const applyCurrentStyleToAllSlides = () => {
+    if (!activeSlide) return;
+    const {
+      badgeBgColor, badgeTextColor, badgeStyle,
+      headerColor, headerFontSize, fontFamily, textAlign, letterSpacing,
+      subtextColor, subtextFontSize,
+      bgType, bgPreset, bgColorPrimary, bgColorSecondary, bgPattern,
+      frameStyle, frameColor, frameInnerBgColor, frameBorderWidth, frameShadowColor, frameShadowBlur,
+      mockupScale, mockupPositionY, mockupRotation, cropStatusBar
+    } = activeSlide;
+
+    const updated = slides.map((s) => ({
+      ...s,
+      badgeBgColor, badgeTextColor, badgeStyle,
+      headerColor, headerFontSize, fontFamily, textAlign, letterSpacing,
+      subtextColor, subtextFontSize,
+      bgType, bgPreset, bgColorPrimary, bgColorSecondary, bgPattern,
+      frameStyle, frameColor, frameInnerBgColor, frameBorderWidth, frameShadowColor, frameShadowBlur,
+      mockupScale, mockupPositionY, mockupRotation, cropStatusBar
+    }));
+
+    setSlides(updated);
+  };
+
   return (
     <div className="space-y-8">
       
@@ -633,7 +657,15 @@ export default function ScreenshotStudioClient() {
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2.5">
+            <button
+              onClick={applyCurrentStyleToAllSlides}
+              className="flex items-center gap-1.5 bg-brand-gold/15 border border-brand-gold/40 hover:border-brand-gold text-brand-gold font-bold text-xs px-4 py-3 rounded-2xl transition-all cursor-pointer shadow-lg"
+              title="Apply active slide's colors, fonts, zoom, & background to all slides"
+            >
+              <Sparkles className="w-4 h-4 text-brand-gold" /> Sync Style to All Slides
+            </button>
+
             <button
               onClick={handleAddNewSlide}
               className="flex items-center gap-1.5 bg-white/5 border border-white/10 hover:border-brand-gold/40 text-white font-semibold text-xs px-4 py-3 rounded-2xl transition-all cursor-pointer"
@@ -691,7 +723,12 @@ export default function ScreenshotStudioClient() {
               <h3 className="text-xs font-bold uppercase tracking-wider text-white font-mono flex items-center gap-2">
                 <Layers className="w-4 h-4 text-brand-gold" /> Slides Sequence ({slides.length} Cards)
               </h3>
-              <span className="text-[11px] text-brand-muted font-mono">Editing Slide #{activeSlideIndex + 1}</span>
+              <button
+                onClick={applyCurrentStyleToAllSlides}
+                className="text-[10px] font-bold text-brand-gold bg-brand-gold/10 hover:bg-brand-gold/20 border border-brand-gold/30 px-2.5 py-1 rounded-xl cursor-pointer flex items-center gap-1 transition-all"
+              >
+                <Sparkles className="w-3 h-3" /> Sync Style to All
+              </button>
             </div>
 
             <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
