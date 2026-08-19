@@ -278,5 +278,248 @@ At **Resizer Tools**, our **[NFC Tools](https://resizertools.com/tools/nfc_tool/
 
 Contactless utilities should simplify communication without creating data privacy vulnerabilities. By leveraging offline static QR generation and native Web NFC APIs, users retain complete control over their digital communications.
     `
+  },
+  {
+    slug: "how-to-compress-pdf-without-losing-quality",
+    title: "How to Compress PDF Files Without Losing Quality: 5 Proven Methods",
+    excerpt: "Learn how to shrink PDF file sizes for email attachments, online applications, and portals while keeping text sharp and images crisp.",
+    date: "August 19, 2026",
+    readTime: "7 min read",
+    author: "Saurabh Kumar Sharma",
+    category: "PDF Optimization",
+    content: `
+# How to Compress PDF Files Without Losing Quality: 5 Proven Methods
+
+Large PDF files can be a headache when submitting job applications, uploading tax forms, or emailing reports to clients. Most email providers cap attachment sizes at 25MB, and government or college admission portals often restrict file uploads to under 2MB or 500KB.
+
+In this guide, we break down five proven ways to compress PDF files efficiently without sacrificing text sharpness or visual clarity.
+
+---
+
+## 1. Why PDF Files Become Large
+
+Understanding what inflates a PDF file size helps you target the root cause:
+- **High-Resolution Images**: Uncompressed 300 DPI photos embedded in documents.
+- **Embedded Custom Fonts**: Full font families packaged inside the PDF binary.
+- **Unoptimized Scanned Pages**: High-density raster scans saved without image compression.
+- **Redundant Object Streams**: Unused metadata and duplicate structural tags.
+
+---
+
+## 2. Five Methods to Reduce PDF Size
+
+### Method 1: Client-Side Browser Compression (Recommended)
+Using tools like **[PDF Reducer](https://resizertools.com/tools/red_pdf/)** on Resizer Tools downscales embedded raster images while preserving vector text elements. Because processing happens locally in browser memory, your data remains 100% private with zero server uploads.
+
+### Method 2: Convert Scanned Color Pages to Grayscale
+Color channels (RGB/CMYK) use 3 to 4 times more data per pixel than grayscale or monochrome black-and-white. Converting scanned documents to grayscale reduces file size by up to 70%.
+
+### Method 3: Remove Unnecessary Pages & Attachments
+Use **[Split PDF](https://resizertools.com/tools/spl_pdf/)** to extract only the essential pages required for your submission.
+
+### Method 4: Flatten Form Fields & Annotations
+Interactive form fields, comments, and vector signatures can inflate file size. Flattening annotations bakes them directly into the page layer.
+
+### Method 5: Optimize Image Downsampling
+Set image resolution to 150 DPI for digital viewing or 200 DPI for standard printing. This retains high clarity while reducing pixel data exponentially.
+
+---
+
+## Conclusion
+
+Reducing PDF size does not require paying for bloated desktop software or risking data privacy on remote servers. Try **Resizer Tools** for instant, offline browser-native PDF compression.
+    `
+  },
+  {
+    slug: "heic-to-jpg-conversion-explained",
+    title: "Understanding HEIC vs JPEG: Converting iPhone Photos Offline on Any Device",
+    excerpt: "Discover why Apple uses HEIC photo format, why Windows and web forms reject it, and how to convert HEIC images to JPG 100% locally.",
+    date: "August 19, 2026",
+    readTime: "6 min read",
+    author: "Saurabh Kumar Sharma",
+    category: "Image Formats",
+    content: `
+# Understanding HEIC vs JPEG: Converting iPhone Photos Offline on Any Device
+
+If you take photos on an iPhone, you have likely encountered the **.HEIC** (High Efficiency Image Container) file extension. While HEIC offers superior compression and image quality on iOS devices, many Windows PCs, Android smartphones, and online application portals fail to open or accept it.
+
+In this article, we explain the difference between HEIC and JPEG, and show you how to convert HEIC photos to JPG format 100% offline.
+
+---
+
+## 1. HEIC vs JPEG: A Technical Comparison
+
+| Feature | HEIC (High Efficiency) | JPEG (Joint Photographic Experts Group) |
+| :--- | :--- | :--- |
+| **File Size** | 50% smaller than JPEG | Larger file footprint |
+| **Bit Depth** | 16-bit color depth | 8-bit color depth |
+| **Transparency** | Supported | Not supported |
+| **Compatibility** | Apple devices (iOS/macOS) | Universal (100% devices & websites) |
+
+---
+
+## 2. Why Online Portals Reject HEIC Files
+
+Most legacy backend web servers use image processing libraries that only understand standard JPEG, PNG, or WebP formats. Uploading a HEIC photo to a passport form or job portal usually triggers an "Invalid file format" error.
+
+---
+
+## 3. How to Convert HEIC to JPG Privately
+
+Using our **[Image Converter](https://resizertools.com/tools/img_conv/)**, you can select HEIC, PNG, or WebP images and convert them directly in your browser memory:
+1. Drag and drop your HEIC photos into the converter.
+2. Select **JPEG / JPG** as your target export format.
+3. Click Convert to download your universally compatible image.
+
+Zero uploads, zero waiting time, and complete offline capability!
+    `
+  },
+  {
+    slug: "digital-signature-legal-validity-guide",
+    title: "Are Electronic PDF Signatures Legally Binding? A Complete Guide for Businesses",
+    excerpt: "Learn about the legal status of electronic and digital signatures under ESIGN, eIDAS, and IT Act guidelines worldwide.",
+    date: "August 19, 2026",
+    readTime: "8 min read",
+    author: "Saurabh Kumar Sharma",
+    category: "Legal & Compliance",
+    content: `
+# Are Electronic PDF Signatures Legally Binding? A Complete Guide for Businesses
+
+In the modern digital economy, printing, physically signing, and scanning paper documents is inefficient. Remote contract signing has become standard practice for employment offers, non-disclosure agreements (NDAs), vendor invoices, and freelance contracts.
+
+However, business owners often ask: **Are drawn or typed PDF signatures legally binding?**
+
+In this comprehensive guide, we review global electronic signature laws and explain how to sign documents securely.
+
+---
+
+## 1. Global Legal Frameworks for Electronic Signatures
+
+Electronic signatures are recognized as legally binding across major international jurisdictions:
+
+- **United States**: The **ESIGN Act** (2000) and **UETA** state that electronic signatures carry the same legal weight as handwritten signatures.
+- **European Union**: The **eIDAS Regulation** categorizes electronic signatures into SES (Simple), AES (Advanced), and QES (Qualified).
+- **India**: The **Information Technology Act (2000)** validates electronic signatures for commercial contracts and agreements.
+
+---
+
+## 2. Key Criteria for a Legally Valid Electronic Signature
+
+For an electronic signature to hold up in legal proceedings, three core requirements must be satisfied:
+
+1. **Intent to Sign**: The signer must demonstrate clear intent to execute the document.
+2. **Consent to Electronic Transactions**: Both parties agree to conduct business digitally.
+3. **Document Integrity**: The signed PDF document must remain tamper-proof post-execution.
+
+---
+
+## 3. Sign PDFs Privately with Resizer Tools
+
+Our **[Sign PDF](https://resizertools.com/tools/sgn_pdf/)** tool allows you to draw your signature, upload a signature image, or type your name onto any PDF page locally:
+- **Zero Server Retention**: Your signature vectors are processed exclusively in your device RAM.
+- **Instant Export**: Download your signed PDF contract in seconds.
+    `
+  },
+  {
+    slug: "how-to-create-passport-photo-sheet",
+    title: "How to Create and Print 35x45mm Passport Photos at Home for Free",
+    excerpt: "Save money on passport photos by creating exact 3.5x4.5cm photo grid sheets for printing on standard 4x6 photo paper.",
+    date: "August 19, 2026",
+    readTime: "6 min read",
+    author: "Saurabh Kumar Sharma",
+    category: "Photo Printing",
+    content: `
+# How to Create and Print 35x45mm Passport Photos at Home for Free
+
+Visiting a commercial photo studio every time you need visa or passport photos can be expensive and time-consuming. Standard official specifications require precise dimensions (e.g. 35mm x 45mm, 2x2 inches, or 51mm x 51mm) against a plain white background.
+
+In this guide, we show you how to crop your photo to exact passport standards and layout multiple copies on a single 4x6 inch print sheet.
+
+---
+
+## 1. Official Passport & Visa Photo Specifications
+
+- **Dimensions**: 35mm width x 45mm height (or 2x2 inches for US Visa).
+- **Background**: Plain white or off-white background.
+- **Head Position**: Centered, facing forward with neutral facial expression.
+- **Lighting**: Even illumination without harsh shadows or red-eye effects.
+
+---
+
+## 2. Creating a 4x6 Photo Grid Sheet
+
+Instead of paying high fees for a single print, you can arrange 6 to 8 passport photos onto a single 4x6 photo paper template:
+
+1. Open the **[Passport Photo Sheet Maker](https://resizertools.com/tools/prnt_sheet/)** on Resizer Tools.
+2. Upload your prepared portrait image.
+3. Select your desired grid layout (e.g. 2x4 grid of 8 passport photos).
+4. Export the high-resolution printable layout.
+5. Print at home or at any photo kiosk for pennies!
+    `
+  },
+  {
+    slug: "how-to-merge-pdf-files-offline",
+    title: "Step-by-Step Guide: Merging Multiple PDF Documents Privately in 2026",
+    excerpt: "Combine PDFs, reports, receipts, and scans into a single organized document without uploading data to external servers.",
+    date: "August 19, 2026",
+    readTime: "5 min read",
+    author: "Saurabh Kumar Sharma",
+    category: "PDF Management",
+    content: `
+# Step-by-Step Guide: Merging Multiple PDF Documents Privately in 2026
+
+Combining multiple PDF files into one clean document is essential when compiling monthly financial statements, submitting homework assignments, or sending project proposals.
+
+In this quick tutorial, we demonstrate how to merge unlimited PDF files using client-side web technology.
+
+---
+
+## 1. Why Server-Side PDF Mergers Pose Privacy Risks
+
+When merging confidential tax receipts or medical records on legacy websites, all your files must be uploaded over public networks to remote cloud servers. If the server logs or temporary file caches are compromised, your data is at risk.
+
+---
+
+## 2. Merging PDFs 100% Offline with Resizer Tools
+
+1. Navigate to the **[Merge PDF](https://resizertools.com/tools/mrg_pdf/)** workspace.
+2. Drag and drop all the PDF files you want to combine.
+3. Reorder the file queue as needed.
+4. Click **Merge PDFs** to stitch them together instantly in browser memory.
+5. Download your merged PDF file.
+
+Fast, free, and completely secure!
+    `
+  },
+  {
+    slug: "qr-code-security-best-practices",
+    title: "QR Code Security 101: How to Spot Malicious QR Scams and Stay Safe",
+    excerpt: "Learn how quishing (QR phishing) scams work and how offline static QR code generators protect user data.",
+    date: "August 19, 2026",
+    readTime: "6 min read",
+    author: "Saurabh Kumar Sharma",
+    category: "Cybersecurity",
+    content: `
+# QR Code Security 101: How to Spot Malicious QR Scams and Stay Safe
+
+Quick Response (QR) codes are everywhere—on restaurant menus, payment counters, public transit posters, and product packaging. However, cybercriminals are increasingly exploiting QR codes through a technique known as **Quishing (QR Phishing)**.
+
+In this article, we cover how QR scams operate and how to protect yourself when creating and scanning QR codes.
+
+---
+
+## 1. What is Quishing (QR Code Phishing)?
+
+Quishing occurs when attackers replace legitimate QR stickers in public places with fraudulent QR codes that point to phishing websites designed to steal credit card details or login credentials.
+
+---
+
+## 2. Best Practices for Safe QR Code Usage
+
+- **Inspect Physical Stickers**: Check if a QR sticker has been pasted over an original poster in public areas.
+- **Preview URLs Before Opening**: Ensure the target domain matches the official entity before submitting personal data.
+- **Use Native Static QR Generators**: Avoid dynamic tracking QR generators that route your traffic through intermediate tracking servers.
+- **Use Offline Scanners**: Tools like **[QR Scanner](https://resizertools.com/tools/qr_scan/)** on Resizer Tools decode QR matrix codes locally in browser memory without sending data anywhere.
+    `
   }
 ];

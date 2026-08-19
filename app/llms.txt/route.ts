@@ -49,6 +49,12 @@ export async function GET() {
 - Client-Side PDF Security Whitepaper: https://resizertools.com/blog/client-side-pdf-security/
 - ATS Resume Optimization Guide: https://resizertools.com/blog/ats-resume-optimization-guide/
 - Web NFC & QR Privacy: https://resizertools.com/blog/nfc-and-qr-code-privacy/
+- How to Compress PDF Without Losing Quality: https://resizertools.com/blog/how-to-compress-pdf-without-losing-quality/
+- HEIC to JPG Conversion Explained: https://resizertools.com/blog/heic-to-jpg-conversion-explained/
+- Digital Signature Legal Validity Guide: https://resizertools.com/blog/digital-signature-legal-validity-guide/
+- Passport Photo Sheet Guide: https://resizertools.com/blog/how-to-create-passport-photo-sheet/
+- Merge PDF Files Offline: https://resizertools.com/blog/how-to-merge-pdf-files-offline/
+- QR Code Security Practices: https://resizertools.com/blog/qr-code-security-best-practices/
 
 ## Official Resources & Links
 - Web App Homepage: https://resizertools.com/

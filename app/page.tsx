@@ -1454,8 +1454,7 @@ export default function Home({ initialToolId }: { initialToolId?: string } = {})
         <div className="hidden md:flex items-center gap-8 text-sm text-brand-muted font-medium">
           <a href="#demo" className="hover:text-white transition-colors">Interactive Demo</a>
           <a href="#studio" className="hover:text-white transition-colors">Workspace Tools ({toolsData.length})</a>
-          <a href="#gallery" className="hover:text-white transition-colors">Visual Gallery</a>
-          <a href="#showcase" className="hover:text-white transition-colors">Full Matrix Showcase</a>
+          <Link href="/blog/" className="text-brand-gold hover:text-white font-semibold flex items-center gap-1 transition-colors">Blog & Guides 📖</Link>
           <a href="#about" className="hover:text-white transition-colors">Creator</a>
           <button onClick={() => setShowSubscription(true)} className="hover:text-white text-brand-gold font-semibold flex items-center gap-1 transition-colors cursor-pointer">Unlock Pro ✨</button>
         </div>
