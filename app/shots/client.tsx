@@ -434,10 +434,8 @@ export default function ScreenshotStudioClient() {
           const paddedW = innerW - paddingGap * 2;
           const paddedH = innerH - paddingGap * 2;
 
-          const scale = Math.max(paddedW / srcW, paddedH / srcH);
-          const imgX = (innerX + paddingGap) + (paddedW - srcW * scale) / 2;
-          const imgY = innerY + paddingGap;
-          ctx.drawImage(img, 0, srcY, srcW, srcH, imgX, imgY, srcW * scale, srcH * scale);
+          // Draw screenshot so it fits the inner screen frame cleanly from top to bottom
+          ctx.drawImage(img, 0, srcY, srcW, srcH, innerX + paddingGap, innerY + paddingGap, paddedW, paddedH);
 
           // Notch / Dynamic Island
           if (slide.frameStyle === "island" && preset.deviceType === "Phone") {
