@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { 
   Apple, ShieldCheck, CheckCircle2, ArrowLeft, 
-  Sparkles, Lock, Zap, QrCode, Cpu, ExternalLink, Smile
+  Sparkles, Lock, Zap, QrCode, Cpu, ExternalLink
 } from "lucide-react";
 
 export const dynamic = "force-static";
@@ -13,6 +13,7 @@ export const metadata = {
 
 export default function AppDownloadPage() {
   const iosAppUrl = "https://apps.apple.com/app/id6742385150";
+  const androidAppUrl = "https://play.google.com/store/apps/details?id=com.resizertools.app";
 
   return (
     <main className="min-h-screen bg-[#080808] text-white selection:bg-brand-gold/30 selection:text-brand-gold-light py-16 px-4 sm:px-6 flex flex-col items-center justify-center relative overflow-hidden">
@@ -39,7 +40,7 @@ export default function AppDownloadPage() {
             Resizer Tools for Mobile
           </h1>
           <p className="text-sm sm:text-base text-brand-muted font-light max-w-md mx-auto leading-relaxed">
-            Carry 26 offline PDF & image utilities in your pocket. 100% client-side privacy, camera document scanner, and NFC radio tools.
+            Carry 27 offline PDF & image utilities in your pocket. 100% client-side privacy, camera document scanner, and NFC radio tools.
           </p>
         </div>
 
@@ -63,21 +64,22 @@ export default function AppDownloadPage() {
             </div>
           </a>
 
-          {/* Android Play Store Card (Coming Soon) */}
-          <div className="flex flex-col items-center justify-center gap-2 p-6 rounded-3xl bg-white/[0.02] border border-white/10 text-center relative overflow-hidden">
-            <div className="w-10 h-10 rounded-full bg-brand-gold/10 text-brand-gold flex items-center justify-center">
-              <Smile className="w-6 h-6 text-brand-gold animate-bounce" />
+          {/* Android Play Store Button */}
+          <a
+            href={androidAppUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex flex-col items-center justify-center gap-2 p-6 rounded-3xl bg-gradient-to-b from-[#1a1a1a] to-[#111111] border border-emerald-500/40 hover:border-emerald-400 text-white shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all group cursor-pointer"
+          >
+            <ExternalLink className="w-10 h-10 text-emerald-400 group-hover:scale-110 transition-transform" />
+            <div className="text-center">
+              <div className="text-[10px] uppercase font-mono text-brand-muted tracking-wider">Get it on</div>
+              <div className="text-base font-extrabold text-white">Google Play Store</div>
             </div>
-            <div>
-              <div className="text-[10px] uppercase font-mono text-brand-muted tracking-wider">Google Play Store</div>
-              <div className="text-base font-bold text-white flex items-center justify-center gap-1.5">
-                Android App Coming Soon! 😊
-              </div>
+            <div className="inline-flex items-center gap-1 text-[11px] font-mono text-emerald-400 pt-1">
+              <CheckCircle2 className="w-3.5 h-3.5" /> Available for Android
             </div>
-            <p className="text-[11px] text-brand-muted font-light leading-snug pt-1">
-              We are crafting a super-fast native Android app. Stay tuned! ✨
-            </p>
-          </div>
+          </a>
 
         </div>
 
