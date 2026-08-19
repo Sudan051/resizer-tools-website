@@ -13,7 +13,7 @@ export const metadata = {
 };
 
 export default function AppDownloadPage() {
-  const iosAppUrl = "https://apps.apple.com/app/id6742385150";
+  const iosAppUrl = "https://apps.apple.com/us/app/resizer-tools-pdf-image-qr/id6785073828";
   const androidAppUrl = "https://play.google.com/store/apps/details?id=com.resizertools.app";
 
   return (

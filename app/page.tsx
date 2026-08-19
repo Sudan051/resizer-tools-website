@@ -2171,7 +2171,7 @@ export default function Home({ initialToolId }: { initialToolId?: string } = {})
                     {/* Appstore badging */}
                     <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-2">
                       <a 
-                        href="https://apps.apple.com/app/id6742385150" 
+                        href="https://apps.apple.com/us/app/resizer-tools-pdf-image-qr/id6785073828" 
                         target="_blank" 
                         rel="noopener noreferrer" 
                         className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-2xl px-5 py-3 hover:border-brand-gold/40 hover:bg-white/[0.08] transition-all duration-300 w-full sm:w-48 text-left"

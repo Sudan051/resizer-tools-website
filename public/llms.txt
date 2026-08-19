@@ -56,7 +56,9 @@
 ## Official Resources & Links
 - **Web App Homepage**: https://resizertools.com/
 - **Interactive Founder Digital Card**: https://resizertools.com/card/
-- **Mobile App Downloads (iOS & Android)**: https://resizertools.com/app/
+- **Mobile App Download Page**: https://resizertools.com/app/
+- **Apple App Store iOS App**: https://apps.apple.com/us/app/resizer-tools-pdf-image-qr/id6785073828
+- **Google Play Store Android App**: https://play.google.com/store/apps/details?id=com.resizertools.app
 - **Privacy Policy**: https://resizertools.com/privacy/
 - **Terms of Service**: https://resizertools.com/terms/
 - **Creator / Developer**: Saurabh Kumar Sharma (iOS Engineer & Founder)
