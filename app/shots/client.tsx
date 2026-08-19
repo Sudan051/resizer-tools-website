@@ -69,10 +69,10 @@ export interface ScreenshotSlide {
 export const DEFAULT_SLIDES: ScreenshotSlide[] = [
   {
     id: "slide-1",
-    badgeText: "SCREENSHOT 1",
+    badgeText: "",
     badgeBgColor: "#F59E0B",
     badgeTextColor: "#000000",
-    badgeStyle: "pill_filled",
+    badgeStyle: "none",
     header: "YOUR APP TITLE #1",
     headerColor: "#F59E0B",
     headerFontSize: 1.0,
@@ -102,10 +102,10 @@ export const DEFAULT_SLIDES: ScreenshotSlide[] = [
   },
   {
     id: "slide-2",
-    badgeText: "SCREENSHOT 2",
+    badgeText: "",
     badgeBgColor: "#F59E0B",
     badgeTextColor: "#000000",
-    badgeStyle: "pill_filled",
+    badgeStyle: "none",
     header: "YOUR APP TITLE #2",
     headerColor: "#F59E0B",
     headerFontSize: 1.0,
@@ -135,10 +135,10 @@ export const DEFAULT_SLIDES: ScreenshotSlide[] = [
   },
   {
     id: "slide-3",
-    badgeText: "SCREENSHOT 3",
+    badgeText: "",
     badgeBgColor: "#F59E0B",
     badgeTextColor: "#000000",
-    badgeStyle: "pill_filled",
+    badgeStyle: "none",
     header: "YOUR APP TITLE #3",
     headerColor: "#F59E0B",
     headerFontSize: 1.0,
@@ -574,10 +574,10 @@ export default function ScreenshotStudioClient() {
     const newId = `slide-${Date.now()}`;
     const newSlide: ScreenshotSlide = {
       id: newId,
-      badgeText: `SCREENSHOT ${slides.length + 1}`,
-      badgeBgColor: "#d4af37",
+      badgeText: "",
+      badgeBgColor: "#F59E0B",
       badgeTextColor: "#000000",
-      badgeStyle: "pill_filled",
+      badgeStyle: "none",
       header: `YOUR APP TITLE #${slides.length + 1}`,
       headerColor: "#ffffff",
       headerFontSize: 1.0,
