@@ -318,8 +318,8 @@ export default function ScreenshotStudioClient() {
         logoImg.src = slide.logoSrc;
       }
 
-      // 4. TOP BADGE RENDER
-      if (slide.badgeText && slide.badgeStyle !== "none") {
+      // 4. TOP BADGE RENDER (Only render if custom badgeText is non-empty AND badgeStyle is not none)
+      if (slide.badgeText && slide.badgeText.trim() !== "" && slide.badgeStyle && slide.badgeStyle !== "none") {
         const badgeFontSize = Math.round(height * 0.012 * slide.headerFontSize);
         ctx.font = getCanvasFont(slide.fontFamily, 700, badgeFontSize);
         ctx.textAlign = alignMode;
@@ -819,6 +819,8 @@ export default function ScreenshotStudioClient() {
                       updateActiveSlide("badgeBgColor", "#F59E0B");
                       updateActiveSlide("badgeTextColor", "#000000");
                       updateActiveSlide("frameColor", "#F59E0B");
+                      updateActiveSlide("badgeText", "");
+                      updateActiveSlide("badgeStyle", "none");
                     }}
                     className="p-2 rounded-xl bg-[#0F172A] border border-[#F59E0B]/40 hover:border-[#F59E0B] text-left transition-all cursor-pointer"
                   >
@@ -835,6 +837,8 @@ export default function ScreenshotStudioClient() {
                       updateActiveSlide("badgeBgColor", "#111827");
                       updateActiveSlide("badgeTextColor", "#FFFFFF");
                       updateActiveSlide("frameColor", "#111827");
+                      updateActiveSlide("badgeText", "");
+                      updateActiveSlide("badgeStyle", "none");
                     }}
                     className="p-2 rounded-xl bg-[#F59E0B] border border-black/20 hover:border-black text-left transition-all cursor-pointer"
                   >
@@ -851,6 +855,8 @@ export default function ScreenshotStudioClient() {
                       updateActiveSlide("badgeBgColor", "#FDE047");
                       updateActiveSlide("badgeTextColor", "#000000");
                       updateActiveSlide("frameColor", "#FDE047");
+                      updateActiveSlide("badgeText", "");
+                      updateActiveSlide("badgeStyle", "none");
                     }}
                     className="p-2 rounded-xl bg-[#1E1B4B] border border-[#FDE047]/40 hover:border-[#FDE047] text-left transition-all cursor-pointer"
                   >
