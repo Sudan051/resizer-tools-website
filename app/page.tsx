@@ -8,7 +8,7 @@ import { encryptPDF } from "@pdfsmaller/pdf-encrypt-lite";
 import { decryptPDF } from "@pdfsmaller/pdf-decrypt-lite";
 import { 
   Download, Sliders, Maximize2, ShieldCheck, Smartphone, 
-  Briefcase, Cpu, Play, X, Sparkles, Check, Search, ChevronDown
+  Briefcase, Cpu, Play, X, Sparkles, Check, Search, ChevronDown, Eye
 } from "lucide-react";
 // 🌐 CONFIGURATION KEYS (Replace with your actual keys)
 const RAZORPAY_KEY_ID: string = "rzp_live_TFRpvE5UpoUDlC"; // e.g. "rzp_live_xxxxxxxxxxxxxx"
@@ -1891,25 +1891,167 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
 
                 {/* 12. ATS RESUME BUILDER */}
                 {activeTool.id === "res_make" && (
-                  <div className="space-y-4 text-left">
-                    <div className="grid grid-cols-2 gap-3 text-xs font-mono">
-                      <div>
-                        <label className="block text-brand-muted mb-1">Full Name</label>
-                        <input type="text" value={resName} onChange={(e) => setResName(e.target.value)} className="w-full bg-black/40 border border-white/10 rounded-lg px-2 py-1.5 text-white" />
+                  <div className="space-y-6 text-left">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                      
+                      {/* Left 7 Columns: Complete Input Form */}
+                      <div className="lg:col-span-7 space-y-4">
+                        {/* 1. Contact & Personal Info */}
+                        <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4 space-y-3">
+                          <h4 className="text-xs font-mono uppercase tracking-wider text-brand-gold font-bold">1. Contact & Personal Info</h4>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                              <label className="block text-[10px] text-brand-muted mb-1 font-mono">Full Name</label>
+                              <input type="text" value={resName} onChange={(e) => setResName(e.target.value)} placeholder="e.g. Saurabh Kumar Sharma" className="w-full bg-black/40 border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-brand-gold/40 font-medium" />
+                            </div>
+                            <div>
+                              <label className="block text-[10px] text-brand-muted mb-1 font-mono font-medium">Professional Title / Role</label>
+                              <input type="text" value={resRole} onChange={(e) => setResRole(e.target.value)} placeholder="e.g. Senior iOS & Full-Stack Engineer" className="w-full bg-black/40 border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-brand-gold/40 font-medium" />
+                            </div>
+                            <div>
+                              <label className="block text-[10px] text-brand-muted mb-1 font-mono">Email Address</label>
+                              <input type="email" value={resEmail} onChange={(e) => setResEmail(e.target.value)} placeholder="saurabh@example.com" className="w-full bg-black/40 border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-brand-gold/40 font-medium" />
+                            </div>
+                            <div>
+                              <label className="block text-[10px] text-brand-muted mb-1 font-mono">Phone Number</label>
+                              <input type="text" value={resPhone} onChange={(e) => setResPhone(e.target.value)} placeholder="+91 9876543210" className="w-full bg-black/40 border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-brand-gold/40 font-medium" />
+                            </div>
+                            <div className="sm:col-span-2">
+                              <label className="block text-[10px] text-brand-muted mb-1 font-mono">Location / City</label>
+                              <input type="text" value={resLocation} onChange={(e) => setResLocation(e.target.value)} placeholder="Haridwar, India" className="w-full bg-black/40 border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-brand-gold/40 font-medium" />
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* 2. Professional Summary */}
+                        <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4 space-y-2">
+                          <h4 className="text-xs font-mono uppercase tracking-wider text-brand-gold font-bold">2. Professional Summary</h4>
+                          <textarea value={resSummary} onChange={(e) => setResSummary(e.target.value)} rows={3} placeholder="Brief summary of your achievements and skills..." className="w-full bg-black/40 border border-white/10 rounded-lg p-2 text-xs text-white focus:outline-none focus:border-brand-gold/40 font-normal leading-relaxed" />
+                        </div>
+
+                        {/* 3. Work Experience */}
+                        <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4 space-y-3">
+                          <h4 className="text-xs font-mono uppercase tracking-wider text-brand-gold font-bold">3. Work Experience</h4>
+                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <div>
+                              <label className="block text-[10px] text-brand-muted mb-1 font-mono">Job Title / Role</label>
+                              <input type="text" value={resExpTitle} onChange={(e) => setResExpTitle(e.target.value)} className="w-full bg-black/40 border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none font-medium" />
+                            </div>
+                            <div>
+                              <label className="block text-[10px] text-brand-muted mb-1 font-mono">Company Name</label>
+                              <input type="text" value={resCompany} onChange={(e) => setResCompany(e.target.value)} className="w-full bg-black/40 border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none font-medium" />
+                            </div>
+                            <div>
+                              <label className="block text-[10px] text-brand-muted mb-1 font-mono">Dates (e.g. 2022 - Present)</label>
+                              <input type="text" value={resExpDates} onChange={(e) => setResExpDates(e.target.value)} className="w-full bg-black/40 border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none font-mono" />
+                            </div>
+                          </div>
+                          <div>
+                            <label className="block text-[10px] text-brand-muted mb-1 font-mono">Key Responsibilities & Achievements</label>
+                            <textarea value={resExpDesc} onChange={(e) => setResExpDesc(e.target.value)} rows={2} className="w-full bg-black/40 border border-white/10 rounded-lg p-2 text-xs text-white focus:outline-none font-normal leading-relaxed" />
+                          </div>
+                        </div>
+
+                        {/* 4. Education & Technical Skills */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4 space-y-2">
+                            <h4 className="text-xs font-mono uppercase tracking-wider text-brand-gold font-bold">4. Education</h4>
+                            <input type="text" value={resDegree} onChange={(e) => setResDegree(e.target.value)} placeholder="Degree / Program" className="w-full bg-black/40 border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none mb-2 font-medium" />
+                            <input type="text" value={resSchool} onChange={(e) => setResSchool(e.target.value)} placeholder="School / University" className="w-full bg-black/40 border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none mb-2 font-medium" />
+                            <input type="text" value={resEduDates} onChange={(e) => setResEduDates(e.target.value)} placeholder="Dates" className="w-full bg-black/40 border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none font-mono" />
+                          </div>
+
+                          <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4 space-y-2">
+                            <h4 className="text-xs font-mono uppercase tracking-wider text-brand-gold font-bold">5. Technical Skills</h4>
+                            <textarea value={resSkills} onChange={(e) => setResSkills(e.target.value)} rows={4} placeholder="Comma-separated skills (e.g. Swift, React, Node.js)" className="w-full bg-black/40 border border-white/10 rounded-lg p-2 text-xs text-white focus:outline-none font-mono text-[11px]" />
+                          </div>
+                        </div>
+
+                        <button onClick={compileResumePDF} className="w-full bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-extrabold text-xs py-3 rounded-xl shadow-premium-gold hover:scale-[1.01] transition-all cursor-pointer">
+                          {isLoading ? "Formatting ATS Resume..." : "Generate ATS Compliant PDF Resume"}
+                        </button>
+
+                        {downloadUrl && (
+                          <a href={downloadUrl} onClick={(e) => triggerAdDownload(e, downloadUrl, `${resName.replace(/\s+/g, "_")}_Resume.pdf`)} download={`${resName.replace(/\s+/g, "_")}_Resume.pdf`} className="w-full bg-emerald-500 text-black font-extrabold text-xs py-3 rounded-xl text-center shadow-lg block cursor-pointer">
+                            Download Professional ATS Resume PDF
+                          </a>
+                        )}
                       </div>
-                      <div>
-                        <label className="block text-brand-muted mb-1">Target Role</label>
-                        <input type="text" value={resRole} onChange={(e) => setResRole(e.target.value)} className="w-full bg-black/40 border border-white/10 rounded-lg px-2 py-1.5 text-white" />
+
+                      {/* Right 5 Columns: Live Real-Time ATS Paper Resume Preview */}
+                      <div className="lg:col-span-5 space-y-3">
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs font-mono font-bold text-brand-gold uppercase tracking-wider flex items-center gap-1.5">
+                            <Eye className="w-4 h-4" /> Live ATS Document Preview
+                          </span>
+                          <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                            Real-Time Sync
+                          </span>
+                        </div>
+
+                        {/* Paper Document Preview Frame */}
+                        <div className="bg-white text-slate-900 rounded-xl p-6 shadow-2xl space-y-4 border border-slate-200 text-left font-sans text-xs min-h-[480px]">
+                          {/* Header */}
+                          <div className="border-b border-slate-300 pb-3 text-center">
+                            <h3 className="text-lg font-bold text-slate-900 tracking-tight uppercase">{resName || "YOUR NAME"}</h3>
+                            <p className="text-xs font-semibold text-amber-700 mt-0.5">{resRole || "TARGET PROFESSIONAL ROLE"}</p>
+                            <p className="text-[10px] text-slate-600 font-mono mt-1">
+                              {[resEmail, resPhone, resLocation].filter(Boolean).join("  •  ") || "email@domain.com  •  +91 9876543210  •  Location"}
+                            </p>
+                          </div>
+
+                          {/* Summary */}
+                          {resSummary && (
+                            <div className="space-y-1">
+                              <h4 className="text-[10px] font-bold font-mono text-amber-800 uppercase tracking-wider border-b border-slate-200 pb-0.5">Professional Summary</h4>
+                              <p className="text-[10.5px] text-slate-700 leading-relaxed font-normal">{resSummary}</p>
+                            </div>
+                          )}
+
+                          {/* Experience */}
+                          {(resCompany || resExpTitle) && (
+                            <div className="space-y-1">
+                              <h4 className="text-[10px] font-bold font-mono text-amber-800 uppercase tracking-wider border-b border-slate-200 pb-0.5">Work Experience</h4>
+                              <div className="flex justify-between items-baseline font-semibold text-slate-900 text-[11px]">
+                                <span>{resExpTitle} — {resCompany}</span>
+                                <span className="text-[9.5px] text-slate-500 font-mono">{resExpDates}</span>
+                              </div>
+                              {resExpDesc && (
+                                <p className="text-[10px] text-slate-700 leading-relaxed pl-2 border-l-2 border-slate-300 mt-1">
+                                  {resExpDesc}
+                                </p>
+                              )}
+                            </div>
+                          )}
+
+                          {/* Education */}
+                          {(resDegree || resSchool) && (
+                            <div className="space-y-1">
+                              <h4 className="text-[10px] font-bold font-mono text-amber-800 uppercase tracking-wider border-b border-slate-200 pb-0.5">Education</h4>
+                              <div className="flex justify-between items-baseline font-semibold text-slate-900 text-[11px]">
+                                <span>{resDegree}</span>
+                                <span className="text-[9.5px] text-slate-500 font-mono">{resEduDates}</span>
+                              </div>
+                              {resSchool && <p className="text-[10px] text-slate-600">{resSchool}</p>}
+                            </div>
+                          )}
+
+                          {/* Skills */}
+                          {resSkills && (
+                            <div className="space-y-1">
+                              <h4 className="text-[10px] font-bold font-mono text-amber-800 uppercase tracking-wider border-b border-slate-200 pb-0.5">Technical Skills</h4>
+                              <p className="text-[10px] text-slate-800 font-mono leading-relaxed">{resSkills}</p>
+                            </div>
+                          )}
+
+                          <div className="pt-4 text-center border-t border-slate-100 text-[8.5px] text-slate-400 font-mono">
+                            ATS Compliant Format • 100% Client-Side Private Compilation
+                          </div>
+                        </div>
+
                       </div>
+
                     </div>
-                    <button onClick={compileResumePDF} className="w-full bg-white/5 border border-white/10 hover:border-brand-gold/40 text-xs font-bold py-2.5 rounded-xl text-white cursor-pointer">
-                      {isLoading ? "Formatting Resume..." : "Generate ATS Compliant PDF Resume"}
-                    </button>
-                    {downloadUrl && (
-                      <a href={downloadUrl} onClick={(e) => triggerAdDownload(e, downloadUrl, `${resName.replace(/\s+/g, "_")}_Resume.pdf`)} download={`${resName.replace(/\s+/g, "_")}_Resume.pdf`} className="w-full bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-extrabold text-xs py-2.5 rounded-xl text-center shadow-premium-gold block cursor-pointer">
-                        Download Professional ATS Resume
-                      </a>
-                    )}
                   </div>
                 )}
 
