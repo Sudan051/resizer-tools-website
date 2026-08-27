@@ -686,13 +686,58 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
   // 📝 ATS Resume Builder Compiler
   const compileResumePDF = async () => {
     setIsLoading(true);
+    setDownloadUrl(null);
     try {
       const pdfDoc = await PDFDocument.create();
-      const page = pdfDoc.addPage([595, 842]);
-      const { width, height } = page.getSize();
+      const width = 595.28;
+      const height = 841.89;
 
-      // Top golden accent bar
-      page.drawRectangle({
+      let currentPage = pdfDoc.addPage([width, height]);
+      let currentY = height - 40;
+
+      const checkOverflow = (spaceNeeded: number) => {
+        if (currentY - spaceNeeded < 45) {
+          // Stamp footer on completed page
+          currentPage.drawText("Generated 100% Client-Side via Resizer Tools (resizertools.com)", {
+            x: 40,
+            y: 20,
+            size: 8,
+            color: rgb(0.6, 0.6, 0.6),
+          });
+          
+          // Create Page 2 (or Page N)
+          currentPage = pdfDoc.addPage([width, height]);
+          
+          // Gold top border bar
+          currentPage.drawRectangle({
+            x: 0,
+            y: height - 10,
+            width: width,
+            height: 10,
+            color: rgb(0.83, 0.68, 0.21),
+          });
+
+          // Page header info
+          currentPage.drawText(`${(resName || "RESUME").toUpperCase()} — Continued`, {
+            x: 40,
+            y: height - 35,
+            size: 10,
+            color: rgb(0.5, 0.5, 0.5),
+          });
+
+          currentPage.drawLine({
+            start: { x: 40, y: height - 45 },
+            end: { x: width - 40, y: height - 45 },
+            thickness: 0.5,
+            color: rgb(0.85, 0.85, 0.85),
+          });
+
+          currentY = height - 65;
+        }
+      };
+
+      // Top Gold Accent Bar
+      currentPage.drawRectangle({
         x: 0,
         y: height - 12,
         width: width,
@@ -701,7 +746,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
       });
 
       // Name Header
-      page.drawText((resName || "YOUR NAME").toUpperCase(), {
+      currentPage.drawText((resName || "YOUR NAME").toUpperCase(), {
         x: 40,
         y: height - 45,
         size: 18,
@@ -709,7 +754,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
       });
 
       // Role / Headline
-      page.drawText(resRole || "Professional Headline", {
+      currentPage.drawText(resRole || "Professional Headline", {
         x: 40,
         y: height - 63,
         size: 11,
@@ -717,99 +762,108 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
       });
 
       // Contact Line
-      page.drawText(`${resEmail}  |  ${resPhone}  |  ${resLocation}`, {
+      currentPage.drawText(`${resEmail}  |  ${resPhone}  |  ${resLocation}`, {
         x: 40,
         y: height - 80,
         size: 9,
         color: rgb(0.4, 0.4, 0.4),
       });
 
-      // Divider Line 1
-      page.drawLine({
+      // Divider Line
+      currentPage.drawLine({
         start: { x: 40, y: height - 92 },
         end: { x: width - 40, y: height - 92 },
         thickness: 1,
         color: rgb(0.85, 0.85, 0.85),
       });
 
-      let y = height - 115;
+      currentY = height - 115;
 
-      // Section 1: PROFESSIONAL SUMMARY
+      // 1. PROFESSIONAL SUMMARY
       if (resSummary) {
-        page.drawText("PROFESSIONAL SUMMARY", { x: 40, y, size: 10, color: rgb(0.83, 0.68, 0.21) });
-        y -= 16;
+        checkOverflow(40);
+        currentPage.drawText("PROFESSIONAL SUMMARY", { x: 40, y: currentY, size: 10, color: rgb(0.83, 0.68, 0.21) });
+        currentY -= 16;
 
         const summaryLines = resSummary.match(/.{1,85}(\s|$)/g) || [resSummary];
         summaryLines.forEach((line) => {
-          page.drawText(line.trim(), { x: 40, y, size: 9, color: rgb(0.2, 0.2, 0.2) });
-          y -= 14;
+          checkOverflow(16);
+          currentPage.drawText(line.trim(), { x: 40, y: currentY, size: 9, color: rgb(0.2, 0.2, 0.2) });
+          currentY -= 14;
         });
-        y -= 10;
+        currentY -= 10;
       }
 
-      // Section 2: WORK EXPERIENCE
+      // 2. WORK EXPERIENCE
       if (resCompany || resExpTitle) {
-        page.drawText("WORK EXPERIENCE", { x: 40, y, size: 10, color: rgb(0.83, 0.68, 0.21) });
-        y -= 16;
-        page.drawText(`${resExpTitle} - ${resCompany}`, { x: 40, y, size: 10, color: rgb(0.1, 0.1, 0.1) });
+        checkOverflow(40);
+        currentPage.drawText("WORK EXPERIENCE", { x: 40, y: currentY, size: 10, color: rgb(0.83, 0.68, 0.21) });
+        currentY -= 16;
+        currentPage.drawText(`${resExpTitle} - ${resCompany}`, { x: 40, y: currentY, size: 10, color: rgb(0.1, 0.1, 0.1) });
         if (resExpDates) {
-          page.drawText(resExpDates, { x: width - 150, y, size: 9, color: rgb(0.5, 0.5, 0.5) });
+          currentPage.drawText(resExpDates, { x: width - 150, y: currentY, size: 9, color: rgb(0.5, 0.5, 0.5) });
         }
-        y -= 14;
+        currentY -= 14;
 
         if (resExpDesc) {
           const expLines = resExpDesc.match(/.{1,85}(\s|$)/g) || [resExpDesc];
           expLines.forEach((line) => {
-            page.drawText(`• ${line.trim()}`, { x: 45, y, size: 9, color: rgb(0.3, 0.3, 0.3) });
-            y -= 14;
+            checkOverflow(16);
+            currentPage.drawText(`• ${line.trim()}`, { x: 45, y: currentY, size: 9, color: rgb(0.3, 0.3, 0.3) });
+            currentY -= 14;
           });
         }
-        y -= 10;
+        currentY -= 10;
       }
 
-      // Section 3: EDUCATION
+      // 3. EDUCATION
       if (resDegree || resSchool) {
-        page.drawText("EDUCATION", { x: 40, y, size: 10, color: rgb(0.83, 0.68, 0.21) });
-        y -= 16;
-        page.drawText(resDegree, { x: 40, y, size: 10, color: rgb(0.1, 0.1, 0.1) });
+        checkOverflow(40);
+        currentPage.drawText("EDUCATION", { x: 40, y: currentY, size: 10, color: rgb(0.83, 0.68, 0.21) });
+        currentY -= 16;
+        currentPage.drawText(resDegree, { x: 40, y: currentY, size: 10, color: rgb(0.1, 0.1, 0.1) });
         if (resEduDates) {
-          page.drawText(resEduDates, { x: width - 150, y, size: 9, color: rgb(0.5, 0.5, 0.5) });
+          currentPage.drawText(resEduDates, { x: width - 150, y: currentY, size: 9, color: rgb(0.5, 0.5, 0.5) });
         }
-        y -= 14;
+        currentY -= 14;
         if (resSchool) {
-          page.drawText(resSchool, { x: 40, y, size: 9, color: rgb(0.4, 0.4, 0.4) });
-          y -= 14;
+          currentPage.drawText(resSchool, { x: 40, y: currentY, size: 9, color: rgb(0.4, 0.4, 0.4) });
+          currentY -= 14;
         }
-        y -= 10;
+        currentY -= 10;
       }
 
-      // Section 4: TECHNICAL SKILLS
+      // 4. TECHNICAL SKILLS
       if (resSkills) {
-        page.drawText("SKILLS & COMPETENCIES", { x: 40, y, size: 10, color: rgb(0.83, 0.68, 0.21) });
-        y -= 16;
+        checkOverflow(40);
+        currentPage.drawText("SKILLS & COMPETENCIES", { x: 40, y: currentY, size: 10, color: rgb(0.83, 0.68, 0.21) });
+        currentY -= 16;
         const skillLines = resSkills.match(/.{1,85}(\s|$)/g) || [resSkills];
         skillLines.forEach((line) => {
-          page.drawText(line.trim(), { x: 40, y, size: 9, color: rgb(0.2, 0.2, 0.2) });
-          y -= 14;
+          checkOverflow(16);
+          currentPage.drawText(line.trim(), { x: 40, y: currentY, size: 9, color: rgb(0.2, 0.2, 0.2) });
+          currentY -= 14;
         });
       }
 
-      // Footer stamp
-      page.drawText("Generated 100% Client-Side via Resizer Tools (resizertools.com)", {
+      // Final Footer Stamp
+      currentPage.drawText("Generated 100% Client-Side via Resizer Tools (resizertools.com)", {
         x: 40,
-        y: 25,
-        size: 7,
+        y: 20,
+        size: 8,
         color: rgb(0.6, 0.6, 0.6),
       });
 
       const pdfBytes = await pdfDoc.save();
-      const blob = new Blob([pdfBytes] as BlobPart[], { type: "application/pdf" });
-      setDownloadUrl(URL.createObjectURL(blob));
+      const blob = new Blob([pdfBytes as unknown as BlobPart], { type: "application/pdf" });
+      const url = URL.createObjectURL(blob);
+      setDownloadUrl(url);
     } catch (err) {
       console.error(err);
-      alert("Failed to compile Resume PDF.");
+      alert("Failed to generate multi-page ATS resume.");
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   // 📉 PDF Reducer Operation
