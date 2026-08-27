@@ -1,0 +1,21 @@
+{
+  "name": "Resizer Tools - Free Web PDF & Image Utilities",
+  "short_name": "ResizerTools",
+  "description": "28+ standalone web utility tools running 100% locally inside your browser memory with zero server uploads.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#080808",
+  "theme_color": "#D4AF37",
+  "icons": [
+    {
+      "src": "/Home.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/Pro.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

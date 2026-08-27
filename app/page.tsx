@@ -8,7 +8,7 @@ import { encryptPDF } from "@pdfsmaller/pdf-encrypt-lite";
 import { decryptPDF } from "@pdfsmaller/pdf-decrypt-lite";
 import { 
   Download, Sliders, Maximize2, ShieldCheck, Smartphone, 
-  Briefcase, Cpu, Play, X, Sparkles, Check
+  Briefcase, Cpu, Play, X, Sparkles, Check, Search, ChevronDown
 } from "lucide-react";
 // 🌐 CONFIGURATION KEYS (Replace with your actual keys)
 const RAZORPAY_KEY_ID: string = "rzp_live_TFRpvE5UpoUDlC"; // e.g. "rzp_live_xxxxxxxxxxxxxx"
@@ -26,10 +26,11 @@ const realScreenshots = [
 ];
 
 
-export default function Home({ initialToolId }: { initialToolId?: string } = {}) {
+export default function Home({ initialToolId, isStandaloneToolPage = false }: { initialToolId?: string; isStandaloneToolPage?: boolean } = {}) {
   const [width, setWidth] = useState(1242);
   const [height, setHeight] = useState(2688);
   const [activeCategory, setActiveCategory] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
 
   // Form States for Rating and Feedback
   const [userName, setUserName] = useState("");
@@ -88,6 +89,34 @@ export default function Home({ initialToolId }: { initialToolId?: string } = {})
   const sigCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [sigColor, setSigColor] = useState("#FFFFFF");
+
+  // PWA Deferred Prompt State
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [showPwaPrompt, setShowPwaPrompt] = useState(false);
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+      setShowPwaPrompt(true);
+    };
+
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+    return () => {
+      window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+    };
+  }, []);
+
+  const handleInstallPWA = async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === "accepted") {
+      setShowPwaPrompt(false);
+    }
+    setDeferredPrompt(null);
+  };
 
   // Invoice Maker states
   const [senderName, setSenderName] = useState("Your Company");
@@ -213,26 +242,17 @@ export default function Home({ initialToolId }: { initialToolId?: string } = {})
     return () => clearInterval(interval);
   }, [showAdOverlay, adCountdown]);
 
-  // Intercept downloads and force interstitial ads for non-subscribed users
+  // Execute instant client-side file download
   const triggerAdDownload = (e: React.MouseEvent<HTMLAnchorElement> | React.MouseEvent<HTMLButtonElement>, downloadUrlValue: string | null, filename: string) => {
     if (!downloadUrlValue) return;
 
-    if (isSubscribed) {
-      // Immediate download
-      const a = document.createElement("a");
-      a.href = downloadUrlValue;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    } else {
-      // Intercept and launch interstitial ad overlay
-      e.preventDefault();
-      setAdDownloadUrl(downloadUrlValue);
-      setAdFileName(filename);
-      setAdCountdown(5);
-      setShowAdOverlay(true);
-    }
+    // Direct, zero-latency instant file download
+    const a = document.createElement("a");
+    a.href = downloadUrlValue;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   };
 
   const handleRazorpaySubscription = (planType: "monthly" | "yearly") => {
@@ -1438,6 +1458,792 @@ export default function Home({ initialToolId }: { initialToolId?: string } = {})
     return `mailto:saurabhsudan051@gmail.com?subject=${subject}&body=${body}`;
   };
 
+  if (isStandaloneToolPage && activeTool) {
+    return (
+      <div className="w-full max-w-4xl mx-auto py-2 px-4">
+        <div className="bg-brand-obsidian/95 border border-brand-gold/30 rounded-3xl p-6 md:p-8 w-full relative overflow-hidden shadow-2xl flex flex-col min-h-[480px]">
+          {/* Workspace Header */}
+          <div className="flex items-center justify-between pb-4 border-b border-white/5 mb-6">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-brand-gold/10 border border-brand-gold/20 text-brand-gold rounded-lg">
+                {activeTool.icon ? <activeTool.icon className="w-5 h-5" /> : <Sliders className="w-5 h-5" />}
+              </div>
+              <div className="text-left">
+                <h3 className="text-lg font-bold text-white tracking-tight flex items-center gap-1.5">
+                  {activeTool.title}
+                  {!isSubscribed && (
+                    <span className="text-[8px] font-mono bg-brand-gold/20 text-brand-gold px-1.5 py-0.5 rounded border border-brand-gold/25 uppercase font-bold tracking-wider">PRO</span>
+                  )}
+                </h3>
+                <p className="text-xs text-brand-muted">{activeTool.subtitle || "Utilify Standalone Workspace"}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Workspace Body */}
+          <div className="flex-1 space-y-6 text-left">
+            {(activeTool.isAppDownload || !["img_comp", "img_res", "doc_scan", "sig_cr", "qr_gen", "mrg_pdf", "spl_pdf", "rot_pdf", "num_pdf", "wtrmk_pdf", "inv_mk", "res_make", "red_pdf", "del_pdf", "ext_pdf", "ord_pdf", "sgn_pdf", "pdf_imgs", "prt_pdf", "unl_pdf", "img_pdf", "img_conv", "prnt_sheet", "mk_pdf", "shot_gen"].includes(activeTool.id)) ? (
+              <div className="text-center py-6 space-y-6">
+                <div className="w-16 h-16 rounded-2xl bg-brand-gold/10 border border-brand-gold/25 flex items-center justify-center mx-auto text-brand-gold animate-pulse">
+                  {activeTool.isAppDownload ? <Download className="w-8 h-8" /> : <Smartphone className="w-8 h-8" />}
+                </div>
+                <div className="space-y-2 max-w-md mx-auto">
+                  <h4 className="text-base font-bold text-white">NFC &amp; Hardware Integration Required</h4>
+                  <p className="text-xs text-brand-muted font-light leading-relaxed">
+                    Features like NFC radio reading, passport camera validation, and multi-file PDF merges require deep mobile hardware capabilities not supported natively in this browser sandbox.
+                  </p>
+                </div>
+
+                <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-2">
+                  <a 
+                    href="https://apps.apple.com/us/app/resizer-tools-pdf-image-qr/id6785073828" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-2xl px-5 py-3 hover:border-brand-gold/40 hover:bg-white/[0.08] transition-all duration-300 w-full sm:w-48 text-left"
+                  >
+                    <Smartphone className="w-6 h-6 text-brand-gold" />
+                    <div>
+                      <p className="text-[9px] text-brand-muted font-mono uppercase leading-none">Download for</p>
+                      <p className="text-xs font-bold text-white">iOS App Store</p>
+                    </div>
+                  </a>
+
+                  <a 
+                    href="https://play.google.com/store/apps/details?id=com.resizertools.app" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="flex items-center gap-3 bg-white/5 border border-emerald-500/30 rounded-2xl px-5 py-3 hover:border-emerald-400 hover:bg-white/[0.08] transition-all duration-300 w-full sm:w-48 text-left"
+                  >
+                    <Cpu className="w-6 h-6 text-emerald-400" />
+                    <div>
+                      <p className="text-[9px] text-brand-muted font-mono uppercase leading-none">Get it on</p>
+                      <p className="text-xs font-bold text-white">Google Play Store</p>
+                    </div>
+                  </a>
+                </div>
+
+                <div className="pt-4 border-t border-white/5 max-w-sm mx-auto text-[10px] text-brand-muted">
+                  No data is uploaded or stored. Download our native app for an optimized mobile-first workflow.
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-6">
+                {/* 1. IMAGE COMPRESSOR */}
+                {activeTool.id === "img_comp" && (
+                  <div className="space-y-4 text-left">
+                    <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4">
+                      <label className="block text-xs font-mono uppercase tracking-wider text-brand-muted mb-2">1. Upload Image file</label>
+                      <input type="file" accept="image/*" onChange={handleFileChange} className="text-xs text-neutral-400 file:mr-4 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-brand-gold/15 file:text-brand-gold hover:file:bg-brand-gold/25 file:cursor-pointer" />
+                    </div>
+
+                    {previewUrl && (
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="bg-black/40 border border-white/5 rounded-2xl p-3 flex flex-col items-center">
+                          <span className="text-[10px] font-mono text-brand-muted mb-2">Original Preview</span>
+                          <Image src={previewUrl} alt="Original Preview" width={200} height={200} className="max-h-48 w-auto object-contain rounded-lg border border-white/5" />
+                          <span className="text-[10px] font-mono text-brand-muted mt-2">Size: {(uploadFile!.size / 1024).toFixed(1)} KB</span>
+                        </div>
+                        <div className="bg-black/40 border border-white/5 rounded-2xl p-3 flex flex-col items-center justify-between">
+                          <span className="text-[10px] font-mono text-brand-muted mb-2">Compression Control</span>
+                          <div className="w-full px-2 space-y-4">
+                            <div>
+                              <div className="flex justify-between text-xs font-mono mb-1">
+                                <span className="text-brand-muted">Quality Parameter:</span>
+                                <span className="text-brand-gold font-bold">{imgQuality}%</span>
+                              </div>
+                              <input type="range" min="10" max="100" value={imgQuality} onChange={(e) => setImgQuality(Number(e.target.value))} className="w-full accent-brand-gold bg-white/10 rounded-lg h-1.5 cursor-pointer appearance-none" />
+                            </div>
+                            <button onClick={compressImage} className="w-full bg-white/5 border border-white/10 hover:border-brand-gold/40 text-xs font-bold py-2 rounded-xl text-white cursor-pointer">
+                              {isLoading ? "Compressing..." : "Process Compression"}
+                            </button>
+                          </div>
+                          {downloadUrl && (
+                            <a href={downloadUrl} onClick={(e) => triggerAdDownload(e, downloadUrl, `compressed_${uploadFile!.name}`)} download={`compressed_${uploadFile!.name}`} className="w-full mt-4 bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-extrabold text-xs py-2 rounded-xl text-center shadow-premium-gold block cursor-pointer">
+                              Download Optimized JPEG
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* 2. IMAGE RESIZER */}
+                {activeTool.id === "img_res" && (
+                  <div className="space-y-4 text-left">
+                    <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4">
+                      <label className="block text-xs font-mono uppercase tracking-wider text-brand-muted mb-2">1. Upload Image file</label>
+                      <input type="file" accept="image/*" onChange={handleFileChange} className="text-xs text-neutral-400 file:mr-4 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-brand-gold/15 file:text-brand-gold hover:file:bg-brand-gold/25 file:cursor-pointer" />
+                    </div>
+
+                    {previewUrl && (
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="bg-black/40 border border-white/5 rounded-2xl p-3 flex flex-col items-center">
+                          <span className="text-[10px] font-mono text-brand-muted mb-2">Source Asset</span>
+                          <Image src={previewUrl} alt="Source" width={200} height={200} className="max-h-48 w-auto object-contain rounded-lg border border-white/5" />
+                          <span className="text-[10px] font-mono text-brand-muted mt-2">Original Res: {resizeWidth}x{resizeHeight}</span>
+                        </div>
+                        <div className="bg-black/40 border border-white/5 rounded-2xl p-3 flex flex-col justify-between space-y-4">
+                          <span className="text-[10px] font-mono text-brand-muted">Target Coordinates</span>
+                          <div className="space-y-3">
+                            <div className="grid grid-cols-2 gap-2 text-xs font-mono">
+                              <div>
+                                <label className="block text-brand-muted mb-1">Width (px)</label>
+                                <input type="number" value={resizeWidth} onChange={(e) => setResizeWidth(Number(e.target.value))} className="w-full bg-black/40 border border-white/10 rounded-lg px-2.5 py-1.5 text-white focus:outline-none focus:border-brand-gold/40 text-center" />
+                              </div>
+                              <div>
+                                <label className="block text-brand-muted mb-1">Height (px)</label>
+                                <input type="number" value={resizeHeight} onChange={(e) => setResizeHeight(Number(e.target.value))} className="w-full bg-black/40 border border-white/10 rounded-lg px-2.5 py-1.5 text-white focus:outline-none focus:border-brand-gold/40 text-center" />
+                              </div>
+                            </div>
+                            <button onClick={resizeImage} className="w-full bg-white/5 border border-white/10 hover:border-brand-gold/40 text-xs font-bold py-2 rounded-xl text-white cursor-pointer">
+                              {isLoading ? "Resizing..." : "Execute Resize"}
+                            </button>
+                          </div>
+                          {downloadUrl && (
+                            <a href={downloadUrl} onClick={(e) => triggerAdDownload(e, downloadUrl, `resized_${uploadFile!.name}`)} download={`resized_${uploadFile!.name}`} className="w-full mt-4 bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-extrabold text-xs py-2 rounded-xl text-center shadow-premium-gold block cursor-pointer">
+                              Download Resized File
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* 3. DOCUMENT SCANNER */}
+                {activeTool.id === "doc_scan" && (
+                  <div className="space-y-4 text-left">
+                    <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4">
+                      <label className="block text-xs font-mono uppercase tracking-wider text-brand-muted mb-2">1. Upload Skewed document snapshot</label>
+                      <input type="file" accept="image/*" onChange={handleFileChange} className="text-xs text-neutral-400 file:mr-4 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-brand-gold/15 file:text-brand-gold hover:file:bg-brand-gold/25 file:cursor-pointer" />
+                    </div>
+
+                    {previewUrl && (
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="bg-black/40 border border-white/5 rounded-2xl p-3 flex flex-col items-center">
+                          <span className="text-[10px] font-mono text-brand-muted mb-2">Source Document</span>
+                          <Image src={previewUrl} alt="Source Doc" width={200} height={200} className="max-h-48 w-auto object-contain rounded-lg border border-white/5" />
+                        </div>
+                        <div className="bg-black/40 border border-white/5 rounded-2xl p-3 flex flex-col justify-between space-y-4">
+                          <span className="text-[10px] font-mono text-brand-muted">Scanner Calibration</span>
+                          <div className="space-y-3.5 text-xs font-mono">
+                            <div>
+                              <div className="flex justify-between mb-1">
+                                <span className="text-brand-muted">Contrast Boost:</span>
+                                <span className="text-brand-gold font-bold">{docContrast}%</span>
+                              </div>
+                              <input type="range" min="80" max="250" value={docContrast} onChange={(e) => setDocContrast(Number(e.target.value))} className="w-full accent-brand-gold bg-white/10 rounded-lg h-1" />
+                            </div>
+                            <div>
+                              <div className="flex justify-between mb-1">
+                                <span className="text-brand-muted">Brightness:</span>
+                                <span className="text-brand-gold font-bold">{docBrightness}%</span>
+                              </div>
+                              <input type="range" min="50" max="150" value={docBrightness} onChange={(e) => setDocBrightness(Number(e.target.value))} className="w-full accent-brand-gold bg-white/10 rounded-lg h-1" />
+                            </div>
+                            <div className="flex items-center justify-between py-1 bg-white/[0.02] border border-white/5 px-2.5 rounded-lg">
+                              <span className="text-brand-muted">Grayscale / Black &amp; White</span>
+                              <input type="checkbox" checked={docGrayscale} onChange={(e) => setDocGrayscale(e.target.checked)} className="accent-brand-gold cursor-pointer" />
+                            </div>
+                            <button onClick={applyScanFilters} className="w-full bg-white/5 border border-white/10 hover:border-brand-gold/40 text-xs font-bold py-2 rounded-xl text-white cursor-pointer">
+                              {isLoading ? "Scanning..." : "Apply Scan Filters"}
+                            </button>
+                          </div>
+                          {downloadUrl && (
+                            <a href={downloadUrl} onClick={(e) => triggerAdDownload(e, downloadUrl, `scanned_${uploadFile!.name}`)} download={`scanned_${uploadFile!.name}`} className="w-full mt-4 bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-extrabold text-xs py-2 rounded-xl text-center shadow-premium-gold block cursor-pointer">
+                              Download Scanned PDF/JPG
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* 4. SIGNATURE CREATOR */}
+                {activeTool.id === "sig_cr" && (
+                  <div className="space-y-4 text-center">
+                    <p className="text-xs text-brand-muted text-left font-light">Draw your signature with your mouse or finger inside the interactive canvas area below.</p>
+                    
+                    <div className="flex items-center gap-3 justify-center mb-1">
+                      <span className="text-xs text-brand-muted font-mono">Select Ink Color:</span>
+                      {[
+                        { hex: "#FFFFFF", label: "White" },
+                        { hex: "#000000", label: "Black" },
+                        { hex: "#D4AF37", label: "Gold" },
+                        { hex: "#38BDF8", label: "Blue" },
+                        { hex: "#F87171", label: "Red" },
+                        { hex: "#4ADE80", label: "Green" }
+                      ].map((c) => (
+                        <button 
+                          key={c.hex}
+                          onClick={() => setSigColor(c.hex)}
+                          style={{ backgroundColor: c.hex }}
+                          className={`w-6 h-6 rounded-full border cursor-pointer transition-transform hover:scale-110 ${
+                            sigColor === c.hex ? "border-brand-gold ring-2 ring-brand-gold/40 scale-105" : "border-white/20"
+                          }`}
+                          title={c.label}
+                        />
+                      ))}
+                    </div>
+
+                    <div className="bg-black/60 border border-white/10 rounded-2xl overflow-hidden p-2">
+                      <canvas 
+                        ref={sigCanvasRef}
+                        width={500}
+                        height={250}
+                        onMouseDown={startDrawing}
+                        onMouseMove={draw}
+                        onMouseUp={stopDrawing}
+                        onMouseLeave={stopDrawing}
+                        onTouchStart={startDrawing}
+                        onTouchMove={draw}
+                        onTouchEnd={stopDrawing}
+                        className="w-full bg-[#111111] rounded-xl border border-white/5 cursor-crosshair h-64 touch-none"
+                      />
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <button onClick={clearSignature} className="flex-1 bg-white/5 border border-white/10 hover:border-white/20 text-xs font-bold py-2.5 rounded-xl text-white cursor-pointer">
+                        Clear Canvas
+                      </button>
+                      <button onClick={downloadSignature} className="flex-1 bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-extrabold text-xs py-2.5 rounded-xl shadow-premium-gold cursor-pointer">
+                        Download Signature PNG
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* 5. QR GENERATOR */}
+                {activeTool.id === "qr_gen" && (
+                  <div className="space-y-4 text-left">
+                    <div>
+                      <label className="block text-xs font-mono uppercase tracking-wider text-brand-muted mb-2">Input URL or Text payload</label>
+                      <input type="text" value={qrText} onChange={(e) => setQrText(e.target.value)} className="w-full bg-white/[0.02] border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-gold/40 font-mono" placeholder="https://resizertools.com" />
+                    </div>
+                    <div className="bg-black/40 border border-white/5 rounded-2xl p-4 flex flex-col items-center space-y-3">
+                      <Image src={generateQRCodeUrl()} alt="QR Code" width={180} height={180} className="bg-white p-2 rounded-lg" />
+                      <a href={generateQRCodeUrl()} target="_blank" rel="noopener noreferrer" download="qrcode.png" className="w-full bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-extrabold text-xs py-2 rounded-xl text-center shadow-premium-gold block cursor-pointer">
+                        Download Vector QR Code
+                      </a>
+                    </div>
+                  </div>
+                )}
+
+                {/* 6. MERGE PDF */}
+                {activeTool.id === "mrg_pdf" && (
+                  <div className="space-y-4 text-left">
+                    <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4">
+                      <label className="block text-xs font-mono uppercase tracking-wider text-brand-muted mb-2">Upload Multiple PDF Files</label>
+                      <input type="file" accept="application/pdf" multiple onChange={handleMultipleFilesChange} className="text-xs text-neutral-400 file:mr-4 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-brand-gold/15 file:text-brand-gold hover:file:bg-brand-gold/25 file:cursor-pointer" />
+                      {uploadFiles.length > 0 && (
+                        <p className="text-xs text-brand-gold font-mono mt-2">Loaded {uploadFiles.length} PDF files ready to stitch.</p>
+                      )}
+                    </div>
+                    <button onClick={mergePDFs} disabled={uploadFiles.length < 2 || isLoading} className="w-full bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-extrabold text-xs py-2.5 rounded-xl shadow-premium-gold disabled:opacity-50 cursor-pointer">
+                      {isLoading ? "Stitching PDFs..." : `Stitch ${uploadFiles.length} PDFs into Master Document`}
+                    </button>
+                    {downloadUrl && (
+                      <a href={downloadUrl} onClick={(e) => triggerAdDownload(e, downloadUrl, "merged_master.pdf")} download="merged_master.pdf" className="w-full bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-xs py-2.5 rounded-xl text-center block shadow-lg cursor-pointer">
+                        Download Merged Master PDF
+                      </a>
+                    )}
+                  </div>
+                )}
+
+                {/* 7. SPLIT PDF */}
+                {activeTool.id === "spl_pdf" && (
+                  <div className="space-y-4 text-left">
+                    <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4">
+                      <label className="block text-xs font-mono uppercase tracking-wider text-brand-muted mb-2">Upload Source PDF File</label>
+                      <input type="file" accept="application/pdf" onChange={handleFileChange} className="text-xs text-neutral-400 file:mr-4 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-brand-gold/15 file:text-brand-gold hover:file:bg-brand-gold/25 file:cursor-pointer" />
+                      {pdfPageCount > 0 && (
+                        <p className="text-xs text-brand-gold font-mono mt-2">Document detected with {pdfPageCount} pages.</p>
+                      )}
+                    </div>
+                    {uploadFile && (
+                      <div className="bg-black/40 border border-white/5 rounded-2xl p-4 space-y-3">
+                        <div className="grid grid-cols-2 gap-4 text-xs font-mono">
+                          <div>
+                            <label className="block text-brand-muted mb-1">Start Page Number</label>
+                            <input type="number" min="1" max={pdfPageCount || 100} value={splitStart} onChange={(e) => setSplitStart(Number(e.target.value))} className="w-full bg-black/40 border border-white/10 rounded-lg px-2.5 py-1.5 text-white text-center" />
+                          </div>
+                          <div>
+                            <label className="block text-brand-muted mb-1">End Page Number</label>
+                            <input type="number" min="1" max={pdfPageCount || 100} value={splitEnd} onChange={(e) => setSplitEnd(Number(e.target.value))} className="w-full bg-black/40 border border-white/10 rounded-lg px-2.5 py-1.5 text-white text-center" />
+                          </div>
+                        </div>
+                        <button onClick={splitPDF} className="w-full bg-white/5 border border-white/10 hover:border-brand-gold/40 text-xs font-bold py-2 rounded-xl text-white cursor-pointer">
+                          {isLoading ? "Splitting..." : "Extract Page Range"}
+                        </button>
+                      </div>
+                    )}
+                    {downloadUrl && (
+                      <a href={downloadUrl} onClick={(e) => triggerAdDownload(e, downloadUrl, `split_${splitStart}_to_${splitEnd}.pdf`)} download={`split_${splitStart}_to_${splitEnd}.pdf`} className="w-full bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-extrabold text-xs py-2.5 rounded-xl text-center shadow-premium-gold block cursor-pointer">
+                        Download Segmented PDF
+                      </a>
+                    )}
+                  </div>
+                )}
+
+                {/* 8. ROTATE PDF */}
+                {activeTool.id === "rot_pdf" && (
+                  <div className="space-y-4 text-left">
+                    <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4">
+                      <label className="block text-xs font-mono uppercase tracking-wider text-brand-muted mb-2">Upload Misaligned PDF</label>
+                      <input type="file" accept="application/pdf" onChange={handleFileChange} className="text-xs text-neutral-400 file:mr-4 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-brand-gold/15 file:text-brand-gold hover:file:bg-brand-gold/25 file:cursor-pointer" />
+                    </div>
+                    {uploadFile && (
+                      <div className="bg-black/40 border border-white/5 rounded-2xl p-4 space-y-4">
+                        <div className="flex items-center justify-between text-xs font-mono">
+                          <span className="text-brand-muted">Rotation Angle:</span>
+                          <span className="text-brand-gold font-bold">{pdfRotation}° Clockwise</span>
+                        </div>
+                        <div className="flex gap-2">
+                          {[90, 180, 270].map((deg) => (
+                            <button key={deg} onClick={() => setPdfRotation(deg)} className={`flex-1 py-2 rounded-xl border text-xs font-mono font-bold cursor-pointer transition-all ${pdfRotation === deg ? "bg-brand-gold/20 border-brand-gold text-brand-gold" : "bg-white/5 border-white/10 text-neutral-400"}`}>
+                              {deg}°
+                            </button>
+                          ))}
+                        </div>
+                        <button onClick={rotatePDF} className="w-full bg-white/5 border border-white/10 hover:border-brand-gold/40 text-xs font-bold py-2 rounded-xl text-white cursor-pointer">
+                          {isLoading ? "Rotating..." : "Apply Rotation Matrix"}
+                        </button>
+                      </div>
+                    )}
+                    {downloadUrl && (
+                      <a href={downloadUrl} onClick={(e) => triggerAdDownload(e, downloadUrl, "rotated_document.pdf")} download="rotated_document.pdf" className="w-full bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-extrabold text-xs py-2.5 rounded-xl text-center shadow-premium-gold block cursor-pointer">
+                        Download Rotated PDF
+                      </a>
+                    )}
+                  </div>
+                )}
+
+                {/* 9. PAGE NUMBERS */}
+                {activeTool.id === "num_pdf" && (
+                  <div className="space-y-4 text-left">
+                    <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4">
+                      <label className="block text-xs font-mono uppercase tracking-wider text-brand-muted mb-2">Upload Target PDF</label>
+                      <input type="file" accept="application/pdf" onChange={handleFileChange} className="text-xs text-neutral-400 file:mr-4 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-brand-gold/15 file:text-brand-gold hover:file:bg-brand-gold/25 file:cursor-pointer" />
+                    </div>
+                    {uploadFile && (
+                      <button onClick={addPageNumbers} className="w-full bg-white/5 border border-white/10 hover:border-brand-gold/40 text-xs font-bold py-2.5 rounded-xl text-white cursor-pointer">
+                        {isLoading ? "Stamp Indexes..." : "Stamp Bottom-Center Page Numbers"}
+                      </button>
+                    )}
+                    {downloadUrl && (
+                      <a href={downloadUrl} onClick={(e) => triggerAdDownload(e, downloadUrl, "numbered_document.pdf")} download="numbered_document.pdf" className="w-full bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-extrabold text-xs py-2.5 rounded-xl text-center shadow-premium-gold block cursor-pointer">
+                        Download Numbered PDF
+                      </a>
+                    )}
+                  </div>
+                )}
+
+                {/* 10. PDF WATERMARK */}
+                {activeTool.id === "wtrmk_pdf" && (
+                  <div className="space-y-4 text-left">
+                    <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4">
+                      <label className="block text-xs font-mono uppercase tracking-wider text-brand-muted mb-2">Upload Target PDF</label>
+                      <input type="file" accept="application/pdf" onChange={handleFileChange} className="text-xs text-neutral-400 file:mr-4 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-brand-gold/15 file:text-brand-gold hover:file:bg-brand-gold/25 file:cursor-pointer" />
+                    </div>
+                    {uploadFile && (
+                      <div className="bg-black/40 border border-white/5 rounded-2xl p-4 space-y-3 font-mono text-xs">
+                        <div>
+                          <label className="block text-brand-muted mb-1">Watermark Text Stamp</label>
+                          <input type="text" value={watermarkText} onChange={(e) => setWatermarkText(e.target.value)} className="w-full bg-black/40 border border-white/10 rounded-lg px-2.5 py-1.5 text-white" />
+                        </div>
+                        <button onClick={addWatermark} className="w-full bg-white/5 border border-white/10 hover:border-brand-gold/40 text-xs font-bold py-2 rounded-xl text-white cursor-pointer">
+                          {isLoading ? "Injecting Watermark..." : "Inject Diagonal Watermark"}
+                        </button>
+                      </div>
+                    )}
+                    {downloadUrl && (
+                      <a href={downloadUrl} onClick={(e) => triggerAdDownload(e, downloadUrl, "watermarked_document.pdf")} download="watermarked_document.pdf" className="w-full bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-extrabold text-xs py-2.5 rounded-xl text-center shadow-premium-gold block cursor-pointer">
+                        Download Watermarked PDF
+                      </a>
+                    )}
+                  </div>
+                )}
+
+                {/* 11. INVOICE MAKER */}
+                {activeTool.id === "inv_mk" && (
+                  <div className="space-y-4 text-left">
+                    <div className="grid grid-cols-2 gap-3 text-xs font-mono">
+                      <div>
+                        <label className="block text-brand-muted mb-1">Company Name</label>
+                        <input type="text" value={senderName} onChange={(e) => setSenderName(e.target.value)} className="w-full bg-black/40 border border-white/10 rounded-lg px-2 py-1.5 text-white" />
+                      </div>
+                      <div>
+                        <label className="block text-brand-muted mb-1">Client Name</label>
+                        <input type="text" value={clientName} onChange={(e) => setClientName(e.target.value)} className="w-full bg-black/40 border border-white/10 rounded-lg px-2 py-1.5 text-white" />
+                      </div>
+                    </div>
+                    <button onClick={compileInvoice} className="w-full bg-white/5 border border-white/10 hover:border-brand-gold/40 text-xs font-bold py-2.5 rounded-xl text-white cursor-pointer">
+                      {isLoading ? "Generating Statement..." : "Generate Professional Invoice PDF"}
+                    </button>
+                    {downloadUrl && (
+                      <a href={downloadUrl} onClick={(e) => triggerAdDownload(e, downloadUrl, `Invoice_${invoiceNum}.pdf`)} download={`Invoice_${invoiceNum}.pdf`} className="w-full bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-extrabold text-xs py-2.5 rounded-xl text-center shadow-premium-gold block cursor-pointer">
+                        Download Corporate Invoice PDF
+                      </a>
+                    )}
+                  </div>
+                )}
+
+                {/* 12. ATS RESUME BUILDER */}
+                {activeTool.id === "res_make" && (
+                  <div className="space-y-4 text-left">
+                    <div className="grid grid-cols-2 gap-3 text-xs font-mono">
+                      <div>
+                        <label className="block text-brand-muted mb-1">Full Name</label>
+                        <input type="text" value={resName} onChange={(e) => setResName(e.target.value)} className="w-full bg-black/40 border border-white/10 rounded-lg px-2 py-1.5 text-white" />
+                      </div>
+                      <div>
+                        <label className="block text-brand-muted mb-1">Target Role</label>
+                        <input type="text" value={resRole} onChange={(e) => setResRole(e.target.value)} className="w-full bg-black/40 border border-white/10 rounded-lg px-2 py-1.5 text-white" />
+                      </div>
+                    </div>
+                    <button onClick={compileResumePDF} className="w-full bg-white/5 border border-white/10 hover:border-brand-gold/40 text-xs font-bold py-2.5 rounded-xl text-white cursor-pointer">
+                      {isLoading ? "Formatting Resume..." : "Generate ATS Compliant PDF Resume"}
+                    </button>
+                    {downloadUrl && (
+                      <a href={downloadUrl} onClick={(e) => triggerAdDownload(e, downloadUrl, `${resName.replace(/\s+/g, "_")}_Resume.pdf`)} download={`${resName.replace(/\s+/g, "_")}_Resume.pdf`} className="w-full bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-extrabold text-xs py-2.5 rounded-xl text-center shadow-premium-gold block cursor-pointer">
+                        Download Professional ATS Resume
+                      </a>
+                    )}
+                  </div>
+                )}
+
+                {/* 13. PDF REDUCER */}
+                {activeTool.id === "red_pdf" && (
+                  <div className="space-y-4 text-left">
+                    <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4">
+                      <label className="block text-xs font-mono uppercase tracking-wider text-brand-muted mb-2">Upload Heavy PDF Document</label>
+                      <input type="file" accept="application/pdf" onChange={handleFileChange} className="text-xs text-neutral-400 file:mr-4 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-brand-gold/15 file:text-brand-gold hover:file:bg-brand-gold/25 file:cursor-pointer" />
+                    </div>
+                    {uploadFile && (
+                      <button onClick={compressPDF} className="w-full bg-white/5 border border-white/10 hover:border-brand-gold/40 text-xs font-bold py-2.5 rounded-xl text-white cursor-pointer">
+                        {isLoading ? "Compressing PDF Stream..." : "Optimize & Compress PDF Stream"}
+                      </button>
+                    )}
+                    {downloadUrl && (
+                      <a href={downloadUrl} onClick={(e) => triggerAdDownload(e, downloadUrl, "compressed_document.pdf")} download="compressed_document.pdf" className="w-full bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-extrabold text-xs py-2.5 rounded-xl text-center shadow-premium-gold block cursor-pointer">
+                        Download Compressed PDF
+                      </a>
+                    )}
+                  </div>
+                )}
+
+                {/* 14. DELETE PDF PAGES */}
+                {activeTool.id === "del_pdf" && (
+                  <div className="space-y-4 text-left">
+                    <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4">
+                      <label className="block text-xs font-mono uppercase tracking-wider text-brand-muted mb-2">Upload PDF Document</label>
+                      <input type="file" accept="application/pdf" onChange={handleFileChange} className="text-xs text-neutral-400 file:mr-4 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-brand-gold/15 file:text-brand-gold hover:file:bg-brand-gold/25 file:cursor-pointer" />
+                    </div>
+                    {uploadFile && (
+                      <div className="bg-black/40 border border-white/5 rounded-2xl p-4 space-y-3 text-xs font-mono">
+                        <div>
+                          <label className="block text-brand-muted mb-1">Page Numbers to Delete (e.g. 1, 3, 5)</label>
+                          <input type="text" value={deletePagesInput} onChange={(e) => setDeletePagesInput(e.target.value)} placeholder="1, 3, 5" className="w-full bg-black/40 border border-white/10 rounded-lg px-2.5 py-1.5 text-white" />
+                        </div>
+                        <button onClick={deletePDFPages} className="w-full bg-white/5 border border-white/10 hover:border-brand-gold/40 text-xs font-bold py-2 rounded-xl text-white cursor-pointer">
+                          {isLoading ? "Pruning Pages..." : "Remove Selected Pages"}
+                        </button>
+                      </div>
+                    )}
+                    {downloadUrl && (
+                      <a href={downloadUrl} onClick={(e) => triggerAdDownload(e, downloadUrl, "pruned_document.pdf")} download="pruned_document.pdf" className="w-full bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-extrabold text-xs py-2.5 rounded-xl text-center shadow-premium-gold block cursor-pointer">
+                        Download Pruned PDF
+                      </a>
+                    )}
+                  </div>
+                )}
+
+                {/* 15. EXTRACT PDF PAGES */}
+                {activeTool.id === "ext_pdf" && (
+                  <div className="space-y-4 text-left">
+                    <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4">
+                      <label className="block text-xs font-mono uppercase tracking-wider text-brand-muted mb-2">Upload Source PDF</label>
+                      <input type="file" accept="application/pdf" onChange={handleFileChange} className="text-xs text-neutral-400 file:mr-4 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-brand-gold/15 file:text-brand-gold hover:file:bg-brand-gold/25 file:cursor-pointer" />
+                    </div>
+                    {uploadFile && (
+                      <div className="bg-black/40 border border-white/5 rounded-2xl p-4 space-y-3 text-xs font-mono">
+                        <div>
+                          <label className="block text-brand-muted mb-1">Page Numbers to Extract (e.g. 2, 4)</label>
+                          <input type="text" value={extractPagesInput} onChange={(e) => setExtractPagesInput(e.target.value)} placeholder="2, 4" className="w-full bg-black/40 border border-white/10 rounded-lg px-2.5 py-1.5 text-white" />
+                        </div>
+                        <button onClick={extractPDFPages} className="w-full bg-white/5 border border-white/10 hover:border-brand-gold/40 text-xs font-bold py-2 rounded-xl text-white cursor-pointer">
+                          {isLoading ? "Extracting..." : "Isolate Selected Pages"}
+                        </button>
+                      </div>
+                    )}
+                    {downloadUrl && (
+                      <a href={downloadUrl} onClick={(e) => triggerAdDownload(e, downloadUrl, "extracted_pages.pdf")} download="extracted_pages.pdf" className="w-full bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-extrabold text-xs py-2.5 rounded-xl text-center shadow-premium-gold block cursor-pointer">
+                        Download Extracted Pages PDF
+                      </a>
+                    )}
+                  </div>
+                )}
+
+                {/* 16. REORDER PDF PAGES */}
+                {activeTool.id === "ord_pdf" && (
+                  <div className="space-y-4 text-left">
+                    <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4">
+                      <label className="block text-xs font-mono uppercase tracking-wider text-brand-muted mb-2">Upload Source PDF</label>
+                      <input type="file" accept="application/pdf" onChange={handleFileChange} className="text-xs text-neutral-400 file:mr-4 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-brand-gold/15 file:text-brand-gold hover:file:bg-brand-gold/25 file:cursor-pointer" />
+                    </div>
+                    {uploadFile && (
+                      <div className="bg-black/40 border border-white/5 rounded-2xl p-4 space-y-3 text-xs font-mono">
+                        <div>
+                          <label className="block text-brand-muted mb-1">New Page Sequence (e.g. 3, 1, 2)</label>
+                          <input type="text" value={reorderPagesInput} onChange={(e) => setReorderPagesInput(e.target.value)} placeholder="3, 1, 2" className="w-full bg-black/40 border border-white/10 rounded-lg px-2.5 py-1.5 text-white" />
+                        </div>
+                        <button onClick={reorderPDFPages} className="w-full bg-white/5 border border-white/10 hover:border-brand-gold/40 text-xs font-bold py-2 rounded-xl text-white cursor-pointer">
+                          {isLoading ? "Reordering..." : "Apply Custom Page Sequence"}
+                        </button>
+                      </div>
+                    )}
+                    {downloadUrl && (
+                      <a href={downloadUrl} onClick={(e) => triggerAdDownload(e, downloadUrl, "reordered_document.pdf")} download="reordered_document.pdf" className="w-full bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-extrabold text-xs py-2.5 rounded-xl text-center shadow-premium-gold block cursor-pointer">
+                        Download Reordered PDF
+                      </a>
+                    )}
+                  </div>
+                )}
+
+                {/* 17. SIGN PDF */}
+                {activeTool.id === "sgn_pdf" && (
+                  <div className="space-y-4 text-left">
+                    <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4">
+                      <label className="block text-xs font-mono uppercase tracking-wider text-brand-muted mb-2">1. Upload Target PDF Document</label>
+                      <input type="file" accept="application/pdf" onChange={handleFileChange} className="text-xs text-neutral-400 file:mr-4 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-brand-gold/15 file:text-brand-gold hover:file:bg-brand-gold/25 file:cursor-pointer" />
+                    </div>
+                    {uploadFile && (
+                      <div className="bg-black/40 border border-white/5 rounded-2xl p-4 space-y-3 text-xs font-mono">
+                        <div>
+                          <label className="block text-brand-muted mb-2">2. Upload Signature Image (PNG/JPG with white/transparent bg)</label>
+                          <input type="file" accept="image/*" onChange={(e) => setSignatureImageFile(e.target.files ? e.target.files[0] : null)} className="text-xs text-neutral-400 file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-brand-gold/15 file:text-brand-gold file:cursor-pointer" />
+                        </div>
+                        <button onClick={signPDF} disabled={!signatureImageFile} className="w-full bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-extrabold text-xs py-2.5 rounded-xl shadow-premium-gold disabled:opacity-50 cursor-pointer">
+                          {isLoading ? "Stamping Signature..." : "Stamp Signature onto PDF"}
+                        </button>
+                      </div>
+                    )}
+                    {downloadUrl && (
+                      <a href={downloadUrl} onClick={(e) => triggerAdDownload(e, downloadUrl, "signed_document.pdf")} download="signed_document.pdf" className="w-full bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-xs py-2.5 rounded-xl text-center block shadow-lg cursor-pointer">
+                        Download Signed PDF Document
+                      </a>
+                    )}
+                  </div>
+                )}
+
+                {/* 18. PDF TO IMAGES */}
+                {activeTool.id === "pdf_imgs" && (
+                  <div className="space-y-4 text-left">
+                    <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4">
+                      <label className="block text-xs font-mono uppercase tracking-wider text-brand-muted mb-2">Upload Source PDF Document</label>
+                      <input type="file" accept="application/pdf" onChange={handleFileChange} className="text-xs text-neutral-400 file:mr-4 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-brand-gold/15 file:text-brand-gold hover:file:bg-brand-gold/25 file:cursor-pointer" />
+                    </div>
+                    {uploadFile && (
+                      <button onClick={extractPageAsImage} className="w-full bg-white/5 border border-white/10 hover:border-brand-gold/40 text-xs font-bold py-2.5 rounded-xl text-white cursor-pointer">
+                        {isLoading ? "Rendering Page..." : "Deconstruct First Page to PNG Image"}
+                      </button>
+                    )}
+                    {downloadUrl && (
+                      <a href={downloadUrl} onClick={(e) => triggerAdDownload(e, downloadUrl, "pdf_page_1.png")} download="pdf_page_1.png" className="w-full bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-extrabold text-xs py-2.5 rounded-xl text-center shadow-premium-gold block cursor-pointer">
+                        Download Rendered PNG Image
+                      </a>
+                    )}
+                  </div>
+                )}
+
+                {/* 19. PROTECT PDF */}
+                {activeTool.id === "prt_pdf" && (
+                  <div className="space-y-4 text-left">
+                    <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4">
+                      <label className="block text-xs font-mono uppercase tracking-wider text-brand-muted mb-2">Upload PDF File to Encrypt</label>
+                      <input type="file" accept="application/pdf" onChange={handleFileChange} className="text-xs text-neutral-400 file:mr-4 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-brand-gold/15 file:text-brand-gold hover:file:bg-brand-gold/25 file:cursor-pointer" />
+                    </div>
+                    {uploadFile && (
+                      <div className="bg-black/40 border border-white/5 rounded-2xl p-4 space-y-3 text-xs font-mono">
+                        <div>
+                          <label className="block text-brand-muted mb-1">Set Document Password</label>
+                          <input type="password" value={pdfPassword} onChange={(e) => setPdfPassword(e.target.value)} placeholder="Enter secure password" className="w-full bg-black/40 border border-white/10 rounded-lg px-2.5 py-1.5 text-white" />
+                        </div>
+                        <button onClick={protectPDF} disabled={!pdfPassword} className="w-full bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-extrabold text-xs py-2.5 rounded-xl shadow-premium-gold disabled:opacity-50 cursor-pointer">
+                          {isLoading ? "Encrypting Document..." : "Encrypt PDF with Password"}
+                        </button>
+                      </div>
+                    )}
+                    {downloadUrl && (
+                      <a href={downloadUrl} onClick={(e) => triggerAdDownload(e, downloadUrl, "protected_document.pdf")} download="protected_document.pdf" className="w-full bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-xs py-2.5 rounded-xl text-center block shadow-lg cursor-pointer">
+                        Download Password-Protected PDF
+                      </a>
+                    )}
+                  </div>
+                )}
+
+                {/* 20. UNLOCK PDF */}
+                {activeTool.id === "unl_pdf" && (
+                  <div className="space-y-4 text-left">
+                    <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4">
+                      <label className="block text-xs font-mono uppercase tracking-wider text-brand-muted mb-2">Upload Protected PDF Document</label>
+                      <input type="file" accept="application/pdf" onChange={handleFileChange} className="text-xs text-neutral-400 file:mr-4 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-brand-gold/15 file:text-brand-gold hover:file:bg-brand-gold/25 file:cursor-pointer" />
+                    </div>
+                    {uploadFile && (
+                      <div className="bg-black/40 border border-white/5 rounded-2xl p-4 space-y-3 text-xs font-mono">
+                        <div>
+                          <label className="block text-brand-muted mb-1">Enter Known Password</label>
+                          <input type="password" value={unlockPassword} onChange={(e) => setUnlockPassword(e.target.value)} placeholder="Enter password" className="w-full bg-black/40 border border-white/10 rounded-lg px-2.5 py-1.5 text-white" />
+                        </div>
+                        <button onClick={unlockPDF} disabled={!unlockPassword} className="w-full bg-white/5 border border-white/10 hover:border-brand-gold/40 text-xs font-bold py-2 rounded-xl text-white cursor-pointer">
+                          {isLoading ? "Decrypting..." : "Decrypt & Strip Password"}
+                        </button>
+                      </div>
+                    )}
+                    {downloadUrl && (
+                      <a href={downloadUrl} onClick={(e) => triggerAdDownload(e, downloadUrl, "unlocked_document.pdf")} download="unlocked_document.pdf" className="w-full bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-extrabold text-xs py-2.5 rounded-xl text-center shadow-premium-gold block cursor-pointer">
+                        Download Unlocked PDF
+                      </a>
+                    )}
+                  </div>
+                )}
+
+                {/* 21. IMAGE TO PDF */}
+                {activeTool.id === "img_pdf" && (
+                  <div className="space-y-4 text-left">
+                    <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4">
+                      <label className="block text-xs font-mono uppercase tracking-wider text-brand-muted mb-2">Upload Multiple Images (JPG, PNG)</label>
+                      <input type="file" accept="image/*" multiple onChange={handleMultipleFilesChange} className="text-xs text-neutral-400 file:mr-4 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-brand-gold/15 file:text-brand-gold hover:file:bg-brand-gold/25 file:cursor-pointer" />
+                      {uploadFiles.length > 0 && (
+                        <p className="text-xs text-brand-gold font-mono mt-2">{uploadFiles.length} image files selected for PDF embedding.</p>
+                      )}
+                    </div>
+                    <button onClick={convertImageToPDF} disabled={uploadFiles.length === 0 || isLoading} className="w-full bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-extrabold text-xs py-2.5 rounded-xl shadow-premium-gold disabled:opacity-50 cursor-pointer">
+                      {isLoading ? "Embedding Images..." : `Compile ${uploadFiles.length} Images into PDF`}
+                    </button>
+                    {downloadUrl && (
+                      <a href={downloadUrl} onClick={(e) => triggerAdDownload(e, downloadUrl, "images_compiled.pdf")} download="images_compiled.pdf" className="w-full bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-xs py-2.5 rounded-xl text-center block shadow-lg cursor-pointer">
+                        Download Compiled PDF File
+                      </a>
+                    )}
+                  </div>
+                )}
+
+                {/* 22. IMAGE FORMAT CONVERTER */}
+                {activeTool.id === "img_conv" && (
+                  <div className="space-y-4 text-left">
+                    <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4">
+                      <label className="block text-xs font-mono uppercase tracking-wider text-brand-muted mb-2">Upload Target Image</label>
+                      <input type="file" accept="image/*" onChange={handleFileChange} className="text-xs text-neutral-400 file:mr-4 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-brand-gold/15 file:text-brand-gold hover:file:bg-brand-gold/25 file:cursor-pointer" />
+                    </div>
+                    {uploadFile && (
+                      <div className="bg-black/40 border border-white/5 rounded-2xl p-4 space-y-3 font-mono text-xs">
+                        <div>
+                          <label className="block text-brand-muted mb-1">Target Format Selection</label>
+                          <select value={targetImageFormat} onChange={(e) => setTargetImageFormat(e.target.value)} className="w-full bg-black/40 border border-white/10 rounded-lg px-2.5 py-1.5 text-white">
+                            <option value="image/png">PNG (.png)</option>
+                            <option value="image/jpeg">JPEG (.jpg)</option>
+                            <option value="image/webp">WebP (.webp)</option>
+                          </select>
+                        </div>
+                        <button onClick={convertImageFormat} className="w-full bg-white/5 border border-white/10 hover:border-brand-gold/40 text-xs font-bold py-2 rounded-xl text-white cursor-pointer">
+                          {isLoading ? "Converting..." : "Convert Asset Format"}
+                        </button>
+                      </div>
+                    )}
+                    {downloadUrl && (
+                      <a href={downloadUrl} onClick={(e) => triggerAdDownload(e, downloadUrl, `converted.${targetImageFormat.split("/")[1]}`)} download={`converted.${targetImageFormat.split("/")[1]}`} className="w-full bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-extrabold text-xs py-2.5 rounded-xl text-center shadow-premium-gold block cursor-pointer">
+                        Download Converted Image
+                      </a>
+                    )}
+                  </div>
+                )}
+
+                {/* 23. PRINT PHOTO SHEET */}
+                {activeTool.id === "prnt_sheet" && (
+                  <div className="space-y-4 text-left">
+                    <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4">
+                      <label className="block text-xs font-mono uppercase tracking-wider text-brand-muted mb-2">Upload Photo / Passport Cutout</label>
+                      <input type="file" accept="image/*" onChange={handleFileChange} className="text-xs text-neutral-400 file:mr-4 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-brand-gold/15 file:text-brand-gold hover:file:bg-brand-gold/25 file:cursor-pointer" />
+                    </div>
+                    {uploadFile && (
+                      <div className="bg-black/40 border border-white/5 rounded-2xl p-4 space-y-3 font-mono text-xs">
+                        <div className="grid grid-cols-2 gap-3">
+                          <div>
+                            <label className="block text-brand-muted mb-1">Grid Rows</label>
+                            <input type="number" value={photoSheetRows} onChange={(e) => setPhotoSheetRows(Number(e.target.value))} className="w-full bg-black/40 border border-white/10 rounded-lg px-2.5 py-1 text-white text-center" />
+                          </div>
+                          <div>
+                            <label className="block text-brand-muted mb-1">Grid Columns</label>
+                            <input type="number" value={photoSheetCols} onChange={(e) => setPhotoSheetCols(Number(e.target.value))} className="w-full bg-black/40 border border-white/10 rounded-lg px-2.5 py-1 text-white text-center" />
+                          </div>
+                        </div>
+                        <button onClick={generatePhotoSheet} className="w-full bg-white/5 border border-white/10 hover:border-brand-gold/40 text-xs font-bold py-2 rounded-xl text-white cursor-pointer">
+                          {isLoading ? "Arranging Grid..." : "Generate Printable A4 Grid Sheet"}
+                        </button>
+                      </div>
+                    )}
+                    {downloadUrl && (
+                      <a href={downloadUrl} onClick={(e) => triggerAdDownload(e, downloadUrl, "print_photo_sheet.pdf")} download="print_photo_sheet.pdf" className="w-full bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-extrabold text-xs py-2.5 rounded-xl text-center shadow-premium-gold block cursor-pointer">
+                        Download Printable PDF Sheet
+                      </a>
+                    )}
+                  </div>
+                )}
+
+                {/* 24. PDF MAKER */}
+                {activeTool.id === "mk_pdf" && (
+                  <div className="space-y-4 text-left">
+                    <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4 space-y-2">
+                      <label className="block text-xs font-mono uppercase tracking-wider text-brand-muted mb-1">Document Text Payload</label>
+                      <textarea value={pdfMakerText} onChange={(e) => setPdfMakerText(e.target.value)} rows={4} className="w-full bg-black/40 border border-white/10 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-brand-gold/40 font-mono" />
+                    </div>
+                    <button onClick={compileCustomPDF} className="w-full bg-white/5 border border-white/10 hover:border-brand-gold/40 text-xs font-bold py-2.5 rounded-xl text-white cursor-pointer">
+                      {isLoading ? "Building Document..." : "Create Vector PDF File"}
+                    </button>
+                    {downloadUrl && (
+                      <a href={downloadUrl} onClick={(e) => triggerAdDownload(e, downloadUrl, "custom_document.pdf")} download="custom_document.pdf" className="w-full bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-extrabold text-xs py-2.5 rounded-xl text-center shadow-premium-gold block cursor-pointer">
+                        Download Created PDF File
+                      </a>
+                    )}
+                  </div>
+                )}
+
+                {/* 25. APP STORE SCREENSHOT STUDIO */}
+                {activeTool.id === "shot_gen" && (
+                  <div className="space-y-4 text-center py-4">
+                    <div className="p-6 rounded-2xl bg-brand-gold/10 border border-brand-gold/30 space-y-3">
+                      <h4 className="text-base font-bold text-white">App Store &amp; Play Store Screenshot Studio</h4>
+                      <p className="text-xs text-brand-muted font-light leading-relaxed">
+                        Generate pixel-perfect Apple App Store (6.7&quot;, 6.5&quot;, 5.5&quot;, iPad 13&quot;) &amp; Google Play Store screenshots with dark-gold luxury device frames, custom titles, and batch PNG export.
+                      </p>
+                      <Link 
+                        href="/shots/" 
+                        className="inline-flex items-center gap-2 bg-gradient-to-r from-brand-gold via-brand-gold-light to-brand-gold-dark text-black font-extrabold text-xs px-6 py-3 rounded-xl shadow-premium-gold hover:scale-105 transition-transform"
+                      >
+                        Open Fullscreen Screenshot Studio 🚀
+                      </Link>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const searchedTools = searchQuery.trim() === "" 
+    ? [] 
+    : toolsData.filter(t => 
+        t.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        (t.subtitle ? t.subtitle.toLowerCase().includes(searchQuery.toLowerCase()) : false) ||
+        (t.desc ? t.desc.toLowerCase().includes(searchQuery.toLowerCase()) : false) ||
+        t.id.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+
   return (
     <main className="min-h-screen bg-brand-black text-white selection:bg-brand-gold/30 selection:text-brand-gold-light relative">
       
@@ -1447,15 +2253,85 @@ export default function Home({ initialToolId }: { initialToolId?: string } = {})
         animate={{ y: 0, opacity: 1 }}
         className="fixed top-0 left-0 right-0 z-50 h-16 glass-panel flex items-center justify-between px-6 md:px-12 border-b border-white/5"
       >
-        <div className="flex items-center gap-2 font-semibold tracking-wide text-lg">
+        <Link href="/" className="flex items-center gap-2 font-semibold tracking-wide text-lg">
           <Sliders className="w-5 h-5 text-brand-gold" />
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-brand-muted">Resizer Tools</span>
-        </div>
-        <div className="hidden md:flex items-center gap-8 text-sm text-brand-muted font-medium">
-          <a href="#demo" className="hover:text-white transition-colors">Interactive Demo</a>
-          <a href="#studio" className="hover:text-white transition-colors">Workspace Tools ({toolsData.length})</a>
-          <Link href="/blog/" className="text-brand-gold hover:text-white font-semibold flex items-center gap-1 transition-colors">Blog & Guides 📖</Link>
-          <a href="#about" className="hover:text-white transition-colors">Creator</a>
+        </Link>
+        <div className="hidden md:flex items-center gap-6 text-sm text-brand-muted font-medium">
+          {/* PDF Tools Dropdown */}
+          <div className="relative group">
+            <button className="flex items-center gap-1 hover:text-white transition-colors py-2 cursor-pointer">
+              PDF Tools <ChevronDown className="w-3.5 h-3.5 text-brand-gold" />
+            </button>
+            <div className="absolute top-full left-0 w-64 bg-brand-obsidian/95 border border-brand-gold/20 rounded-2xl p-3 shadow-2xl backdrop-blur-xl opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-all duration-200 grid grid-cols-1 gap-1 z-50">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-brand-gold px-2 py-1">📄 PDF Studio</span>
+              {[
+                { id: "mrg_pdf", name: "Merge PDF Documents" },
+                { id: "spl_pdf", name: "Split & Cut PDF" },
+                { id: "red_pdf", name: "PDF Reducer / Compress" },
+                { id: "del_pdf", name: "Delete PDF Pages" },
+                { id: "ext_pdf", name: "Extract PDF Pages" },
+                { id: "ord_pdf", name: "Reorder PDF Pages" },
+                { id: "rot_pdf", name: "Rotate PDF Pages" },
+                { id: "num_pdf", name: "Add Page Numbers" },
+                { id: "wtrmk_pdf", name: "Add PDF Watermark" },
+              ].map((item) => (
+                <Link key={item.id} href={`/tools/${item.id}/`} className="text-xs text-neutral-300 hover:text-brand-gold hover:bg-white/5 px-2.5 py-1.5 rounded-lg transition-colors flex items-center justify-between">
+                  <span>{item.name}</span>
+                  <span className="text-[9px] font-mono text-brand-gold/60">🔗</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Image Tools Dropdown */}
+          <div className="relative group">
+            <button className="flex items-center gap-1 hover:text-white transition-colors py-2 cursor-pointer">
+              Image Tools <ChevronDown className="w-3.5 h-3.5 text-brand-gold" />
+            </button>
+            <div className="absolute top-full left-0 w-64 bg-brand-obsidian/95 border border-brand-gold/20 rounded-2xl p-3 shadow-2xl backdrop-blur-xl opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-all duration-200 grid grid-cols-1 gap-1 z-50">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-brand-gold px-2 py-1">🖼️ Image Studio</span>
+              {[
+                { id: "img_comp", name: "Image Compressor" },
+                { id: "img_res", name: "Image Resizer" },
+                { id: "img_pdf", name: "Batch Images to PDF" },
+                { id: "img_conv", name: "Format Converter" },
+                { id: "prnt_sheet", name: "Print Photo Sheet" },
+                { id: "id_cam", name: "ID Photo Camera" },
+              ].map((item) => (
+                <Link key={item.id} href={`/tools/${item.id}/`} className="text-xs text-neutral-300 hover:text-brand-gold hover:bg-white/5 px-2.5 py-1.5 rounded-lg transition-colors flex items-center justify-between">
+                  <span>{item.name}</span>
+                  <span className="text-[9px] font-mono text-brand-gold/60">🔗</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Security & Studios Dropdown */}
+          <div className="relative group">
+            <button className="flex items-center gap-1 hover:text-white transition-colors py-2 cursor-pointer">
+              Security & Studios <ChevronDown className="w-3.5 h-3.5 text-brand-gold" />
+            </button>
+            <div className="absolute top-full left-0 w-64 bg-brand-obsidian/95 border border-brand-gold/20 rounded-2xl p-3 shadow-2xl backdrop-blur-xl opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-all duration-200 grid grid-cols-1 gap-1 z-50">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-brand-gold px-2 py-1">🔒 Security & Studios</span>
+              {[
+                { id: "shot_gen", name: "App Store Screenshot Studio" },
+                { id: "prt_pdf", name: "Protect PDF (Password)" },
+                { id: "unl_pdf", name: "Unlock PDF Document" },
+                { id: "sgn_pdf", name: "Sign PDF Document" },
+                { id: "sig_cr", name: "Digital Signature Creator" },
+                { id: "inv_mk", name: "Corporate Invoice Maker" },
+                { id: "res_make", name: "ATS Resume Builder" },
+              ].map((item) => (
+                <Link key={item.id} href={`/tools/${item.id}/`} className="text-xs text-neutral-300 hover:text-brand-gold hover:bg-white/5 px-2.5 py-1.5 rounded-lg transition-colors flex items-center justify-between">
+                  <span>{item.name}</span>
+                  <span className="text-[9px] font-mono text-brand-gold/60">🔗</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <Link href="/blog/" className="text-brand-gold hover:text-white font-semibold flex items-center gap-1 transition-colors">Blog 📖</Link>
           <button onClick={() => setShowSubscription(true)} className="hover:text-white text-brand-gold font-semibold flex items-center gap-1 transition-colors cursor-pointer">Unlock Pro ✨</button>
         </div>
         <button onClick={() => openToolModal({ id: "app_download", title: "Download Utilify App", isAppDownload: true })} className="flex items-center gap-2 bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-semibold text-xs px-4 py-2 rounded-full shadow-premium-gold hover:scale-105 transition-transform cursor-pointer">
@@ -1477,6 +2353,32 @@ export default function Home({ initialToolId }: { initialToolId?: string } = {})
           Your standalone platform for advanced graphics manipulation, secure encryption, and document automation. <br />
           <span className="font-semibold text-white">🔒 100% Client-Side Processing:</span> Your files are processed entirely in your browser using local resources. <span className="text-brand-gold font-semibold underline decoration-brand-gold/30">Zero server uploads. Absolute data privacy.</span>
         </p>
+
+        {/* 🔍 INSTANT LIVE SEARCH BAR */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="mt-8 w-full max-w-2xl mx-auto relative z-20">
+          <div className="relative flex items-center">
+            <Search className="w-5 h-5 text-brand-gold absolute left-4 pointer-events-none" />
+            <input 
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search 28+ tools (e.g. Merge PDF, Compress Image, Screenshot Studio, Signature)..."
+              className="w-full bg-brand-obsidian/90 border border-brand-gold/40 focus:border-brand-gold rounded-2xl pl-12 pr-20 py-4 text-sm text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-brand-gold/30 shadow-2xl backdrop-blur-xl transition-all"
+            />
+            {searchQuery ? (
+              <button 
+                onClick={() => setSearchQuery("")}
+                className="absolute right-4 text-brand-gold hover:text-white text-xs font-mono bg-brand-gold/15 border border-brand-gold/30 px-2.5 py-1 rounded-lg cursor-pointer transition-colors"
+              >
+                Clear ✕
+              </button>
+            ) : (
+              <span className="absolute right-4 text-[10px] font-mono text-brand-muted bg-white/5 border border-white/10 px-2 py-1 rounded-lg">
+                28 Tools
+              </span>
+            )}
+          </div>
+        </motion.div>
         
         {/* HERO SMARTPHONE MOCKUP */}
         <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="mt-16 w-72 aspect-[1242/2688] bg-brand-obsidian rounded-[44px] p-2 border-[4px] border-white/10 shadow-2xl shadow-brand-gold/10 relative">
@@ -1547,12 +2449,12 @@ export default function Home({ initialToolId }: { initialToolId?: string } = {})
         </div>
       </section>
 
-      {/* ⚡ 4. Workspace Directory Grid with Luxury Golden Hover Glow & Explanation */}
+      {/* ⚡ 4. Workspace Directory Grid with Organized Studio Sections */}
       <section id="studio" className="py-24 px-6 max-w-6xl mx-auto scroll-mt-16 border-t border-white/5">
         <div className="text-center mb-12">
-          <p className="text-brand-gold font-mono tracking-widest text-xs uppercase mb-2">Centralized Command</p>
+          <p className="text-brand-gold font-mono tracking-widest text-xs uppercase mb-2 font-bold">Organized Utility Hub</p>
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight">Browse Free Web PDF & Image Tools</h2>
-          <p className="text-brand-muted mt-3 max-w-lg mx-auto text-sm font-light">Hover over each standalone unit to unfold full operational engine blueprints.</p>
+          <p className="text-brand-muted mt-3 max-w-lg mx-auto text-sm font-light">Every tool runs 100% locally inside your browser memory. Zero server uploads.</p>
         </div>
 
         {/* Filter Tabs */}
@@ -1560,9 +2462,9 @@ export default function Home({ initialToolId }: { initialToolId?: string } = {})
           {categories.map((cat) => (
             <button
               key={cat.id}
-              onClick={() => setActiveCategory(cat.id)}
+              onClick={() => { setActiveCategory(cat.id); setSearchQuery(""); }}
               className={`px-4 py-1.5 rounded-full text-xs font-medium tracking-wide transition-all cursor-pointer ${
-                activeCategory === cat.id 
+                activeCategory === cat.id && !searchQuery
                   ? "bg-brand-gold text-black shadow-lg font-semibold" 
                   : "text-brand-muted hover:text-white"
               }`}
@@ -1572,57 +2474,273 @@ export default function Home({ initialToolId }: { initialToolId?: string } = {})
           ))}
         </div>
 
-        {/* 26 Tools Grid */}
-        <div className="space-y-20">
-          <div>
-            <div className="mb-8 text-left">
-              <h3 className="text-xl font-bold tracking-tight text-white flex items-center gap-2">
-                <Sliders className="w-5 h-5 text-brand-gold" /> Web-Native Tool Studio
+        {/* ORGANIZED STUDIO SECTIONS */}
+        {searchQuery.trim() !== "" ? (
+          /* Search Results Display */
+          <div className="space-y-6">
+            <div className="flex items-center justify-between pb-4 border-b border-white/10">
+              <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                🔍 Search Results ({searchedTools.length})
               </h3>
-              <p className="text-xs text-brand-muted mt-1 font-light">These utility tools run 100% locally inside your browser sandbox.</p>
+              <span className="text-xs font-mono text-brand-gold">Matching &quot;{searchQuery}&quot;</span>
             </div>
-            
-            <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 min-h-[200px]">
-              <AnimatePresence mode="popLayout">
-                {filteredTools.filter(t => !t.isAppOnly).map((tool) => (
-                  <motion.div 
-                    layout
-                    initial={{ opacity: 0, scale: 0.93 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.93 }}
-                    whileHover={{ 
-                      y: -6,
-                      borderColor: "rgba(212, 175, 55, 0.4)",
-                      boxShadow: "0 12px 30px -10px rgba(212, 175, 55, 0.25)"
-                    }}
-                    transition={{ duration: 0.25, ease: "easeOut" }}
-                    key={tool.id}
-                    onClick={() => openToolModal(tool)}
-                    className="p-6 rounded-2xl bg-brand-obsidian/40 border border-white/5 transition-colors group relative overflow-hidden flex flex-col justify-between cursor-pointer"
-                  >
-                    <div className="absolute -top-10 -left-10 w-24 h-24 bg-brand-gold/5 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-                    
-                    <div>
-                      <div className="flex items-center gap-4 mb-4">
-                        <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5 text-brand-gold group-hover:bg-gradient-to-r group-hover:from-brand-gold group-hover:to-brand-gold-dark group-hover:text-black transition-all duration-300 shadow-glass">
-                          <tool.icon className="w-5 h-5 stroke-[2]" />
+            {searchedTools.length === 0 ? (
+              <div className="text-center py-16 bg-white/[0.01] border border-white/5 rounded-3xl">
+                <p className="text-brand-muted text-sm">No tools found matching &quot;{searchQuery}&quot;.</p>
+                <button onClick={() => setSearchQuery("")} className="mt-3 text-xs font-mono text-brand-gold hover:underline">Clear Search Filter</button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {searchedTools.map((tool) => (
+                  <Link key={tool.id} href={`/tools/${tool.id}/`} className="block group h-full">
+                    <motion.div 
+                      whileHover={{ y: -6, borderColor: "rgba(212, 175, 55, 0.4)" }}
+                      className="p-6 rounded-2xl bg-brand-obsidian/40 border border-white/5 transition-all group-hover:border-brand-gold/40 relative overflow-hidden flex flex-col justify-between cursor-pointer h-full"
+                    >
+                      <div>
+                        <div className="flex items-center gap-4 mb-4">
+                          <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5 text-brand-gold group-hover:bg-gradient-to-r group-hover:from-brand-gold group-hover:to-brand-gold-dark group-hover:text-black transition-all duration-300">
+                            <tool.icon className="w-5 h-5 stroke-[2]" />
+                          </div>
+                          <div>
+                            <h3 className="text-base font-bold text-white tracking-tight group-hover:text-brand-gold-light transition-colors">{tool.title}</h3>
+                            <p className="text-[11px] text-brand-muted font-medium tracking-wide">{tool.subtitle}</p>
+                          </div>
                         </div>
-                        <div>
-                          <h3 className="text-base font-bold text-white tracking-tight group-hover:text-brand-gold-light transition-colors">{tool.title}</h3>
-                          <p className="text-[11px] text-brand-muted font-medium tracking-wide">{tool.subtitle}</p>
-                        </div>
+                        <p className="text-xs text-brand-muted font-light leading-relaxed border-t border-white/5 pt-3 group-hover:text-neutral-200 transition-colors">
+                          {tool.desc}
+                        </p>
                       </div>
-                      <p className="text-xs text-brand-muted font-light leading-relaxed border-t border-white/5 pt-3 group-hover:text-neutral-200 transition-colors">
-                        {tool.desc}
-                      </p>
-                    </div>
-                  </motion.div>
+                      <div className="pt-3 border-t border-white/5 mt-4 flex items-center justify-between">
+                        <span className="text-[10px] font-mono text-brand-gold flex items-center gap-1">
+                          <span className="w-1.5 h-1.5 rounded-full bg-brand-gold animate-pulse"></span> /tools/{tool.id}/
+                        </span>
+                        <span className="text-[11px] font-mono font-bold text-brand-gold group-hover:text-white bg-brand-gold/15 group-hover:bg-brand-gold/30 border border-brand-gold/40 px-2.5 py-1 rounded-lg transition-all flex items-center gap-1 shadow-md">
+                          Open Separate Page 🔗
+                        </span>
+                      </div>
+                    </motion.div>
+                  </Link>
                 ))}
-              </AnimatePresence>
-            </motion.div>
+              </div>
+            )}
           </div>
+        ) : (
+          /* 4 Categorized Studio Blocks */
+          <div className="space-y-16">
+            
+            {/* 📄 SECTION 1: PDF Manipulation Studio */}
+            {(activeCategory === "all" || activeCategory === "pdf") && (
+              <div className="space-y-6">
+                <div className="flex items-center justify-between pb-4 border-b border-white/10">
+                  <div>
+                    <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                      <span className="p-2 rounded-xl bg-brand-gold/10 border border-brand-gold/20 text-brand-gold text-sm">📄</span> 
+                      PDF Manipulation & Editing Studio
+                    </h3>
+                    <p className="text-xs text-brand-muted mt-1 font-light">Merge, split, compress, reorder, and watermark PDF documents 100% client-side.</p>
+                  </div>
+                  <span className="text-xs font-mono bg-brand-gold/10 text-brand-gold border border-brand-gold/20 px-3 py-1 rounded-full font-bold">
+                    9 Tools • 🔒 Client-Side
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {toolsData.filter(t => ["mrg_pdf", "spl_pdf", "red_pdf", "del_pdf", "ext_pdf", "ord_pdf", "rot_pdf", "num_pdf", "wtrmk_pdf"].includes(t.id)).map((tool) => (
+                    <Link key={tool.id} href={`/tools/${tool.id}/`} className="block group h-full">
+                      <motion.div 
+                        whileHover={{ y: -6, borderColor: "rgba(212, 175, 55, 0.4)", boxShadow: "0 12px 30px -10px rgba(212, 175, 55, 0.25)" }}
+                        transition={{ duration: 0.25 }}
+                        className="p-6 rounded-2xl bg-brand-obsidian/40 border border-white/5 transition-all group-hover:border-brand-gold/40 relative overflow-hidden flex flex-col justify-between cursor-pointer h-full"
+                      >
+                        <div>
+                          <div className="flex items-center gap-4 mb-4">
+                            <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5 text-brand-gold group-hover:bg-gradient-to-r group-hover:from-brand-gold group-hover:to-brand-gold-dark group-hover:text-black transition-all duration-300">
+                              <tool.icon className="w-5 h-5 stroke-[2]" />
+                            </div>
+                            <div>
+                              <h3 className="text-base font-bold text-white tracking-tight group-hover:text-brand-gold-light transition-colors">{tool.title}</h3>
+                              <p className="text-[11px] text-brand-muted font-medium tracking-wide">{tool.subtitle}</p>
+                            </div>
+                          </div>
+                          <p className="text-xs text-brand-muted font-light leading-relaxed border-t border-white/5 pt-3 group-hover:text-neutral-200 transition-colors">
+                            {tool.desc}
+                          </p>
+                        </div>
+                        <div className="pt-3 border-t border-white/5 mt-4 flex items-center justify-between">
+                          <span className="text-[10px] font-mono text-brand-gold flex items-center gap-1 group-hover:text-white transition-colors">
+                            <span className="w-1.5 h-1.5 rounded-full bg-brand-gold animate-pulse"></span> /tools/{tool.id}/
+                          </span>
+                          <span className="text-[11px] font-mono font-bold text-brand-gold group-hover:text-white bg-brand-gold/15 group-hover:bg-brand-gold/30 border border-brand-gold/40 px-2.5 py-1 rounded-lg transition-all flex items-center gap-1 shadow-md">
+                            Open Separate Page 🔗
+                          </span>
+                        </div>
+                      </motion.div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
 
-          <div className="border-t border-white/5 pt-16">
+            {/* 🖼️ SECTION 2: Image Processing & Format Studio */}
+            {(activeCategory === "all" || activeCategory === "image") && (
+              <div className="space-y-6 pt-6">
+                <div className="flex items-center justify-between pb-4 border-b border-white/10">
+                  <div>
+                    <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                      <span className="p-2 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm">🖼️</span> 
+                      Image Processing & Format Studio
+                    </h3>
+                    <p className="text-xs text-brand-muted mt-1 font-light">Down-sample, resize, convert formats, and assemble photo print grids natively.</p>
+                  </div>
+                  <span className="text-xs font-mono bg-blue-500/10 text-blue-400 border border-blue-500/20 px-3 py-1 rounded-full font-bold">
+                    6 Tools • ⚡ Web Canvas API
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {toolsData.filter(t => ["img_comp", "img_res", "img_pdf", "img_conv", "prnt_sheet", "id_cam"].includes(t.id)).map((tool) => (
+                    <Link key={tool.id} href={`/tools/${tool.id}/`} className="block group h-full">
+                      <motion.div 
+                        whileHover={{ y: -6, borderColor: "rgba(56, 189, 248, 0.4)", boxShadow: "0 12px 30px -10px rgba(56, 189, 248, 0.2)" }}
+                        transition={{ duration: 0.25 }}
+                        className="p-6 rounded-2xl bg-brand-obsidian/40 border border-white/5 transition-all group-hover:border-blue-400/40 relative overflow-hidden flex flex-col justify-between cursor-pointer h-full"
+                      >
+                        <div>
+                          <div className="flex items-center gap-4 mb-4">
+                            <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5 text-blue-400 group-hover:bg-gradient-to-r group-hover:from-blue-400 group-hover:to-blue-600 group-hover:text-black transition-all duration-300">
+                              <tool.icon className="w-5 h-5 stroke-[2]" />
+                            </div>
+                            <div>
+                              <h3 className="text-base font-bold text-white tracking-tight group-hover:text-blue-300 transition-colors">{tool.title}</h3>
+                              <p className="text-[11px] text-brand-muted font-medium tracking-wide">{tool.subtitle}</p>
+                            </div>
+                          </div>
+                          <p className="text-xs text-brand-muted font-light leading-relaxed border-t border-white/5 pt-3 group-hover:text-neutral-200 transition-colors">
+                            {tool.desc}
+                          </p>
+                        </div>
+                        <div className="pt-3 border-t border-white/5 mt-4 flex items-center justify-between">
+                          <span className="text-[10px] font-mono text-blue-400 flex items-center gap-1 group-hover:text-white transition-colors">
+                            <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span> /tools/{tool.id}/
+                          </span>
+                          <span className="text-[11px] font-mono font-bold text-blue-400 group-hover:text-white bg-blue-500/15 group-hover:bg-blue-500/30 border border-blue-500/40 px-2.5 py-1 rounded-lg transition-all flex items-center gap-1 shadow-md">
+                            Open Separate Page 🔗
+                          </span>
+                        </div>
+                      </motion.div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* 🔒 SECTION 3: Security, Signatures & Documents */}
+            {(activeCategory === "all" || activeCategory === "security") && (
+              <div className="space-y-6 pt-6">
+                <div className="flex items-center justify-between pb-4 border-b border-white/10">
+                  <div>
+                    <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                      <span className="p-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm">🔒</span> 
+                      Security, Signatures & Professional Documents
+                    </h3>
+                    <p className="text-xs text-brand-muted mt-1 font-light">Encrypt, unlock, digital signatures, invoice compilation, and ATS resumes.</p>
+                  </div>
+                  <span className="text-xs font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-3 py-1 rounded-full font-bold">
+                    6 Tools • 🛡️ Zero Upload Privacy
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {toolsData.filter(t => ["prt_pdf", "unl_pdf", "sgn_pdf", "sig_cr", "inv_mk", "res_make"].includes(t.id)).map((tool) => (
+                    <Link key={tool.id} href={`/tools/${tool.id}/`} className="block group h-full">
+                      <motion.div 
+                        whileHover={{ y: -6, borderColor: "rgba(74, 222, 128, 0.4)", boxShadow: "0 12px 30px -10px rgba(74, 222, 128, 0.2)" }}
+                        transition={{ duration: 0.25 }}
+                        className="p-6 rounded-2xl bg-brand-obsidian/40 border border-white/5 transition-all group-hover:border-emerald-400/40 relative overflow-hidden flex flex-col justify-between cursor-pointer h-full"
+                      >
+                        <div>
+                          <div className="flex items-center gap-4 mb-4">
+                            <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5 text-emerald-400 group-hover:bg-gradient-to-r group-hover:from-emerald-400 group-hover:to-emerald-600 group-hover:text-black transition-all duration-300">
+                              <tool.icon className="w-5 h-5 stroke-[2]" />
+                            </div>
+                            <div>
+                              <h3 className="text-base font-bold text-white tracking-tight group-hover:text-emerald-300 transition-colors">{tool.title}</h3>
+                              <p className="text-[11px] text-brand-muted font-medium tracking-wide">{tool.subtitle}</p>
+                            </div>
+                          </div>
+                          <p className="text-xs text-brand-muted font-light leading-relaxed border-t border-white/5 pt-3 group-hover:text-neutral-200 transition-colors">
+                            {tool.desc}
+                          </p>
+                        </div>
+                        <div className="pt-3 border-t border-white/5 mt-4 flex items-center justify-between">
+                          <span className="text-[10px] font-mono text-emerald-400 flex items-center gap-1 group-hover:text-white transition-colors">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> /tools/{tool.id}/
+                          </span>
+                          <span className="text-[11px] font-mono font-bold text-emerald-400 group-hover:text-white bg-emerald-500/15 group-hover:bg-emerald-500/30 border border-emerald-500/40 px-2.5 py-1 rounded-lg transition-all flex items-center gap-1 shadow-md">
+                            Open Separate Page 🔗
+                          </span>
+                        </div>
+                      </motion.div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* ⚡ SECTION 4: Generators, Scanners & App Studios */}
+            {(activeCategory === "all" || activeCategory === "app" || activeCategory === "qr") && (
+              <div className="space-y-6 pt-6">
+                <div className="flex items-center justify-between pb-4 border-b border-white/10">
+                  <div>
+                    <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                      <span className="p-2 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 text-sm">⚡</span> 
+                      Generators, Scanners & Marketing Studios
+                    </h3>
+                    <p className="text-xs text-brand-muted mt-1 font-light">App Store screenshots, QR code creation, document scanning, and NFC chip tools.</p>
+                  </div>
+                  <span className="text-xs font-mono bg-purple-500/10 text-purple-400 border border-purple-500/20 px-3 py-1 rounded-full font-bold">
+                    7 Tools • 🚀 App Store Ready
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {toolsData.filter(t => ["shot_gen", "qr_gen", "qr_scan", "doc_scan", "nfc_wrt", "nfc_rd", "pass_gen"].includes(t.id)).map((tool) => (
+                    <Link key={tool.id} href={`/tools/${tool.id}/`} className="block group h-full">
+                      <motion.div 
+                        whileHover={{ y: -6, borderColor: "rgba(168, 85, 247, 0.4)", boxShadow: "0 12px 30px -10px rgba(168, 85, 247, 0.2)" }}
+                        transition={{ duration: 0.25 }}
+                        className="p-6 rounded-2xl bg-brand-obsidian/40 border border-white/5 transition-all group-hover:border-purple-400/40 relative overflow-hidden flex flex-col justify-between cursor-pointer h-full"
+                      >
+                        <div>
+                          <div className="flex items-center gap-4 mb-4">
+                            <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5 text-purple-400 group-hover:bg-gradient-to-r group-hover:from-purple-400 group-hover:to-purple-600 group-hover:text-black transition-all duration-300">
+                              <tool.icon className="w-5 h-5 stroke-[2]" />
+                            </div>
+                            <div>
+                              <h3 className="text-base font-bold text-white tracking-tight group-hover:text-purple-300 transition-colors">{tool.title}</h3>
+                              <p className="text-[11px] text-brand-muted font-medium tracking-wide">{tool.subtitle}</p>
+                            </div>
+                          </div>
+                          <p className="text-xs text-brand-muted font-light leading-relaxed border-t border-white/5 pt-3 group-hover:text-neutral-200 transition-colors">
+                            {tool.desc}
+                          </p>
+                        </div>
+                        <div className="pt-3 border-t border-white/5 mt-4 flex items-center justify-between">
+                          <span className="text-[10px] font-mono text-purple-400 flex items-center gap-1 group-hover:text-white transition-colors">
+                            <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse"></span> /tools/{tool.id}/
+                          </span>
+                          <span className="text-[11px] font-mono font-bold text-purple-400 group-hover:text-white bg-purple-500/15 group-hover:bg-purple-500/30 border border-purple-500/40 px-2.5 py-1 rounded-lg transition-all flex items-center gap-1 shadow-md">
+                            Open Separate Page 🔗
+                          </span>
+                        </div>
+                      </motion.div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+
+          </div>
+        )}
+
+        <div className="border-t border-white/5 pt-16">
             <div className="mb-8 text-left">
               <h3 className="text-xl font-bold tracking-tight text-white flex items-center gap-2">
                 <Smartphone className="w-5 h-5 text-brand-gold" /> App-Level Features (Deep OS Integration)
@@ -1669,8 +2787,7 @@ export default function Home({ initialToolId }: { initialToolId?: string } = {})
               </AnimatePresence>
             </motion.div>
           </div>
-        </div>
-      </section>
+        </section>
 
       {/* 🎬 5. Visual Media Gallery */}
       <section id="gallery" className="py-24 px-6 max-w-6xl mx-auto scroll-mt-16 border-t border-white/5">
@@ -1684,13 +2801,13 @@ export default function Home({ initialToolId }: { initialToolId?: string } = {})
           {realScreenshots.map((screenshot, i) => (
             <div key={i} className="w-[280px] sm:w-[320px] shrink-0 bg-brand-obsidian/30 border border-white/5 rounded-3xl p-4 flex flex-col justify-between hover:border-brand-gold/20 transition-all duration-300 shadow-xl snap-center">
               
-              <div className="w-full aspect-[1242/2688] overflow-hidden rounded-2xl relative bg-black/60 flex items-center justify-center border border-white/5 p-1">
+              <div className="w-full aspect-[1242/2688] overflow-hidden rounded-2xl relative bg-black/80 flex items-center justify-center border border-white/5 p-1">
                 <Image 
                   src={screenshot.src} 
                   alt={screenshot.headline} 
                   width={320} 
                   height={693} 
-                  className="w-full h-full object-fill rounded-xl group-hover:scale-[1.01] transition-transform duration-500" 
+                  className="w-full h-full object-cover object-top rounded-xl group-hover:scale-[1.01] transition-transform duration-500" 
                 />
               </div>
 
@@ -1724,13 +2841,13 @@ export default function Home({ initialToolId }: { initialToolId?: string } = {})
             return (
               <div key={idx} onClick={() => openToolModal(tool)} className="bg-brand-obsidian/20 border border-white/5 rounded-2xl p-2.5 flex flex-col justify-between hover:border-brand-gold/20 transition-all duration-300 shadow-md group cursor-pointer">
                 
-                <div className="w-full aspect-[1242/2688] overflow-hidden rounded-xl relative bg-neutral-900 flex items-center justify-center border border-white/5 p-0.5">
+                <div className="w-full aspect-[1242/2688] overflow-hidden rounded-xl relative bg-black/90 flex items-center justify-center border border-white/5 p-1">
                   <Image 
                     src={imageSrc} 
                     alt={tool.title} 
                     width={150} 
                     height={325} 
-                    className={`w-full h-full object-fill rounded-lg transition-transform duration-300 ${tool.src === "/placeholder.png" ? "opacity-30 blur-[1px] group-hover:scale-105" : "group-hover:scale-[1.02]"}`} 
+                    className={`w-full h-full object-contain rounded-lg transition-transform duration-300 ${tool.src === "/placeholder.png" ? "opacity-30 blur-[1px] group-hover:scale-105" : "group-hover:scale-[1.02]"}`} 
                   />
                   {tool.src === "/placeholder.png" && (
                     <div className="absolute inset-0 flex items-center justify-center p-2 text-center bg-black/40">
@@ -2120,13 +3237,13 @@ export default function Home({ initialToolId }: { initialToolId?: string } = {})
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4"
+            className={isStandaloneToolPage ? "relative z-10 py-4 max-w-4xl mx-auto px-4 w-full" : "fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4"}
           >
             <motion.div 
               initial={{ scale: 0.93, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.93, y: 20 }}
-              className="bg-brand-obsidian/95 border border-white/10 rounded-3xl p-6 md:p-8 max-w-2xl w-full relative overflow-hidden shadow-2xl flex flex-col max-h-[90vh]"
+              className={isStandaloneToolPage ? "bg-brand-obsidian/95 border border-brand-gold/30 rounded-3xl p-6 md:p-8 w-full relative overflow-hidden shadow-2xl flex flex-col min-h-[520px]" : "bg-brand-obsidian/95 border border-white/10 rounded-3xl p-6 md:p-8 max-w-2xl w-full relative overflow-hidden shadow-2xl flex flex-col max-h-[90vh]"}
             >
               {/* Modal Header */}
               <div className="flex items-center justify-between pb-4 border-b border-white/5 mb-6">
@@ -3235,6 +4352,42 @@ export default function Home({ initialToolId }: { initialToolId?: string } = {})
           &copy; {new Date().getFullYear()} Resizer Tools. Engineered to perfection. All rights reserved.
         </p>
       </footer>
+
+      {/* 📲 Floating PWA Install Banner */}
+      <AnimatePresence>
+        {showPwaPrompt && (
+          <motion.div 
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 50, opacity: 0 }}
+            className="fixed bottom-6 left-6 right-6 md:left-auto md:right-6 md:max-w-md z-50 bg-brand-obsidian/95 backdrop-blur-xl border border-brand-gold/30 rounded-2xl p-4 shadow-2xl flex items-center justify-between gap-4"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-brand-gold/10 border border-brand-gold/30 flex items-center justify-center text-brand-gold shrink-0">
+                <Smartphone className="w-5 h-5" />
+              </div>
+              <div className="text-left">
+                <p className="text-xs font-bold text-white">Install Resizer Tools App</p>
+                <p className="text-[10px] text-brand-muted font-light">1-Click Home Screen access &amp; offline utilities</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <button 
+                onClick={handleInstallPWA}
+                className="bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-extrabold text-xs px-3.5 py-2 rounded-xl shadow-premium-gold hover:scale-[1.02] transition-all cursor-pointer whitespace-nowrap"
+              >
+                Install Now 🚀
+              </button>
+              <button 
+                onClick={() => setShowPwaPrompt(false)}
+                className="text-neutral-400 hover:text-white text-xs p-1 font-mono cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   );
 }
