@@ -45,8 +45,39 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     notFound();
   }
 
+  const relatedPosts = blogPosts.filter((p) => p.slug !== post.slug).slice(0, 3);
+
+  const blogSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "@id": `https://resizertools.com/blog/${post.slug}/#article`,
+    "mainEntityOfPage": `https://resizertools.com/blog/${post.slug}/`,
+    "headline": post.title,
+    "description": post.excerpt,
+    "image": "https://resizertools.com/icon.svg",
+    "datePublished": "2026-08-19",
+    "dateModified": "2026-08-28",
+    "author": {
+      "@type": "Person",
+      "name": post.author,
+      "url": "https://resizertools.com/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Resizer Tools",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://resizertools.com/icon.svg"
+      }
+    }
+  };
+
   return (
     <main className="min-h-screen bg-[#080808] text-white selection:bg-brand-gold/30 selection:text-brand-gold-light py-16 px-4 sm:px-6">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema) }}
+      />
       <div className="max-w-3xl mx-auto space-y-10">
         
         {/* Navigation */}
@@ -153,6 +184,24 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           })}
         </article>
 
+        {/* Internal Cross-Linking Grid */}
+        <div className="border-t border-white/5 pt-10 space-y-4">
+          <h3 className="text-sm font-mono uppercase tracking-wider text-brand-gold font-bold">Related Knowledge & Utilities</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {relatedPosts.map((rp) => (
+              <Link 
+                key={rp.slug}
+                href={`/blog/${rp.slug}/`}
+                className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-brand-gold/30 transition-all space-y-2 group"
+              >
+                <span className="text-[10px] font-mono text-brand-gold uppercase tracking-wider block">{rp.category}</span>
+                <h4 className="text-xs font-bold text-white group-hover:text-brand-gold transition-colors line-clamp-2">{rp.title}</h4>
+                <p className="text-[11px] text-brand-muted font-light line-clamp-2">{rp.excerpt}</p>
+              </Link>
+            ))}
+          </div>
+        </div>
+
         {/* CTA to Use Tools */}
         <div className="p-8 rounded-3xl bg-gradient-to-r from-[#141414] to-[#0a0a0a] border border-brand-gold/30 space-y-4 shadow-2xl">
           <div className="flex items-center gap-3">
@@ -181,9 +230,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           </div>
         </div>
 
-        {/* Footer */}
-        <div className="border-t border-white/5 pt-8 text-center text-xs text-brand-muted font-mono">
-          &copy; {new Date().getFullYear()} Resizer Tools. All rights reserved.
+        {/* Footer Links */}
+        <div className="border-t border-white/5 pt-8 flex flex-wrap items-center justify-between text-xs text-brand-muted font-mono gap-4">
+          <span>&copy; {new Date().getFullYear()} Resizer Tools. All rights reserved.</span>
+          <div className="flex gap-4">
+            <Link href="/" className="hover:text-brand-gold">Home Studio</Link>
+            <Link href="/blog/" className="hover:text-brand-gold">All Guides</Link>
+            <Link href="/privacy/" className="hover:text-brand-gold">Privacy Policy</Link>
+            <Link href="/terms/" className="hover:text-brand-gold">Terms</Link>
+          </div>
         </div>
 
       </div>

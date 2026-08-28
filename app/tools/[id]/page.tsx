@@ -22,8 +22,8 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     };
   }
 
-  const title = `${tool.title} Online - Free Browser & Offline Utility | Resizer Tools`;
-  const description = `Use our free online ${tool.title.toLowerCase()} tool. ${tool.subtitle || tool.desc} 100% browser-native with zero server uploads, high privacy, and offline capability.`;
+  const title = `${tool.title} Online | Free Resizer Tools`;
+  const description = `Free ${tool.title.toLowerCase()} tool. ${tool.subtitle || tool.desc} 100% browser-native with zero server uploads and high privacy.`;
 
   return {
     title,
@@ -38,12 +38,12 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
       "privacy first tools"
     ],
     alternates: {
-      canonical: `https://resizertools.com/tools/${tool.id}/`,
+      canonical: `https://resizertools.com/tools/${tool.id}`,
     },
     openGraph: {
       title,
       description,
-      url: `https://resizertools.com/tools/${tool.id}/`,
+      url: `https://resizertools.com/tools/${tool.id}`,
       siteName: "Resizer Tools",
       locale: "en_US",
       type: "website",
@@ -58,7 +58,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
 export default async function ToolPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const tool = toolsData.find((t) => t.id === id);
+  const tool = toolsData.find((t) => t.id === id || t.id.replace(/_/g, "-") === id);
 
   if (!tool) return <Home />;
 
@@ -69,14 +69,15 @@ export default async function ToolPage({ params }: { params: Promise<{ id: strin
     .filter((t) => t.id !== id && (t.category === tool.category || t.category === "generator"))
     .slice(0, 6);
 
-  // 1. WebApplication Schema
+  // 1. SoftwareApplication Schema
   const webAppSchema = {
-    "@type": "WebApplication",
-    "@id": `https://resizertools.com/tools/${tool.id}/#webapp`,
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "@id": `https://resizertools.com/tools/${tool.id}#software`,
     "name": `${tool.title} - Resizer Tools`,
-    "url": `https://resizertools.com/tools/${tool.id}/`,
+    "url": `https://resizertools.com/tools/${tool.id}`,
     "description": `${tool.subtitle || tool.desc}`,
-    "applicationCategory": "Utility",
+    "applicationCategory": "BusinessApplication",
     "operatingSystem": "All",
     "browserRequirements": "Requires HTML5, WebCrypto API, Canvas API",
     "softwareVersion": "1.0",
