@@ -67,64 +67,51 @@ export interface SEOContent {
 }
 
 export function getToolSEOContent(tool: { id: string; title: string; subtitle?: string; desc?: string }): SEOContent {
-  let steps: string[] = [];
-  let faq: { q: string; a: string }[] = [];
+  const steps: string[] = [
+    `Select and upload your local files directly into the specialized ${tool.title} web workspace.`,
+    `Adjust the custom settings, visual parameters, or compression metrics using our integrated control sliders.`,
+    `Preview the real-time file computation and verify byte reductions or output quality directly in your browser.`,
+    `Click the instant single-click trigger button to download your finalized ${tool.title} file with zero server wait times.`
+  ];
 
-  switch(tool.id) {
-    case "img_comp":
-      steps = [
-        "Click the upload area or drop your image files (JPEG, PNG, WebP) directly into the browser.",
-        "Adjust the quality slider to control the balance between image size and visual fidelity.",
-        "Verify the real-time compressed size computation and download your optimized image instantly."
-      ];
-      faq = [
-        { q: "Is the Image Compressor secure?", a: "Yes, it runs 100% locally in your browser memory. Your private images are never uploaded to any remote server." },
-        { q: "Can I use it offline?", a: "Absolutely. Once the page is loaded, you can turn off your Wi-Fi and compress files completely offline." }
-      ];
-      break;
-    case "img_res":
-      steps = [
-        "Upload the target graphic or photo you wish to resize.",
-        "Input your custom width and height coordinate values in pixels.",
-        "Maintain or unlock the original aspect ratio and download the resized image instantly."
-      ];
-      faq = [
-        { q: "Will resizing reduce image quality?", a: "No, we use advanced canvas resampling filters to ensure your resized graphics remain crisp and clean." },
-        { q: "Does the Image Resizer upload my photos?", a: "No, all dimensions are processed locally inside your web browser. No server uploads occur." }
-      ];
-      break;
-    case "mrg_pdf":
-      steps = [
-        "Select and upload multiple PDF documents from your local filesystem.",
-        "Arrange or drag the document array order to define the merged sequence.",
-        "Click the compilation trigger button to stitch files together and download the merged PDF instantly."
-      ];
-      faq = [
-        { q: "Is there a file limit on merging PDFs?", a: "No, since it runs locally on your computer, you can merge massive files without hitches, limited only by your device RAM." },
-        { q: "Are my sensitive PDF contracts uploaded?", a: "Never. Resizer Tools runs entirely client-side using JavaScript libraries. Your files remain on your device." }
-      ];
-      break;
-    case "sgn_pdf":
-      steps = [
-        "Upload your PDF document to the visual canvas viewer.",
-        "Use your touch device or mouse pointer to draw a custom signature in the signature creator pad.",
-        "Position, scale, and stamp the digital signature onto your document pages, and save the signed PDF."
-      ];
-      faq = [
-        { q: "Is my signature saved securely?", a: "Yes, your signature is stamped directly onto the PDF file in your local browser memory. We never store or upload your signatures." },
-        { q: "Is it legally binding?", a: "Yes, visual signatures applied locally are valid for standard applications and standard digital declarations." }
-      ];
-      break;
-    default:
-      steps = [
-        `Select and upload your local files into the specialized ${tool.title} workspace interface.`,
-        "Adjust the visual parameters, metadata properties, or action triggers using our integrated controls.",
-        `Run browser-native compiling to download your finalized ${tool.title} file with zero upload delay.`
-      ];
-      faq = [
-        { q: `Does this ${tool.title} upload my personal data?`, a: `No, just like all our resources, the ${tool.title} runs 100% client-side in your browser. No files are ever sent to our servers.` },
-        { q: "Does this utility work on mobile devices?", a: "Yes, Resizer Tools is fully responsive and supports all mobile, tablet, and desktop browser environments." }
-      ];
+  const faq: { q: string; a: string }[] = [
+    { 
+      q: `Does ${tool.title} upload my personal files to external servers?`, 
+      a: `No. ${tool.title} operates 100% client-side inside your local browser memory using HTML5 Canvas, WebCrypto, and WebAssembly APIs. Your private images, PDF files, and documents never leave your device.` 
+    },
+    { 
+      q: `Is ${tool.title} completely free to use without subscriptions?`, 
+      a: `Yes, ${tool.title} on Resizer Tools is completely free to use with zero mandatory account registrations, hidden paywalls, or daily file quota caps.` 
+    },
+    { 
+      q: `Can I use ${tool.title} offline without an active internet connection?`, 
+      a: `Yes. Because ${tool.title} is a progressive browser-native application, once the workspace page is loaded, you can disconnect from the internet and continue using the tool completely offline.` 
+    },
+    { 
+      q: `Which devices and web browsers are supported?`, 
+      a: `${tool.title} is fully responsive and compatible with all modern desktop and mobile browsers, including Google Chrome, Apple Safari, Mozilla Firefox, Microsoft Edge, and Opera on Windows, macOS, iOS, and Android.` 
+    },
+    { 
+      q: `How does browser-native processing benefit privacy and speed?`, 
+      a: `Traditional web converters force you to upload large files over cellular or Wi-Fi networks to remote cloud servers, creating privacy risks and upload delays. By performing calculations in local RAM, processing completes instantly with maximum data safety.` 
+    }
+  ];
+
+  if (tool.id === "img_comp" || tool.id === "img-comp") {
+    faq.push({
+      q: "What image formats can I compress with this tool?",
+      a: "Our Image Compressor supports JPEG, JPG, PNG, WebP, and HEIC image formats, compressing them up to 80% with zero perceptible quality degradation."
+    });
+  } else if (tool.id === "mrg_pdf" || tool.id === "mrg-pdf") {
+    faq.push({
+      q: "Can I reorder PDF pages before merging?",
+      a: "Yes, you can drag and drop or re-sequence your PDF file queue before stitching them together into a single master document."
+    });
+  } else if (tool.id === "res_make" || tool.id === "res-make") {
+    faq.push({
+      q: "Is the generated resume ATS-compliant?",
+      a: "Yes, our resume builder generates clean, single-column vector PDFs that Applicant Tracking Systems (ATS) like Greenhouse, Workday, and Lever parse with 100% accuracy."
+    });
   }
 
   return { steps, faq };
