@@ -1536,7 +1536,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
 
           {/* Workspace Body */}
           <div className="flex-1 space-y-6 text-left">
-            {(activeTool.isAppDownload || !["img_comp", "img_res", "doc_scan", "sig_cr", "qr_gen", "mrg_pdf", "spl_pdf", "rot_pdf", "num_pdf", "wtrmk_pdf", "inv_mk", "res_make", "red_pdf", "del_pdf", "ext_pdf", "ord_pdf", "sgn_pdf", "pdf_imgs", "prt_pdf", "unl_pdf", "img_pdf", "img_conv", "prnt_sheet", "mk_pdf", "shot_gen"].includes(activeTool.id)) ? (
+            {(activeTool.isAppDownload || !["img_comp", "img-comp", "img_res", "img-res", "doc_scan", "doc-scan", "sig_cr", "sig-cr", "qr_gen", "qr-gen", "mrg_pdf", "mrg-pdf", "spl_pdf", "spl-pdf", "rot_pdf", "rot-pdf", "num_pdf", "num-pdf", "wtrmk_pdf", "wtrmk-pdf", "inv_mk", "inv-mk", "res_make", "res-make", "red_pdf", "red-pdf", "del_pdf", "del-pdf", "ext_pdf", "ext-pdf", "ord_pdf", "ord-pdf", "sgn_pdf", "sgn-pdf", "pdf_imgs", "pdf-imgs", "prt_pdf", "prt-pdf", "unl_pdf", "unl-pdf", "img_pdf", "img-pdf", "img_conv", "img-conv", "prnt_sheet", "prnt-sheet", "mk_pdf", "mk-pdf", "shot_gen", "shot-gen"].includes(activeTool.id)) ? (
               <div className="text-center py-6 space-y-6">
                 <div className="w-16 h-16 rounded-2xl bg-brand-gold/10 border border-brand-gold/25 flex items-center justify-center mx-auto text-brand-gold animate-pulse">
                   {activeTool.isAppDownload ? <Download className="w-8 h-8" /> : <Smartphone className="w-8 h-8" />}
@@ -3469,7 +3469,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
               <div className="flex-1 overflow-y-auto pr-1 scrollbar-none space-y-6">
                 
                 {/* 📳 CASE A: App Download / App-Level Redirect prompt */}
-                {(activeTool.isAppDownload || !["img_comp", "img_res", "doc_scan", "sig_cr", "qr_gen", "mrg_pdf", "spl_pdf", "rot_pdf", "num_pdf", "wtrmk_pdf", "inv_mk", "res_make", "red_pdf", "del_pdf", "ext_pdf", "ord_pdf", "sgn_pdf", "pdf_imgs", "prt_pdf", "unl_pdf", "img_pdf", "img_conv", "prnt_sheet", "mk_pdf", "shot_gen"].includes(activeTool.id)) ? (
+                {(activeTool.isAppDownload || !["img_comp", "img-comp", "img_res", "img-res", "doc_scan", "doc-scan", "sig_cr", "sig-cr", "qr_gen", "qr-gen", "mrg_pdf", "mrg-pdf", "spl_pdf", "spl-pdf", "rot_pdf", "rot-pdf", "num_pdf", "num-pdf", "wtrmk_pdf", "wtrmk-pdf", "inv_mk", "inv-mk", "res_make", "res-make", "red_pdf", "red-pdf", "del_pdf", "del-pdf", "ext_pdf", "ext-pdf", "ord_pdf", "ord-pdf", "sgn_pdf", "sgn-pdf", "pdf_imgs", "pdf-imgs", "prt_pdf", "prt-pdf", "unl_pdf", "unl-pdf", "img_pdf", "img-pdf", "img_conv", "img-conv", "prnt_sheet", "prnt-sheet", "mk_pdf", "mk-pdf", "shot_gen", "shot-gen"].includes(activeTool.id)) ? (
                   <div className="text-center py-6 space-y-6">
                     <div className="w-16 h-16 rounded-2xl bg-brand-gold/10 border border-brand-gold/25 flex items-center justify-center mx-auto text-brand-gold animate-pulse">
                       {activeTool.isAppDownload ? <Download className="w-8 h-8" /> : <Smartphone className="w-8 h-8" />}

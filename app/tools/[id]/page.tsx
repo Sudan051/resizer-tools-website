@@ -7,14 +7,14 @@ import { Sliders, Download, ShieldCheck, Zap, Smartphone, ArrowRight, CheckCircl
 export const dynamic = "force-static";
 
 export async function generateStaticParams() {
-  return toolsData.map((tool) => ({
-    id: tool.id,
-  }));
+  const hyphenParams = toolsData.map((tool) => ({ id: tool.id }));
+  const underscoreParams = toolsData.map((tool) => ({ id: tool.id.replace(/-/g, "_") }));
+  return [...hyphenParams, ...underscoreParams];
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
-  const tool = toolsData.find((t) => t.id === id);
+  const tool = toolsData.find((t) => t.id === id || t.id.replace(/-/g, "_") === id || t.id.replace(/_/g, "-") === id);
   if (!tool) {
     return {
       title: "Tool Not Found - Resizer Tools",
