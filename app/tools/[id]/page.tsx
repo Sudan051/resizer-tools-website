@@ -7,14 +7,14 @@ import { Sliders, Download, ShieldCheck, Zap, Smartphone, ArrowRight, CheckCircl
 export const dynamic = "force-static";
 
 export async function generateStaticParams() {
-  const hyphenParams = toolsData.map((tool) => ({ id: tool.id }));
-  const underscoreParams = toolsData.map((tool) => ({ id: tool.id.replace(/-/g, "_") }));
+  const hyphenParams = toolsData.map((tool) => ({ id: tool.id.replace(/_/g, "-") }));
+  const underscoreParams = toolsData.map((tool) => ({ id: tool.id }));
   return [...hyphenParams, ...underscoreParams];
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
-  const tool = toolsData.find((t) => t.id === id || t.id.replace(/-/g, "_") === id || t.id.replace(/_/g, "-") === id);
+  const tool = toolsData.find((t) => t.id === id || t.id.replace(/_/g, "-") === id || t.id.replace(/-/g, "_") === id);
   if (!tool) {
     return {
       title: "Tool Not Found - Resizer Tools",
@@ -22,6 +22,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     };
   }
 
+  const cleanId = tool.id.replace(/_/g, "-");
   const title = `${tool.title} Online | Free Resizer Tools`;
   const description = `Free ${tool.title.toLowerCase()} tool. ${tool.subtitle || tool.desc} 100% browser-native with zero server uploads and high privacy.`;
 
@@ -38,12 +39,12 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
       "privacy first tools"
     ],
     alternates: {
-      canonical: `https://resizertools.com/tools/${tool.id}`,
+      canonical: `https://resizertools.com/tools/${cleanId}`,
     },
     openGraph: {
       title,
       description,
-      url: `https://resizertools.com/tools/${tool.id}`,
+      url: `https://resizertools.com/tools/${cleanId}`,
       siteName: "Resizer Tools",
       locale: "en_US",
       type: "website",
@@ -58,7 +59,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
 export default async function ToolPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const tool = toolsData.find((t) => t.id === id || t.id.replace(/_/g, "-") === id);
+  const tool = toolsData.find((t) => t.id === id || t.id.replace(/_/g, "-") === id || t.id.replace(/-/g, "_") === id);
 
   if (!tool) return <Home />;
 
@@ -66,16 +67,16 @@ export default async function ToolPage({ params }: { params: Promise<{ id: strin
 
   // Filter 6 related tools in same category or overall catalog for internal linking
   const relatedTools = toolsData
-    .filter((t) => t.id !== id && (t.category === tool.category || t.category === "generator"))
+    .filter((t) => t.id !== tool.id && (t.category === tool.category || t.category === "generator"))
     .slice(0, 6);
 
   // 1. SoftwareApplication Schema
   const webAppSchema = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    "@id": `https://resizertools.com/tools/${tool.id}#software`,
+    "@id": `https://resizertools.com/tools/${tool.id.replace(/_/g, "-")}#software`,
     "name": `${tool.title} - Resizer Tools`,
-    "url": `https://resizertools.com/tools/${tool.id}`,
+    "url": `https://resizertools.com/tools/${tool.id.replace(/_/g, "-")}`,
     "description": `${tool.subtitle || tool.desc}`,
     "applicationCategory": "BusinessApplication",
     "operatingSystem": "All",

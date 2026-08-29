@@ -70,7 +70,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
 
   const toolRoutes = toolsData.map((tool) => ({
-    url: `https://resizertools.com/tools/${tool.id}`,
+    url: `https://resizertools.com/tools/${tool.id.replace(/_/g, "-")}`,
     lastModified: new Date(),
     changeFrequency: "weekly" as const,
     priority: 0.8,
