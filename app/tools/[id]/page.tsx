@@ -254,6 +254,19 @@ export default async function ToolPage({ params }: { params: Promise<{ id: strin
       <section className="bg-[#080808] border-t border-white/5 py-20 px-6 text-left relative z-10">
         <div className="max-w-4xl mx-auto space-y-12">
           
+          {/* Detailed Overview */}
+          <div className="space-y-4 bg-white/[0.015] border border-white/5 rounded-3xl p-6 md:p-8">
+            <h2 className="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
+              <span className="text-brand-gold">⚡</span> Comprehensive {tool.title} Guide &amp; Technical Capabilities
+            </h2>
+            <p className="text-xs text-neutral-300 leading-relaxed font-light">
+              Welcome to the official <strong>{tool.title}</strong> workspace on Resizer Tools. Engineered specifically for high-speed, privacy-first file manipulation, this browser-native application enables developers, designers, students, and corporate teams to process documents and graphics with zero server upload friction. Utilizing client-side HTML5 Canvas, WebAssembly, and WebCrypto APIs, {tool.title} executes all computations directly in your local hardware memory (RAM).
+            </p>
+            <p className="text-xs text-neutral-300 leading-relaxed font-light">
+              Whether you are working with confidential financial contracts, personal ID photos, large PDF bundles, or high-resolution graphics, {tool.title} guarantees ironclad security. Because no data packets are transmitted across external cloud networks, your files remain completely private and immune to server-side data leaks or network sniffing. Furthermore, once loaded in your browser, the tool operates seamlessly offline without requiring cellular or Wi-Fi data.
+            </p>
+          </div>
+
           {/* How-To Steps */}
           <div className="space-y-6">
             <h2 className="text-2xl font-bold text-white tracking-tight flex items-center gap-2">

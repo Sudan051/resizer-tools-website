@@ -68,39 +68,47 @@ export interface SEOContent {
 
 export function getToolSEOContent(tool: { id: string; title: string; subtitle?: string; desc?: string }): SEOContent {
   const steps: string[] = [
-    `Select and upload your local files directly into the specialized ${tool.title} web workspace.`,
-    `Adjust the custom settings, visual parameters, or compression metrics using our integrated control sliders.`,
-    `Preview the real-time file computation and verify byte reductions or output quality directly in your browser.`,
-    `Click the instant single-click trigger button to download your finalized ${tool.title} file with zero server wait times.`
+    `Select and drag-and-drop your local files or documents directly into the specialized ${tool.title} web workspace interface using your desktop browser or mobile touch screen.`,
+    `Adjust the custom settings, visual parameters, quality ratios, page range parameters, or compression metrics using our integrated control sliders and real-time canvas configuration controls.`,
+    `Preview the real-time file computation in your workspace, verify byte reductions, page alignments, visual quality, or output parameters directly in your local browser memory before compiling.`,
+    `Click the instant single-click action button to download your finalized ${tool.title} file instantly to your local device downloads folder with zero server upload wait times or queue delays.`
   ];
 
   const faq: { q: string; a: string }[] = [
     { 
-      q: `Does ${tool.title} upload my personal files to external servers?`, 
-      a: `No. ${tool.title} operates 100% client-side inside your local browser memory using HTML5 Canvas, WebCrypto, and WebAssembly APIs. Your private images, PDF files, and documents never leave your device.` 
+      q: `Does ${tool.title} upload my personal files to external remote servers?`, 
+      a: `No, absolutely not. ${tool.title} operates 100% client-side inside your local web browser memory using modern HTML5 Canvas, WebCrypto API, and WebAssembly technologies. Your private images, PDF files, financial invoices, signatures, and confidential documents remain completely on your local device and are never sent over the network to any third-party or cloud server.` 
     },
     { 
-      q: `Is ${tool.title} completely free to use without subscriptions?`, 
-      a: `Yes, ${tool.title} on Resizer Tools is completely free to use with zero mandatory account registrations, hidden paywalls, or daily file quota caps.` 
+      q: `Is ${tool.title} completely free to use without hidden subscriptions or limits?`, 
+      a: `Yes, ${tool.title} on Resizer Tools is completely free to use. There are zero mandatory account registrations, hidden credit card paywalls, daily file processing quota caps, or watermarks injected into your output documents. You can process as many files as you need for personal, commercial, or professional projects.` 
     },
     { 
       q: `Can I use ${tool.title} offline without an active internet connection?`, 
-      a: `Yes. Because ${tool.title} is a progressive browser-native application, once the workspace page is loaded, you can disconnect from the internet and continue using the tool completely offline.` 
+      a: `Yes. Because Resizer Tools is engineered as a progressive, browser-native application, once the workspace page is loaded in your browser tab, you can turn off your Wi-Fi or mobile data and continue using ${tool.title} completely offline without any internet connection.` 
     },
     { 
-      q: `Which devices and web browsers are supported?`, 
-      a: `${tool.title} is fully responsive and compatible with all modern desktop and mobile browsers, including Google Chrome, Apple Safari, Mozilla Firefox, Microsoft Edge, and Opera on Windows, macOS, iOS, and Android.` 
+      q: `Which operating systems, devices, and web browsers are supported?`, 
+      a: `${tool.title} is fully responsive and compatible across all modern desktop, laptop, tablet, and mobile platforms. It works flawlessly on Google Chrome, Apple Safari, Mozilla Firefox, Microsoft Edge, and Opera across Windows, macOS, Linux, iOS (iPhone/iPad), and Android operating systems.` 
     },
     { 
-      q: `How does browser-native processing benefit privacy and speed?`, 
-      a: `Traditional web converters force you to upload large files over cellular or Wi-Fi networks to remote cloud servers, creating privacy risks and upload delays. By performing calculations in local RAM, processing completes instantly with maximum data safety.` 
+      q: `How does browser-native local processing benefit privacy and speed?`, 
+      a: `Traditional online file converters force you to upload multi-megabyte files over mobile data or Wi-Fi to remote servers, exposing sensitive personal records to data privacy risks and causing long upload queues. By executing all algorithms directly in your computer or phone's local RAM, processing finishes in milliseconds while keeping your private data 100% secure.` 
+    },
+    { 
+      q: `What are the system RAM or file size recommendations for ${tool.title}?`, 
+      a: `Since ${tool.title} computes files locally inside your web browser's RAM sandbox, processing speed depends on your device CPU and available memory. For optimal performance with large multi-page PDF documents or high-resolution camera photos, we recommend using a modern web browser with at least 2GB of available system RAM.` 
+    },
+    { 
+      q: `How does ${tool.title} protect confidential legal and corporate documents?`, 
+      a: `Because no remote server connections are established during file manipulation, your sensitive tax records, legal contracts, business invoices, and personal identity documents never leave your physical hardware. This zero-trust client architecture satisfies strict corporate compliance and data privacy regulations.` 
     }
   ];
 
   if (tool.id === "img_comp" || tool.id === "img-comp") {
     faq.push({
       q: "What image formats can I compress with this tool?",
-      a: "Our Image Compressor supports JPEG, JPG, PNG, WebP, and HEIC image formats, compressing them up to 80% with zero perceptible quality degradation."
+      a: "Our Image Compressor supports JPEG, JPG, PNG, WebP, and HEIC image formats, compressing them up to 80% with zero perceptible visual quality loss for web and mobile publishing."
     });
   } else if (tool.id === "mrg_pdf" || tool.id === "mrg-pdf") {
     faq.push({
@@ -109,7 +117,7 @@ export function getToolSEOContent(tool: { id: string; title: string; subtitle?: 
     });
   } else if (tool.id === "res_make" || tool.id === "res-make") {
     faq.push({
-      q: "Is the generated resume ATS-compliant?",
+      q: "Is the generated resume ATS-compliant for job applications?",
       a: "Yes, our resume builder generates clean, single-column vector PDFs that Applicant Tracking Systems (ATS) like Greenhouse, Workday, and Lever parse with 100% accuracy."
     });
   }
