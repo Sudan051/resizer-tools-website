@@ -226,7 +226,7 @@ export default async function ToolPage({ params }: { params: Promise<{ id: strin
             {relatedTools.map((relTool) => (
               <Link
                 key={relTool.id}
-                href={`/tools/${relTool.id}/`}
+                href={`/tools/${relTool.id.replace(/_/g, "-")}`}
                 className="bg-white/[0.02] border border-white/10 rounded-2xl p-5 hover:border-brand-gold/40 hover:bg-white/[0.04] transition-all cursor-pointer group flex flex-col justify-between"
               >
                 <div className="space-y-3">
@@ -307,30 +307,30 @@ export default async function ToolPage({ params }: { params: Promise<{ id: strin
           <div className="space-y-3">
             <h4 className="text-xs font-bold font-mono text-white uppercase tracking-wider">Top Image Tools</h4>
             <ul className="space-y-2 text-xs text-brand-muted">
-              <li><Link href="/tools/img_comp/" className="hover:text-brand-gold transition-colors">Image Compressor</Link></li>
-              <li><Link href="/tools/img_res/" className="hover:text-brand-gold transition-colors">Image Resizer</Link></li>
-              <li><Link href="/tools/img_pdf/" className="hover:text-brand-gold transition-colors">Image to PDF</Link></li>
-              <li><Link href="/tools/img_conv/" className="hover:text-brand-gold transition-colors">Image Converter</Link></li>
+              <li><Link href="/tools/img-comp" className="hover:text-brand-gold transition-colors">Image Compressor</Link></li>
+              <li><Link href="/tools/img-res" className="hover:text-brand-gold transition-colors">Image Resizer</Link></li>
+              <li><Link href="/tools/img-pdf" className="hover:text-brand-gold transition-colors">Image to PDF</Link></li>
+              <li><Link href="/tools/img-conv" className="hover:text-brand-gold transition-colors">Image Converter</Link></li>
             </ul>
           </div>
 
           <div className="space-y-3">
             <h4 className="text-xs font-bold font-mono text-white uppercase tracking-wider">Top PDF Tools</h4>
             <ul className="space-y-2 text-xs text-brand-muted">
-              <li><Link href="/tools/mrg_pdf/" className="hover:text-brand-gold transition-colors">Merge PDF</Link></li>
-              <li><Link href="/tools/sgn_pdf/" className="hover:text-brand-gold transition-colors">Sign PDF</Link></li>
-              <li><Link href="/tools/prt_pdf/" className="hover:text-brand-gold transition-colors">Protect PDF</Link></li>
-              <li><Link href="/tools/res_make/" className="hover:text-brand-gold transition-colors">ATS Resume Builder</Link></li>
+              <li><Link href="/tools/mrg-pdf" className="hover:text-brand-gold transition-colors">Merge PDF</Link></li>
+              <li><Link href="/tools/sgn-pdf" className="hover:text-brand-gold transition-colors">Sign PDF</Link></li>
+              <li><Link href="/tools/prt-pdf" className="hover:text-brand-gold transition-colors">Protect PDF</Link></li>
+              <li><Link href="/tools/res-make" className="hover:text-brand-gold transition-colors">ATS Resume Builder</Link></li>
             </ul>
           </div>
 
           <div className="space-y-3">
             <h4 className="text-xs font-bold font-mono text-white uppercase tracking-wider">Legal &amp; Support</h4>
             <ul className="space-y-2 text-xs text-brand-muted">
-              <li><Link href="/privacy/" className="hover:text-brand-gold transition-colors">Privacy Policy</Link></li>
-              <li><Link href="/terms/" className="hover:text-brand-gold transition-colors">Terms of Service</Link></li>
-              <li><Link href="/contact/" className="hover:text-brand-gold transition-colors">Contact Us</Link></li>
-              <li><Link href="/blog/" className="hover:text-brand-gold transition-colors">Blog &amp; Guides</Link></li>
+              <li><Link href="/privacy" className="hover:text-brand-gold transition-colors">Privacy Policy</Link></li>
+              <li><Link href="/terms" className="hover:text-brand-gold transition-colors">Terms of Service</Link></li>
+              <li><Link href="/contact" className="hover:text-brand-gold transition-colors">Contact Us</Link></li>
+              <li><Link href="/blog" className="hover:text-brand-gold transition-colors">Blog &amp; Guides</Link></li>
             </ul>
           </div>
         </div>
