@@ -40,7 +40,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
   // Interactive tools states
   const [activeTool, setActiveTool] = useState<Tool | null>(() => {
     if (initialToolId) {
-      const tool = toolsData.find((t) => t.id === initialToolId);
+      const tool = toolsData.find((t) => t.id === initialToolId || t.id.replace(/_/g, "-") === initialToolId || t.id.replace(/-/g, "_") === initialToolId);
       if (tool) return tool as Tool;
     }
     return null;
