@@ -4538,6 +4538,9 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
 
       <footer className="py-12 text-center text-xs text-brand-muted border-t border-white/5 space-y-4">
         <div className="flex flex-wrap items-center justify-center gap-6 text-[11px] font-medium tracking-wide">
+          <Link href="/shots" className="hover:text-brand-gold-light hover:underline transition-colors">Screenshot Studio</Link>
+          <Link href="/card" className="hover:text-brand-gold-light hover:underline transition-colors">Pro Membership</Link>
+          <Link href="/app" className="hover:text-brand-gold-light hover:underline transition-colors">Mobile App</Link>
           <Link href="/blog" className="hover:text-brand-gold-light hover:underline transition-colors">Blog & Guides</Link>
           <Link href="/privacy" className="hover:text-brand-gold-light hover:underline transition-colors">Privacy Policy</Link>
           <Link href="/terms" className="hover:text-brand-gold-light hover:underline transition-colors">Terms & Conditions</Link>

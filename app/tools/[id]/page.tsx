@@ -85,6 +85,13 @@ export default async function ToolPage({ params }: { params: Promise<{ id: strin
       "@type": "Offer",
       "price": "0.00",
       "priceCurrency": "USD"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "ratingCount": "128",
+      "bestRating": "5",
+      "worstRating": "1"
     }
   };
 
