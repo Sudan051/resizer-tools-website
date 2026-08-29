@@ -39,12 +39,12 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
       "privacy first tools"
     ],
     alternates: {
-      canonical: `https://resizertools.com/tools/${cleanId}`,
+      canonical: `https://www.resizertools.com/tools/${cleanId}`,
     },
     openGraph: {
       title,
       description,
-      url: `https://resizertools.com/tools/${cleanId}`,
+      url: `https://www.resizertools.com/tools/${cleanId}`,
       siteName: "Resizer Tools",
       locale: "en_US",
       type: "website",
@@ -73,24 +73,25 @@ export default async function ToolPage({ params }: { params: Promise<{ id: strin
   // 1. SoftwareApplication Schema
   const webAppSchema = {
     "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "@id": `https://resizertools.com/tools/${tool.id.replace(/_/g, "-")}#software`,
+    "@type": ["SoftwareApplication", "WebApplication"],
+    "@id": `https://www.resizertools.com/tools/${tool.id.replace(/_/g, "-")}#software`,
     "name": `${tool.title} - Resizer Tools`,
-    "url": `https://resizertools.com/tools/${tool.id.replace(/_/g, "-")}`,
+    "url": `https://www.resizertools.com/tools/${tool.id.replace(/_/g, "-")}`,
     "description": `${tool.subtitle || tool.desc}`,
-    "applicationCategory": "BusinessApplication",
-    "operatingSystem": "All",
-    "browserRequirements": "Requires HTML5, WebCrypto API, Canvas API",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Windows, macOS, Android, iOS, Web Browser",
+    "browserRequirements": "Requires HTML5 Canvas, WebAssembly, WebCrypto API",
     "softwareVersion": "1.0",
     "offers": {
       "@type": "Offer",
-      "price": "0.00",
+      "price": "0",
       "priceCurrency": "USD"
     },
     "aggregateRating": {
       "@type": "AggregateRating",
       "ratingValue": "4.9",
       "ratingCount": "128",
+      "reviewCount": "128",
       "bestRating": "5",
       "worstRating": "1"
     }
