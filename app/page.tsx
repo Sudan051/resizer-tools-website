@@ -2472,7 +2472,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                 { id: "num_pdf", name: "Add Page Numbers" },
                 { id: "wtrmk_pdf", name: "Add PDF Watermark" },
               ].map((item) => (
-                <Link key={item.id} href={`/tools/${item.id}/`} className="text-xs text-neutral-300 hover:text-brand-gold hover:bg-white/5 px-2.5 py-1.5 rounded-lg transition-colors flex items-center justify-between">
+                <Link key={item.id} href={`/tools/${item.id.replace(/_/g, "-")}`} className="text-xs text-neutral-300 hover:text-brand-gold hover:bg-white/5 px-2.5 py-1.5 rounded-lg transition-colors flex items-center justify-between">
                   <span>{item.name}</span>
                   <span className="text-[9px] font-mono text-brand-gold/60">🔗</span>
                 </Link>
@@ -2495,7 +2495,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                 { id: "prnt_sheet", name: "Print Photo Sheet" },
                 { id: "id_cam", name: "ID Photo Camera" },
               ].map((item) => (
-                <Link key={item.id} href={`/tools/${item.id}/`} className="text-xs text-neutral-300 hover:text-brand-gold hover:bg-white/5 px-2.5 py-1.5 rounded-lg transition-colors flex items-center justify-between">
+                <Link key={item.id} href={`/tools/${item.id.replace(/_/g, "-")}`} className="text-xs text-neutral-300 hover:text-brand-gold hover:bg-white/5 px-2.5 py-1.5 rounded-lg transition-colors flex items-center justify-between">
                   <span>{item.name}</span>
                   <span className="text-[9px] font-mono text-brand-gold/60">🔗</span>
                 </Link>
@@ -2519,7 +2519,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                 { id: "inv_mk", name: "Corporate Invoice Maker" },
                 { id: "res_make", name: "ATS Resume Builder" },
               ].map((item) => (
-                <Link key={item.id} href={`/tools/${item.id}/`} className="text-xs text-neutral-300 hover:text-brand-gold hover:bg-white/5 px-2.5 py-1.5 rounded-lg transition-colors flex items-center justify-between">
+                <Link key={item.id} href={`/tools/${item.id.replace(/_/g, "-")}`} className="text-xs text-neutral-300 hover:text-brand-gold hover:bg-white/5 px-2.5 py-1.5 rounded-lg transition-colors flex items-center justify-between">
                   <span>{item.name}</span>
                   <span className="text-[9px] font-mono text-brand-gold/60">🔗</span>
                 </Link>
@@ -2688,7 +2688,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {searchedTools.map((tool) => (
-                  <Link key={tool.id} href={`/tools/${tool.id}/`} className="block group h-full">
+                  <Link key={tool.id} href={`/tools/${tool.id.replace(/_/g, "-")}`} className="block group h-full">
                     <motion.div 
                       whileHover={{ y: -6, borderColor: "rgba(212, 175, 55, 0.4)" }}
                       className="p-6 rounded-2xl bg-brand-obsidian/40 border border-white/5 transition-all group-hover:border-brand-gold/40 relative overflow-hidden flex flex-col justify-between cursor-pointer h-full"
@@ -2709,7 +2709,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                       </div>
                       <div className="pt-3 border-t border-white/5 mt-4 flex items-center justify-between">
                         <span className="text-[10px] font-mono text-brand-gold flex items-center gap-1">
-                          <span className="w-1.5 h-1.5 rounded-full bg-brand-gold animate-pulse"></span> /tools/{tool.id}/
+                          <span className="w-1.5 h-1.5 rounded-full bg-brand-gold animate-pulse"></span> /tools/{tool.id.replace(/_/g, "-")}
                         </span>
                         <span className="text-[11px] font-mono font-bold text-brand-gold group-hover:text-white bg-brand-gold/15 group-hover:bg-brand-gold/30 border border-brand-gold/40 px-2.5 py-1 rounded-lg transition-all flex items-center gap-1 shadow-md">
                           Open Separate Page 🔗
@@ -2742,7 +2742,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {toolsData.filter(t => ["mrg_pdf", "spl_pdf", "red_pdf", "del_pdf", "ext_pdf", "ord_pdf", "rot_pdf", "num_pdf", "wtrmk_pdf"].includes(t.id)).map((tool) => (
-                    <Link key={tool.id} href={`/tools/${tool.id}/`} className="block group h-full">
+                    <Link key={tool.id} href={`/tools/${tool.id.replace(/_/g, "-")}`} className="block group h-full">
                       <motion.div 
                         whileHover={{ y: -6, borderColor: "rgba(212, 175, 55, 0.4)", boxShadow: "0 12px 30px -10px rgba(212, 175, 55, 0.25)" }}
                         transition={{ duration: 0.25 }}
@@ -2764,7 +2764,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                         </div>
                         <div className="pt-3 border-t border-white/5 mt-4 flex items-center justify-between">
                           <span className="text-[10px] font-mono text-brand-gold flex items-center gap-1 group-hover:text-white transition-colors">
-                            <span className="w-1.5 h-1.5 rounded-full bg-brand-gold animate-pulse"></span> /tools/{tool.id}/
+                            <span className="w-1.5 h-1.5 rounded-full bg-brand-gold animate-pulse"></span> /tools/{tool.id.replace(/_/g, "-")}
                           </span>
                           <span className="text-[11px] font-mono font-bold text-brand-gold group-hover:text-white bg-brand-gold/15 group-hover:bg-brand-gold/30 border border-brand-gold/40 px-2.5 py-1 rounded-lg transition-all flex items-center gap-1 shadow-md">
                             Open Separate Page 🔗
@@ -2794,7 +2794,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {toolsData.filter(t => ["img_comp", "img_res", "img_pdf", "img_conv", "prnt_sheet", "id_cam"].includes(t.id)).map((tool) => (
-                    <Link key={tool.id} href={`/tools/${tool.id}/`} className="block group h-full">
+                    <Link key={tool.id} href={`/tools/${tool.id.replace(/_/g, "-")}`} className="block group h-full">
                       <motion.div 
                         whileHover={{ y: -6, borderColor: "rgba(56, 189, 248, 0.4)", boxShadow: "0 12px 30px -10px rgba(56, 189, 248, 0.2)" }}
                         transition={{ duration: 0.25 }}
@@ -2816,7 +2816,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                         </div>
                         <div className="pt-3 border-t border-white/5 mt-4 flex items-center justify-between">
                           <span className="text-[10px] font-mono text-blue-400 flex items-center gap-1 group-hover:text-white transition-colors">
-                            <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span> /tools/{tool.id}/
+                            <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span> /tools/{tool.id.replace(/_/g, "-")}
                           </span>
                           <span className="text-[11px] font-mono font-bold text-blue-400 group-hover:text-white bg-blue-500/15 group-hover:bg-blue-500/30 border border-blue-500/40 px-2.5 py-1 rounded-lg transition-all flex items-center gap-1 shadow-md">
                             Open Separate Page 🔗
@@ -2846,7 +2846,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {toolsData.filter(t => ["prt_pdf", "unl_pdf", "sgn_pdf", "sig_cr", "inv_mk", "res_make"].includes(t.id)).map((tool) => (
-                    <Link key={tool.id} href={`/tools/${tool.id}/`} className="block group h-full">
+                    <Link key={tool.id} href={`/tools/${tool.id.replace(/_/g, "-")}`} className="block group h-full">
                       <motion.div 
                         whileHover={{ y: -6, borderColor: "rgba(74, 222, 128, 0.4)", boxShadow: "0 12px 30px -10px rgba(74, 222, 128, 0.2)" }}
                         transition={{ duration: 0.25 }}
@@ -2868,7 +2868,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                         </div>
                         <div className="pt-3 border-t border-white/5 mt-4 flex items-center justify-between">
                           <span className="text-[10px] font-mono text-emerald-400 flex items-center gap-1 group-hover:text-white transition-colors">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> /tools/{tool.id}/
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> /tools/{tool.id.replace(/_/g, "-")}
                           </span>
                           <span className="text-[11px] font-mono font-bold text-emerald-400 group-hover:text-white bg-emerald-500/15 group-hover:bg-emerald-500/30 border border-emerald-500/40 px-2.5 py-1 rounded-lg transition-all flex items-center gap-1 shadow-md">
                             Open Separate Page 🔗
@@ -2898,7 +2898,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {toolsData.filter(t => ["shot_gen", "qr_gen", "qr_scan", "doc_scan", "nfc_wrt", "nfc_rd", "pass_gen"].includes(t.id)).map((tool) => (
-                    <Link key={tool.id} href={`/tools/${tool.id}/`} className="block group h-full">
+                    <Link key={tool.id} href={`/tools/${tool.id.replace(/_/g, "-")}`} className="block group h-full">
                       <motion.div 
                         whileHover={{ y: -6, borderColor: "rgba(168, 85, 247, 0.4)", boxShadow: "0 12px 30px -10px rgba(168, 85, 247, 0.2)" }}
                         transition={{ duration: 0.25 }}
@@ -2920,7 +2920,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                         </div>
                         <div className="pt-3 border-t border-white/5 mt-4 flex items-center justify-between">
                           <span className="text-[10px] font-mono text-purple-400 flex items-center gap-1 group-hover:text-white transition-colors">
-                            <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse"></span> /tools/{tool.id}/
+                            <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse"></span> /tools/{tool.id.replace(/_/g, "-")}
                           </span>
                           <span className="text-[11px] font-mono font-bold text-purple-400 group-hover:text-white bg-purple-500/15 group-hover:bg-purple-500/30 border border-purple-500/40 px-2.5 py-1 rounded-lg transition-all flex items-center gap-1 shadow-md">
                             Open Separate Page 🔗
