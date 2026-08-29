@@ -7,9 +7,9 @@ import { Sliders, Download, ShieldCheck, Zap, Smartphone, ArrowRight, CheckCircl
 export const dynamic = "force-static";
 
 export async function generateStaticParams() {
-  const hyphenParams = toolsData.map((tool) => ({ id: tool.id.replace(/_/g, "-") }));
-  const underscoreParams = toolsData.map((tool) => ({ id: tool.id }));
-  return [...hyphenParams, ...underscoreParams];
+  return toolsData.map((tool) => ({
+    id: tool.id.replace(/_/g, "-"),
+  }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
