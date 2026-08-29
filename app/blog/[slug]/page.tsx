@@ -222,7 +222,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               Open Web Utilities Studio
             </Link>
             <Link 
-              href="/app/"
+              href="/app"
               className="bg-white/5 border border-white/10 hover:border-brand-gold/40 text-white font-bold text-xs py-3 px-6 rounded-xl transition-colors"
             >
               Download Mobile App
@@ -235,9 +235,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           <span>&copy; {new Date().getFullYear()} Resizer Tools. All rights reserved.</span>
           <div className="flex gap-4">
             <Link href="/" className="hover:text-brand-gold">Home Studio</Link>
-            <Link href="/blog/" className="hover:text-brand-gold">All Guides</Link>
-            <Link href="/privacy/" className="hover:text-brand-gold">Privacy Policy</Link>
-            <Link href="/terms/" className="hover:text-brand-gold">Terms</Link>
+            <Link href="/blog" className="hover:text-brand-gold">All Guides</Link>
+            <Link href="/privacy" className="hover:text-brand-gold">Privacy Policy</Link>
+            <Link href="/terms" className="hover:text-brand-gold">Terms</Link>
+            <Link href="/refund" className="hover:text-brand-gold">Refund Policy</Link>
           </div>
         </div>
 

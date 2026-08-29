@@ -343,6 +343,7 @@ export default async function ToolPage({ params }: { params: Promise<{ id: strin
             <ul className="space-y-2 text-xs text-brand-muted">
               <li><Link href="/privacy" className="hover:text-brand-gold transition-colors">Privacy Policy</Link></li>
               <li><Link href="/terms" className="hover:text-brand-gold transition-colors">Terms of Service</Link></li>
+              <li><Link href="/refund" className="hover:text-brand-gold transition-colors">Refund Policy</Link></li>
               <li><Link href="/contact" className="hover:text-brand-gold transition-colors">Contact Us</Link></li>
               <li><Link href="/blog" className="hover:text-brand-gold transition-colors">Blog &amp; Guides</Link></li>
             </ul>
