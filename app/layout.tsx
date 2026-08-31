@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     canonical: "https://www.resizertools.com",
   },
   verification: {
-    google: "google38413941c148eb69",
+    google: "JiXo48Cu40zyZUMU6s9lKuxoD-mvj2R-6K0H4yhk6bQ",
   },
   other: {
     "apple-itunes-app": "app-id=6785073828",
