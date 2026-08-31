@@ -155,7 +155,7 @@ Quishing occurs when attackers replace legitimate QR stickers in public places w
 - **Inspect Physical Stickers**: Check if a QR sticker has been pasted over an original poster in public areas.
 - **Preview URLs Before Opening**: Ensure the target domain matches the official entity before submitting personal data.
 - **Use Native Static QR Generators**: Avoid dynamic tracking QR generators that route your traffic through intermediate tracking servers.
-- **Use Offline Scanners**: Tools like **[QR Scanner](https://resizertools.com/tools/qr_scan/)** on Resizer Tools decode QR matrix codes locally in browser memory without sending data anywhere.
+- **Use Offline Scanners**: Tools like **[QR Scanner](/tools/qr-scan)** on Resizer Tools decode QR matrix codes locally in browser memory without sending data anywhere.
     `
   }
 ];

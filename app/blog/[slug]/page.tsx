@@ -25,12 +25,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: `${post.title} | Resizer Tools Blog`,
     description: post.excerpt,
     alternates: {
-      canonical: `https://resizertools.com/blog/${post.slug}/`,
+      canonical: `https://www.resizertools.com/blog/${post.slug}`,
     },
     openGraph: {
       title: post.title,
       description: post.excerpt,
-      url: `https://resizertools.com/blog/${post.slug}/`,
+      url: `https://www.resizertools.com/blog/${post.slug}`,
       siteName: "Resizer Tools Knowledge Base",
       type: "article",
     },

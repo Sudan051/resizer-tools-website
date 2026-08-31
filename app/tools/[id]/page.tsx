@@ -325,6 +325,9 @@ export default async function ToolPage({ params }: { params: Promise<{ id: strin
               <li><Link href="/tools/img-res" className="hover:text-brand-gold transition-colors">Image Resizer</Link></li>
               <li><Link href="/tools/img-pdf" className="hover:text-brand-gold transition-colors">Image to PDF</Link></li>
               <li><Link href="/tools/img-conv" className="hover:text-brand-gold transition-colors">Image Converter</Link></li>
+              <li><Link href="/tools/pdf-imgs" className="hover:text-brand-gold transition-colors">PDF to Image</Link></li>
+              <li><Link href="/tools/prnt-sheet" className="hover:text-brand-gold transition-colors">Passport Photo Sheet</Link></li>
+              <li><Link href="/tools/id-cam" className="hover:text-brand-gold transition-colors">ID Photo Camera</Link></li>
             </ul>
           </div>
 
@@ -334,13 +337,26 @@ export default async function ToolPage({ params }: { params: Promise<{ id: strin
               <li><Link href="/tools/mrg-pdf" className="hover:text-brand-gold transition-colors">Merge PDF</Link></li>
               <li><Link href="/tools/sgn-pdf" className="hover:text-brand-gold transition-colors">Sign PDF</Link></li>
               <li><Link href="/tools/prt-pdf" className="hover:text-brand-gold transition-colors">Protect PDF</Link></li>
+              <li><Link href="/tools/unl-pdf" className="hover:text-brand-gold transition-colors">Unlock PDF</Link></li>
+              <li><Link href="/tools/spl-pdf" className="hover:text-brand-gold transition-colors">Split PDF</Link></li>
+              <li><Link href="/tools/del-pdf" className="hover:text-brand-gold transition-colors">Delete PDF Pages</Link></li>
+              <li><Link href="/tools/rot-pdf" className="hover:text-brand-gold transition-colors">Rotate PDF Pages</Link></li>
+              <li><Link href="/tools/num-pdf" className="hover:text-brand-gold transition-colors">Page Numbers</Link></li>
+              <li><Link href="/tools/wtrmk-pdf" className="hover:text-brand-gold transition-colors">PDF Watermark</Link></li>
               <li><Link href="/tools/res-make" className="hover:text-brand-gold transition-colors">ATS Resume Builder</Link></li>
             </ul>
           </div>
 
           <div className="space-y-3">
-            <h4 className="text-xs font-bold font-mono text-white uppercase tracking-wider">Legal &amp; Support</h4>
+            <h4 className="text-xs font-bold font-mono text-white uppercase tracking-wider">Utilities &amp; Legal</h4>
             <ul className="space-y-2 text-xs text-brand-muted">
+              <li><Link href="/tools/inv-mk" className="hover:text-brand-gold transition-colors">Invoice Maker</Link></li>
+              <li><Link href="/tools/qr-gen" className="hover:text-brand-gold transition-colors">QR Code Generator</Link></li>
+              <li><Link href="/tools/qr-scan" className="hover:text-brand-gold transition-colors">QR Matrix Scanner</Link></li>
+              <li><Link href="/tools/nfc-tl" className="hover:text-brand-gold transition-colors">Web NFC Studio</Link></li>
+              <li><Link href="/shots" className="hover:text-brand-gold transition-colors">App Screenshot Studio</Link></li>
+              <li><Link href="/card" className="hover:text-brand-gold transition-colors">Pro Membership</Link></li>
+              <li><Link href="/app" className="hover:text-brand-gold transition-colors">Mobile App</Link></li>
               <li><Link href="/privacy" className="hover:text-brand-gold transition-colors">Privacy Policy</Link></li>
               <li><Link href="/terms" className="hover:text-brand-gold transition-colors">Terms of Service</Link></li>
               <li><Link href="/refund" className="hover:text-brand-gold transition-colors">Refund Policy</Link></li>

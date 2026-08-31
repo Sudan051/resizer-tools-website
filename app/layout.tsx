@@ -14,6 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.resizertools.com"),
   title: "Resizer Tools - Free Online PDF & Image Utilities Platform",
   description: "Compress, resize, merge, split, rotate, watermark, lock, unlock, and sign PDF or image files 100% locally in your browser. Zero server uploads, private and secure.",
   keywords: [
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
     "image to pdf doc", "image format converter webp png jpeg", "client-side web utility tools"
   ],
   alternates: {
-    canonical: "https://resizertools.com/",
+    canonical: "https://www.resizertools.com",
   },
   other: {
     "apple-itunes-app": "app-id=6785073828",
@@ -43,7 +44,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Resizer Tools - 26 Free Web-Native Image & PDF Utilities",
     description: "Browser-native document & image manipulation with zero server latency. Private, secure, and 100% client-side.",
-    url: "https://resizertools.com/",
+    url: "https://www.resizertools.com",
     siteName: "Resizer Tools",
     locale: "en_US",
     type: "website",
@@ -74,22 +75,22 @@ export default function RootLayout({
               "@graph": [
                 {
                   "@type": "Organization",
-                  "@id": "https://resizertools.com/#organization",
+                  "@id": "https://www.resizertools.com/#organization",
                   "name": "Resizer Tools",
-                  "url": "https://resizertools.com/",
-                  "logo": "https://resizertools.com/icon.svg",
+                  "url": "https://www.resizertools.com",
+                  "logo": "https://www.resizertools.com/icon.svg",
                   "sameAs": [
                     "https://github.com/Sudan051"
                   ]
                 },
                 {
                   "@type": "WebSite",
-                  "@id": "https://resizertools.com/#website",
-                  "url": "https://resizertools.com/",
+                  "@id": "https://www.resizertools.com/#website",
+                  "url": "https://www.resizertools.com",
                   "name": "Resizer Tools",
                   "description": "Compress, resize, merge, split, rotate, watermark, lock, unlock, and sign PDF or image files 100% locally in your browser.",
                   "publisher": {
-                    "@id": "https://resizertools.com/#organization"
+                    "@id": "https://www.resizertools.com/#organization"
                   }
                 }
               ]
