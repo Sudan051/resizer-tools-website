@@ -6,6 +6,9 @@ export const dynamic = "force-static";
 export const metadata = {
   title: "Privacy Policy - Resizer Tools",
   description: "Learn how Resizer Tools maintains absolute client-side file privacy, zero server uploads, and secure browser-native execution.",
+  alternates: {
+    canonical: "https://www.resizertools.com/privacy",
+  },
 };
 
 export default function PrivacyPage() {
@@ -61,16 +64,26 @@ export default function PrivacyPage() {
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-lg font-bold text-white tracking-tight">4. Browser Local Storage</h2>
+            <h2 className="text-lg font-bold text-white tracking-tight">4. Browser Local Storage &amp; Cookie Policy</h2>
             <p>
-              We use `localStorage` (a client-side storage API inside your web browser) purely to remember if you have activated a Pro subscription so that we do not show you advertisements during subsequent visits. No tracking data is saved.
+              We use `localStorage` (a client-side storage API inside your web browser) purely to remember if you have activated a Pro subscription so that we do not show you advertisements during subsequent visits. No tracking data, personally identifiable information, or persistent third-party cookies are saved by Resizer Tools.
             </p>
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-lg font-bold text-white tracking-tight">5. Contact Information</h2>
+            <h2 className="text-lg font-bold text-white tracking-tight">5. GDPR &amp; CCPA Compliance</h2>
             <p>
-              If you have any queries regarding our browser-native local pipeline or this policy, please reach out to us at:
+              Because Resizer Tools utilizes zero-upload client architecture, your personal records, photos, and files are never stored or processed on our backend systems. You maintain 100% data ownership and sovereignty under the General Data Protection Regulation (GDPR) and California Consumer Privacy Act (CCPA).
+            </p>
+            <p>
+              Users have the unconditional right to process, compress, convert, and delete their files locally without leaving any digital footprint on external networks.
+            </p>
+          </section>
+
+          <section className="space-y-3">
+            <h2 className="text-lg font-bold text-white tracking-tight">6. Contact Information &amp; Support</h2>
+            <p>
+              If you have any queries regarding our browser-native local pipeline or this privacy policy, please reach out to our engineering team at:
             </p>
             <p className="font-mono text-brand-gold-light">
               Email: Saurabhsudan051@gmail.com

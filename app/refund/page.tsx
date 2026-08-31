@@ -6,6 +6,9 @@ export const dynamic = "force-static";
 export const metadata = {
   title: "Refund and Cancellation Policy - Resizer Tools",
   description: "Read the refund rules, billing terms, and subscription cancellation processes on Resizer Tools.",
+  alternates: {
+    canonical: "https://www.resizertools.com/refund",
+  },
 };
 
 export default function RefundPage() {
@@ -23,7 +26,7 @@ export default function RefundPage() {
           <div className="p-3 bg-brand-gold/10 border border-brand-gold/25 text-brand-gold w-fit rounded-2xl">
             <HelpCircle className="w-8 h-8" />
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold tracking-tight">Refund & Cancellation</h1>
+          <h1 className="text-3xl md:text-4xl font-bold tracking-tight">Refund &amp; Cancellation Policy</h1>
           <p className="text-xs text-brand-muted font-mono">Last updated: July 22, 2026</p>
         </div>
 
@@ -32,31 +35,38 @@ export default function RefundPage() {
           <section className="space-y-3">
             <h2 className="text-lg font-bold text-white tracking-tight">1. Subscription Cancellation</h2>
             <p>
-              You can cancel your Resizer Tools Pro subscription at any time. When you cancel, the auto-renewal feature will be immediately turned off. 
+              You can cancel your Resizer Tools Pro subscription at any time without penalty or cancellation fees. When you cancel, the auto-renewal feature will be immediately turned off for your billing account. 
             </p>
             <p>
-              Your account will remain in Pro status and you will have full access to all premium features until the end of your current active billing cycle (e.g., the end of your paid month or year).
+              Your account will remain in Pro status with full ad-free access to all premium features until the end of your current active billing cycle (e.g., the end of your paid month or year).
             </p>
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-lg font-bold text-white tracking-tight">2. Refund Terms</h2>
+            <h2 className="text-lg font-bold text-white tracking-tight">2. Refund Terms &amp; Eligibility</h2>
             <p>
-              Since we offer immediate, downloadable premium benefits and browser utilities upon payment:
+              Since we provide instant, client-side digital utilities and immediate ad-removal benefits upon payment confirmation:
             </p>
             <ul className="list-disc pl-6 space-y-1.5">
-              <li>**Standard Subscriptions**: Payments made for monthly or annual subscriptions are generally non-refundable, and we do not provide refunds or credits for any partial-month subscription periods.</li>
-              <li>**Billing Errors**: If you believe you were charged in error, billed twice for the same period, or encountered a payment gateway bug, please contact us within **7 days** of the transaction. We will inspect your transaction log and process a full refund if the double charge is verified.</li>
+              <li>**Standard Subscriptions**: Monthly or annual membership payments are generally non-refundable once active, and we do not provide prorated refunds for partial-month usage.</li>
+              <li>**Billing Errors &amp; Duplicate Charges**: If you believe you were charged in error, billed twice for the same billing cycle, or encountered a payment gateway error, please contact us within **7 calendar days** of the transaction. We will verify your transaction logs and issue a full refund immediately.</li>
             </ul>
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-lg font-bold text-white tracking-tight">3. How to Request a Refund or Support</h2>
+            <h2 className="text-lg font-bold text-white tracking-tight">3. How to Request a Refund</h2>
             <p>
-              For refund inquiries, billing assistance, or payment cancellation issues, please write to us at **Saurabhsudan051@gmail.com**. Please include your transaction ID (e.g., Razorpay payment ID) and the billing email address.
+              For refund inquiries, billing assistance, or payment cancellation requests, please email our support desk at **Saurabhsudan051@gmail.com**. Please include your payment ID, billing email, and date of transaction.
             </p>
             <p>
-              All verified refunds are processed back to the original payment source (UPI, Card, or Netbanking) within **5-7 business days** as per bank settlement guidelines.
+              All verified refunds are processed back to the original payment source (UPI, Debit/Credit Card, Netbanking, or Google Play balance) within **5-7 business days** in accordance with banking settlement timelines.
+            </p>
+          </section>
+
+          <section className="space-y-3">
+            <h2 className="text-lg font-bold text-white tracking-tight">4. Payment Security &amp; Gateway Compliance</h2>
+            <p>
+              All transactions are encrypted with 256-bit SSL protocols handled exclusively by PCI-DSS compliant payment gateways (Razorpay and Google Play). Resizer Tools does not store or process your sensitive credit card numbers or banking passwords.
             </p>
           </section>
         </div>

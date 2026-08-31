@@ -308,7 +308,7 @@ export default async function ToolPage({ params }: { params: Promise<{ id: strin
 
       {/* 🔻 FULL SITE FOOTER */}
       <footer className="bg-black border-t border-white/10 py-16 px-6 text-center md:text-left relative z-10">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8">
           <div className="space-y-4">
             <div className="flex items-center gap-2 font-bold text-lg text-white">
               <Sliders className="w-5 h-5 text-brand-gold" /> Resizer Tools
@@ -361,7 +361,23 @@ export default async function ToolPage({ params }: { params: Promise<{ id: strin
               <li><Link href="/terms" className="hover:text-brand-gold transition-colors">Terms of Service</Link></li>
               <li><Link href="/refund" className="hover:text-brand-gold transition-colors">Refund Policy</Link></li>
               <li><Link href="/contact" className="hover:text-brand-gold transition-colors">Contact Us</Link></li>
-              <li><Link href="/blog" className="hover:text-brand-gold transition-colors">Blog &amp; Guides</Link></li>
+              <li><Link href="/blog" className="hover:text-brand-gold transition-colors">All Blog Guides</Link></li>
+            </ul>
+          </div>
+
+          <div className="space-y-3">
+            <h4 className="text-xs font-bold font-mono text-white uppercase tracking-wider">Knowledge Guides</h4>
+            <ul className="space-y-2 text-xs text-brand-muted">
+              <li><Link href="/blog/image-compression-guide-2026" className="hover:text-brand-gold transition-colors">Image Compression Guide</Link></li>
+              <li><Link href="/blog/client-side-pdf-security" className="hover:text-brand-gold transition-colors">Zero-Upload PDF Security</Link></li>
+              <li><Link href="/blog/ats-resume-optimization-guide" className="hover:text-brand-gold transition-colors">ATS Resume Guide</Link></li>
+              <li><Link href="/blog/nfc-and-qr-code-privacy" className="hover:text-brand-gold transition-colors">Web NFC &amp; QR Privacy</Link></li>
+              <li><Link href="/blog/how-to-compress-pdf-without-losing-quality" className="hover:text-brand-gold transition-colors">Compress PDF Quality</Link></li>
+              <li><Link href="/blog/heic-to-jpg-conversion-explained" className="hover:text-brand-gold transition-colors">HEIC vs JPEG Guide</Link></li>
+              <li><Link href="/blog/digital-signature-legal-validity-guide" className="hover:text-brand-gold transition-colors">Digital Signatures Law</Link></li>
+              <li><Link href="/blog/how-to-create-passport-photo-sheet" className="hover:text-brand-gold transition-colors">Passport Photo Guide</Link></li>
+              <li><Link href="/blog/how-to-merge-pdf-files-offline" className="hover:text-brand-gold transition-colors">Merge PDF Offline</Link></li>
+              <li><Link href="/blog/qr-code-security-best-practices" className="hover:text-brand-gold transition-colors">QR Security 101</Link></li>
             </ul>
           </div>
         </div>

@@ -1,11 +1,19 @@
-"use client";
-
 import Link from "next/link";
 import Image from "next/image";
 import { 
   ShieldCheck, ExternalLink, Mail, Globe, Play, 
   Sparkles, Layers, Smartphone, CheckCircle2, Apple 
 } from "lucide-react";
+
+export const dynamic = "force-static";
+
+export const metadata = {
+  title: "Saurabh Kumar Sharma - Founder Profile & Pro Membership | Resizer Tools",
+  description: "Official digital card & founder profile of Saurabh Kumar Sharma, Creator of Resizer Tools and Android & iOS utility applications.",
+  alternates: {
+    canonical: "https://www.resizertools.com/card",
+  },
+};
 
 export default function DigitalCardPage() {
   return (

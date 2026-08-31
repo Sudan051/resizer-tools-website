@@ -10,6 +10,9 @@ export const dynamic = "force-static";
 export const metadata = {
   title: "Download Resizer Tools Mobile App - Official iOS & Android Apps",
   description: "Download Resizer Tools official mobile app for iOS App Store and Google Play Store. 100% private, offline PDF & image utilities, camera document scanner, and NFC writer.",
+  alternates: {
+    canonical: "https://www.resizertools.com/app",
+  },
 };
 
 export default function AppDownloadPage() {

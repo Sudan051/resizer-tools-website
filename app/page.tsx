@@ -4536,38 +4536,63 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
         )}
       </AnimatePresence>
 
-      <footer className="py-16 text-center text-xs text-brand-muted border-t border-white/5 space-y-6 max-w-6xl mx-auto px-6">
-        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[11px] font-medium tracking-wide">
-          <Link href="/tools/img-comp" className="hover:text-brand-gold-light hover:underline transition-colors">Image Compressor</Link>
-          <Link href="/tools/img-res" className="hover:text-brand-gold-light hover:underline transition-colors">Image Resizer</Link>
-          <Link href="/tools/img-pdf" className="hover:text-brand-gold-light hover:underline transition-colors">Image to PDF</Link>
-          <Link href="/tools/img-conv" className="hover:text-brand-gold-light hover:underline transition-colors">Image Converter</Link>
-          <Link href="/tools/pdf-imgs" className="hover:text-brand-gold-light hover:underline transition-colors">PDF to Image</Link>
-          <Link href="/tools/prnt-sheet" className="hover:text-brand-gold-light hover:underline transition-colors">Passport Photo Sheet</Link>
-          <Link href="/tools/id-cam" className="hover:text-brand-gold-light hover:underline transition-colors">ID Photo Camera</Link>
-          <Link href="/tools/mrg-pdf" className="hover:text-brand-gold-light hover:underline transition-colors">Merge PDF</Link>
-          <Link href="/tools/sgn-pdf" className="hover:text-brand-gold-light hover:underline transition-colors">Sign PDF</Link>
-          <Link href="/tools/prt-pdf" className="hover:text-brand-gold-light hover:underline transition-colors">Protect PDF</Link>
-          <Link href="/tools/unl-pdf" className="hover:text-brand-gold-light hover:underline transition-colors">Unlock PDF</Link>
-          <Link href="/tools/spl-pdf" className="hover:text-brand-gold-light hover:underline transition-colors">Split PDF</Link>
-          <Link href="/tools/del-pdf" className="hover:text-brand-gold-light hover:underline transition-colors">Delete PDF</Link>
-          <Link href="/tools/rot-pdf" className="hover:text-brand-gold-light hover:underline transition-colors">Rotate PDF</Link>
-          <Link href="/tools/num-pdf" className="hover:text-brand-gold-light hover:underline transition-colors">Page Numbers</Link>
-          <Link href="/tools/wtrmk-pdf" className="hover:text-brand-gold-light hover:underline transition-colors">PDF Watermark</Link>
-          <Link href="/tools/res-make" className="hover:text-brand-gold-light hover:underline transition-colors">ATS Resume Builder</Link>
-          <Link href="/tools/inv-mk" className="hover:text-brand-gold-light hover:underline transition-colors">Invoice Maker</Link>
-          <Link href="/tools/qr-gen" className="hover:text-brand-gold-light hover:underline transition-colors">QR Generator</Link>
-          <Link href="/tools/qr-scan" className="hover:text-brand-gold-light hover:underline transition-colors">QR Scanner</Link>
-          <Link href="/tools/nfc-tl" className="hover:text-brand-gold-light hover:underline transition-colors">Web NFC</Link>
-          <Link href="/shots" className="hover:text-brand-gold-light hover:underline transition-colors">Screenshot Studio</Link>
-          <Link href="/card" className="hover:text-brand-gold-light hover:underline transition-colors">Pro Membership</Link>
-          <Link href="/app" className="hover:text-brand-gold-light hover:underline transition-colors">Mobile App</Link>
-          <Link href="/blog" className="hover:text-brand-gold-light hover:underline transition-colors">Blog &amp; Guides</Link>
-          <Link href="/privacy" className="hover:text-brand-gold-light hover:underline transition-colors">Privacy Policy</Link>
-          <Link href="/terms" className="hover:text-brand-gold-light hover:underline transition-colors">Terms of Service</Link>
-          <Link href="/refund" className="hover:text-brand-gold-light hover:underline transition-colors">Refund &amp; Cancellation</Link>
-          <Link href="/contact" className="hover:text-brand-gold-light hover:underline transition-colors">Contact Us</Link>
+      <footer className="py-16 text-center text-xs text-brand-muted border-t border-white/5 space-y-8 max-w-6xl mx-auto px-6">
+        <div className="space-y-3">
+          <h4 className="text-[10px] font-mono uppercase tracking-widest text-brand-gold font-bold">PDF &amp; Image Web Utilities</h4>
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] font-medium tracking-wide">
+            <Link href="/tools/img-comp" className="hover:text-brand-gold-light hover:underline transition-colors">Image Compressor</Link>
+            <Link href="/tools/img-res" className="hover:text-brand-gold-light hover:underline transition-colors">Image Resizer</Link>
+            <Link href="/tools/img-pdf" className="hover:text-brand-gold-light hover:underline transition-colors">Image to PDF</Link>
+            <Link href="/tools/img-conv" className="hover:text-brand-gold-light hover:underline transition-colors">Image Converter</Link>
+            <Link href="/tools/pdf-imgs" className="hover:text-brand-gold-light hover:underline transition-colors">PDF to Image</Link>
+            <Link href="/tools/prnt-sheet" className="hover:text-brand-gold-light hover:underline transition-colors">Passport Photo Sheet</Link>
+            <Link href="/tools/id-cam" className="hover:text-brand-gold-light hover:underline transition-colors">ID Photo Camera</Link>
+            <Link href="/tools/mrg-pdf" className="hover:text-brand-gold-light hover:underline transition-colors">Merge PDF</Link>
+            <Link href="/tools/sgn-pdf" className="hover:text-brand-gold-light hover:underline transition-colors">Sign PDF</Link>
+            <Link href="/tools/prt-pdf" className="hover:text-brand-gold-light hover:underline transition-colors">Protect PDF</Link>
+            <Link href="/tools/unl-pdf" className="hover:text-brand-gold-light hover:underline transition-colors">Unlock PDF</Link>
+            <Link href="/tools/spl-pdf" className="hover:text-brand-gold-light hover:underline transition-colors">Split PDF</Link>
+            <Link href="/tools/del-pdf" className="hover:text-brand-gold-light hover:underline transition-colors">Delete PDF</Link>
+            <Link href="/tools/rot-pdf" className="hover:text-brand-gold-light hover:underline transition-colors">Rotate PDF</Link>
+            <Link href="/tools/num-pdf" className="hover:text-brand-gold-light hover:underline transition-colors">Page Numbers</Link>
+            <Link href="/tools/wtrmk-pdf" className="hover:text-brand-gold-light hover:underline transition-colors">PDF Watermark</Link>
+            <Link href="/tools/res-make" className="hover:text-brand-gold-light hover:underline transition-colors">ATS Resume Builder</Link>
+            <Link href="/tools/inv-mk" className="hover:text-brand-gold-light hover:underline transition-colors">Invoice Maker</Link>
+            <Link href="/tools/qr-gen" className="hover:text-brand-gold-light hover:underline transition-colors">QR Generator</Link>
+            <Link href="/tools/qr-scan" className="hover:text-brand-gold-light hover:underline transition-colors">QR Scanner</Link>
+            <Link href="/tools/nfc-tl" className="hover:text-brand-gold-light hover:underline transition-colors">Web NFC</Link>
+            <Link href="/shots" className="hover:text-brand-gold-light hover:underline transition-colors">Screenshot Studio</Link>
+            <Link href="/card" className="hover:text-brand-gold-light hover:underline transition-colors">Pro Membership</Link>
+            <Link href="/app" className="hover:text-brand-gold-light hover:underline transition-colors">Mobile App</Link>
+          </div>
         </div>
+
+        <div className="space-y-3 pt-2 border-t border-white/5">
+          <h4 className="text-[10px] font-mono uppercase tracking-widest text-brand-gold font-bold">Knowledge Base &amp; Tutorials</h4>
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] font-medium tracking-wide">
+            <Link href="/blog/image-compression-guide-2026" className="hover:text-brand-gold-light hover:underline transition-colors">Image Compression Guide</Link>
+            <Link href="/blog/client-side-pdf-security" className="hover:text-brand-gold-light hover:underline transition-colors">Zero-Upload PDF Security</Link>
+            <Link href="/blog/ats-resume-optimization-guide" className="hover:text-brand-gold-light hover:underline transition-colors">ATS Resume Guide</Link>
+            <Link href="/blog/nfc-and-qr-code-privacy" className="hover:text-brand-gold-light hover:underline transition-colors">Web NFC &amp; QR Privacy</Link>
+            <Link href="/blog/how-to-compress-pdf-without-losing-quality" className="hover:text-brand-gold-light hover:underline transition-colors">Compress PDF Quality</Link>
+            <Link href="/blog/heic-to-jpg-conversion-explained" className="hover:text-brand-gold-light hover:underline transition-colors">HEIC vs JPEG Guide</Link>
+            <Link href="/blog/digital-signature-legal-validity-guide" className="hover:text-brand-gold-light hover:underline transition-colors">Digital Signatures Law</Link>
+            <Link href="/blog/how-to-create-passport-photo-sheet" className="hover:text-brand-gold-light hover:underline transition-colors">Passport Photo Guide</Link>
+            <Link href="/blog/how-to-merge-pdf-files-offline" className="hover:text-brand-gold-light hover:underline transition-colors">Merge PDF Offline</Link>
+            <Link href="/blog/qr-code-security-best-practices" className="hover:text-brand-gold-light hover:underline transition-colors">QR Security 101</Link>
+          </div>
+        </div>
+
+        <div className="space-y-3 pt-2 border-t border-white/5">
+          <div className="flex flex-wrap items-center justify-center gap-6 text-[11px] font-medium tracking-wide">
+            <Link href="/blog" className="hover:text-brand-gold-light hover:underline transition-colors">All Blog Articles</Link>
+            <Link href="/privacy" className="hover:text-brand-gold-light hover:underline transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="hover:text-brand-gold-light hover:underline transition-colors">Terms of Service</Link>
+            <Link href="/refund" className="hover:text-brand-gold-light hover:underline transition-colors">Refund &amp; Cancellation</Link>
+            <Link href="/contact" className="hover:text-brand-gold-light hover:underline transition-colors">Contact Us</Link>
+          </div>
+        </div>
+
         <p className="font-mono text-[10px] opacity-75">
           &copy; {new Date().getFullYear()} Resizer Tools. Engineered to perfection. All rights reserved.
         </p>

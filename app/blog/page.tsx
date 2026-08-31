@@ -7,6 +7,9 @@ export const dynamic = "force-static";
 export const metadata = {
   title: "Resizer Tools Blog - Guides, Tutorials & Web Utility Knowledge Base",
   description: "Explore technical guides on image compression, ATS resume optimization, client-side PDF security, Web NFC, and browser-native web performance.",
+  alternates: {
+    canonical: "https://www.resizertools.com/blog",
+  },
 };
 
 export default function BlogIndexPage() {

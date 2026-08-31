@@ -6,6 +6,9 @@ export const dynamic = "force-static";
 export const metadata = {
   title: "App Store & Play Store Screenshot Generator Studio - Resizer Tools",
   description: "Create pixel-perfect, high-converting iOS App Store (6.7\", 6.5\", 5.5\", iPad 13\") & Google Play Store (Phone, 7\" & 10\" Tablet) screenshots with dark-gold luxury device frames, custom typography, and instant batch export.",
+  alternates: {
+    canonical: "https://www.resizertools.com/shots",
+  },
 };
 
 export default function ShotsPage() {

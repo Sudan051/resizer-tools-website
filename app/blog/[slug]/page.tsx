@@ -45,29 +45,32 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     notFound();
   }
 
-  const relatedPosts = blogPosts.filter((p) => p.slug !== post.slug).slice(0, 3);
+  // Pick 4 related articles dynamically
+  const currentIndex = blogPosts.findIndex((p) => p.slug === post.slug);
+  const otherPosts = blogPosts.filter((p) => p.slug !== post.slug);
+  const relatedPosts = otherPosts.slice(currentIndex % (otherPosts.length - 3), (currentIndex % (otherPosts.length - 3)) + 4);
 
   const blogSchema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "@id": `https://resizertools.com/blog/${post.slug}/#article`,
-    "mainEntityOfPage": `https://resizertools.com/blog/${post.slug}/`,
+    "@id": `https://www.resizertools.com/blog/${post.slug}#article`,
+    "mainEntityOfPage": `https://www.resizertools.com/blog/${post.slug}`,
     "headline": post.title,
     "description": post.excerpt,
-    "image": "https://resizertools.com/icon.svg",
+    "image": "https://www.resizertools.com/icon.svg",
     "datePublished": "2026-08-19",
-    "dateModified": "2026-08-28",
+    "dateModified": "2026-08-31",
     "author": {
       "@type": "Person",
       "name": post.author,
-      "url": "https://resizertools.com/"
+      "url": "https://www.resizertools.com"
     },
     "publisher": {
       "@type": "Organization",
       "name": "Resizer Tools",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://resizertools.com/icon.svg"
+        "url": "https://www.resizertools.com/icon.svg"
       }
     }
   };
@@ -191,7 +194,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             {relatedPosts.map((rp) => (
               <Link 
                 key={rp.slug}
-                href={`/blog/${rp.slug}/`}
+                href={`/blog/${rp.slug}`}
                 className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-brand-gold/30 transition-all space-y-2 group"
               >
                 <span className="text-[10px] font-mono text-brand-gold uppercase tracking-wider block">{rp.category}</span>
