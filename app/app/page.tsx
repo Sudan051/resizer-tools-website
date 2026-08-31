@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { 
   Apple, ShieldCheck, CheckCircle2, ArrowLeft, 
-  Sparkles, Lock, Zap, QrCode, ExternalLink, 
+  Sparkles, Lock, Zap, QrCode, 
   Star, Smartphone, Camera 
 } from "lucide-react";
 
@@ -165,18 +165,45 @@ export default function AppDownloadPage() {
           </div>
         </div>
 
+        {/* Detailed Application Features & Mobile Architecture */}
+        <div className="pt-8 border-t border-white/5 space-y-6 text-xs text-brand-muted font-light leading-relaxed max-w-3xl mx-auto text-left">
+          <h2 className="text-base font-bold text-white tracking-tight">Why Choose the Resizer Tools Mobile App?</h2>
+          <p>
+            The official Resizer Tools mobile app for iOS and Android is engineered for professionals, students, photographers, and developers who require reliable, offline-ready document and image manipulation. Unlike traditional cloud converters that require stable LTE/5G connections and upload confidential data to remote servers, our mobile apps run native on-device rendering engines.
+          </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+            <div className="p-4 bg-white/[0.02] border border-white/5 rounded-xl space-y-1.5">
+              <h3 className="font-semibold text-white">Full On-Device Hardware Acceleration</h3>
+              <p>Utilizes Apple Metal, iOS CoreImage, and Android Canvas APIs to deliver instantaneous compression and multi-page PDF compilation without battery drain.</p>
+            </div>
+            <div className="p-4 bg-white/[0.02] border border-white/5 rounded-xl space-y-1.5">
+              <h3 className="font-semibold text-white">Zero Cloud Tracking &amp; Absolute Privacy</h3>
+              <p>Your contracts, medical scans, signatures, and personal photos are processed exclusively in sandboxed application memory. No telemetry or file harvesting.</p>
+            </div>
+          </div>
+        </div>
+
         {/* Bottom Footer Links */}
-        <div className="flex flex-wrap justify-center items-center gap-6 pt-4 text-xs font-mono text-brand-muted">
-          <Link href="/card" className="hover:text-brand-gold flex items-center gap-1 transition-colors">
-            Founder Digital Card <ExternalLink className="w-3.5 h-3.5" />
+        <div className="flex flex-wrap justify-center items-center gap-6 pt-6 text-xs font-mono text-brand-muted border-t border-white/5">
+          <Link href="/" className="hover:text-brand-gold transition-colors">
+            Home Studio
           </Link>
           <span>•</span>
-          <Link href="/blog/" className="hover:text-brand-gold flex items-center gap-1 transition-colors">
-            Technical Blog & Guides <ExternalLink className="w-3.5 h-3.5" />
+          <Link href="/shots" className="hover:text-brand-gold transition-colors">
+            Screenshot Studio
           </Link>
           <span>•</span>
-          <Link href="/privacy" className="hover:text-brand-gold flex items-center gap-1 transition-colors">
-            Privacy Policy <ExternalLink className="w-3.5 h-3.5" />
+          <Link href="/card" className="hover:text-brand-gold transition-colors">
+            Founder Profile
+          </Link>
+          <span>•</span>
+          <Link href="/blog" className="hover:text-brand-gold transition-colors">
+            Guides &amp; Tutorials
+          </Link>
+          <span>•</span>
+          <Link href="/privacy" className="hover:text-brand-gold transition-colors">
+            Privacy Policy
           </Link>
         </div>
 

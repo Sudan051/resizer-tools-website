@@ -51,6 +51,58 @@ export default function ShotsPage() {
         {/* Client Interactive Generator Canvas */}
         <ScreenshotStudioClient />
 
+        {/* Informational SEO Guide & App Store Specifications */}
+        <div className="pt-12 border-t border-white/10 space-y-8 text-xs text-brand-muted font-light leading-relaxed max-w-4xl mx-auto">
+          <div className="space-y-3 text-left">
+            <h2 className="text-lg font-bold text-white tracking-tight">App Store &amp; Google Play Screenshot Dimensions (2026 Guide)</h2>
+            <p>
+              Publishing your mobile app on the Apple App Store and Google Play Store requires uploading screenshots that strictly comply with official store dimension guidelines. High-converting screenshot sets with readable value propositions and dark-gold luxury device mockups directly increase organic tap-through rates (TTR) and store conversion rates (CVR).
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
+            <div className="p-4 bg-white/[0.02] border border-white/5 rounded-2xl space-y-2">
+              <h3 className="font-bold text-white font-mono text-xs uppercase tracking-wider text-brand-gold">Apple App Store Specifications</h3>
+              <ul className="list-disc pl-4 space-y-1">
+                <li>**6.7&quot; Super Retina (iPhone 16 Pro Max, 15 Pro Max)**: 1290 x 2796 px (Portrait)</li>
+                <li>**6.5&quot; Display (iPhone 14 Plus, 11 Pro Max)**: 1242 x 2688 px (Portrait)</li>
+                <li>**5.5&quot; Display (iPhone 8 Plus, 7 Plus)**: 1242 x 2208 px (Portrait)</li>
+                <li>**13&quot; iPad Pro (M4 &amp; 6th Gen Liquid Retina)**: 2064 x 2752 px (Portrait)</li>
+              </ul>
+            </div>
+
+            <div className="p-4 bg-white/[0.02] border border-white/5 rounded-2xl space-y-2">
+              <h3 className="font-bold text-white font-mono text-xs uppercase tracking-wider text-brand-gold">Google Play Store Specifications</h3>
+              <ul className="list-disc pl-4 space-y-1">
+                <li>**Android Phone Display**: 1080 x 2400 px or 1080 x 1920 px (16:9 / 20:9 ratio)</li>
+                <li>**7-inch Tablet Screenshots**: 1200 x 1920 px (minimum 1080 px edge)</li>
+                <li>**10-inch Tablet Screenshots**: 1600 x 2560 px (required for Play Tablet feature)</li>
+                <li>**Aspect Ratio**: 16:9, 18:9, 19.5:9 or 20:9 supported</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="space-y-3 text-left">
+            <h2 className="text-lg font-bold text-white tracking-tight">100% Client-Side Privacy &amp; Instant Batch Export</h2>
+            <p>
+              Unlike traditional cloud design portals that upload your unreleased app UI mockups to third-party servers, Resizer Tools processes all slide renders, typography blending, gradients, and device shadows locally on your device using HTML5 Canvas. Export your full 5-slide screenshot suite instantly in high-resolution PNG or compressed ZIP format.
+            </p>
+          </div>
+
+          {/* Footer Directory */}
+          <div className="pt-8 border-t border-white/5 text-center font-mono space-y-3">
+            <div className="flex flex-wrap justify-center gap-4 text-[11px]">
+              <Link href="/" className="hover:text-brand-gold">Home Studio</Link>
+              <Link href="/tools/shot-gen" className="hover:text-brand-gold">Screenshot Tool</Link>
+              <Link href="/app" className="hover:text-brand-gold">Mobile App</Link>
+              <Link href="/card" className="hover:text-brand-gold">Pro Card</Link>
+              <Link href="/blog" className="hover:text-brand-gold">Guides</Link>
+              <Link href="/privacy" className="hover:text-brand-gold">Privacy Policy</Link>
+            </div>
+            <p>&copy; {new Date().getFullYear()} Resizer Tools. All rights reserved.</p>
+          </div>
+        </div>
+
       </div>
 
     </main>

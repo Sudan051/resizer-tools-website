@@ -4547,6 +4547,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
             <Link href="/tools/pdf-imgs" className="hover:text-brand-gold-light hover:underline transition-colors">PDF to Image</Link>
             <Link href="/tools/prnt-sheet" className="hover:text-brand-gold-light hover:underline transition-colors">Passport Photo Sheet</Link>
             <Link href="/tools/id-cam" className="hover:text-brand-gold-light hover:underline transition-colors">ID Photo Camera</Link>
+            <Link href="/tools/doc-scan" className="hover:text-brand-gold-light hover:underline transition-colors">Document Scanner</Link>
             <Link href="/tools/mrg-pdf" className="hover:text-brand-gold-light hover:underline transition-colors">Merge PDF</Link>
             <Link href="/tools/sgn-pdf" className="hover:text-brand-gold-light hover:underline transition-colors">Sign PDF</Link>
             <Link href="/tools/prt-pdf" className="hover:text-brand-gold-light hover:underline transition-colors">Protect PDF</Link>
@@ -4557,10 +4558,16 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
             <Link href="/tools/num-pdf" className="hover:text-brand-gold-light hover:underline transition-colors">Page Numbers</Link>
             <Link href="/tools/wtrmk-pdf" className="hover:text-brand-gold-light hover:underline transition-colors">PDF Watermark</Link>
             <Link href="/tools/res-make" className="hover:text-brand-gold-light hover:underline transition-colors">ATS Resume Builder</Link>
+            <Link href="/tools/red-pdf" className="hover:text-brand-gold-light hover:underline transition-colors">PDF Reducer</Link>
+            <Link href="/tools/mk-pdf" className="hover:text-brand-gold-light hover:underline transition-colors">PDF Maker</Link>
+            <Link href="/tools/ext-pdf" className="hover:text-brand-gold-light hover:underline transition-colors">Extract PDF</Link>
+            <Link href="/tools/ord-pdf" className="hover:text-brand-gold-light hover:underline transition-colors">Reorder PDF</Link>
             <Link href="/tools/inv-mk" className="hover:text-brand-gold-light hover:underline transition-colors">Invoice Maker</Link>
             <Link href="/tools/qr-gen" className="hover:text-brand-gold-light hover:underline transition-colors">QR Generator</Link>
             <Link href="/tools/qr-scan" className="hover:text-brand-gold-light hover:underline transition-colors">QR Scanner</Link>
             <Link href="/tools/nfc-tl" className="hover:text-brand-gold-light hover:underline transition-colors">Web NFC</Link>
+            <Link href="/tools/sig-cr" className="hover:text-brand-gold-light hover:underline transition-colors">Signature Creator</Link>
+            <Link href="/tools/shot-gen" className="hover:text-brand-gold-light hover:underline transition-colors">Screenshot Generator</Link>
             <Link href="/shots" className="hover:text-brand-gold-light hover:underline transition-colors">Screenshot Studio</Link>
             <Link href="/card" className="hover:text-brand-gold-light hover:underline transition-colors">Pro Membership</Link>
             <Link href="/app" className="hover:text-brand-gold-light hover:underline transition-colors">Mobile App</Link>

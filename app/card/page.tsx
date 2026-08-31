@@ -130,9 +130,37 @@ export default function DigitalCardPage() {
           </div>
         </div>
 
+        {/* Founder Bio & Engineering Mission */}
+        <div className="space-y-4 pt-4 border-t border-white/5 text-left text-xs text-brand-muted font-light leading-relaxed">
+          <h2 className="text-sm font-bold text-white uppercase tracking-wider">About the Creator</h2>
+          <p>
+            Saurabh Kumar Sharma is a mobile and web application architect dedicated to building fast, high-performance, and privacy-first digital utility tools. Resizer Tools was created with the fundamental principle that users should never have to upload confidential documents, tax forms, or personal photos to remote cloud servers just to perform routine compression, resizing, signing, or format conversion.
+          </p>
+          <p>
+            By engineering advanced WebAssembly (WASM), WebGL, and HTML5 Canvas processing pipelines directly into the browser, Resizer Tools delivers instant processing with zero server latency, zero tracking, and complete offline capability.
+          </p>
+        </div>
+
+        {/* Pro Membership Benefits */}
+        <div className="space-y-3 pt-2 text-left text-xs text-brand-muted font-light leading-relaxed">
+          <h2 className="text-sm font-bold text-white uppercase tracking-wider">Pro Membership Features</h2>
+          <ul className="list-disc pl-5 space-y-1">
+            <li>100% Ad-Free uninterrupted workspace experience</li>
+            <li>Priority batch processing for multi-file PDF and image operations</li>
+            <li>Offline Progressive Web App (PWA) installation across desktop & mobile</li>
+            <li>Lifetime access to new developer tools, NFC writers, and screenshot studios</li>
+          </ul>
+        </div>
+
         {/* Footer */}
-        <div className="pt-2 text-center text-[10px] font-mono text-brand-muted border-t border-white/5">
-          resizertools.com &copy; {new Date().getFullYear()}
+        <div className="pt-4 text-center text-[10px] font-mono text-brand-muted border-t border-white/5 space-y-2">
+          <div className="flex flex-wrap justify-center gap-4">
+            <Link href="/" className="hover:text-brand-gold">Home Studio</Link>
+            <Link href="/shots" className="hover:text-brand-gold">Screenshot Studio</Link>
+            <Link href="/blog" className="hover:text-brand-gold">Guides</Link>
+            <Link href="/privacy" className="hover:text-brand-gold">Privacy</Link>
+          </div>
+          <p>resizertools.com &copy; {new Date().getFullYear()} Resizer Tools. All rights reserved.</p>
         </div>
 
       </div>

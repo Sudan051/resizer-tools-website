@@ -328,6 +328,7 @@ export default async function ToolPage({ params }: { params: Promise<{ id: strin
               <li><Link href="/tools/pdf-imgs" className="hover:text-brand-gold transition-colors">PDF to Image</Link></li>
               <li><Link href="/tools/prnt-sheet" className="hover:text-brand-gold transition-colors">Passport Photo Sheet</Link></li>
               <li><Link href="/tools/id-cam" className="hover:text-brand-gold transition-colors">ID Photo Camera</Link></li>
+              <li><Link href="/tools/doc-scan" className="hover:text-brand-gold transition-colors">Document Scanner</Link></li>
             </ul>
           </div>
 
@@ -344,6 +345,10 @@ export default async function ToolPage({ params }: { params: Promise<{ id: strin
               <li><Link href="/tools/num-pdf" className="hover:text-brand-gold transition-colors">Page Numbers</Link></li>
               <li><Link href="/tools/wtrmk-pdf" className="hover:text-brand-gold transition-colors">PDF Watermark</Link></li>
               <li><Link href="/tools/res-make" className="hover:text-brand-gold transition-colors">ATS Resume Builder</Link></li>
+              <li><Link href="/tools/red-pdf" className="hover:text-brand-gold transition-colors">PDF Reducer</Link></li>
+              <li><Link href="/tools/mk-pdf" className="hover:text-brand-gold transition-colors">PDF Maker</Link></li>
+              <li><Link href="/tools/ext-pdf" className="hover:text-brand-gold transition-colors">Extract PDF Pages</Link></li>
+              <li><Link href="/tools/ord-pdf" className="hover:text-brand-gold transition-colors">Reorder PDF</Link></li>
             </ul>
           </div>
 
@@ -354,7 +359,9 @@ export default async function ToolPage({ params }: { params: Promise<{ id: strin
               <li><Link href="/tools/qr-gen" className="hover:text-brand-gold transition-colors">QR Code Generator</Link></li>
               <li><Link href="/tools/qr-scan" className="hover:text-brand-gold transition-colors">QR Matrix Scanner</Link></li>
               <li><Link href="/tools/nfc-tl" className="hover:text-brand-gold transition-colors">Web NFC Studio</Link></li>
-              <li><Link href="/shots" className="hover:text-brand-gold transition-colors">App Screenshot Studio</Link></li>
+              <li><Link href="/tools/sig-cr" className="hover:text-brand-gold transition-colors">Signature Creator</Link></li>
+              <li><Link href="/tools/shot-gen" className="hover:text-brand-gold transition-colors">Screenshot Generator</Link></li>
+              <li><Link href="/shots" className="hover:text-brand-gold transition-colors">Screenshot Studio</Link></li>
               <li><Link href="/card" className="hover:text-brand-gold transition-colors">Pro Membership</Link></li>
               <li><Link href="/app" className="hover:text-brand-gold transition-colors">Mobile App</Link></li>
               <li><Link href="/privacy" className="hover:text-brand-gold transition-colors">Privacy Policy</Link></li>
