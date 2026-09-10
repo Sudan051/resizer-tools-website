@@ -67,7 +67,7 @@ export default function ShotsPage() {
           <div className="space-y-3 text-left">
             <h2 className="text-lg font-bold text-white tracking-tight">App Store &amp; Google Play Screenshot Dimensions (2026 Guide)</h2>
             <p>
-              Publishing your mobile app on the Apple App Store and Google Play Store requires uploading screenshots that strictly comply with official store dimension guidelines. High-converting screenshot sets with readable value propositions and dark-gold luxury device mockups directly increase organic tap-through rates (TTR) and store conversion rates (CVR).
+              When uploading your app to Apple App Store Connect or Google Play Console, your screenshots must match exact screen dimensions. Clear, well-designed screenshots with device frames and readable titles help showcase your app&apos;s best features and attract more downloads.
             </p>
           </div>
 

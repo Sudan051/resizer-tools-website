@@ -2540,15 +2540,15 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
       <section className="relative pt-36 pb-20 px-6 flex flex-col items-center text-center overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-brand-gold/5 rounded-full blur-[120px] pointer-events-none" />
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-brand-gold-light mb-6">
-          <ShieldCheck className="w-3.5 h-3.5" /> Fully Private & Apple Native
+          <ShieldCheck className="w-3.5 h-3.5" /> 100% Private &amp; Browser-Native
         </motion.div>
         <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-4xl md:text-7xl font-bold tracking-tight max-w-5xl leading-tight">
           Resizer Tools: <br />
-          <span className="bg-clip-text text-transparent bg-gold-gradient">{toolsData.length} Free PDF & Image Web Utilities</span>
+          <span className="bg-clip-text text-transparent bg-gold-gradient">{toolsData.length} Free Web Utilities for PDF, Image &amp; Docs</span>
         </motion.h1>
         <p className="mt-6 text-brand-muted text-base md:text-xl max-w-3xl font-light leading-relaxed">
-          Your standalone platform for advanced graphics manipulation, secure encryption, and document automation. <br />
-          <span className="font-semibold text-white">🔒 100% Client-Side Processing:</span> Your files are processed entirely in your browser using local resources. <span className="text-brand-gold font-semibold underline decoration-brand-gold/30">Zero server uploads. Absolute data privacy.</span>
+          Compress images, edit PDFs, create App Store screenshots, and generate QR codes—all free and private. <br />
+          <span className="font-semibold text-white">🔒 Runs in your browser:</span> Your files are processed locally on your device. <span className="text-brand-gold font-semibold underline decoration-brand-gold/30">Zero server uploads. 100% privacy.</span>
         </p>
 
         {/* 🔍 INSTANT LIVE SEARCH BAR */}
@@ -2599,25 +2599,25 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
           <div className="absolute top-0 right-0 w-64 h-64 bg-brand-gold/5 rounded-full blur-3xl pointer-events-none" />
           <div className="space-y-4 text-left max-w-xl">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-gold/10 border border-brand-gold/20 text-xs font-mono font-bold tracking-wider text-brand-gold uppercase">
-              🛡️ Privacy First Guarantee
+              🛡️ Privacy First
             </span>
             <h3 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
-              Your Files Never Leave Your Device. Period.
+              Your Files Never Leave Your Device
             </h3>
             <p className="text-sm text-brand-muted leading-relaxed font-light">
-              Unlike online PDF converters that upload your sensitive documents (invoices, credentials, visual templates) to external databases, Resizer Tools operates <strong className="text-white font-semibold">100% locally in browser memory</strong>. Zero server latency, absolute data privacy.
+              Unlike typical online converters that upload your confidential files to remote servers, Resizer Tools works <strong className="text-white font-semibold">100% locally in your browser memory</strong>. Faster processing, zero upload waits, and complete data privacy.
             </p>
           </div>
           <div className="grid grid-cols-2 gap-4 w-full md:w-auto shrink-0">
             <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4 text-left flex flex-col justify-between max-w-[200px]">
               <span className="text-2xl mb-1">🔌</span>
               <h4 className="text-xs font-bold text-white uppercase tracking-wider">Works Offline</h4>
-              <p className="text-[10px] text-brand-muted mt-1 leading-normal">Disconnect your internet and keep editing, compressing, or watermarking files flawlessly.</p>
+              <p className="text-[10px] text-brand-muted mt-1 leading-normal">Disconnect your internet and keep editing, compressing, or watermarking files without interruption.</p>
             </div>
             <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4 text-left flex flex-col justify-between max-w-[200px]">
               <span className="text-2xl mb-1">🚀</span>
               <h4 className="text-xs font-bold text-white uppercase tracking-wider">Zero Upload Lag</h4>
-              <p className="text-[10px] text-brand-muted mt-1 leading-normal">Skip uploading massive documents. Process gigabyte files instantly utilizing local CPU speeds.</p>
+              <p className="text-[10px] text-brand-muted mt-1 leading-normal">No waiting for slow uploads. Process your documents and photos instantly using your own device hardware.</p>
             </div>
           </div>
         </div>
@@ -3024,23 +3024,23 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
         </div>
       </section>
 
-      {/* 💼 7. Premium LinkedIn-Style Profile & Live Feedback Console (with Orange Shirt Alignment Alignment) */}
+      {/* 💼 7. Premium Profile & Feedback Section */}
       <section id="about" className="py-24 px-6 bg-gradient-to-b from-brand-black via-brand-obsidian/20 to-brand-black border-t border-white/5 scroll-mt-16">
         <div className="max-w-5xl mx-auto space-y-8">
           
           <div className="text-center mb-12">
-            <p className="text-brand-gold font-mono tracking-widest text-xs uppercase mb-2">Connect & Innovate</p>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Creator Terminal & User Signals</h2>
+            <p className="text-brand-gold font-mono tracking-widest text-xs uppercase mb-2 font-bold">About the Creator</p>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Built by a Passionate Developer</h2>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             
-            {/* 👤 Left Side: Your Custom LinkedIn Profile Image Card Card */}
+            {/* 👤 Left Side: Profile Card */}
             <div className="lg:col-span-7 bg-brand-obsidian/40 border border-white/10 rounded-3xl overflow-hidden shadow-2xl relative group">
               <div className="w-full h-36 bg-neutral-900 relative overflow-hidden border-b border-white/5">
                 <Image 
                   src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=1200&auto=format&fit=crop" 
-                  alt="MacBook Pro Workspace Aesthetic" 
+                  alt="Developer Workspace" 
                   width={800} 
                   height={300} 
                   className="w-full h-full object-cover opacity-25 object-center group-hover:scale-[1.01] transition-transform duration-700"
@@ -3052,7 +3052,6 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                 <div className="relative shrink-0 z-10">
                   <div className="absolute -inset-1 bg-gradient-to-tr from-brand-gold via-brand-gold-dark to-transparent rounded-full blur-sm opacity-60 group-hover:opacity-100 transition duration-500"></div>
                   
-                  {/* PERFECTLY ADJUSTED CO-ORDINATES FOR YOUR PIC PIC */}
                   <div className="relative w-28 h-28 rounded-full border-4 border-brand-black bg-[#1a1a1a] overflow-hidden shadow-xl flex items-center justify-center">
                     <Image 
                       src="/saurabh-profile1.PNG" 
@@ -3065,12 +3064,12 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                 </div>
 
                 <div className="flex-1 sm:mb-2">
-                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-brand-gold/10 border border-brand-gold/20 text-[9px] font-mono tracking-widest text-brand-gold uppercase mb-1.5">
-                    iOS Engineer & Digital Creator
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-brand-gold/10 border border-brand-gold/20 text-[9px] font-mono tracking-widest text-brand-gold uppercase mb-1.5 font-bold">
+                    iOS Engineer &amp; Creator
                   </div>
                   <h3 className="text-2xl font-bold tracking-tight text-white mb-1">Saurabh Kumar Sharma</h3>
                   <p className="text-xs text-brand-muted font-light leading-relaxed">
-                    Specializing in native iOS app deployment and automated asset distribution matrices. Crafting seamless pipelines for global product compliance.
+                    Passionate about building fast, client-side web utilities and native iOS apps. Focused on privacy, clean user experiences, and seamless productivity.
                   </p>
                 </div>
               </div>
@@ -3083,7 +3082,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                 </a>
                 <a href="https://linkedin.com/in/pandit-saurabh-kumar-sharma" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2.5 p-2 rounded-xl bg-white/[0.01] border border-white/5 hover:border-brand-gold/30 hover:bg-white/[0.03] transition-all">
                   <span className="p-1.5 bg-brand-gold/10 rounded-md text-brand-gold"><Cpu className="w-3.5 h-3.5" /></span>
-                  <div className="overflow-hidden"><p className="text-[8px] text-brand-muted font-mono uppercase tracking-wider leading-none mb-0.5">LinkedIn</p><p className="text-xs font-medium text-white truncate">Connect Live</p></div>
+                  <div className="overflow-hidden"><p className="text-[8px] text-brand-muted font-mono uppercase tracking-wider leading-none mb-0.5">LinkedIn</p><p className="text-xs font-medium text-white truncate">Connect on LinkedIn</p></div>
                 </a>
                 <a href="https://youtube.com/@ComedyWithTau-Saurabh" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2.5 p-2 rounded-xl bg-white/[0.01] border border-white/5 hover:border-brand-gold/30 hover:bg-white/[0.03] transition-all">
                   <span className="p-1.5 bg-brand-gold/10 rounded-md text-brand-gold"><Play className="w-3.5 h-3.5" /></span>
@@ -3095,31 +3094,31 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
             {/* ✉️ Right Side: Live Feedback Form */}
             <div className="lg:col-span-5 bg-brand-obsidian/40 border border-white/5 rounded-3xl p-6 shadow-2xl relative">
               <h4 className="text-base font-semibold text-white mb-1 flex items-center gap-2">
-                <Smartphone className="w-4 h-4 text-brand-gold" /> System Telemetry & Feedback
+                <Smartphone className="w-4 h-4 text-brand-gold" /> Send Feedback &amp; Suggestions
               </h4>
-              <p className="text-xs text-brand-muted font-light mb-4">Submit tool reviews, engine logs, or custom feature inquiries instantly.</p>
+              <p className="text-xs text-brand-muted font-light mb-4">Have an idea for a new tool or found a bug? We&apos;d love to hear from you.</p>
               
               <div className="space-y-3.5 text-left">
                 {/* 🚀 Upcoming Feature Announcement */}
                 <div className="p-3.5 rounded-2xl bg-brand-gold/[0.03] border border-brand-gold/15 text-left">
                   <div className="flex items-center gap-2 text-brand-gold text-[10px] font-mono font-bold uppercase tracking-wider mb-1">
-                    <span>🚀</span> Upcoming Features Roadmap
+                    <span>🚀</span> What&apos;s Coming Next
                   </div>
                   <p className="text-[11px] text-brand-muted leading-relaxed font-light">
-                    We are planning to add **Audio & Video tools** (compressors, cutters, and format converters) in the next release.
+                    We are working on **Audio &amp; Video tools** (compressors, cutters, and converters) in our upcoming release.
                   </p>
                   <p className="text-[10px] text-brand-gold-light mt-1.5 font-medium">
-                    💬 What specific audio/video tools do you want? Let us know in your feedback below!
+                    💬 What specific tools would help your daily workflow? Let us know below!
                   </p>
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-mono uppercase tracking-wider text-brand-muted mb-1">User Identifier</label>
+                  <label className="block text-[10px] font-mono uppercase tracking-wider text-brand-muted mb-1">Your Name</label>
                   <input type="text" value={userName} onChange={(e) => setUserName(e.target.value)} placeholder="Enter your name" className="w-full bg-black/40 border border-white/10 rounded-xl px-3 py-2 text-xs text-white placeholder:text-neutral-600 focus:outline-none focus:border-brand-gold/40 transition-colors" />
                 </div>
                 
                 <div>
-                  <label className="block text-[10px] font-mono uppercase tracking-wider text-brand-muted mb-1">Engine Utility Rating</label>
+                  <label className="block text-[10px] font-mono uppercase tracking-wider text-brand-muted mb-1">Rate Your Experience</label>
                   <div className="flex gap-1.5 text-brand-gold">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <button type="button" key={star} onClick={() => setRating(star)} className={`hover:scale-110 transition-transform cursor-pointer text-base ${rating >= star ? "opacity-100" : "opacity-30"}`}>★</button>
@@ -3128,8 +3127,8 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-mono uppercase tracking-wider text-brand-muted mb-1">Payload Message / Feedback</label>
-                  <textarea rows={3} value={feedbackMsg} onChange={(e) => setFeedbackMsg(e.target.value)} placeholder="Type your message here..." className="w-full bg-black/40 border border-white/10 rounded-xl px-3 py-2 text-xs text-white placeholder:text-neutral-600 focus:outline-none focus:border-brand-gold/40 transition-colors resize-none" />
+                  <label className="block text-[10px] font-mono uppercase tracking-wider text-brand-muted mb-1">Your Message or Feedback</label>
+                  <textarea rows={3} value={feedbackMsg} onChange={(e) => setFeedbackMsg(e.target.value)} placeholder="Share your suggestions, questions, or ideas..." className="w-full bg-black/40 border border-white/10 rounded-xl px-3 py-2 text-xs text-white placeholder:text-neutral-600 focus:outline-none focus:border-brand-gold/40 transition-colors resize-none" />
                 </div>
 
                 {/* Validation Lock Trigger link */}
@@ -3142,7 +3141,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                       : "bg-neutral-800 text-neutral-500 opacity-40 cursor-not-allowed pointer-events-none"
                   }`}
                 >
-                  Transmit Signal Securely
+                  Send Feedback
                 </a>
               </div>
             </div>

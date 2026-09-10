@@ -100,9 +100,9 @@ export default function ToolContentSection({ tool }: ToolContentSectionProps) {
             <div className="w-12 h-12 rounded-2xl bg-brand-gold/10 border border-brand-gold/25 flex items-center justify-center text-brand-gold group-hover:scale-110 transition-transform">
               <Zap className="w-6 h-6" />
             </div>
-            <h3 className="text-base font-bold text-white tracking-tight">Unlimited & High-Speed Processing</h3>
+            <h3 className="text-base font-bold text-white tracking-tight">Instant Local Processing</h3>
             <p className="text-xs text-neutral-400 leading-relaxed font-light">
-              Experience zero server upload bottlenecks or network queues. Algorithms execute directly inside your device&apos;s local RAM memory for instant file computation.
+              No server upload delays or slow internet queues. Everything runs directly on your computer or phone for immediate results.
             </p>
           </div>
 
@@ -110,9 +110,9 @@ export default function ToolContentSection({ tool }: ToolContentSectionProps) {
             <div className="w-12 h-12 rounded-2xl bg-brand-gold/10 border border-brand-gold/25 flex items-center justify-center text-brand-gold group-hover:scale-110 transition-transform">
               <Layers className="w-6 h-6" />
             </div>
-            <h3 className="text-base font-bold text-white tracking-tight">Lossless Precision & Quality Control</h3>
+            <h3 className="text-base font-bold text-white tracking-tight">High Quality & Sharp Output</h3>
             <p className="text-xs text-neutral-400 leading-relaxed font-light">
-              Advanced bicubic downsampling, vector preservation, and strict color matrix rendering ensure optimal compression with zero perceptible loss in visual fidelity.
+              Smart compression keeps your text crisp, colors rich, and images clear without unnecessary file bloat.
             </p>
           </div>
 
@@ -120,9 +120,9 @@ export default function ToolContentSection({ tool }: ToolContentSectionProps) {
             <div className="w-12 h-12 rounded-2xl bg-brand-gold/10 border border-brand-gold/25 flex items-center justify-center text-brand-gold group-hover:scale-110 transition-transform">
               <ShieldCheck className="w-6 h-6" />
             </div>
-            <h3 className="text-base font-bold text-white tracking-tight">100% Private, Zero Cloud Storage</h3>
+            <h3 className="text-base font-bold text-white tracking-tight">100% Private & Secure</h3>
             <p className="text-xs text-neutral-400 leading-relaxed font-light">
-              Your confidential tax records, financial statements, contracts, photos, and signatures never leave your device. Absolute peace of mind for sensitive workflows.
+              Your confidential tax records, contracts, photos, and signatures never leave your device. We never upload, store, or view your files.
             </p>
           </div>
         </div>
@@ -131,13 +131,13 @@ export default function ToolContentSection({ tool }: ToolContentSectionProps) {
         <div className="space-y-8 text-left bg-gradient-to-b from-white/[0.02] to-transparent p-8 md:p-10 rounded-3xl border border-white/5">
           <div className="space-y-2">
             <span className="text-[11px] font-mono uppercase tracking-widest text-brand-gold font-bold flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5" /> Tutorial & Workflow
+              <Sparkles className="w-3.5 h-3.5" /> Quick Guide
             </span>
             <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
               How to use {tool.title} Online for Free
             </h2>
             <p className="text-xs sm:text-sm text-neutral-400 font-light max-w-3xl">
-              Follow these simple, browser-native steps to process your files seamlessly without software installation or server delays:
+              Follow these simple steps to process your files in seconds without installing any software or waiting for uploads:
             </p>
           </div>
 
@@ -159,10 +159,10 @@ export default function ToolContentSection({ tool }: ToolContentSectionProps) {
 
           <div className="pt-4 border-t border-white/5 text-xs text-neutral-400 leading-relaxed font-light space-y-3">
             <p>
-              The <strong>{tool.title}</strong> on Resizer Tools is built specifically for users requiring high performance, strict privacy, and zero licensing fees. Whether preparing assets for the Apple App Store, Google Play Store, corporate documentation, government passport submissions, or web deployment, our WebAssembly engine provides rapid desktop-class document handling.
+              The <strong>{tool.title}</strong> on Resizer Tools is built for fast, everyday productivity. Whether you are prepping documents for work, submitting official forms, creating App Store screenshots, or optimizing photos for the web, everything happens right inside your browser.
             </p>
             <p>
-              Once your browser loads this webpage, you can also operate completely offline without an active internet connection, ensuring continuous productivity during flights, remote commutes, or low-connectivity environments.
+              Once loaded, you can even use this tool offline without an active internet connection—convenient when traveling, working remotely, or dealing with slow Wi-Fi.
             </p>
           </div>
         </div>
@@ -171,30 +171,30 @@ export default function ToolContentSection({ tool }: ToolContentSectionProps) {
         <div className="p-8 md:p-10 rounded-3xl bg-gradient-to-r from-brand-gold/10 via-brand-obsidian to-black border border-brand-gold/25 text-left flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="space-y-4 max-w-2xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-gold/20 text-brand-gold font-mono text-[10px] font-bold uppercase tracking-wider">
-              <Lock className="w-3.5 h-3.5" /> Ironclad Data Security
+              <Lock className="w-3.5 h-3.5" /> Privacy Guarantee
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-              Your Privacy, Our Core Commitment
+              Your Files Stay on Your Device
             </h2>
             <p className="text-xs text-neutral-300 leading-relaxed font-light">
-              Unlike conventional online conversion portals that upload multi-megabyte user files to remote servers—risking data leaks, third-party snooping, and retention breaches—Resizer Tools processes every byte strictly within your client device sandbox.
+              Most online file converters upload your personal documents and photos to their cloud servers. Resizer Tools runs entirely inside your browser memory, so your files are never transferred over the internet.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs text-neutral-300">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-brand-gold shrink-0" />
-                <span>Zero Server Uploads & Zero Logs</span>
+                <span>Zero Server Uploads &amp; Zero Logs</span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-brand-gold shrink-0" />
-                <span>GDPR & CCPA Client-Side Model</span>
+                <span>Works Completely Offline</span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-brand-gold shrink-0" />
-                <span>Encrypted Browser Memory Sandbox</span>
+                <span>Processes Directly in Local RAM</span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-brand-gold shrink-0" />
-                <span>Instant RAM Purge on Tab Close</span>
+                <span>Auto-Purged when Tab Closes</span>
               </div>
             </div>
           </div>
@@ -216,7 +216,7 @@ export default function ToolContentSection({ tool }: ToolContentSectionProps) {
               Got Questions? We&apos;ve Got Answers
             </h2>
             <p className="text-xs sm:text-sm text-neutral-400 font-light">
-              Clear answers regarding {tool.title} privacy, browser compatibility, file limits, and offline capabilities.
+              Helpful answers about {tool.title} privacy, file limits, browser compatibility, and offline usage.
             </p>
           </div>
 

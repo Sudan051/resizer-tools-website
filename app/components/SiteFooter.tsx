@@ -18,7 +18,7 @@ export default function SiteFooter() {
               </span>
             </Link>
             <p className="text-xs text-neutral-400 font-light leading-relaxed">
-              100% Free, privacy-first web &amp; mobile utility suite. Compress images, master PDFs, generate QR codes, and create screenshots entirely in local browser RAM with zero server latency.
+              Free, privacy-first web tools to edit PDFs, compress photos, generate QR codes, and create screenshots—processed 100% locally on your device.
             </p>
             <div className="space-y-2 pt-2 text-[11px] font-mono text-neutral-400">
               <div className="flex items-center gap-2 text-emerald-400">
