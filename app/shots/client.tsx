@@ -175,8 +175,7 @@ export const DEFAULT_SLIDES: ScreenshotSlide[] = [
 // Helper to draw clean placeholder wireframe
 function drawPlaceholderWireframe(
   ctx: CanvasRenderingContext2D, 
-  x: number, y: number, w: number, h: number, 
-  title: string
+  x: number, y: number, w: number, h: number
 ) {
   const bgGrad = ctx.createLinearGradient(x, y, x, y + h);
   bgGrad.addColorStop(0, "#161616");
@@ -184,28 +183,46 @@ function drawPlaceholderWireframe(
   ctx.fillStyle = bgGrad;
   ctx.fillRect(x, y, w, h);
 
-  const headerBarH = h * 0.08;
-  ctx.fillStyle = "#222222";
+  // App UI Top Search & Action Bar
+  const headerBarH = h * 0.07;
+  ctx.fillStyle = "#1e1e1e";
   ctx.fillRect(x, y, w, headerBarH);
 
-  ctx.fillStyle = "#F59E0B";
-  ctx.font = `bold ${Math.round(w * 0.04)}px sans-serif`;
-  ctx.textAlign = "center";
-  ctx.fillText(title, x + w / 2, y + headerBarH * 0.62);
+  // Search input mock inside app
+  const searchW = w * 0.75;
+  const searchH = headerBarH * 0.55;
+  const searchX = x + (w - searchW) / 2;
+  const searchY = y + (headerBarH - searchH) / 2 + 10;
+  ctx.fillStyle = "#2a2a2a";
+  ctx.beginPath();
+  ctx.roundRect(searchX, searchY, searchW, searchH, searchH / 2);
+  ctx.fill();
 
+  // Dotted Upload Box
   ctx.strokeStyle = "rgba(245, 158, 11, 0.4)";
   ctx.lineWidth = 3;
   ctx.setLineDash([8, 8]);
-  ctx.strokeRect(x + w * 0.1, y + h * 0.25, w * 0.8, h * 0.4);
+  ctx.strokeRect(x + w * 0.1, y + h * 0.22, w * 0.8, h * 0.45);
   ctx.setLineDash([]);
 
-  ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
-  ctx.font = `600 ${Math.round(w * 0.042)}px sans-serif`;
-  ctx.fillText("Upload App Screenshot", x + w / 2, y + h * 0.43);
+  // Upload Callout
+  ctx.fillStyle = "#ffffff";
+  ctx.font = `700 ${Math.round(w * 0.044)}px -apple-system, sans-serif`;
+  ctx.textAlign = "center";
+  ctx.fillText("Upload App Screenshot", x + w / 2, y + h * 0.42);
 
-  ctx.fillStyle = "rgba(245, 158, 11, 0.8)";
-  ctx.font = `400 ${Math.round(w * 0.03)}px sans-serif`;
-  ctx.fillText("(Click 'Upload Screenshot' panel on left)", x + w / 2, y + h * 0.48);
+  ctx.fillStyle = "#F59E0B";
+  ctx.font = `500 ${Math.round(w * 0.032)}px -apple-system, sans-serif`;
+  ctx.fillText("(Click 'App Screenshot' upload button on left)", x + w / 2, y + h * 0.48);
+
+  // App UI cards placeholder
+  ctx.fillStyle = "#1c1c1c";
+  ctx.beginPath();
+  ctx.roundRect(x + w * 0.1, y + h * 0.72, w * 0.8, h * 0.1, 16);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.roundRect(x + w * 0.1, y + h * 0.84, w * 0.8, h * 0.1, 16);
+  ctx.fill();
 }
 
 interface ColorPickerFieldProps {
@@ -378,10 +395,10 @@ export default function ScreenshotStudioClient() {
       let textX = width / 2;
       let alignMode: CanvasTextAlign = "center";
       if (slide.textAlign === "left") {
-        textX = width * 0.1;
+        textX = width * 0.08;
         alignMode = "left";
       } else if (slide.textAlign === "right") {
-        textX = width * 0.9;
+        textX = width * 0.92;
         alignMode = "right";
       }
 
@@ -390,30 +407,34 @@ export default function ScreenshotStudioClient() {
         const logoImg = new Image();
         logoImg.crossOrigin = "anonymous";
         logoImg.onload = () => {
-          const logoSize = Math.round(height * 0.04);
+          const logoSize = Math.round(height * 0.035);
           let logoX = width / 2 - logoSize / 2;
-          if (slide.textAlign === "left") logoX = width * 0.1;
-          if (slide.textAlign === "right") logoX = width * 0.9 - logoSize;
+          if (slide.textAlign === "left") logoX = width * 0.08;
+          if (slide.textAlign === "right") logoX = width * 0.92 - logoSize;
           
           ctx.save();
           ctx.beginPath();
-          ctx.roundRect(logoX, height * 0.02, logoSize, logoSize, 12);
+          ctx.roundRect(logoX, height * 0.015, logoSize, logoSize, 10);
           ctx.clip();
-          ctx.drawImage(logoImg, logoX, height * 0.02, logoSize, logoSize);
+          ctx.drawImage(logoImg, logoX, height * 0.015, logoSize, logoSize);
           ctx.restore();
         };
         logoImg.src = slide.logoSrc;
       }
 
-      // 4. TOP BADGE RENDER
-      if (slide.badgeText && slide.badgeText.trim() !== "" && slide.badgeStyle && slide.badgeStyle !== "none") {
-        const badgeFontSize = Math.round(height * 0.0125 * (slide.headerFontSize || 1.0));
+      // 4. TOP MARKETING COPY LAYOUT (BADGE, HEADER & SUBTEXT)
+      const hasBadge = slide.badgeText && slide.badgeText.trim() !== "" && slide.badgeStyle && slide.badgeStyle !== "none";
+
+      // A) TOP BADGE RENDER
+      let currentY = height * 0.038;
+      if (hasBadge) {
+        const badgeFontSize = Math.round(height * 0.0115 * (slide.headerFontSize || 1.0));
         ctx.font = getCanvasFont(slide.fontFamily, 800, badgeFontSize);
         ctx.textAlign = alignMode;
 
         const metrics = ctx.measureText(slide.badgeText.toUpperCase());
-        const badgeW = metrics.width + 36;
-        const badgeH = badgeFontSize + 18;
+        const badgeW = metrics.width + 32;
+        const badgeH = badgeFontSize + 16;
         let badgeX = textX - badgeW / 2;
         if (slide.textAlign === "left") badgeX = textX;
         if (slide.textAlign === "right") badgeX = textX - badgeW;
@@ -421,53 +442,99 @@ export default function ScreenshotStudioClient() {
         if (slide.badgeStyle === "pill_filled") {
           ctx.fillStyle = slide.badgeBgColor || "#F59E0B";
           ctx.beginPath();
-          ctx.roundRect(badgeX, height * 0.052, badgeW, badgeH, badgeH / 2);
+          ctx.roundRect(badgeX, currentY, badgeW, badgeH, badgeH / 2);
           ctx.fill();
 
           ctx.fillStyle = slide.badgeTextColor || "#000000";
-          ctx.fillText(slide.badgeText.toUpperCase(), badgeX + badgeW / 2, height * 0.052 + badgeH * 0.72);
+          ctx.fillText(slide.badgeText.toUpperCase(), badgeX + badgeW / 2, currentY + badgeH * 0.72);
         } else if (slide.badgeStyle === "pill_bordered") {
           ctx.strokeStyle = slide.badgeBgColor || "#F59E0B";
-          ctx.lineWidth = 2.5;
+          ctx.lineWidth = 2;
           ctx.beginPath();
-          ctx.roundRect(badgeX, height * 0.052, badgeW, badgeH, badgeH / 2);
+          ctx.roundRect(badgeX, currentY, badgeW, badgeH, badgeH / 2);
           ctx.stroke();
 
           ctx.fillStyle = slide.badgeTextColor || "#FFFFFF";
-          ctx.fillText(slide.badgeText.toUpperCase(), badgeX + badgeW / 2, height * 0.052 + badgeH * 0.72);
+          ctx.fillText(slide.badgeText.toUpperCase(), badgeX + badgeW / 2, currentY + badgeH * 0.72);
         } else if (slide.badgeStyle === "neon") {
           ctx.save();
           ctx.shadowColor = slide.badgeBgColor || "#F59E0B";
-          ctx.shadowBlur = 15;
+          ctx.shadowBlur = 12;
           ctx.fillStyle = slide.badgeBgColor || "#F59E0B";
-          ctx.fillText(slide.badgeText.toUpperCase(), textX, height * 0.065);
+          ctx.fillText(slide.badgeText.toUpperCase(), textX, currentY + badgeH * 0.6);
           ctx.restore();
         }
+
+        currentY += badgeH + height * 0.018;
+      } else {
+        currentY = height * 0.045;
       }
 
-      // 5. HEADER TITLE RENDER
-      const headerFontSize = Math.round(height * 0.036 * (slide.headerFontSize || 1.0));
+      // B) HEADER TITLE RENDER (WITH AUTO MULTI-LINE WRAPPING)
+      const headerFontSize = Math.round(height * 0.034 * (slide.headerFontSize || 1.0));
       ctx.font = getCanvasFont(slide.fontFamily, 900, headerFontSize);
       ctx.textAlign = alignMode;
       ctx.fillStyle = slide.headerColor || "#ffffff";
-      ctx.fillText(slide.header, textX, height * 0.115);
 
-      // 6. SUBTEXT RENDER
-      if (slide.subtext) {
-        const subfontSize = Math.round(height * 0.017 * (slide.subtextFontSize || 1.0));
-        ctx.font = getCanvasFont(slide.fontFamily, 400, subfontSize);
+      const maxTitleWidth = width * 0.86;
+      const words = (slide.header || "").split(" ");
+      let line = "";
+      const lines: string[] = [];
+
+      for (let n = 0; n < words.length; n++) {
+        const testLine = line + words[n] + " ";
+        const metrics = ctx.measureText(testLine);
+        if (metrics.width > maxTitleWidth && n > 0) {
+          lines.push(line.trim());
+          line = words[n] + " ";
+        } else {
+          line = testLine;
+        }
+      }
+      lines.push(line.trim());
+
+      const lineHeight = headerFontSize * 1.15;
+      for (let i = 0; i < lines.length; i++) {
+        ctx.fillText(lines[i], textX, currentY + headerFontSize * 0.85 + (i * lineHeight));
+      }
+      currentY += (lines.length * lineHeight) + height * 0.008;
+
+      // C) SUBTEXT DESCRIPTION RENDER
+      if (slide.subtext && slide.subtext.trim() !== "") {
+        const subfontSize = Math.round(height * 0.0155 * (slide.subtextFontSize || 1.0));
+        ctx.font = getCanvasFont(slide.fontFamily, 500, subfontSize);
         ctx.textAlign = alignMode;
         ctx.fillStyle = slide.subtextColor || "rgba(255, 255, 255, 0.75)";
-        ctx.fillText(slide.subtext, textX, height * 0.155);
+        
+        // Multi-line wrap for subtext if long
+        const subwords = slide.subtext.split(" ");
+        let subline = "";
+        const sublines: string[] = [];
+        for (let sn = 0; sn < subwords.length; sn++) {
+          const testSub = subline + subwords[sn] + " ";
+          if (ctx.measureText(testSub).width > maxTitleWidth && sn > 0) {
+            sublines.push(subline.trim());
+            subline = subwords[sn] + " ";
+          } else {
+            subline = testSub;
+          }
+        }
+        sublines.push(subline.trim());
+
+        const subLineHeight = subfontSize * 1.25;
+        for (let si = 0; si < sublines.length; si++) {
+          ctx.fillText(sublines[si], textX, currentY + subfontSize * 0.85 + (si * subLineHeight));
+        }
       }
 
-      // 7. DEVICE MOCKUP POSITION, BEZEL, SHADOW & ROTATION
+      // 5. DEVICE MOCKUP POSITION, BEZEL & HARDWARE RENDER
       ctx.save();
 
-      const baseFrameWidth = (width * 0.82) * (slide.mockupScale || 1.0);
-      const baseFrameHeight = (height * 0.84) * (slide.mockupScale || 1.0);
+      const baseFrameWidth = (width * 0.84) * (slide.mockupScale || 1.0);
+      const baseFrameHeight = (height * 0.80) * (slide.mockupScale || 1.0);
+      // Clean positioning: Phone starts at ~23% from top of canvas so it NEVER overlaps marketing copy
       const frameX = width / 2;
-      const frameY = height * 0.58 + (slide.mockupPositionY || 0);
+      const frameY = height * 0.64 + (slide.mockupPositionY || 0);
 
       ctx.translate(frameX, frameY);
       if (slide.mockupRotation) {
@@ -523,7 +590,7 @@ export default function ScreenshotStudioClient() {
 
       ctx.restore();
 
-      // 8. INNER SCREEN AREA CLIP & IMAGE DRAW
+      // 6. INNER SCREEN AREA CLIP & IMAGE DRAW
       const innerMargin = Math.round(width * 0.012) + Math.round(borderWidth * 0.6);
       const innerX = drawX + innerMargin;
       const innerY = drawY + innerMargin;
@@ -547,7 +614,7 @@ export default function ScreenshotStudioClient() {
 
       // Render Cutouts (Dynamic Island / Apple Notch / Hole Punch) and Status Bar
       const renderTopHardwareAndStatusBar = () => {
-        // A) AUTHENTIC DYNAMIC ISLAND (Modern iPhone 15/16 Pro)
+        // A) AUTHENTIC DYNAMIC ISLAND (Modern iPhone 16/15 Pro)
         if (slide.frameStyle === "island" && preset.deviceType === "Phone") {
           const islandW = innerW * 0.285;
           const islandH = innerH * 0.026;
@@ -752,14 +819,14 @@ export default function ScreenshotStudioClient() {
           resolve();
         };
         img.onerror = () => {
-          drawPlaceholderWireframe(ctx, innerX, innerY, innerW, innerH, slide.header);
+          drawPlaceholderWireframe(ctx, innerX, innerY, innerW, innerH);
           renderTopHardwareAndStatusBar();
           ctx.restore();
           resolve();
         };
         img.src = slide.imageSrc;
       } else {
-        drawPlaceholderWireframe(ctx, innerX, innerY, innerW, innerH, slide.header);
+        drawPlaceholderWireframe(ctx, innerX, innerY, innerW, innerH);
         renderTopHardwareAndStatusBar();
         ctx.restore();
         resolve();
