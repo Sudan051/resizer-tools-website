@@ -177,51 +177,124 @@ function drawPlaceholderWireframe(
   ctx: CanvasRenderingContext2D, 
   x: number, y: number, w: number, h: number
 ) {
+  // Sleek dark gradient background for app canvas
   const bgGrad = ctx.createLinearGradient(x, y, x, y + h);
-  bgGrad.addColorStop(0, "#161616");
-  bgGrad.addColorStop(1, "#0a0a0a");
+  bgGrad.addColorStop(0, "#11141c");
+  bgGrad.addColorStop(1, "#07090e");
   ctx.fillStyle = bgGrad;
   ctx.fillRect(x, y, w, h);
 
-  // App UI Top Search Bar Area
-  const headerBarH = h * 0.08;
-  ctx.fillStyle = "#1e1e1e";
-  ctx.fillRect(x, y, w, headerBarH);
-
-  // Search input mock inside app
-  const searchW = w * 0.76;
-  const searchH = headerBarH * 0.5;
-  const searchX = x + (w - searchW) / 2;
-  const searchY = y + (headerBarH - searchH) / 2 + 12;
-  ctx.fillStyle = "#282828";
+  // App UI Top Navigation Bar (Positioned safely BELOW status bar / dynamic island area)
+  const navY = y + h * 0.072;
+  const navH = h * 0.045;
+  
+  // Left: App Menu / Back pill icon
+  ctx.fillStyle = "rgba(255, 255, 255, 0.1)";
   ctx.beginPath();
-  ctx.roundRect(searchX, searchY, searchW, searchH, searchH / 2);
+  ctx.roundRect(x + w * 0.08, navY + (navH - 24) / 2, 24, 24, 8);
   ctx.fill();
 
-  // Dotted Upload Box
-  ctx.strokeStyle = "rgba(245, 158, 11, 0.4)";
-  ctx.lineWidth = 3;
+  // Center: App Header Title placeholder
+  ctx.fillStyle = "rgba(255, 255, 255, 0.25)";
+  ctx.beginPath();
+  ctx.roundRect(x + w * 0.35, navY + (navH - 12) / 2, w * 0.3, 12, 6);
+  ctx.fill();
+
+  // Right: Action button pill
+  ctx.fillStyle = "rgba(245, 158, 11, 0.2)";
+  ctx.beginPath();
+  ctx.roundRect(x + w * 0.82, navY + (navH - 24) / 2, 24, 24, 8);
+  ctx.fill();
+
+  // Dotted Upload Screenshot Box in Center
+  const boxX = x + w * 0.08;
+  const boxY = y + h * 0.18;
+  const boxW = w * 0.84;
+  const boxH = h * 0.46;
+
+  // Box Background
+  ctx.fillStyle = "rgba(255, 255, 255, 0.02)";
+  ctx.beginPath();
+  ctx.roundRect(boxX, boxY, boxW, boxH, 20);
+  ctx.fill();
+
+  // Dashed Golden Rim
+  ctx.strokeStyle = "rgba(245, 158, 11, 0.45)";
+  ctx.lineWidth = 2.5;
   ctx.setLineDash([8, 8]);
-  ctx.strokeRect(x + w * 0.1, y + h * 0.22, w * 0.8, h * 0.45);
+  ctx.strokeRect(boxX, boxY, boxW, boxH);
   ctx.setLineDash([]);
 
-  // Upload Callout
-  ctx.fillStyle = "#ffffff";
-  ctx.font = `700 ${Math.round(w * 0.044)}px -apple-system, sans-serif`;
-  ctx.textAlign = "center";
-  ctx.fillText("Upload App Screenshot", x + w / 2, y + h * 0.42);
-
+  // Upload Cloud / Icon Glyph
+  const iconCenterY = boxY + boxH * 0.34;
   ctx.fillStyle = "#F59E0B";
-  ctx.font = `500 ${Math.round(w * 0.032)}px -apple-system, sans-serif`;
-  ctx.fillText("(Click 'App Screenshot' button on left panel)", x + w / 2, y + h * 0.48);
-
-  // App UI cards placeholder
-  ctx.fillStyle = "#1c1c1c";
   ctx.beginPath();
-  ctx.roundRect(x + w * 0.1, y + h * 0.72, w * 0.8, h * 0.1, 16);
+  ctx.arc(x + w / 2, iconCenterY, 24, 0, Math.PI * 2);
   ctx.fill();
+  ctx.fillStyle = "#000000";
+  ctx.font = `900 ${Math.round(w * 0.045)}px -apple-system, sans-serif`;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText("↑", x + w / 2, iconCenterY);
+
+  // Upload Callout Primary Text
+  ctx.fillStyle = "#ffffff";
+  ctx.font = `700 ${Math.round(w * 0.042)}px -apple-system, sans-serif`;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "alphabetic";
+  ctx.fillText("Upload App Screenshot", x + w / 2, boxY + boxH * 0.58);
+
+  // Upload Subtitle Helper
+  ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
+  ctx.font = `500 ${Math.round(w * 0.028)}px -apple-system, sans-serif`;
+  ctx.fillText("PNG, JPG or WebP supported", x + w / 2, boxY + boxH * 0.68);
+
+  // App UI Bottom Cards / Skeleton Rows
+  const cardY1 = y + h * 0.69;
+  const cardH = h * 0.085;
+  ctx.fillStyle = "rgba(255, 255, 255, 0.04)";
   ctx.beginPath();
-  ctx.roundRect(x + w * 0.1, y + h * 0.84, w * 0.8, h * 0.1, 16);
+  ctx.roundRect(boxX, cardY1, boxW, cardH, 16);
+  ctx.fill();
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.06)";
+  ctx.lineWidth = 1;
+  ctx.stroke();
+
+  // Skeleton rows inside card
+  ctx.fillStyle = "rgba(255, 255, 255, 0.15)";
+  ctx.beginPath();
+  ctx.roundRect(boxX + 16, cardY1 + 18, boxW * 0.45, 10, 5);
+  ctx.fill();
+  ctx.fillStyle = "rgba(255, 255, 255, 0.08)";
+  ctx.beginPath();
+  ctx.roundRect(boxX + 16, cardY1 + 36, boxW * 0.65, 8, 4);
+  ctx.fill();
+
+  const cardY2 = y + h * 0.80;
+  ctx.fillStyle = "rgba(255, 255, 255, 0.04)";
+  ctx.beginPath();
+  ctx.roundRect(boxX, cardY2, boxW, cardH, 16);
+  ctx.fill();
+  ctx.stroke();
+
+  // Skeleton rows inside card 2
+  ctx.fillStyle = "rgba(255, 255, 255, 0.15)";
+  ctx.beginPath();
+  ctx.roundRect(boxX + 16, cardY2 + 18, boxW * 0.35, 10, 5);
+  ctx.fill();
+  ctx.fillStyle = "rgba(255, 255, 255, 0.08)";
+  ctx.beginPath();
+  ctx.roundRect(boxX + 16, cardY2 + 36, boxW * 0.55, 8, 4);
+  ctx.fill();
+
+  // iOS Home Indicator Bar at the bottom
+  const homeW = w * 0.34;
+  const homeH = 4.5;
+  const homeX = x + (w - homeW) / 2;
+  const homeY = y + h - 14;
+  ctx.fillStyle = "rgba(255, 255, 255, 0.35)";
+  ctx.beginPath();
+  ctx.roundRect(homeX, homeY, homeW, homeH, homeH / 2);
   ctx.fill();
 }
 
@@ -482,14 +555,14 @@ export default function ScreenshotStudioClient() {
 
         // Hardware Notch/Island & Status Bar Sub-Renderer
         const renderHardwareAndStatusBar = () => {
-          const statusBarY = innerY + innerH * 0.024;
+          const islandH = innerH * 0.027;
+          const islandY = innerY + innerH * 0.012;
+          const statusBarY = islandY + islandH * 0.5;
 
           // A) DYNAMIC ISLAND (Modern iPhone 15/16 Pro)
           if (slide.frameStyle === "island" && preset.deviceType === "Phone") {
             const islandW = innerW * 0.285;
-            const islandH = innerH * 0.026;
             const islandX = innerX + (innerW - islandW) / 2;
-            const islandY = statusBarY - islandH / 2;
             const islandR = islandH / 2;
 
             ctx.save();
@@ -500,14 +573,14 @@ export default function ScreenshotStudioClient() {
             ctx.fillStyle = "#000000";
             ctx.fill();
 
-            // 0.75px metallic outline rim so island pops on white screenshots
-            ctx.strokeStyle = "rgba(255, 255, 255, 0.14)";
+            // 0.75px metallic outline rim so island pops on light screenshots
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.12)";
             ctx.lineWidth = 1;
             ctx.stroke();
 
             // TrueDepth Camera Lens (Right)
-            const camX = islandX + islandW * 0.74;
-            const camY = islandY + islandH * 0.5;
+            const camX = islandX + islandW * 0.76;
+            const camY = statusBarY;
             const camR = islandH * 0.22;
             ctx.beginPath();
             ctx.arc(camX, camY, camR, 0, Math.PI * 2);
@@ -519,8 +592,8 @@ export default function ScreenshotStudioClient() {
             ctx.fill();
 
             // Face ID / Optical Matrix (Left)
-            const sensorX = islandX + islandW * 0.28;
-            const sensorY = islandY + islandH * 0.5;
+            const sensorX = islandX + islandW * 0.26;
+            const sensorY = statusBarY;
             const sensorR = islandH * 0.16;
             ctx.beginPath();
             ctx.arc(sensorX, sensorY, sensorR, 0, Math.PI * 2);
@@ -599,56 +672,58 @@ export default function ScreenshotStudioClient() {
             ctx.save();
             const sbColor = "rgba(255, 255, 255, 0.95)";
             ctx.fillStyle = sbColor;
-            ctx.font = getCanvasFont("sans", 700, Math.round(innerW * 0.034));
+            ctx.font = getCanvasFont("sans", 700, Math.round(innerW * 0.035));
             ctx.textAlign = "left";
             ctx.textBaseline = "middle";
             
             // Time 9:41
-            const timeX = innerX + innerW * 0.07;
+            const timeX = innerX + innerW * 0.075;
             ctx.fillText("9:41", timeX, statusBarY);
 
             // Right Icons (Cellular, Wi-Fi, Battery)
-            const rightBaseX = innerX + innerW * 0.93;
+            const rightBaseX = innerX + innerW * 0.925;
 
             // 1. Battery Pill
             const batW = innerW * 0.054;
-            const batH = innerH * 0.013;
+            const batH = innerH * 0.0125;
             const batX = rightBaseX - batW;
+            const batY = statusBarY - batH / 2;
             ctx.strokeStyle = sbColor;
             ctx.lineWidth = 1.8;
             ctx.beginPath();
-            ctx.roundRect(batX, statusBarY - batH / 2, batW, batH, 3.5);
+            ctx.roundRect(batX, batY, batW, batH, 3.5);
             ctx.stroke();
 
             // Battery Nipple
             ctx.fillStyle = sbColor;
             ctx.beginPath();
-            ctx.roundRect(batX + batW + 1.5, statusBarY - batH * 0.25, 2, batH * 0.5, 1);
+            ctx.roundRect(batX + batW + 1.2, statusBarY - batH * 0.22, 1.8, batH * 0.44, 1);
             ctx.fill();
 
             // Battery Charge Fill
             ctx.beginPath();
-            ctx.roundRect(batX + 2.5, statusBarY - batH / 2 + 2.5, batW - 5, batH - 5, 2);
+            ctx.roundRect(batX + 2.2, batY + 2.2, batW - 4.4, batH - 4.4, 2);
             ctx.fill();
 
             // 2. Wi-Fi Arc
-            const wifiX = batX - innerW * 0.045;
+            const wifiX = batX - innerW * 0.046;
             ctx.lineWidth = 1.8;
             ctx.beginPath();
-            ctx.arc(wifiX, statusBarY + 2, 8, Math.PI * 1.25, Math.PI * 1.75);
+            ctx.arc(wifiX, statusBarY + 3, 7.5, Math.PI * 1.25, Math.PI * 1.75);
             ctx.stroke();
             ctx.beginPath();
-            ctx.arc(wifiX, statusBarY + 2, 5, Math.PI * 1.25, Math.PI * 1.75);
+            ctx.arc(wifiX, statusBarY + 3, 4.5, Math.PI * 1.25, Math.PI * 1.75);
             ctx.stroke();
             ctx.beginPath();
-            ctx.arc(wifiX, statusBarY + 2, 1.5, 0, Math.PI * 2);
+            ctx.arc(wifiX, statusBarY + 3, 1.5, 0, Math.PI * 2);
             ctx.fill();
 
             // 3. Cellular 4 Bars
-            const cellX = wifiX - innerW * 0.042;
+            const cellX = wifiX - innerW * 0.044;
+            const cellBaseY = statusBarY + batH * 0.45;
             for (let b = 0; b < 4; b++) {
-              const barH = 4 + b * 2.8;
-              ctx.fillRect(cellX + b * 3.2, statusBarY + 5 - barH, 2.2, barH);
+              const barH = 3.5 + b * 2.5;
+              ctx.fillRect(cellX + b * 3.2, cellBaseY - barH, 2.2, barH);
             }
 
             ctx.restore();
