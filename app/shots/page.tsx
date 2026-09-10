@@ -1,5 +1,8 @@
 import Link from "next/link";
 import ScreenshotStudioClient from "./client";
+import ToolContentSection from "../components/ToolContentSection";
+import SiteFooter from "../components/SiteFooter";
+import { toolsData } from "../data/tools";
 
 export const dynamic = "force-static";
 
@@ -12,8 +15,16 @@ export const metadata = {
 };
 
 export default function ShotsPage() {
+  const shotTool = toolsData.find((t) => t.id === "shot_gen") || {
+    id: "shot_gen",
+    title: "App Store Screenshot Studio",
+    subtitle: "Generate iOS & Android App Store Screenshots",
+    desc: "Generate pixel-perfect Apple App Store & Google Play Store marketing screenshots with luxury frames and batch ZIP export.",
+    category: "generator"
+  };
+
   return (
-    <main className="min-h-screen bg-[#080808] text-white selection:bg-brand-gold/30 selection:text-brand-gold-light py-10 px-4 sm:px-6 relative overflow-hidden">
+    <main className="min-h-screen bg-[#080808] text-white selection:bg-brand-gold/30 selection:text-brand-gold-light pt-10 px-4 sm:px-6 relative overflow-hidden">
       
       {/* Ambiance glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-brand-gold/10 rounded-full blur-[180px] pointer-events-none" />
@@ -64,46 +75,42 @@ export default function ShotsPage() {
             <div className="p-4 bg-white/[0.02] border border-white/5 rounded-2xl space-y-2">
               <h3 className="font-bold text-white font-mono text-xs uppercase tracking-wider text-brand-gold">Apple App Store Specifications</h3>
               <ul className="list-disc pl-4 space-y-1">
-                <li>**6.7&quot; Super Retina (iPhone 16 Pro Max, 15 Pro Max)**: 1290 x 2796 px (Portrait)</li>
-                <li>**6.5&quot; Display (iPhone 14 Plus, 11 Pro Max)**: 1242 x 2688 px (Portrait)</li>
-                <li>**5.5&quot; Display (iPhone 8 Plus, 7 Plus)**: 1242 x 2208 px (Portrait)</li>
-                <li>**13&quot; iPad Pro (M4 &amp; 6th Gen Liquid Retina)**: 2064 x 2752 px (Portrait)</li>
+                <li><strong>6.7&quot; Super Retina (iPhone 16 Pro Max, 15 Pro Max)</strong>: 1290 x 2796 px (Portrait)</li>
+                <li><strong>6.5&quot; Display (iPhone 14 Plus, 11 Pro Max)</strong>: 1242 x 2688 px (Portrait)</li>
+                <li><strong>5.5&quot; Display (iPhone 8 Plus, 7 Plus)</strong>: 1242 x 2208 px (Portrait)</li>
+                <li><strong>13&quot; iPad Pro (M4 &amp; 6th Gen Liquid Retina)</strong>: 2064 x 2752 px (Portrait)</li>
               </ul>
             </div>
 
             <div className="p-4 bg-white/[0.02] border border-white/5 rounded-2xl space-y-2">
               <h3 className="font-bold text-white font-mono text-xs uppercase tracking-wider text-brand-gold">Google Play Store Specifications</h3>
               <ul className="list-disc pl-4 space-y-1">
-                <li>**Android Phone Display**: 1080 x 2400 px or 1080 x 1920 px (16:9 / 20:9 ratio)</li>
-                <li>**7-inch Tablet Screenshots**: 1200 x 1920 px (minimum 1080 px edge)</li>
-                <li>**10-inch Tablet Screenshots**: 1600 x 2560 px (required for Play Tablet feature)</li>
-                <li>**Aspect Ratio**: 16:9, 18:9, 19.5:9 or 20:9 supported</li>
+                <li><strong>Android Phone Display</strong>: 1080 x 2400 px or 1080 x 1920 px (16:9 / 20:9 ratio)</li>
+                <li><strong>7-inch Tablet Screenshots</strong>: 1200 x 1920 px (minimum 1080 px edge)</li>
+                <li><strong>10-inch Tablet Screenshots</strong>: 1600 x 2560 px (required for Play Tablet feature)</li>
+                <li><strong>Aspect Ratio</strong>: 16:9, 18:9, 19.5:9 or 20:9 supported</li>
               </ul>
             </div>
-          </div>
-
-          <div className="space-y-3 text-left">
-            <h2 className="text-lg font-bold text-white tracking-tight">100% Client-Side Privacy &amp; Instant Batch Export</h2>
-            <p>
-              Unlike traditional cloud design portals that upload your unreleased app UI mockups to third-party servers, Resizer Tools processes all slide renders, typography blending, gradients, and device shadows locally on your device using HTML5 Canvas. Export your full 5-slide screenshot suite instantly in high-resolution PNG or compressed ZIP format.
-            </p>
-          </div>
-
-          {/* Footer Directory */}
-          <div className="pt-8 border-t border-white/5 text-center font-mono space-y-3">
-            <div className="flex flex-wrap justify-center gap-4 text-[11px]">
-              <Link href="/" className="hover:text-brand-gold">Home Studio</Link>
-              <Link href="/tools/shot-gen" className="hover:text-brand-gold">Screenshot Tool</Link>
-              <Link href="/app" className="hover:text-brand-gold">Mobile App</Link>
-              <Link href="/card" className="hover:text-brand-gold">Pro Card</Link>
-              <Link href="/blog" className="hover:text-brand-gold">Guides</Link>
-              <Link href="/privacy" className="hover:text-brand-gold">Privacy Policy</Link>
-            </div>
-            <p>&copy; {new Date().getFullYear()} Resizer Tools. All rights reserved.</p>
           </div>
         </div>
 
       </div>
+
+      {/* 👑 RICH SEO VALUE, FAQ, RATINGS, HOW-TO & TRUST CONTENT */}
+      <div className="mt-16">
+        <ToolContentSection 
+          tool={{
+            id: shotTool.id,
+            title: shotTool.title,
+            subtitle: shotTool.subtitle,
+            desc: shotTool.desc,
+            category: shotTool.category,
+          }} 
+        />
+      </div>
+
+      {/* 🔻 GLOBAL LUXURY SITE FOOTER */}
+      <SiteFooter />
 
     </main>
   );

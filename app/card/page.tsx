@@ -4,6 +4,7 @@ import {
   ShieldCheck, ExternalLink, Mail, Globe, Play, 
   Sparkles, Layers, Smartphone, CheckCircle2, Apple 
 } from "lucide-react";
+import SiteFooter from "../components/SiteFooter";
 
 export const dynamic = "force-static";
 
@@ -147,24 +148,16 @@ export default function DigitalCardPage() {
           <ul className="list-disc pl-5 space-y-1">
             <li>100% Ad-Free uninterrupted workspace experience</li>
             <li>Priority batch processing for multi-file PDF and image operations</li>
-            <li>Offline Progressive Web App (PWA) installation across desktop & mobile</li>
+            <li>Offline Progressive Web App (PWA) installation across desktop &amp; mobile</li>
             <li>Lifetime access to new developer tools, NFC writers, and screenshot studios</li>
           </ul>
         </div>
 
-        {/* Footer */}
-        <div className="pt-4 text-center text-[10px] font-mono text-brand-muted border-t border-white/5 space-y-2">
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/" className="hover:text-brand-gold">Home Studio</Link>
-            <Link href="/shots" className="hover:text-brand-gold">Screenshot Studio</Link>
-            <Link href="/blog" className="hover:text-brand-gold">Guides</Link>
-            <Link href="/privacy" className="hover:text-brand-gold">Privacy</Link>
-          </div>
-          <p>resizertools.com &copy; {new Date().getFullYear()} Resizer Tools. All rights reserved.</p>
-        </div>
-
       </div>
 
+      <div className="w-full mt-16">
+        <SiteFooter />
+      </div>
     </main>
   );
 }

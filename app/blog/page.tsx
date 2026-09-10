@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { blogPosts } from "../data/blog";
 import { ArrowLeft, BookOpen, Clock, User, ArrowRight, ShieldCheck } from "lucide-react";
+import SiteFooter from "../components/SiteFooter";
 
 export const dynamic = "force-static";
 
@@ -14,7 +15,7 @@ export const metadata = {
 
 export default function BlogIndexPage() {
   return (
-    <main className="min-h-screen bg-[#080808] text-white selection:bg-brand-gold/30 selection:text-brand-gold-light py-16 px-4 sm:px-6">
+    <main className="min-h-screen bg-[#080808] text-white selection:bg-brand-gold/30 selection:text-brand-gold-light pt-16 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto space-y-12">
         
         {/* Navigation */}
@@ -87,11 +88,10 @@ export default function BlogIndexPage() {
           </p>
         </div>
 
-        {/* Footer info */}
-        <div className="border-t border-white/5 pt-8 text-center text-xs text-brand-muted font-mono">
-          &copy; {new Date().getFullYear()} Resizer Tools. All rights reserved.
-        </div>
+      </div>
 
+      <div className="mt-16">
+        <SiteFooter />
       </div>
     </main>
   );

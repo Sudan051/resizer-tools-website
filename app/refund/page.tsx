@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { HelpCircle, ArrowLeft } from "lucide-react";
+import SiteFooter from "../components/SiteFooter";
 
 export const dynamic = "force-static";
 
@@ -13,7 +14,7 @@ export const metadata = {
 
 export default function RefundPage() {
   return (
-    <main className="min-h-screen bg-[#080808] text-white selection:bg-brand-gold/30 selection:text-brand-gold-light py-20 px-6">
+    <main className="min-h-screen bg-[#080808] text-white selection:bg-brand-gold/30 selection:text-brand-gold-light pt-20 px-6">
       <div className="max-w-3xl mx-auto space-y-12">
         
         {/* Navigation back */}
@@ -71,10 +72,10 @@ export default function RefundPage() {
           </section>
         </div>
 
-        <div className="border-t border-white/5 pt-8 text-center text-xs text-brand-muted font-mono">
-          &copy; {new Date().getFullYear()} Resizer Tools. All rights reserved.
-        </div>
+      </div>
 
+      <div className="mt-16">
+        <SiteFooter />
       </div>
     </main>
   );

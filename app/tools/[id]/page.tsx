@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Home from "../../page";
 import { toolsData, getToolSEOContent } from "../../data/tools";
-import { Sliders, Download, ShieldCheck, Zap, Smartphone, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Sliders, Download, ShieldCheck, Zap, Smartphone } from "lucide-react";
+import ToolContentSection from "../../components/ToolContentSection";
+import SiteFooter from "../../components/SiteFooter";
 
 export const dynamic = "force-static";
 
@@ -64,11 +66,6 @@ export default async function ToolPage({ params }: { params: Promise<{ id: strin
   if (!tool) return <Home />;
 
   const seo = getToolSEOContent(tool);
-
-  // Filter 6 related tools in same category or overall catalog for internal linking
-  const relatedTools = toolsData
-    .filter((t) => t.id !== tool.id && (t.category === tool.category || t.category === "generator"))
-    .slice(0, 6);
 
   // 1. SoftwareApplication Schema
   const webAppSchema = {
@@ -210,190 +207,19 @@ export default async function ToolPage({ params }: { params: Promise<{ id: strin
         <Home initialToolId={id} isStandaloneToolPage={true} />
       </main>
 
-      {/* 🔗 INTERNAL LINKING: RELATED TOOLS GRID */}
-      <section className="bg-brand-black border-t border-white/5 py-16 px-6 relative z-10">
-        <div className="max-w-5xl mx-auto space-y-8">
-          <div className="text-left space-y-2">
-            <span className="text-brand-gold font-mono tracking-widest text-xs uppercase font-bold">Internal Utility Network</span>
-            <h2 className="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
-              🔗 Explore Related Free Web &amp; Offline Tools
-            </h2>
-            <p className="text-xs text-brand-muted font-light">
-              Try these complementary browser-native utilities to compress, convert, and manage your assets:
-            </p>
-          </div>
+      {/* 👑 RICH SEO VALUE, FAQ, RATINGS, HOW-TO & TRUST CONTENT */}
+      <ToolContentSection 
+        tool={{
+          id: tool.id,
+          title: tool.title,
+          subtitle: tool.subtitle,
+          desc: tool.desc,
+          category: tool.category,
+        }} 
+      />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {relatedTools.map((relTool) => (
-              <Link
-                key={relTool.id}
-                href={`/tools/${relTool.id.replace(/_/g, "-")}`}
-                className="bg-white/[0.02] border border-white/10 rounded-2xl p-5 hover:border-brand-gold/40 hover:bg-white/[0.04] transition-all cursor-pointer group flex flex-col justify-between"
-              >
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-brand-gold/15 text-brand-gold uppercase">
-                      {relTool.category || "Utility"}
-                    </span>
-                    <ArrowRight className="w-4 h-4 text-brand-muted group-hover:text-brand-gold group-hover:translate-x-1 transition-all" />
-                  </div>
-                  <h3 className="text-sm font-bold text-white group-hover:text-brand-gold transition-colors">{relTool.title}</h3>
-                  <p className="text-xs text-brand-muted font-light line-clamp-2">{relTool.subtitle || relTool.desc}</p>
-                </div>
-                <div className="pt-4 border-t border-white/5 mt-4 flex items-center justify-between text-[11px] font-mono text-brand-muted">
-                  <span>100% Free</span>
-                  <span className="text-emerald-400">Offline Ready</span>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 📖 SEO STRUCTURED CONTENT & FAQ KNOWLEDGE SECTION */}
-      <section className="bg-[#080808] border-t border-white/5 py-20 px-6 text-left relative z-10">
-        <div className="max-w-4xl mx-auto space-y-12">
-          
-          {/* Detailed Overview */}
-          <div className="space-y-4 bg-white/[0.015] border border-white/5 rounded-3xl p-6 md:p-8">
-            <h2 className="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
-              <span className="text-brand-gold">⚡</span> Comprehensive {tool.title} Guide &amp; Technical Capabilities
-            </h2>
-            <p className="text-xs text-neutral-300 leading-relaxed font-light">
-              Welcome to the official <strong>{tool.title}</strong> workspace on Resizer Tools. Engineered specifically for high-speed, privacy-first file manipulation, this browser-native application enables developers, designers, students, and corporate teams to process documents and graphics with zero server upload friction. Utilizing client-side HTML5 Canvas, WebAssembly, and WebCrypto APIs, {tool.title} executes all computations directly in your local hardware memory (RAM).
-            </p>
-            <p className="text-xs text-neutral-300 leading-relaxed font-light">
-              Whether you are working with confidential financial contracts, personal ID photos, large PDF bundles, or high-resolution graphics, {tool.title} guarantees ironclad security. Because no data packets are transmitted across external cloud networks, your files remain completely private and immune to server-side data leaks or network sniffing. Furthermore, once loaded in your browser, the tool operates seamlessly offline without requiring cellular or Wi-Fi data.
-            </p>
-          </div>
-
-          {/* How-To Steps */}
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
-              <span className="text-brand-gold">📖</span> How to use {tool.title} Online &amp; Offline
-            </h2>
-            <p className="text-sm text-brand-muted leading-relaxed font-light">
-              Follow these simple browser-native instructions to process your documents and images without server uploads:
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
-              {seo.steps.map((step, idx) => (
-                <div key={idx} className="bg-white/[0.02] border border-white/5 rounded-2xl p-5 space-y-3">
-                  <div className="w-8 h-8 rounded-xl bg-brand-gold/15 border border-brand-gold/30 flex items-center justify-center text-brand-gold font-bold font-mono text-sm">
-                    {idx + 1}
-                  </div>
-                  <p className="text-xs text-brand-muted leading-relaxed font-light">{step}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Frequently Asked Questions */}
-          <div className="space-y-6 pt-6 border-t border-white/5">
-            <h2 className="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
-              <span className="text-brand-gold">🛡️</span> Frequently Asked Questions (FAQ)
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {seo.faq.map((item, idx) => (
-                <div key={idx} className="bg-white/[0.02] border border-white/5 rounded-2xl p-5 space-y-2">
-                  <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-brand-gold shrink-0" /> {item.q}
-                  </h3>
-                  <p className="text-xs text-brand-muted font-light leading-relaxed pl-6">{item.a}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 🔻 FULL SITE FOOTER */}
-      <footer className="bg-black border-t border-white/10 py-16 px-6 text-center md:text-left relative z-10">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8">
-          <div className="space-y-4">
-            <div className="flex items-center gap-2 font-bold text-lg text-white">
-              <Sliders className="w-5 h-5 text-brand-gold" /> Resizer Tools
-            </div>
-            <p className="text-xs text-brand-muted font-light leading-relaxed">
-              100% Free client-side Web &amp; Mobile utility studio. Convert, compress, sign, merge, scan, and edit your documents with total privacy.
-            </p>
-          </div>
-
-          <div className="space-y-3">
-            <h4 className="text-xs font-bold font-mono text-white uppercase tracking-wider">Top Image Tools</h4>
-            <ul className="space-y-2 text-xs text-brand-muted">
-              <li><Link href="/tools/img-comp" className="hover:text-brand-gold transition-colors">Image Compressor</Link></li>
-              <li><Link href="/tools/img-res" className="hover:text-brand-gold transition-colors">Image Resizer</Link></li>
-              <li><Link href="/tools/img-pdf" className="hover:text-brand-gold transition-colors">Image to PDF</Link></li>
-              <li><Link href="/tools/img-conv" className="hover:text-brand-gold transition-colors">Image Converter</Link></li>
-              <li><Link href="/tools/pdf-imgs" className="hover:text-brand-gold transition-colors">PDF to Image</Link></li>
-              <li><Link href="/tools/prnt-sheet" className="hover:text-brand-gold transition-colors">Passport Photo Sheet</Link></li>
-              <li><Link href="/tools/id-cam" className="hover:text-brand-gold transition-colors">ID Photo Camera</Link></li>
-              <li><Link href="/tools/doc-scan" className="hover:text-brand-gold transition-colors">Document Scanner</Link></li>
-            </ul>
-          </div>
-
-          <div className="space-y-3">
-            <h4 className="text-xs font-bold font-mono text-white uppercase tracking-wider">Top PDF Tools</h4>
-            <ul className="space-y-2 text-xs text-brand-muted">
-              <li><Link href="/tools/mrg-pdf" className="hover:text-brand-gold transition-colors">Merge PDF</Link></li>
-              <li><Link href="/tools/sgn-pdf" className="hover:text-brand-gold transition-colors">Sign PDF</Link></li>
-              <li><Link href="/tools/prt-pdf" className="hover:text-brand-gold transition-colors">Protect PDF</Link></li>
-              <li><Link href="/tools/unl-pdf" className="hover:text-brand-gold transition-colors">Unlock PDF</Link></li>
-              <li><Link href="/tools/spl-pdf" className="hover:text-brand-gold transition-colors">Split PDF</Link></li>
-              <li><Link href="/tools/del-pdf" className="hover:text-brand-gold transition-colors">Delete PDF Pages</Link></li>
-              <li><Link href="/tools/rot-pdf" className="hover:text-brand-gold transition-colors">Rotate PDF Pages</Link></li>
-              <li><Link href="/tools/num-pdf" className="hover:text-brand-gold transition-colors">Page Numbers</Link></li>
-              <li><Link href="/tools/wtrmk-pdf" className="hover:text-brand-gold transition-colors">PDF Watermark</Link></li>
-              <li><Link href="/tools/res-make" className="hover:text-brand-gold transition-colors">ATS Resume Builder</Link></li>
-              <li><Link href="/tools/red-pdf" className="hover:text-brand-gold transition-colors">PDF Reducer</Link></li>
-              <li><Link href="/tools/mk-pdf" className="hover:text-brand-gold transition-colors">PDF Maker</Link></li>
-              <li><Link href="/tools/ext-pdf" className="hover:text-brand-gold transition-colors">Extract PDF Pages</Link></li>
-              <li><Link href="/tools/ord-pdf" className="hover:text-brand-gold transition-colors">Reorder PDF</Link></li>
-            </ul>
-          </div>
-
-          <div className="space-y-3">
-            <h4 className="text-xs font-bold font-mono text-white uppercase tracking-wider">Utilities &amp; Legal</h4>
-            <ul className="space-y-2 text-xs text-brand-muted">
-              <li><Link href="/tools/inv-mk" className="hover:text-brand-gold transition-colors">Invoice Maker</Link></li>
-              <li><Link href="/tools/qr-gen" className="hover:text-brand-gold transition-colors">QR Code Generator</Link></li>
-              <li><Link href="/tools/qr-scan" className="hover:text-brand-gold transition-colors">QR Matrix Scanner</Link></li>
-              <li><Link href="/tools/nfc-tl" className="hover:text-brand-gold transition-colors">Web NFC Studio</Link></li>
-              <li><Link href="/tools/sig-cr" className="hover:text-brand-gold transition-colors">Signature Creator</Link></li>
-              <li><Link href="/tools/shot-gen" className="hover:text-brand-gold transition-colors">Screenshot Generator</Link></li>
-              <li><Link href="/shots" className="hover:text-brand-gold transition-colors">Screenshot Studio</Link></li>
-              <li><Link href="/card" className="hover:text-brand-gold transition-colors">Pro Membership</Link></li>
-              <li><Link href="/app" className="hover:text-brand-gold transition-colors">Mobile App</Link></li>
-              <li><Link href="/privacy" className="hover:text-brand-gold transition-colors">Privacy Policy</Link></li>
-              <li><Link href="/terms" className="hover:text-brand-gold transition-colors">Terms of Service</Link></li>
-              <li><Link href="/refund" className="hover:text-brand-gold transition-colors">Refund Policy</Link></li>
-              <li><Link href="/contact" className="hover:text-brand-gold transition-colors">Contact Us</Link></li>
-              <li><Link href="/blog" className="hover:text-brand-gold transition-colors">All Blog Guides</Link></li>
-            </ul>
-          </div>
-
-          <div className="space-y-3">
-            <h4 className="text-xs font-bold font-mono text-white uppercase tracking-wider">Knowledge Guides</h4>
-            <ul className="space-y-2 text-xs text-brand-muted">
-              <li><Link href="/blog/image-compression-guide-2026" className="hover:text-brand-gold transition-colors">Image Compression Guide</Link></li>
-              <li><Link href="/blog/client-side-pdf-security" className="hover:text-brand-gold transition-colors">Zero-Upload PDF Security</Link></li>
-              <li><Link href="/blog/ats-resume-optimization-guide" className="hover:text-brand-gold transition-colors">ATS Resume Guide</Link></li>
-              <li><Link href="/blog/nfc-and-qr-code-privacy" className="hover:text-brand-gold transition-colors">Web NFC &amp; QR Privacy</Link></li>
-              <li><Link href="/blog/how-to-compress-pdf-without-losing-quality" className="hover:text-brand-gold transition-colors">Compress PDF Quality</Link></li>
-              <li><Link href="/blog/heic-to-jpg-conversion-explained" className="hover:text-brand-gold transition-colors">HEIC vs JPEG Guide</Link></li>
-              <li><Link href="/blog/digital-signature-legal-validity-guide" className="hover:text-brand-gold transition-colors">Digital Signatures Law</Link></li>
-              <li><Link href="/blog/how-to-create-passport-photo-sheet" className="hover:text-brand-gold transition-colors">Passport Photo Guide</Link></li>
-              <li><Link href="/blog/how-to-merge-pdf-files-offline" className="hover:text-brand-gold transition-colors">Merge PDF Offline</Link></li>
-              <li><Link href="/blog/qr-code-security-best-practices" className="hover:text-brand-gold transition-colors">QR Security 101</Link></li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="max-w-6xl mx-auto pt-10 mt-10 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between text-xs text-brand-muted font-mono">
-          <p>© {new Date().getFullYear()} Resizer Tools. All rights reserved.</p>
-          <p className="mt-2 sm:mt-0">Built with 100% Client-Side WASM &amp; Canvas Privacy</p>
-        </div>
-      </footer>
+      {/* 🔻 GLOBAL LUXURY SITE FOOTER */}
+      <SiteFooter />
 
     </div>
   );

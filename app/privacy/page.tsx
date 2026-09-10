@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Shield, ArrowLeft } from "lucide-react";
+import SiteFooter from "../components/SiteFooter";
 
 export const dynamic = "force-static";
 
@@ -91,10 +92,10 @@ export default function PrivacyPage() {
           </section>
         </div>
 
-        <div className="border-t border-white/5 pt-8 text-center text-xs text-brand-muted font-mono">
-          &copy; {new Date().getFullYear()} Resizer Tools. All rights reserved.
-        </div>
+      </div>
 
+      <div className="mt-16">
+        <SiteFooter />
       </div>
     </main>
   );

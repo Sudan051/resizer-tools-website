@@ -4,6 +4,7 @@ import {
   Sparkles, Lock, Zap, QrCode, 
   Star, Smartphone, Camera 
 } from "lucide-react";
+import SiteFooter from "../components/SiteFooter";
 
 export const dynamic = "force-static";
 
@@ -184,31 +185,11 @@ export default function AppDownloadPage() {
           </div>
         </div>
 
-        {/* Bottom Footer Links */}
-        <div className="flex flex-wrap justify-center items-center gap-6 pt-6 text-xs font-mono text-brand-muted border-t border-white/5">
-          <Link href="/" className="hover:text-brand-gold transition-colors">
-            Home Studio
-          </Link>
-          <span>•</span>
-          <Link href="/shots" className="hover:text-brand-gold transition-colors">
-            Screenshot Studio
-          </Link>
-          <span>•</span>
-          <Link href="/card" className="hover:text-brand-gold transition-colors">
-            Founder Profile
-          </Link>
-          <span>•</span>
-          <Link href="/blog" className="hover:text-brand-gold transition-colors">
-            Guides &amp; Tutorials
-          </Link>
-          <span>•</span>
-          <Link href="/privacy" className="hover:text-brand-gold transition-colors">
-            Privacy Policy
-          </Link>
-        </div>
-
       </div>
 
+      <div className="w-full mt-16">
+        <SiteFooter />
+      </div>
     </main>
   );
 }

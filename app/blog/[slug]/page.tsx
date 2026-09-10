@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { blogPosts } from "../../data/blog";
 import { ArrowLeft, Clock, User, Calendar, Layers } from "lucide-react";
+import SiteFooter from "../../components/SiteFooter";
 
 export const dynamic = "force-static";
 
@@ -233,18 +234,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           </div>
         </div>
 
-        {/* Footer Links */}
-        <div className="border-t border-white/5 pt-8 flex flex-wrap items-center justify-between text-xs text-brand-muted font-mono gap-4">
-          <span>&copy; {new Date().getFullYear()} Resizer Tools. All rights reserved.</span>
-          <div className="flex gap-4">
-            <Link href="/" className="hover:text-brand-gold">Home Studio</Link>
-            <Link href="/blog" className="hover:text-brand-gold">All Guides</Link>
-            <Link href="/privacy" className="hover:text-brand-gold">Privacy Policy</Link>
-            <Link href="/terms" className="hover:text-brand-gold">Terms</Link>
-            <Link href="/refund" className="hover:text-brand-gold">Refund Policy</Link>
-          </div>
-        </div>
+      </div>
 
+      <div className="mt-16">
+        <SiteFooter />
       </div>
     </main>
   );
