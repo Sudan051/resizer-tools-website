@@ -172,7 +172,7 @@ export const DEFAULT_SLIDES: ScreenshotSlide[] = [
   }
 ];
 
-// Helper to draw clean placeholder wireframe
+// Helper to draw clean placeholder wireframe inside phone screen
 function drawPlaceholderWireframe(
   ctx: CanvasRenderingContext2D, 
   x: number, y: number, w: number, h: number
@@ -183,17 +183,17 @@ function drawPlaceholderWireframe(
   ctx.fillStyle = bgGrad;
   ctx.fillRect(x, y, w, h);
 
-  // App UI Top Search & Action Bar
-  const headerBarH = h * 0.07;
+  // App UI Top Search Bar Area
+  const headerBarH = h * 0.08;
   ctx.fillStyle = "#1e1e1e";
   ctx.fillRect(x, y, w, headerBarH);
 
   // Search input mock inside app
-  const searchW = w * 0.75;
-  const searchH = headerBarH * 0.55;
+  const searchW = w * 0.76;
+  const searchH = headerBarH * 0.5;
   const searchX = x + (w - searchW) / 2;
-  const searchY = y + (headerBarH - searchH) / 2 + 10;
-  ctx.fillStyle = "#2a2a2a";
+  const searchY = y + (headerBarH - searchH) / 2 + 12;
+  ctx.fillStyle = "#282828";
   ctx.beginPath();
   ctx.roundRect(searchX, searchY, searchW, searchH, searchH / 2);
   ctx.fill();
@@ -213,7 +213,7 @@ function drawPlaceholderWireframe(
 
   ctx.fillStyle = "#F59E0B";
   ctx.font = `500 ${Math.round(w * 0.032)}px -apple-system, sans-serif`;
-  ctx.fillText("(Click 'App Screenshot' upload button on left)", x + w / 2, y + h * 0.48);
+  ctx.fillText("(Click 'App Screenshot' button on left panel)", x + w / 2, y + h * 0.48);
 
   // App UI cards placeholder
   ctx.fillStyle = "#1c1c1c";
@@ -304,7 +304,9 @@ export default function ScreenshotStudioClient() {
 
       const { width, height } = preset;
 
-      // 1. BACKGROUND RENDER
+      // ==========================================
+      // LAYER 1: BACKGROUND RENDER
+      // ==========================================
       if (slide.bgType === "custom_solid") {
         ctx.fillStyle = slide.bgColorPrimary || "#0F172A";
         ctx.fillRect(0, 0, width, height);
@@ -362,7 +364,7 @@ export default function ScreenshotStudioClient() {
         }
       }
 
-      // BACKGROUND PATTERN OVERLAY
+      // Background Pattern
       if (slide.bgPattern === "grid") {
         ctx.strokeStyle = "rgba(255, 255, 255, 0.05)";
         ctx.lineWidth = 1;
@@ -391,446 +393,449 @@ export default function ScreenshotStudioClient() {
         }
       }
 
-      // 2. TEXT ALIGNMENT POSITIONING
-      let textX = width / 2;
-      let alignMode: CanvasTextAlign = "center";
-      if (slide.textAlign === "left") {
-        textX = width * 0.08;
-        alignMode = "left";
-      } else if (slide.textAlign === "right") {
-        textX = width * 0.92;
-        alignMode = "right";
-      }
+      // ==========================================
+      // LAYER 2: DEVICE MOCKUP HARDWARE & SCREEN
+      // ==========================================
+      const renderDeviceAndMarketing = () => {
+        ctx.save();
 
-      // 3. LOGO WATERMARK STAMP (IF UPLOADED)
-      if (slide.logoSrc) {
-        const logoImg = new Image();
-        logoImg.crossOrigin = "anonymous";
-        logoImg.onload = () => {
-          const logoSize = Math.round(height * 0.035);
-          let logoX = width / 2 - logoSize / 2;
-          if (slide.textAlign === "left") logoX = width * 0.08;
-          if (slide.textAlign === "right") logoX = width * 0.92 - logoSize;
-          
-          ctx.save();
-          ctx.beginPath();
-          ctx.roundRect(logoX, height * 0.015, logoSize, logoSize, 10);
-          ctx.clip();
-          ctx.drawImage(logoImg, logoX, height * 0.015, logoSize, logoSize);
-          ctx.restore();
-        };
-        logoImg.src = slide.logoSrc;
-      }
-
-      // 4. TOP MARKETING COPY LAYOUT (BADGE, HEADER & SUBTEXT)
-      const hasBadge = slide.badgeText && slide.badgeText.trim() !== "" && slide.badgeStyle && slide.badgeStyle !== "none";
-
-      // A) TOP BADGE RENDER
-      let currentY = height * 0.038;
-      if (hasBadge) {
-        const badgeFontSize = Math.round(height * 0.0115 * (slide.headerFontSize || 1.0));
-        ctx.font = getCanvasFont(slide.fontFamily, 800, badgeFontSize);
-        ctx.textAlign = alignMode;
-
-        const metrics = ctx.measureText(slide.badgeText.toUpperCase());
-        const badgeW = metrics.width + 32;
-        const badgeH = badgeFontSize + 16;
-        let badgeX = textX - badgeW / 2;
-        if (slide.textAlign === "left") badgeX = textX;
-        if (slide.textAlign === "right") badgeX = textX - badgeW;
-
-        if (slide.badgeStyle === "pill_filled") {
-          ctx.fillStyle = slide.badgeBgColor || "#F59E0B";
-          ctx.beginPath();
-          ctx.roundRect(badgeX, currentY, badgeW, badgeH, badgeH / 2);
-          ctx.fill();
-
-          ctx.fillStyle = slide.badgeTextColor || "#000000";
-          ctx.fillText(slide.badgeText.toUpperCase(), badgeX + badgeW / 2, currentY + badgeH * 0.72);
-        } else if (slide.badgeStyle === "pill_bordered") {
-          ctx.strokeStyle = slide.badgeBgColor || "#F59E0B";
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.roundRect(badgeX, currentY, badgeW, badgeH, badgeH / 2);
-          ctx.stroke();
-
-          ctx.fillStyle = slide.badgeTextColor || "#FFFFFF";
-          ctx.fillText(slide.badgeText.toUpperCase(), badgeX + badgeW / 2, currentY + badgeH * 0.72);
-        } else if (slide.badgeStyle === "neon") {
-          ctx.save();
-          ctx.shadowColor = slide.badgeBgColor || "#F59E0B";
-          ctx.shadowBlur = 12;
-          ctx.fillStyle = slide.badgeBgColor || "#F59E0B";
-          ctx.fillText(slide.badgeText.toUpperCase(), textX, currentY + badgeH * 0.6);
-          ctx.restore();
-        }
-
-        currentY += badgeH + height * 0.018;
-      } else {
-        currentY = height * 0.045;
-      }
-
-      // B) HEADER TITLE RENDER (WITH AUTO MULTI-LINE WRAPPING)
-      const headerFontSize = Math.round(height * 0.034 * (slide.headerFontSize || 1.0));
-      ctx.font = getCanvasFont(slide.fontFamily, 900, headerFontSize);
-      ctx.textAlign = alignMode;
-      ctx.fillStyle = slide.headerColor || "#ffffff";
-
-      const maxTitleWidth = width * 0.86;
-      const words = (slide.header || "").split(" ");
-      let line = "";
-      const lines: string[] = [];
-
-      for (let n = 0; n < words.length; n++) {
-        const testLine = line + words[n] + " ";
-        const metrics = ctx.measureText(testLine);
-        if (metrics.width > maxTitleWidth && n > 0) {
-          lines.push(line.trim());
-          line = words[n] + " ";
-        } else {
-          line = testLine;
-        }
-      }
-      lines.push(line.trim());
-
-      const lineHeight = headerFontSize * 1.15;
-      for (let i = 0; i < lines.length; i++) {
-        ctx.fillText(lines[i], textX, currentY + headerFontSize * 0.85 + (i * lineHeight));
-      }
-      currentY += (lines.length * lineHeight) + height * 0.008;
-
-      // C) SUBTEXT DESCRIPTION RENDER
-      if (slide.subtext && slide.subtext.trim() !== "") {
-        const subfontSize = Math.round(height * 0.0155 * (slide.subtextFontSize || 1.0));
-        ctx.font = getCanvasFont(slide.fontFamily, 500, subfontSize);
-        ctx.textAlign = alignMode;
-        ctx.fillStyle = slide.subtextColor || "rgba(255, 255, 255, 0.75)";
+        const baseFrameWidth = (width * 0.82) * (slide.mockupScale || 1.0);
+        const baseFrameHeight = (height * 0.80) * (slide.mockupScale || 1.0);
         
-        // Multi-line wrap for subtext if long
-        const subwords = slide.subtext.split(" ");
-        let subline = "";
-        const sublines: string[] = [];
-        for (let sn = 0; sn < subwords.length; sn++) {
-          const testSub = subline + subwords[sn] + " ";
-          if (ctx.measureText(testSub).width > maxTitleWidth && sn > 0) {
-            sublines.push(subline.trim());
-            subline = subwords[sn] + " ";
-          } else {
-            subline = testSub;
-          }
+        // Clean Device Placement: starts around 24% height so marketing text has plenty of breathing room
+        const frameX = width / 2;
+        const frameY = height * 0.65 + (slide.mockupPositionY || 0);
+
+        ctx.translate(frameX, frameY);
+        if (slide.mockupRotation) {
+          ctx.rotate((slide.mockupRotation * Math.PI) / 180);
         }
-        sublines.push(subline.trim());
 
-        const subLineHeight = subfontSize * 1.25;
-        for (let si = 0; si < sublines.length; si++) {
-          ctx.fillText(sublines[si], textX, currentY + subfontSize * 0.85 + (si * subLineHeight));
+        const drawW = baseFrameWidth;
+        const drawH = baseFrameHeight;
+        const drawX = -drawW / 2;
+        const drawY = -drawH / 2;
+
+        const cornerRadius = preset.deviceType === "Tablet" ? 44 : 58;
+
+        // Outer Frame Shadow & Ambient Glow
+        ctx.shadowColor = slide.frameShadowColor || "rgba(0, 0, 0, 0.5)";
+        ctx.shadowBlur = slide.frameShadowBlur !== undefined ? slide.frameShadowBlur : 40;
+        ctx.shadowOffsetY = 24;
+
+        // Subtle Realistic Side Buttons on iPhone Bezel
+        if (preset.deviceType === "Phone") {
+          ctx.fillStyle = slide.frameColor || "#1e1e1e";
+          ctx.fillRect(drawX - 4, drawY + drawH * 0.18, 4, 32); // Action Button
+          ctx.fillRect(drawX - 4, drawY + drawH * 0.24, 4, 60); // Volume Up
+          ctx.fillRect(drawX - 4, drawY + drawH * 0.32, 4, 60); // Volume Down
+          ctx.fillRect(drawX + drawW, drawY + drawH * 0.26, 4, 90); // Power Button
         }
-      }
 
-      // 5. DEVICE MOCKUP POSITION, BEZEL & HARDWARE RENDER
-      ctx.save();
-
-      const baseFrameWidth = (width * 0.84) * (slide.mockupScale || 1.0);
-      const baseFrameHeight = (height * 0.80) * (slide.mockupScale || 1.0);
-      // Clean positioning: Phone starts at ~23% from top of canvas so it NEVER overlaps marketing copy
-      const frameX = width / 2;
-      const frameY = height * 0.64 + (slide.mockupPositionY || 0);
-
-      ctx.translate(frameX, frameY);
-      if (slide.mockupRotation) {
-        ctx.rotate((slide.mockupRotation * Math.PI) / 180);
-      }
-
-      const drawW = baseFrameWidth;
-      const drawH = baseFrameHeight;
-      const drawX = -drawW / 2;
-      const drawY = -drawH / 2;
-
-      const cornerRadius = preset.deviceType === "Tablet" ? 44 : 58;
-
-      // Outer Frame Shadow & Ambient Glow
-      ctx.shadowColor = slide.frameShadowColor || "rgba(0, 0, 0, 0.5)";
-      ctx.shadowBlur = slide.frameShadowBlur !== undefined ? slide.frameShadowBlur : 40;
-      ctx.shadowOffsetY = 24;
-
-      // Subtle Realistic Side Buttons on iPhone Bezel
-      if (preset.deviceType === "Phone") {
-        ctx.fillStyle = slide.frameColor || "#1e1e1e";
-        // Left side: Action button & Volume Buttons
-        ctx.fillRect(drawX - 4, drawY + drawH * 0.18, 4, 32); // Action Button
-        ctx.fillRect(drawX - 4, drawY + drawH * 0.24, 4, 60); // Volume Up
-        ctx.fillRect(drawX - 4, drawY + drawH * 0.32, 4, 60); // Volume Down
-        // Right side: Power / Lock Button
-        ctx.fillRect(drawX + drawW, drawY + drawH * 0.26, 4, 90); // Power Button
-      }
-
-      // Draw Outer Bezel Body (Titanium / Dark Matte)
-      ctx.beginPath();
-      ctx.roundRect(drawX, drawY, drawW, drawH, cornerRadius);
-      ctx.fillStyle = "#121212";
-      ctx.fill();
-
-      // Custom Border Width & Bezel Color
-      const borderWidth = slide.frameBorderWidth !== undefined ? Math.max(3, slide.frameBorderWidth) : 8;
-      ctx.lineWidth = borderWidth;
-      ctx.strokeStyle = slide.frameColor || "#F59E0B";
-      ctx.stroke();
-
-      // Top Micro-Speaker Acoustic Mesh Slit on Outer Bezel
-      if (preset.deviceType === "Phone") {
-        const speakerW = drawW * 0.14;
-        const speakerH = 4;
-        const speakerX = -speakerW / 2;
-        const speakerY = drawY + Math.max(4, borderWidth * 0.5);
+        // Draw Outer Bezel Body
         ctx.beginPath();
-        ctx.roundRect(speakerX, speakerY, speakerW, speakerH, 2);
-        ctx.fillStyle = "#262626";
+        ctx.roundRect(drawX, drawY, drawW, drawH, cornerRadius);
+        ctx.fillStyle = "#121212";
         ctx.fill();
-      }
 
-      ctx.restore();
+        // Custom Border Width & Bezel Color
+        const borderWidth = slide.frameBorderWidth !== undefined ? Math.max(3, slide.frameBorderWidth) : 8;
+        ctx.lineWidth = borderWidth;
+        ctx.strokeStyle = slide.frameColor || "#F59E0B";
+        ctx.stroke();
 
-      // 6. INNER SCREEN AREA CLIP & IMAGE DRAW
-      const innerMargin = Math.round(width * 0.012) + Math.round(borderWidth * 0.6);
-      const innerX = drawX + innerMargin;
-      const innerY = drawY + innerMargin;
-      const innerW = drawW - innerMargin * 2;
-      const innerH = drawH - innerMargin * 2;
-      const innerRadius = Math.max(14, cornerRadius - innerMargin);
-
-      ctx.save();
-      ctx.translate(frameX, frameY);
-      if (slide.mockupRotation) {
-        ctx.rotate((slide.mockupRotation * Math.PI) / 180);
-      }
-
-      ctx.beginPath();
-      ctx.roundRect(innerX, innerY, innerW, innerH, innerRadius);
-      ctx.clip();
-
-      // Inner Screen Custom Background Color
-      ctx.fillStyle = slide.frameInnerBgColor || "#000000";
-      ctx.fillRect(innerX, innerY, innerW, innerH);
-
-      // Render Cutouts (Dynamic Island / Apple Notch / Hole Punch) and Status Bar
-      const renderTopHardwareAndStatusBar = () => {
-        // A) AUTHENTIC DYNAMIC ISLAND (Modern iPhone 16/15 Pro)
-        if (slide.frameStyle === "island" && preset.deviceType === "Phone") {
-          const islandW = innerW * 0.285;
-          const islandH = innerH * 0.026;
-          const islandX = innerX + (innerW - islandW) / 2;
-          const islandY = innerY + innerH * 0.012;
-          const islandR = islandH / 2;
-
-          // Island Outer Glow / Edge Outline
-          ctx.save();
-          ctx.shadowColor = "rgba(0, 0, 0, 0.4)";
-          ctx.shadowBlur = 6;
+        // Top Micro-Speaker Acoustic Mesh Slit on Outer Bezel
+        if (preset.deviceType === "Phone") {
+          const speakerW = drawW * 0.14;
+          const speakerH = 4;
+          const speakerX = -speakerW / 2;
+          const speakerY = drawY + Math.max(4, borderWidth * 0.5);
           ctx.beginPath();
-          ctx.roundRect(islandX, islandY, islandW, islandH, islandR);
-          ctx.fillStyle = "#000000";
+          ctx.roundRect(speakerX, speakerY, speakerW, speakerH, 2);
+          ctx.fillStyle = "#262626";
           ctx.fill();
-
-          // Subtle 0.75px metallic rim so island pops on white/light screenshots
-          ctx.strokeStyle = "rgba(255, 255, 255, 0.12)";
-          ctx.lineWidth = 1;
-          ctx.stroke();
-
-          // TrueDepth Camera Lens (Right Side)
-          const camX = islandX + islandW * 0.74;
-          const camY = islandY + islandH * 0.5;
-          const camR = islandH * 0.22;
-          ctx.beginPath();
-          ctx.arc(camX, camY, camR, 0, Math.PI * 2);
-          ctx.fillStyle = "#0a1324"; // Deep sapphire blue glass
-          ctx.fill();
-          // Lens Specular Reflection Dot
-          ctx.beginPath();
-          ctx.arc(camX - camR * 0.35, camY - camR * 0.35, camR * 0.35, 0, Math.PI * 2);
-          ctx.fillStyle = "rgba(96, 165, 250, 0.65)";
-          ctx.fill();
-
-          // Face ID / Optical Matrix (Left Side)
-          const sensorX = islandX + islandW * 0.28;
-          const sensorY = islandY + islandH * 0.5;
-          const sensorR = islandH * 0.16;
-          ctx.beginPath();
-          ctx.arc(sensorX, sensorY, sensorR, 0, Math.PI * 2);
-          ctx.fillStyle = "#050505";
-          ctx.fill();
-          ctx.restore();
-        } 
-        // B) AUTHENTIC CLASSIC CURVED APPLE NOTCH (iPhone 14/13/XS)
-        else if (slide.frameStyle === "notch" && preset.deviceType === "Phone") {
-          const notchW = innerW * 0.44;
-          const notchH = innerH * 0.034;
-          const notchX = innerX + (innerW - notchW) / 2;
-          const notchY = innerY;
-
-          ctx.save();
-          ctx.beginPath();
-          // Top Left Outward Curve
-          ctx.moveTo(notchX - 10, notchY);
-          ctx.quadraticCurveTo(notchX, notchY, notchX, notchY + 8);
-          // Left Wall
-          ctx.lineTo(notchX, notchY + notchH - 12);
-          // Bottom Left Round
-          ctx.quadraticCurveTo(notchX, notchY + notchH, notchX + 12, notchY + notchH);
-          // Bottom Wall
-          ctx.lineTo(notchX + notchW - 12, notchY + notchH);
-          // Bottom Right Round
-          ctx.quadraticCurveTo(notchX + notchW, notchY + notchH, notchX + notchW, notchY + notchH - 12);
-          // Right Wall
-          ctx.lineTo(notchX + notchW, notchY + 8);
-          // Top Right Outward Curve
-          ctx.quadraticCurveTo(notchX + notchW, notchY, notchX + notchW + 10, notchY);
-          ctx.closePath();
-          ctx.fillStyle = "#000000";
-          ctx.fill();
-
-          // Speaker Slit in Notch
-          const spkW = notchW * 0.36;
-          const spkH = 4;
-          const spkX = notchX + (notchW - spkW) / 2;
-          const spkY = notchY + 8;
-          ctx.beginPath();
-          ctx.roundRect(spkX, spkY, spkW, spkH, 2);
-          ctx.fillStyle = "#222222";
-          ctx.fill();
-
-          // Front Camera in Notch
-          const nCamX = notchX + notchW * 0.78;
-          const nCamY = notchY + notchH * 0.55;
-          ctx.beginPath();
-          ctx.arc(nCamX, nCamY, 4, 0, Math.PI * 2);
-          ctx.fillStyle = "#0d1a33";
-          ctx.fill();
-          ctx.beginPath();
-          ctx.arc(nCamX - 1.2, nCamY - 1.2, 1.5, 0, Math.PI * 2);
-          ctx.fillStyle = "rgba(96, 165, 250, 0.7)";
-          ctx.fill();
-          ctx.restore();
-        } 
-        // C) ANDROID PUNCH HOLE
-        else if (slide.frameStyle === "pixel_hole" && preset.deviceType === "Phone") {
-          const holeX = innerX + innerW / 2;
-          const holeY = innerY + innerH * 0.022;
-          const holeR = innerW * 0.02;
-
-          ctx.save();
-          ctx.beginPath();
-          ctx.arc(holeX, holeY, holeR, 0, Math.PI * 2);
-          ctx.fillStyle = "#000000";
-          ctx.fill();
-          // Inner Sapphire Lens
-          ctx.beginPath();
-          ctx.arc(holeX, holeY, holeR * 0.7, 0, Math.PI * 2);
-          ctx.fillStyle = "#0a1324";
-          ctx.fill();
-          ctx.beginPath();
-          ctx.arc(holeX - holeR * 0.25, holeY - holeR * 0.25, holeR * 0.25, 0, Math.PI * 2);
-          ctx.fillStyle = "rgba(96, 165, 250, 0.7)";
-          ctx.fill();
-          ctx.restore();
         }
 
-        // D) CRISP NATIVE APPLE STATUS BAR (9:41 + 5G/Wi-Fi + Battery)
-        if (slide.showIOSStatusBar !== false && preset.deviceType === "Phone") {
-          ctx.save();
-          const sbColor = "rgba(255, 255, 255, 0.95)";
-          ctx.fillStyle = sbColor;
-          ctx.font = getCanvasFont("sans", 700, Math.round(innerW * 0.034));
-          ctx.textAlign = "left";
-          
-          // Time 9:41
-          const timeX = innerX + innerW * 0.07;
-          const timeY = innerY + innerH * 0.028;
-          ctx.fillText("9:41", timeX, timeY);
+        ctx.restore();
 
-          // Right Icons (Cellular, Wi-Fi, Battery)
-          const rightBaseX = innerX + innerW * 0.93;
-          const iconY = innerY + innerH * 0.023;
+        // Inner Screen Area Clip & Image Draw
+        const innerMargin = Math.round(width * 0.012) + Math.round(borderWidth * 0.6);
+        const innerX = drawX + innerMargin;
+        const innerY = drawY + innerMargin;
+        const innerW = drawW - innerMargin * 2;
+        const innerH = drawH - innerMargin * 2;
+        const innerRadius = Math.max(14, cornerRadius - innerMargin);
 
-          // 1. Battery Pill
-          const batW = innerW * 0.054;
-          const batH = innerH * 0.013;
-          const batX = rightBaseX - batW;
-          ctx.strokeStyle = sbColor;
-          ctx.lineWidth = 1.8;
-          ctx.beginPath();
-          ctx.roundRect(batX, iconY - batH / 2, batW, batH, 3.5);
-          ctx.stroke();
+        ctx.save();
+        ctx.translate(frameX, frameY);
+        if (slide.mockupRotation) {
+          ctx.rotate((slide.mockupRotation * Math.PI) / 180);
+        }
 
-          // Battery Positive Nipple
-          ctx.fillStyle = sbColor;
-          ctx.beginPath();
-          ctx.roundRect(batX + batW + 1.5, iconY - batH * 0.25, 2, batH * 0.5, 1);
-          ctx.fill();
+        ctx.beginPath();
+        ctx.roundRect(innerX, innerY, innerW, innerH, innerRadius);
+        ctx.clip();
 
-          // Battery 100% Charge Fill
-          ctx.beginPath();
-          ctx.roundRect(batX + 2.5, iconY - batH / 2 + 2.5, batW - 5, batH - 5, 2);
-          ctx.fill();
+        // Inner Screen Background Fill
+        ctx.fillStyle = slide.frameInnerBgColor || "#000000";
+        ctx.fillRect(innerX, innerY, innerW, innerH);
 
-          // 2. Wi-Fi Icon Arc
-          const wifiX = batX - innerW * 0.045;
-          ctx.lineWidth = 1.8;
-          ctx.beginPath();
-          ctx.arc(wifiX, iconY + 2, 8, Math.PI * 1.25, Math.PI * 1.75);
-          ctx.stroke();
-          ctx.beginPath();
-          ctx.arc(wifiX, iconY + 2, 5, Math.PI * 1.25, Math.PI * 1.75);
-          ctx.stroke();
-          ctx.beginPath();
-          ctx.arc(wifiX, iconY + 2, 1.5, 0, Math.PI * 2);
-          ctx.fill();
+        // Hardware Notch/Island & Status Bar Sub-Renderer
+        const renderHardwareAndStatusBar = () => {
+          const statusBarY = innerY + innerH * 0.024;
 
-          // 3. Cellular 4 Bars
-          const cellX = wifiX - innerW * 0.042;
-          for (let b = 0; b < 4; b++) {
-            const barH = 4 + b * 2.8;
-            ctx.fillRect(cellX + b * 3.2, iconY + 4 - barH, 2.2, barH);
+          // A) DYNAMIC ISLAND (Modern iPhone 15/16 Pro)
+          if (slide.frameStyle === "island" && preset.deviceType === "Phone") {
+            const islandW = innerW * 0.285;
+            const islandH = innerH * 0.026;
+            const islandX = innerX + (innerW - islandW) / 2;
+            const islandY = statusBarY - islandH / 2;
+            const islandR = islandH / 2;
+
+            ctx.save();
+            ctx.shadowColor = "rgba(0, 0, 0, 0.4)";
+            ctx.shadowBlur = 6;
+            ctx.beginPath();
+            ctx.roundRect(islandX, islandY, islandW, islandH, islandR);
+            ctx.fillStyle = "#000000";
+            ctx.fill();
+
+            // 0.75px metallic outline rim so island pops on white screenshots
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.14)";
+            ctx.lineWidth = 1;
+            ctx.stroke();
+
+            // TrueDepth Camera Lens (Right)
+            const camX = islandX + islandW * 0.74;
+            const camY = islandY + islandH * 0.5;
+            const camR = islandH * 0.22;
+            ctx.beginPath();
+            ctx.arc(camX, camY, camR, 0, Math.PI * 2);
+            ctx.fillStyle = "#0a1324";
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(camX - camR * 0.35, camY - camR * 0.35, camR * 0.35, 0, Math.PI * 2);
+            ctx.fillStyle = "rgba(96, 165, 250, 0.65)";
+            ctx.fill();
+
+            // Face ID / Optical Matrix (Left)
+            const sensorX = islandX + islandW * 0.28;
+            const sensorY = islandY + islandH * 0.5;
+            const sensorR = islandH * 0.16;
+            ctx.beginPath();
+            ctx.arc(sensorX, sensorY, sensorR, 0, Math.PI * 2);
+            ctx.fillStyle = "#050505";
+            ctx.fill();
+            ctx.restore();
+          } 
+          // B) CLASSIC APPLE CURVED NOTCH (iPhone 14/13/XS)
+          else if (slide.frameStyle === "notch" && preset.deviceType === "Phone") {
+            const notchW = innerW * 0.44;
+            const notchH = innerH * 0.034;
+            const notchX = innerX + (innerW - notchW) / 2;
+            const notchY = innerY;
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(notchX - 10, notchY);
+            ctx.quadraticCurveTo(notchX, notchY, notchX, notchY + 8);
+            ctx.lineTo(notchX, notchY + notchH - 12);
+            ctx.quadraticCurveTo(notchX, notchY + notchH, notchX + 12, notchY + notchH);
+            ctx.lineTo(notchX + notchW - 12, notchY + notchH);
+            ctx.quadraticCurveTo(notchX + notchW, notchY + notchH, notchX + notchW, notchY + notchH - 12);
+            ctx.lineTo(notchX + notchW, notchY + 8);
+            ctx.quadraticCurveTo(notchX + notchW, notchY, notchX + notchW + 10, notchY);
+            ctx.closePath();
+            ctx.fillStyle = "#000000";
+            ctx.fill();
+
+            // Speaker Slit in Notch
+            const spkW = notchW * 0.36;
+            const spkH = 4;
+            const spkX = notchX + (notchW - spkW) / 2;
+            const spkY = notchY + 8;
+            ctx.beginPath();
+            ctx.roundRect(spkX, spkY, spkW, spkH, 2);
+            ctx.fillStyle = "#222222";
+            ctx.fill();
+
+            // Front Camera
+            const nCamX = notchX + notchW * 0.78;
+            const nCamY = notchY + notchH * 0.55;
+            ctx.beginPath();
+            ctx.arc(nCamX, nCamY, 4, 0, Math.PI * 2);
+            ctx.fillStyle = "#0d1a33";
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(nCamX - 1.2, nCamY - 1.2, 1.5, 0, Math.PI * 2);
+            ctx.fillStyle = "rgba(96, 165, 250, 0.7)";
+            ctx.fill();
+            ctx.restore();
+          } 
+          // C) ANDROID HOLE PUNCH
+          else if (slide.frameStyle === "pixel_hole" && preset.deviceType === "Phone") {
+            const holeX = innerX + innerW / 2;
+            const holeY = statusBarY;
+            const holeR = innerW * 0.02;
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(holeX, holeY, holeR, 0, Math.PI * 2);
+            ctx.fillStyle = "#000000";
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(holeX, holeY, holeR * 0.7, 0, Math.PI * 2);
+            ctx.fillStyle = "#0a1324";
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(holeX - holeR * 0.25, holeY - holeR * 0.25, holeR * 0.25, 0, Math.PI * 2);
+            ctx.fillStyle = "rgba(96, 165, 250, 0.7)";
+            ctx.fill();
+            ctx.restore();
           }
 
+          // D) CRISP NATIVE APPLE STATUS BAR (9:41 + 5G/Wi-Fi + Battery)
+          if (slide.showIOSStatusBar !== false && preset.deviceType === "Phone") {
+            ctx.save();
+            const sbColor = "rgba(255, 255, 255, 0.95)";
+            ctx.fillStyle = sbColor;
+            ctx.font = getCanvasFont("sans", 700, Math.round(innerW * 0.034));
+            ctx.textAlign = "left";
+            ctx.textBaseline = "middle";
+            
+            // Time 9:41
+            const timeX = innerX + innerW * 0.07;
+            ctx.fillText("9:41", timeX, statusBarY);
+
+            // Right Icons (Cellular, Wi-Fi, Battery)
+            const rightBaseX = innerX + innerW * 0.93;
+
+            // 1. Battery Pill
+            const batW = innerW * 0.054;
+            const batH = innerH * 0.013;
+            const batX = rightBaseX - batW;
+            ctx.strokeStyle = sbColor;
+            ctx.lineWidth = 1.8;
+            ctx.beginPath();
+            ctx.roundRect(batX, statusBarY - batH / 2, batW, batH, 3.5);
+            ctx.stroke();
+
+            // Battery Nipple
+            ctx.fillStyle = sbColor;
+            ctx.beginPath();
+            ctx.roundRect(batX + batW + 1.5, statusBarY - batH * 0.25, 2, batH * 0.5, 1);
+            ctx.fill();
+
+            // Battery Charge Fill
+            ctx.beginPath();
+            ctx.roundRect(batX + 2.5, statusBarY - batH / 2 + 2.5, batW - 5, batH - 5, 2);
+            ctx.fill();
+
+            // 2. Wi-Fi Arc
+            const wifiX = batX - innerW * 0.045;
+            ctx.lineWidth = 1.8;
+            ctx.beginPath();
+            ctx.arc(wifiX, statusBarY + 2, 8, Math.PI * 1.25, Math.PI * 1.75);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(wifiX, statusBarY + 2, 5, Math.PI * 1.25, Math.PI * 1.75);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(wifiX, statusBarY + 2, 1.5, 0, Math.PI * 2);
+            ctx.fill();
+
+            // 3. Cellular 4 Bars
+            const cellX = wifiX - innerW * 0.042;
+            for (let b = 0; b < 4; b++) {
+              const barH = 4 + b * 2.8;
+              ctx.fillRect(cellX + b * 3.2, statusBarY + 5 - barH, 2.2, barH);
+            }
+
+            ctx.restore();
+          }
+        };
+
+        if (slide.imageSrc) {
+          const img = new Image();
+          img.crossOrigin = "anonymous";
+          img.onload = () => {
+            const srcY = (slide.cropStatusBar !== false) ? img.height * 0.042 : 0;
+            const srcH = (slide.cropStatusBar !== false) ? img.height * 0.958 : img.height;
+            const srcW = img.width;
+
+            const paddingGap = Math.max(1, Math.round(width * 0.001));
+            const paddedW = innerW - paddingGap * 2;
+            const paddedH = innerH - paddingGap * 2;
+
+            ctx.drawImage(img, 0, srcY, srcW, srcH, innerX + paddingGap, innerY + paddingGap, paddedW, paddedH);
+            renderHardwareAndStatusBar();
+            ctx.restore();
+            renderMarketingLayer();
+            resolve();
+          };
+          img.onerror = () => {
+            drawPlaceholderWireframe(ctx, innerX, innerY, innerW, innerH);
+            renderHardwareAndStatusBar();
+            ctx.restore();
+            renderMarketingLayer();
+            resolve();
+          };
+          img.src = slide.imageSrc;
+        } else {
+          drawPlaceholderWireframe(ctx, innerX, innerY, innerW, innerH);
+          renderHardwareAndStatusBar();
           ctx.restore();
+          renderMarketingLayer();
+          resolve();
         }
       };
 
-      if (slide.imageSrc) {
-        const img = new Image();
-        img.crossOrigin = "anonymous";
-        img.onload = () => {
-          // Crop out user's raw status bar to prevent double icons
-          const srcY = (slide.cropStatusBar !== false) ? img.height * 0.042 : 0;
-          const srcH = (slide.cropStatusBar !== false) ? img.height * 0.958 : img.height;
-          const srcW = img.width;
+      // ==========================================
+      // LAYER 3: TOP MARKETING COPY (ALWAYS ON TOP)
+      // ==========================================
+      const renderMarketingLayer = () => {
+        ctx.save();
+        let textX = width / 2;
+        let alignMode: CanvasTextAlign = "center";
+        if (slide.textAlign === "left") {
+          textX = width * 0.08;
+          alignMode = "left";
+        } else if (slide.textAlign === "right") {
+          textX = width * 0.92;
+          alignMode = "right";
+        }
 
-          // High-DPI padding gap inside device frame
-          const paddingGap = Math.max(1, Math.round(width * 0.001));
-          const paddedW = innerW - paddingGap * 2;
-          const paddedH = innerH - paddingGap * 2;
+        // App Logo Watermark
+        if (slide.logoSrc) {
+          const logoImg = new Image();
+          logoImg.crossOrigin = "anonymous";
+          logoImg.onload = () => {
+            const logoSize = Math.round(height * 0.035);
+            let logoX = width / 2 - logoSize / 2;
+            if (slide.textAlign === "left") logoX = width * 0.08;
+            if (slide.textAlign === "right") logoX = width * 0.92 - logoSize;
+            
+            ctx.save();
+            ctx.beginPath();
+            ctx.roundRect(logoX, height * 0.015, logoSize, logoSize, 10);
+            ctx.clip();
+            ctx.drawImage(logoImg, logoX, height * 0.015, logoSize, logoSize);
+            ctx.restore();
+          };
+          logoImg.src = slide.logoSrc;
+        }
 
-          ctx.drawImage(img, 0, srcY, srcW, srcH, innerX + paddingGap, innerY + paddingGap, paddedW, paddedH);
+        const hasBadge = slide.badgeText && slide.badgeText.trim() !== "" && slide.badgeStyle && slide.badgeStyle !== "none";
 
-          // Draw hardware Dynamic Island / Notch and Status bar on top of screenshot
-          renderTopHardwareAndStatusBar();
+        // A) TOP BADGE
+        let currentY = height * 0.035;
+        if (hasBadge) {
+          const badgeFontSize = Math.round(height * 0.012 * (slide.headerFontSize || 1.0));
+          ctx.font = getCanvasFont(slide.fontFamily, 800, badgeFontSize);
+          ctx.textAlign = alignMode;
+          ctx.textBaseline = "alphabetic";
 
-          ctx.restore();
-          resolve();
-        };
-        img.onerror = () => {
-          drawPlaceholderWireframe(ctx, innerX, innerY, innerW, innerH);
-          renderTopHardwareAndStatusBar();
-          ctx.restore();
-          resolve();
-        };
-        img.src = slide.imageSrc;
-      } else {
-        drawPlaceholderWireframe(ctx, innerX, innerY, innerW, innerH);
-        renderTopHardwareAndStatusBar();
+          const metrics = ctx.measureText(slide.badgeText.toUpperCase());
+          const badgeW = metrics.width + 32;
+          const badgeH = badgeFontSize + 16;
+          let badgeX = textX - badgeW / 2;
+          if (slide.textAlign === "left") badgeX = textX;
+          if (slide.textAlign === "right") badgeX = textX - badgeW;
+
+          if (slide.badgeStyle === "pill_filled") {
+            ctx.fillStyle = slide.badgeBgColor || "#F59E0B";
+            ctx.beginPath();
+            ctx.roundRect(badgeX, currentY, badgeW, badgeH, badgeH / 2);
+            ctx.fill();
+
+            ctx.fillStyle = slide.badgeTextColor || "#000000";
+            ctx.fillText(slide.badgeText.toUpperCase(), badgeX + badgeW / 2, currentY + badgeH * 0.72);
+          } else if (slide.badgeStyle === "pill_bordered") {
+            ctx.strokeStyle = slide.badgeBgColor || "#F59E0B";
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.roundRect(badgeX, currentY, badgeW, badgeH, badgeH / 2);
+            ctx.stroke();
+
+            ctx.fillStyle = slide.badgeTextColor || "#FFFFFF";
+            ctx.fillText(slide.badgeText.toUpperCase(), badgeX + badgeW / 2, currentY + badgeH * 0.72);
+          } else if (slide.badgeStyle === "neon") {
+            ctx.save();
+            ctx.shadowColor = slide.badgeBgColor || "#F59E0B";
+            ctx.shadowBlur = 12;
+            ctx.fillStyle = slide.badgeBgColor || "#F59E0B";
+            ctx.fillText(slide.badgeText.toUpperCase(), textX, currentY + badgeH * 0.65);
+            ctx.restore();
+          }
+
+          currentY += badgeH + height * 0.015;
+        } else {
+          currentY = height * 0.048;
+        }
+
+        // B) HEADER TITLE (WITH AUTO MULTI-LINE WRAPPING)
+        const headerFontSize = Math.round(height * 0.035 * (slide.headerFontSize || 1.0));
+        ctx.font = getCanvasFont(slide.fontFamily, 900, headerFontSize);
+        ctx.textAlign = alignMode;
+        ctx.textBaseline = "alphabetic";
+        ctx.fillStyle = slide.headerColor || "#ffffff";
+
+        const maxTitleWidth = width * 0.86;
+        const words = (slide.header || "").split(" ");
+        let line = "";
+        const lines: string[] = [];
+
+        for (let n = 0; n < words.length; n++) {
+          const testLine = line + words[n] + " ";
+          const metrics = ctx.measureText(testLine);
+          if (metrics.width > maxTitleWidth && n > 0) {
+            lines.push(line.trim());
+            line = words[n] + " ";
+          } else {
+            line = testLine;
+          }
+        }
+        lines.push(line.trim());
+
+        const lineHeight = headerFontSize * 1.15;
+        for (let i = 0; i < lines.length; i++) {
+          ctx.fillText(lines[i], textX, currentY + headerFontSize * 0.85 + (i * lineHeight));
+        }
+        currentY += (lines.length * lineHeight) + height * 0.008;
+
+        // C) SUBTEXT DESCRIPTION
+        if (slide.subtext && slide.subtext.trim() !== "") {
+          const subfontSize = Math.round(height * 0.016 * (slide.subtextFontSize || 1.0));
+          ctx.font = getCanvasFont(slide.fontFamily, 500, subfontSize);
+          ctx.textAlign = alignMode;
+          ctx.textBaseline = "alphabetic";
+          ctx.fillStyle = slide.subtextColor || "rgba(255, 255, 255, 0.75)";
+          
+          const subwords = slide.subtext.split(" ");
+          let subline = "";
+          const sublines: string[] = [];
+          for (let sn = 0; sn < subwords.length; sn++) {
+            const testSub = subline + subwords[sn] + " ";
+            if (ctx.measureText(testSub).width > maxTitleWidth && sn > 0) {
+              sublines.push(subline.trim());
+              subline = subwords[sn] + " ";
+            } else {
+              subline = testSub;
+            }
+          }
+          sublines.push(subline.trim());
+
+          const subLineHeight = subfontSize * 1.25;
+          for (let si = 0; si < sublines.length; si++) {
+            ctx.fillText(sublines[si], textX, currentY + subfontSize * 0.85 + (si * subLineHeight));
+          }
+        }
+
         ctx.restore();
-        resolve();
-      }
+      };
+
+      // Launch Device & Layer Rendering
+      renderDeviceAndMarketing();
     });
   }, []);
 
