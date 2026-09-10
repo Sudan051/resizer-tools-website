@@ -2528,7 +2528,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
             </div>
           </div>
 
-          <Link href="/blog/" className="text-brand-gold hover:text-white font-semibold flex items-center gap-1 transition-colors">Blog 📖</Link>
+          <Link href="/blog" className="text-brand-gold hover:text-white font-semibold flex items-center gap-1 transition-colors">Blog 📖</Link>
           <button onClick={() => setShowSubscription(true)} className="hover:text-white text-brand-gold font-semibold flex items-center gap-1 transition-colors cursor-pointer">Unlock Pro ✨</button>
         </div>
         <button onClick={() => openToolModal({ id: "app_download", title: "Download Utilify App", isAppDownload: true })} className="flex items-center gap-2 bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-semibold text-xs px-4 py-2 rounded-full shadow-premium-gold hover:scale-105 transition-transform cursor-pointer">

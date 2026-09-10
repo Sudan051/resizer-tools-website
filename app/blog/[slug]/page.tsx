@@ -86,7 +86,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         
         {/* Navigation */}
         <Link 
-          href="/blog/" 
+          href="/blog" 
           className="inline-flex items-center gap-2 text-xs font-mono text-brand-muted hover:text-brand-gold transition-colors"
         >
           <ArrowLeft className="w-4 h-4" /> Back to Knowledge Base

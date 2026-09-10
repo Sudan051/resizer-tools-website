@@ -53,7 +53,7 @@ export default function BlogIndexPage() {
                 </div>
 
                 <h2 className="text-lg font-bold text-white group-hover:text-brand-gold transition-colors leading-snug">
-                  <Link href={`/blog/${post.slug}/`}>
+                  <Link href={`/blog/${post.slug}`}>
                     {post.title}
                   </Link>
                 </h2>
@@ -68,7 +68,7 @@ export default function BlogIndexPage() {
                   <User className="w-3.5 h-3.5 text-brand-gold" /> {post.author}
                 </span>
                 <Link 
-                  href={`/blog/${post.slug}/`}
+                  href={`/blog/${post.slug}`}
                   className="inline-flex items-center gap-1 font-mono text-xs text-brand-gold group-hover:translate-x-1 transition-transform"
                 >
                   Read Article <ArrowRight className="w-3.5 h-3.5" />

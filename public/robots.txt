@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://resizertools.com/sitemap.xml
+Sitemap: https://www.resizertools.com/sitemap.xml

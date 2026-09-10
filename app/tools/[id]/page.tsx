@@ -67,13 +67,14 @@ export default async function ToolPage({ params }: { params: Promise<{ id: strin
 
   const seo = getToolSEOContent(tool);
 
+  const cleanId = tool.id.replace(/_/g, "-");
+
   // 1. SoftwareApplication Schema
   const webAppSchema = {
-    "@context": "https://schema.org",
     "@type": ["SoftwareApplication", "WebApplication"],
-    "@id": `https://www.resizertools.com/tools/${tool.id.replace(/_/g, "-")}#software`,
+    "@id": `https://www.resizertools.com/tools/${cleanId}#software`,
     "name": `${tool.title} - Resizer Tools`,
-    "url": `https://www.resizertools.com/tools/${tool.id.replace(/_/g, "-")}`,
+    "url": `https://www.resizertools.com/tools/${cleanId}`,
     "description": `${tool.subtitle || tool.desc}`,
     "applicationCategory": "UtilityApplication",
     "operatingSystem": "Windows, macOS, Android, iOS, Web Browser",
@@ -97,7 +98,7 @@ export default async function ToolPage({ params }: { params: Promise<{ id: strin
   // 2. HowTo Schema
   const howToSchema = {
     "@type": "HowTo",
-    "@id": `https://resizertools.com/tools/${tool.id}/#howto`,
+    "@id": `https://www.resizertools.com/tools/${cleanId}#howto`,
     "name": `How to use ${tool.title} online and offline`,
     "description": `Step-by-step guide to run ${tool.title} in your web browser with zero server uploads.`,
     "step": seo.steps.map((step, index) => ({
@@ -110,7 +111,7 @@ export default async function ToolPage({ params }: { params: Promise<{ id: strin
   // 3. FAQPage Schema
   const faqSchema = {
     "@type": "FAQPage",
-    "@id": `https://resizertools.com/tools/${tool.id}/#faq`,
+    "@id": `https://www.resizertools.com/tools/${cleanId}#faq`,
     "mainEntity": seo.faq.map((f) => ({
       "@type": "Question",
       "name": f.q,
@@ -124,25 +125,25 @@ export default async function ToolPage({ params }: { params: Promise<{ id: strin
   // 4. BreadcrumbList Schema
   const breadcrumbSchema = {
     "@type": "BreadcrumbList",
-    "@id": `https://resizertools.com/tools/${tool.id}/#breadcrumb`,
+    "@id": `https://www.resizertools.com/tools/${cleanId}#breadcrumb`,
     "itemListElement": [
       {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://resizertools.com/"
+        "item": "https://www.resizertools.com"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "Tools",
-        "item": "https://resizertools.com/#studio"
+        "item": "https://www.resizertools.com/#studio"
       },
       {
         "@type": "ListItem",
         "position": 3,
         "name": tool.title,
-        "item": `https://resizertools.com/tools/${tool.id}/`
+        "item": `https://www.resizertools.com/tools/${cleanId}`
       }
     ]
   };
@@ -169,11 +170,11 @@ export default async function ToolPage({ params }: { params: Promise<{ id: strin
         </Link>
         <div className="hidden md:flex items-center gap-8 text-sm text-brand-muted font-medium">
           <Link href="/#studio" className="hover:text-white transition-colors">All Tools ({toolsData.length})</Link>
-          <Link href="/blog/" className="text-brand-gold hover:text-white font-semibold flex items-center gap-1 transition-colors">Blog &amp; Guides 📖</Link>
-          <Link href="/app/" className="hover:text-white transition-colors">Mobile App</Link>
+          <Link href="/blog" className="text-brand-gold hover:text-white font-semibold flex items-center gap-1 transition-colors">Blog &amp; Guides 📖</Link>
+          <Link href="/app" className="hover:text-white transition-colors">Mobile App</Link>
         </div>
         <Link 
-          href="/app/" 
+          href="/app" 
           className="flex items-center gap-2 bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-semibold text-xs px-4 py-2 rounded-full shadow-premium-gold hover:scale-105 transition-transform cursor-pointer"
         >
           <Download className="w-3.5 h-3.5 stroke-[3]" /> Download App
