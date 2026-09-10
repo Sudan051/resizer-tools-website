@@ -2708,14 +2708,6 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                           {tool.desc}
                         </p>
                       </div>
-                      <div className="pt-3 border-t border-white/5 mt-4 flex items-center justify-between">
-                        <span className="text-[10px] font-mono text-brand-gold flex items-center gap-1">
-                          <span className="w-1.5 h-1.5 rounded-full bg-brand-gold animate-pulse"></span> /tools/{tool.id.replace(/_/g, "-")}
-                        </span>
-                        <span className="text-[11px] font-mono font-bold text-brand-gold group-hover:text-white bg-brand-gold/15 group-hover:bg-brand-gold/30 border border-brand-gold/40 px-2.5 py-1 rounded-lg transition-all flex items-center gap-1 shadow-md">
-                          Open Separate Page 🔗
-                        </span>
-                      </div>
                     </motion.div>
                   </Link>
                 ))}
@@ -2763,14 +2755,6 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                             {tool.desc}
                           </p>
                         </div>
-                        <div className="pt-3 border-t border-white/5 mt-4 flex items-center justify-between">
-                          <span className="text-[10px] font-mono text-brand-gold flex items-center gap-1 group-hover:text-white transition-colors">
-                            <span className="w-1.5 h-1.5 rounded-full bg-brand-gold animate-pulse"></span> /tools/{tool.id.replace(/_/g, "-")}
-                          </span>
-                          <span className="text-[11px] font-mono font-bold text-brand-gold group-hover:text-white bg-brand-gold/15 group-hover:bg-brand-gold/30 border border-brand-gold/40 px-2.5 py-1 rounded-lg transition-all flex items-center gap-1 shadow-md">
-                            Open Separate Page 🔗
-                          </span>
-                        </div>
                       </motion.div>
                     </Link>
                   ))}
@@ -2814,14 +2798,6 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                           <p className="text-xs text-brand-muted font-light leading-relaxed border-t border-white/5 pt-3 group-hover:text-neutral-200 transition-colors">
                             {tool.desc}
                           </p>
-                        </div>
-                        <div className="pt-3 border-t border-white/5 mt-4 flex items-center justify-between">
-                          <span className="text-[10px] font-mono text-blue-400 flex items-center gap-1 group-hover:text-white transition-colors">
-                            <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span> /tools/{tool.id.replace(/_/g, "-")}
-                          </span>
-                          <span className="text-[11px] font-mono font-bold text-blue-400 group-hover:text-white bg-blue-500/15 group-hover:bg-blue-500/30 border border-blue-500/40 px-2.5 py-1 rounded-lg transition-all flex items-center gap-1 shadow-md">
-                            Open Separate Page 🔗
-                          </span>
                         </div>
                       </motion.div>
                     </Link>
@@ -2867,14 +2843,6 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                             {tool.desc}
                           </p>
                         </div>
-                        <div className="pt-3 border-t border-white/5 mt-4 flex items-center justify-between">
-                          <span className="text-[10px] font-mono text-emerald-400 flex items-center gap-1 group-hover:text-white transition-colors">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> /tools/{tool.id.replace(/_/g, "-")}
-                          </span>
-                          <span className="text-[11px] font-mono font-bold text-emerald-400 group-hover:text-white bg-emerald-500/15 group-hover:bg-emerald-500/30 border border-emerald-500/40 px-2.5 py-1 rounded-lg transition-all flex items-center gap-1 shadow-md">
-                            Open Separate Page 🔗
-                          </span>
-                        </div>
                       </motion.div>
                     </Link>
                   ))}
@@ -2918,14 +2886,6 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                           <p className="text-xs text-brand-muted font-light leading-relaxed border-t border-white/5 pt-3 group-hover:text-neutral-200 transition-colors">
                             {tool.desc}
                           </p>
-                        </div>
-                        <div className="pt-3 border-t border-white/5 mt-4 flex items-center justify-between">
-                          <span className="text-[10px] font-mono text-purple-400 flex items-center gap-1 group-hover:text-white transition-colors">
-                            <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse"></span> /tools/{tool.id.replace(/_/g, "-")}
-                          </span>
-                          <span className="text-[11px] font-mono font-bold text-purple-400 group-hover:text-white bg-purple-500/15 group-hover:bg-purple-500/30 border border-purple-500/40 px-2.5 py-1 rounded-lg transition-all flex items-center gap-1 shadow-md">
-                            Open Separate Page 🔗
-                          </span>
                         </div>
                       </motion.div>
                     </Link>
