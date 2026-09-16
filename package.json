@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test:seo": "node scripts/seo-audit-check.js"
   },
   "dependencies": {
     "@pdfsmaller/pdf-decrypt-lite": "^1.0.0",

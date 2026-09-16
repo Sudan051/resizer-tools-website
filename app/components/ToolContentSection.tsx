@@ -40,10 +40,17 @@ export default function ToolContentSection({ tool }: ToolContentSectionProps) {
     setOpenFaqIndex(openFaqIndex === idx ? null : idx);
   };
 
-  // 6 related tools in the same category or top tools
-  const relatedTools = toolsData
-    .filter((t) => t.id !== tool.id && (t.category === tool.category || t.category === "generator" || t.category === "image"))
-    .slice(0, 6);
+  // Contextual related tools with rotating window to ensure balanced link distribution across all tools
+  const sameCategoryTools = toolsData.filter((t) => t.id !== tool.id && t.category === tool.category);
+  const currentIndex = toolsData.findIndex((t) => t.id === tool.id);
+  const rotatedSameCategory = sameCategoryTools.length > 0
+    ? [
+        ...sameCategoryTools.slice(currentIndex % sameCategoryTools.length),
+        ...sameCategoryTools.slice(0, currentIndex % sameCategoryTools.length)
+      ]
+    : [];
+  const otherCategoryTools = toolsData.filter((t) => t.id !== tool.id && t.category !== tool.category);
+  const relatedTools = [...rotatedSameCategory, ...otherCategoryTools].slice(0, 6);
 
   return (
     <div className="w-full bg-[#080808] text-white border-t border-white/5 py-16 px-4 sm:px-6 relative z-10">
@@ -94,41 +101,55 @@ export default function ToolContentSection({ tool }: ToolContentSectionProps) {
           </div>
         </div>
 
-        {/* 💎 2. CORE VALUE PROPOSITION & BENEFIT CARDS (3 CARDS) */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-          <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/5 hover:border-brand-gold/30 transition-all space-y-3 group">
-            <div className="w-12 h-12 rounded-2xl bg-brand-gold/10 border border-brand-gold/25 flex items-center justify-center text-brand-gold group-hover:scale-110 transition-transform">
-              <Zap className="w-6 h-6" />
-            </div>
-            <h3 className="text-base font-bold text-white tracking-tight">Instant Local Processing</h3>
-            <p className="text-xs text-neutral-400 leading-relaxed font-light">
-              No server upload delays or slow internet queues. Everything runs directly on your computer or phone for immediate results.
+        {/* 💎 2. CORE VALUE PROPOSITION & BENEFIT CARDS */}
+        <section className="space-y-6 text-left">
+          <div className="space-y-2">
+            <span className="text-[11px] font-mono uppercase tracking-widest text-brand-gold font-bold flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5" /> Built For Privacy &amp; Performance
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+              Why Professionals Rely on {tool.title}
+            </h2>
+            <p className="text-xs sm:text-sm text-neutral-400 font-light max-w-3xl">
+              Unlike traditional cloud utilities that transfer your confidential documents over the network, Resizer Tools executes all transformations in zero-trust, local browser memory.
             </p>
           </div>
 
-          <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/5 hover:border-brand-gold/30 transition-all space-y-3 group">
-            <div className="w-12 h-12 rounded-2xl bg-brand-gold/10 border border-brand-gold/25 flex items-center justify-center text-brand-gold group-hover:scale-110 transition-transform">
-              <Layers className="w-6 h-6" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+            <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/5 hover:border-brand-gold/30 transition-all space-y-3 group">
+              <div className="w-12 h-12 rounded-2xl bg-brand-gold/10 border border-brand-gold/25 flex items-center justify-center text-brand-gold group-hover:scale-110 transition-transform">
+                <Zap className="w-6 h-6" />
+              </div>
+              <h3 className="text-base font-bold text-white tracking-tight">Instant Local Processing</h3>
+              <p className="text-xs text-neutral-400 leading-relaxed font-light">
+                No server upload queues, network timeouts, or bandwidth throttling. Operations complete in milliseconds directly on your CPU/GPU.
+              </p>
             </div>
-            <h3 className="text-base font-bold text-white tracking-tight">High Quality & Sharp Output</h3>
-            <p className="text-xs text-neutral-400 leading-relaxed font-light">
-              Smart compression keeps your text crisp, colors rich, and images clear without unnecessary file bloat.
-            </p>
-          </div>
 
-          <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/5 hover:border-brand-gold/30 transition-all space-y-3 group">
-            <div className="w-12 h-12 rounded-2xl bg-brand-gold/10 border border-brand-gold/25 flex items-center justify-center text-brand-gold group-hover:scale-110 transition-transform">
-              <ShieldCheck className="w-6 h-6" />
+            <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/5 hover:border-brand-gold/30 transition-all space-y-3 group">
+              <div className="w-12 h-12 rounded-2xl bg-brand-gold/10 border border-brand-gold/25 flex items-center justify-center text-brand-gold group-hover:scale-110 transition-transform">
+                <Layers className="w-6 h-6" />
+              </div>
+              <h3 className="text-base font-bold text-white tracking-tight">High Fidelity &amp; Lossless Precision</h3>
+              <p className="text-xs text-neutral-400 leading-relaxed font-light">
+                Native HTML5 Canvas rendering and WebAssembly vector compilation preserve vector clarity, font glyphs, and color profiles accurately.
+              </p>
             </div>
-            <h3 className="text-base font-bold text-white tracking-tight">100% Private & Secure</h3>
-            <p className="text-xs text-neutral-400 leading-relaxed font-light">
-              Your confidential tax records, contracts, photos, and signatures never leave your device. We never upload, store, or view your files.
-            </p>
-          </div>
-        </div>
 
-        {/* 📖 3. STEP-BY-STEP "HOW TO USE" INFORMATIVE GUIDE */}
-        <div className="space-y-8 text-left bg-gradient-to-b from-white/[0.02] to-transparent p-8 md:p-10 rounded-3xl border border-white/5">
+            <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/5 hover:border-brand-gold/30 transition-all space-y-3 group">
+              <div className="w-12 h-12 rounded-2xl bg-brand-gold/10 border border-brand-gold/25 flex items-center justify-center text-brand-gold group-hover:scale-110 transition-transform">
+                <ShieldCheck className="w-6 h-6" />
+              </div>
+              <h3 className="text-base font-bold text-white tracking-tight">Zero-Log Data Privacy</h3>
+              <p className="text-xs text-neutral-400 leading-relaxed font-light">
+                Financial records, tax returns, passport scans, and contracts remain strictly confined to your physical machine with no remote database persistence.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* 📖 3. STEP-BY-STEP "HOW TO USE" GUIDE */}
+        <section className="space-y-8 text-left bg-gradient-to-b from-white/[0.02] to-transparent p-8 md:p-10 rounded-3xl border border-white/5">
           <div className="space-y-2">
             <span className="text-[11px] font-mono uppercase tracking-widest text-brand-gold font-bold flex items-center gap-1.5">
               <Sparkles className="w-3.5 h-3.5" /> Quick Guide
@@ -165,10 +186,121 @@ export default function ToolContentSection({ tool }: ToolContentSectionProps) {
               Once loaded, you can even use this tool offline without an active internet connection—convenient when traveling, working remotely, or dealing with slow Wi-Fi.
             </p>
           </div>
-        </div>
+        </section>
 
-        {/* 🛡️ 4. YOUR PRIVACY, OUR CORE COMMITMENT TRUST SECTION */}
-        <div className="p-8 md:p-10 rounded-3xl bg-gradient-to-r from-brand-gold/10 via-brand-obsidian to-black border border-brand-gold/25 text-left flex flex-col md:flex-row items-center justify-between gap-8">
+        {/* 📊 4. TECHNICAL SPECIFICATIONS & BROWSER COMPATIBILITY MATRIX */}
+        <section className="space-y-6 text-left">
+          <div className="space-y-2">
+            <span className="text-[11px] font-mono uppercase tracking-widest text-brand-gold font-bold flex items-center gap-1.5">
+              <Globe className="w-3.5 h-3.5" /> Technical Specifications
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+              Architecture, Engine &amp; Compatibility
+            </h2>
+            <p className="text-xs sm:text-sm text-neutral-400 font-light">
+              Detailed technical overview of execution parameters, supported file formats, cryptographic safeguards, and browser engine requirements.
+            </p>
+          </div>
+
+          <div className="overflow-x-auto rounded-2xl border border-white/10 bg-white/[0.02]">
+            <table className="w-full text-left text-xs text-neutral-300">
+              <thead className="bg-white/5 text-brand-gold font-mono uppercase text-[10px] tracking-wider border-b border-white/10">
+                <tr>
+                  <th className="py-3 px-4 sm:px-6">Specification Parameter</th>
+                  <th className="py-3 px-4 sm:px-6">Implementation Standard</th>
+                  <th className="py-3 px-4 sm:px-6">Performance &amp; Security Guarantee</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/5 font-light">
+                <tr>
+                  <td className="py-3.5 px-4 sm:px-6 font-medium text-white">Execution Environment</td>
+                  <td className="py-3.5 px-4 sm:px-6 font-mono text-brand-gold">Client-Side JavaScript / WebAssembly</td>
+                  <td className="py-3.5 px-4 sm:px-6">Zero bytes dispatched to external cloud servers</td>
+                </tr>
+                <tr>
+                  <td className="py-3.5 px-4 sm:px-6 font-medium text-white">Supported Formats</td>
+                  <td className="py-3.5 px-4 sm:px-6 font-mono text-neutral-200">PDF, PNG, JPEG, WebP, SVG, HEIC</td>
+                  <td className="py-3.5 px-4 sm:px-6">Standard MIME-type validation &amp; binary integrity checks</td>
+                </tr>
+                <tr>
+                  <td className="py-3.5 px-4 sm:px-6 font-medium text-white">Offline Capability (PWA)</td>
+                  <td className="py-3.5 px-4 sm:px-6 font-mono text-emerald-400">Supported via Service Worker cache</td>
+                  <td className="py-3.5 px-4 sm:px-6">Fully functional with no active network or Wi-Fi connection</td>
+                </tr>
+                <tr>
+                  <td className="py-3.5 px-4 sm:px-6 font-medium text-white">Hardware Acceleration</td>
+                  <td className="py-3.5 px-4 sm:px-6 font-mono text-neutral-200">WebGL &amp; OffscreenCanvas API</td>
+                  <td className="py-3.5 px-4 sm:px-6">Direct GPU rasterization for high-resolution graphics</td>
+                </tr>
+                <tr>
+                  <td className="py-3.5 px-4 sm:px-6 font-medium text-white">Memory Lifecycle</td>
+                  <td className="py-3.5 px-4 sm:px-6 font-mono text-neutral-200">Transient Blob &amp; TypedArray Buffers</td>
+                  <td className="py-3.5 px-4 sm:px-6">Auto-garbage collected upon tab dismissal</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {/* 💼 5. PRACTICAL REAL-WORLD USE CASES */}
+        <section className="space-y-6 text-left">
+          <div className="space-y-2">
+            <span className="text-[11px] font-mono uppercase tracking-widest text-brand-gold font-bold flex items-center gap-1.5">
+              <Layers className="w-3.5 h-3.5" /> Professional Workflows
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+              Practical Use Cases &amp; Common Scenarios
+            </h2>
+            <p className="text-xs sm:text-sm text-neutral-400 font-light">
+              See how different professionals, businesses, and everyday users streamline their digital asset workflows with {tool.title}.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2">
+              <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-brand-gold"></span>
+                Legal, Accounting &amp; Confidential Records
+              </h3>
+              <p className="text-xs text-neutral-400 font-light leading-relaxed">
+                Review, sign, redact, and reorganize client tax forms, contracts, and financial statements without violating data-handling compliance rules or GDPR regulations.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2">
+              <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-brand-gold"></span>
+                Job Seekers &amp; ATS Resume Optimization
+              </h3>
+              <p className="text-xs text-neutral-400 font-light leading-relaxed">
+                Ensure CVs and portfolios adhere strictly to standard single-column formats and target file size limits accepted by modern recruitment applicant tracking systems.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2">
+              <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-brand-gold"></span>
+                Web Developers &amp; E-Commerce Merchandisers
+              </h3>
+              <p className="text-xs text-neutral-400 font-light leading-relaxed">
+                Compress product catalog imagery, convert raw graphics into modern WebP formats, and resize responsive thumbnails to achieve top Core Web Vitals (LCP) performance scores.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2">
+              <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-brand-gold"></span>
+                Remote Teams &amp; Mobile Field Operations
+              </h3>
+              <p className="text-xs text-neutral-400 font-light leading-relaxed">
+                Convert, scan, and reorder multi-page documents directly in the field on low-connectivity mobile devices with immediate PDF generation and no cloud round-trips.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* 🛡️ 6. YOUR PRIVACY, OUR CORE COMMITMENT TRUST SECTION */}
+        <section className="p-8 md:p-10 rounded-3xl bg-gradient-to-r from-brand-gold/10 via-brand-obsidian to-black border border-brand-gold/25 text-left flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="space-y-4 max-w-2xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-gold/20 text-brand-gold font-mono text-[10px] font-bold uppercase tracking-wider">
               <Lock className="w-3.5 h-3.5" /> Privacy Guarantee
@@ -204,10 +336,10 @@ export default function ToolContentSection({ tool }: ToolContentSectionProps) {
             <span className="text-[11px] font-extrabold text-white">100% PRIVATE</span>
             <span className="text-[9px] text-brand-muted font-mono">ZERO UPLOADS</span>
           </div>
-        </div>
+        </section>
 
-        {/* ❓ 5. INTERACTIVE ACCORDION FAQ SECTION */}
-        <div className="space-y-6 text-left">
+        {/* ❓ 7. INTERACTIVE ACCORDION FAQ SECTION */}
+        <section className="space-y-6 text-left">
           <div className="space-y-2">
             <span className="text-[11px] font-mono uppercase tracking-widest text-brand-gold font-bold flex items-center gap-1.5">
               <Globe className="w-3.5 h-3.5" /> Frequently Asked Questions
@@ -251,14 +383,14 @@ export default function ToolContentSection({ tool }: ToolContentSectionProps) {
               );
             })}
           </div>
-        </div>
+        </section>
 
-        {/* 🔗 6. RELATED TOOLS INTERNAL LINKING GRID */}
-        <div className="space-y-6 text-left pt-6 border-t border-white/5">
+        {/* 🔗 8. RELATED TOOLS INTERNAL LINKING GRID */}
+        <section className="space-y-6 text-left pt-6 border-t border-white/5">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
               <span className="text-[11px] font-mono uppercase tracking-widest text-brand-gold font-bold">Related Utilities</span>
-              <h3 className="text-xl font-bold text-white tracking-tight">Explore More Free Web Tools</h3>
+              <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">Explore More Free Web Tools</h2>
             </div>
             <Link href="/#studio" className="text-xs font-mono text-brand-gold hover:underline flex items-center gap-1">
               View All {toolsData.length} Tools →
@@ -279,7 +411,7 @@ export default function ToolContentSection({ tool }: ToolContentSectionProps) {
                     </span>
                     <ArrowRight className="w-4 h-4 text-neutral-500 group-hover:text-brand-gold group-hover:translate-x-1 transition-all" />
                   </div>
-                  <h4 className="text-sm font-bold text-white group-hover:text-brand-gold transition-colors">{rel.title}</h4>
+                  <h3 className="text-sm font-bold text-white group-hover:text-brand-gold transition-colors">{rel.title}</h3>
                   <p className="text-xs text-neutral-400 font-light line-clamp-2">{rel.subtitle || rel.desc}</p>
                 </div>
                 <div className="pt-3 border-t border-white/5 mt-3 flex items-center justify-between text-[11px] font-mono text-neutral-400">
@@ -289,7 +421,7 @@ export default function ToolContentSection({ tool }: ToolContentSectionProps) {
               </Link>
             ))}
           </div>
-        </div>
+        </section>
 
       </div>
     </div>

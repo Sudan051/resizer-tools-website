@@ -2464,6 +2464,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
               <span className="text-[10px] font-mono uppercase tracking-wider text-brand-gold px-2 py-1">📄 PDF Studio</span>
               {[
                 { id: "mrg_pdf", name: "Merge PDF Documents" },
+                { id: "mk_pdf", name: "PDF Maker & Designer" },
                 { id: "spl_pdf", name: "Split & Cut PDF" },
                 { id: "red_pdf", name: "PDF Reducer / Compress" },
                 { id: "del_pdf", name: "Delete PDF Pages" },
@@ -2601,9 +2602,9 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-gold/10 border border-brand-gold/20 text-xs font-mono font-bold tracking-wider text-brand-gold uppercase">
               🛡️ Privacy First
             </span>
-            <h3 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
+            <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
               Your Files Never Leave Your Device
-            </h3>
+            </h2>
             <p className="text-sm text-brand-muted leading-relaxed font-light">
               Unlike typical online converters that upload your confidential files to remote servers, Resizer Tools works <strong className="text-white font-semibold">100% locally in your browser memory</strong>. Faster processing, zero upload waits, and complete data privacy.
             </p>
@@ -2611,12 +2612,12 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
           <div className="grid grid-cols-2 gap-4 w-full md:w-auto shrink-0">
             <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4 text-left flex flex-col justify-between max-w-[200px]">
               <span className="text-2xl mb-1">🔌</span>
-              <h4 className="text-xs font-bold text-white uppercase tracking-wider">Works Offline</h4>
+              <h3 className="text-xs font-bold text-white uppercase tracking-wider">Works Offline</h3>
               <p className="text-[10px] text-brand-muted mt-1 leading-normal">Disconnect your internet and keep editing, compressing, or watermarking files without interruption.</p>
             </div>
             <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4 text-left flex flex-col justify-between max-w-[200px]">
               <span className="text-2xl mb-1">🚀</span>
-              <h4 className="text-xs font-bold text-white uppercase tracking-wider">Zero Upload Lag</h4>
+              <h3 className="text-xs font-bold text-white uppercase tracking-wider">Zero Upload Lag</h3>
               <p className="text-[10px] text-brand-muted mt-1 leading-normal">No waiting for slow uploads. Process your documents and photos instantly using your own device hardware.</p>
             </div>
           </div>
@@ -2650,7 +2651,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
       <section id="studio" className="py-24 px-6 max-w-6xl mx-auto scroll-mt-16 border-t border-white/5">
         <div className="text-center mb-12">
           <p className="text-brand-gold font-mono tracking-widest text-xs uppercase mb-2 font-bold">Organized Utility Hub</p>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight">Browse Free Web PDF & Image Tools</h2>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight">Browse Free Web PDF &amp; Image Tools</h2>
           <p className="text-brand-muted mt-3 max-w-lg mx-auto text-sm font-light">Every tool runs 100% locally inside your browser memory. Zero server uploads.</p>
         </div>
 
@@ -2700,7 +2701,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                             <tool.icon className="w-5 h-5 stroke-[2]" />
                           </div>
                           <div>
-                            <h3 className="text-base font-bold text-white tracking-tight group-hover:text-brand-gold-light transition-colors">{tool.title}</h3>
+                            <h4 className="text-base font-bold text-white tracking-tight group-hover:text-brand-gold-light transition-colors">{tool.title}</h4>
                             <p className="text-[11px] text-brand-muted font-medium tracking-wide">{tool.subtitle}</p>
                           </div>
                         </div>
@@ -2725,16 +2726,16 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                   <div>
                     <h3 className="text-xl font-bold text-white flex items-center gap-2">
                       <span className="p-2 rounded-xl bg-brand-gold/10 border border-brand-gold/20 text-brand-gold text-sm">📄</span> 
-                      PDF Manipulation & Editing Studio
+                      PDF Manipulation &amp; Editing Studio
                     </h3>
-                    <p className="text-xs text-brand-muted mt-1 font-light">Merge, split, compress, reorder, and watermark PDF documents 100% client-side.</p>
+                    <p className="text-xs text-brand-muted mt-1 font-light">Create, merge, split, extract, reorder, compress, and watermark PDF documents 100% client-side.</p>
                   </div>
                   <span className="text-xs font-mono bg-brand-gold/10 text-brand-gold border border-brand-gold/20 px-3 py-1 rounded-full font-bold">
-                    9 Tools • 🔒 Client-Side
+                    10 Tools • 🔒 Client-Side
                   </span>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {toolsData.filter(t => ["mrg_pdf", "spl_pdf", "red_pdf", "del_pdf", "ext_pdf", "ord_pdf", "rot_pdf", "num_pdf", "wtrmk_pdf"].includes(t.id)).map((tool) => (
+                  {toolsData.filter(t => ["mrg_pdf", "mk_pdf", "spl_pdf", "ext_pdf", "ord_pdf", "red_pdf", "del_pdf", "rot_pdf", "num_pdf", "wtrmk_pdf"].includes(t.id)).map((tool) => (
                     <Link key={tool.id} href={`/tools/${tool.id.replace(/_/g, "-")}`} className="block group h-full">
                       <motion.div 
                         whileHover={{ y: -6, borderColor: "rgba(212, 175, 55, 0.4)", boxShadow: "0 12px 30px -10px rgba(212, 175, 55, 0.25)" }}
@@ -2747,7 +2748,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                               <tool.icon className="w-5 h-5 stroke-[2]" />
                             </div>
                             <div>
-                              <h3 className="text-base font-bold text-white tracking-tight group-hover:text-brand-gold-light transition-colors">{tool.title}</h3>
+                              <h4 className="text-base font-bold text-white tracking-tight group-hover:text-brand-gold-light transition-colors">{tool.title}</h4>
                               <p className="text-[11px] text-brand-muted font-medium tracking-wide">{tool.subtitle}</p>
                             </div>
                           </div>
@@ -2769,7 +2770,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                   <div>
                     <h3 className="text-xl font-bold text-white flex items-center gap-2">
                       <span className="p-2 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm">🖼️</span> 
-                      Image Processing & Format Studio
+                      Image Processing &amp; Format Studio
                     </h3>
                     <p className="text-xs text-brand-muted mt-1 font-light">Down-sample, resize, convert formats, and assemble photo print grids natively.</p>
                   </div>
@@ -2791,7 +2792,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                               <tool.icon className="w-5 h-5 stroke-[2]" />
                             </div>
                             <div>
-                              <h3 className="text-base font-bold text-white tracking-tight group-hover:text-blue-300 transition-colors">{tool.title}</h3>
+                              <h4 className="text-base font-bold text-white tracking-tight group-hover:text-blue-300 transition-colors">{tool.title}</h4>
                               <p className="text-[11px] text-brand-muted font-medium tracking-wide">{tool.subtitle}</p>
                             </div>
                           </div>
@@ -2813,7 +2814,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                   <div>
                     <h3 className="text-xl font-bold text-white flex items-center gap-2">
                       <span className="p-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm">🔒</span> 
-                      Security, Signatures & Professional Documents
+                      Security, Signatures &amp; Professional Documents
                     </h3>
                     <p className="text-xs text-brand-muted mt-1 font-light">Encrypt, unlock, digital signatures, invoice compilation, and ATS resumes.</p>
                   </div>
@@ -2835,7 +2836,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                               <tool.icon className="w-5 h-5 stroke-[2]" />
                             </div>
                             <div>
-                              <h3 className="text-base font-bold text-white tracking-tight group-hover:text-emerald-300 transition-colors">{tool.title}</h3>
+                              <h4 className="text-base font-bold text-white tracking-tight group-hover:text-emerald-300 transition-colors">{tool.title}</h4>
                               <p className="text-[11px] text-brand-muted font-medium tracking-wide">{tool.subtitle}</p>
                             </div>
                           </div>
@@ -2857,16 +2858,16 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                   <div>
                     <h3 className="text-xl font-bold text-white flex items-center gap-2">
                       <span className="p-2 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 text-sm">⚡</span> 
-                      Generators, Scanners & Marketing Studios
+                      Generators, Scanners &amp; Marketing Studios
                     </h3>
                     <p className="text-xs text-brand-muted mt-1 font-light">App Store screenshots, QR code creation, document scanning, and NFC chip tools.</p>
                   </div>
                   <span className="text-xs font-mono bg-purple-500/10 text-purple-400 border border-purple-500/20 px-3 py-1 rounded-full font-bold">
-                    7 Tools • 🚀 App Store Ready
+                    5 Tools • 🚀 App Store Ready
                   </span>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {toolsData.filter(t => ["shot_gen", "qr_gen", "qr_scan", "doc_scan", "nfc_wrt", "nfc_rd", "pass_gen"].includes(t.id)).map((tool) => (
+                  {toolsData.filter(t => ["shot_gen", "qr_gen", "qr_scan", "doc_scan", "nfc_tl"].includes(t.id)).map((tool) => (
                     <Link key={tool.id} href={`/tools/${tool.id.replace(/_/g, "-")}`} className="block group h-full">
                       <motion.div 
                         whileHover={{ y: -6, borderColor: "rgba(168, 85, 247, 0.4)", boxShadow: "0 12px 30px -10px rgba(168, 85, 247, 0.2)" }}
@@ -2879,7 +2880,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                               <tool.icon className="w-5 h-5 stroke-[2]" />
                             </div>
                             <div>
-                              <h3 className="text-base font-bold text-white tracking-tight group-hover:text-purple-300 transition-colors">{tool.title}</h3>
+                              <h4 className="text-base font-bold text-white tracking-tight group-hover:text-purple-300 transition-colors">{tool.title}</h4>
                               <p className="text-[11px] text-brand-muted font-medium tracking-wide">{tool.subtitle}</p>
                             </div>
                           </div>
@@ -2931,7 +2932,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                           <tool.icon className="w-5 h-5 stroke-[2]" />
                         </div>
                         <div>
-                          <h3 className="text-base font-bold text-neutral-300 tracking-tight group-hover:text-white transition-colors">{tool.title}</h3>
+                          <h4 className="text-base font-bold text-neutral-300 tracking-tight group-hover:text-white transition-colors">{tool.title}</h4>
                           <p className="text-[11px] text-brand-muted font-medium tracking-wide">{tool.subtitle}</p>
                         </div>
                       </div>
@@ -2973,7 +2974,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                   <span className="text-[10px] font-mono bg-brand-gold/10 text-brand-gold border border-brand-gold/20 px-2 py-0.5 rounded-full">Core 0{i+1}</span>
                   <span className="text-[10px] text-brand-muted font-mono uppercase tracking-widest">1242 × 2688 px</span>
                 </div>
-                <h4 className="text-sm font-semibold text-white group-hover:text-brand-gold-light transition-colors">{screenshot.headline}</h4>
+                <h3 className="text-sm font-semibold text-white group-hover:text-brand-gold-light transition-colors">{screenshot.headline}</h3>
                 <p className="text-xs text-brand-muted font-light mt-0.5">{screenshot.sub}</p>
               </div>
             </div>
@@ -3093,9 +3094,9 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
 
             {/* ✉️ Right Side: Live Feedback Form */}
             <div className="lg:col-span-5 bg-brand-obsidian/40 border border-white/5 rounded-3xl p-6 shadow-2xl relative">
-              <h4 className="text-base font-semibold text-white mb-1 flex items-center gap-2">
+              <h3 className="text-base font-semibold text-white mb-1 flex items-center gap-2">
                 <Smartphone className="w-4 h-4 text-brand-gold" /> Send Feedback &amp; Suggestions
-              </h4>
+              </h3>
               <p className="text-xs text-brand-muted font-light mb-4">Have an idea for a new tool or found a bug? We&apos;d love to hear from you.</p>
               
               <div className="space-y-3.5 text-left">

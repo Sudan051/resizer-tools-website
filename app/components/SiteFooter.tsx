@@ -56,12 +56,15 @@ export default function SiteFooter() {
             </h4>
             <ul className="space-y-2 text-xs text-neutral-400">
               <li><Link href="/tools/mrg-pdf" className="hover:text-brand-gold transition-colors">Merge PDF Files</Link></li>
+              <li><Link href="/tools/mk-pdf" className="hover:text-brand-gold transition-colors">PDF Maker</Link></li>
               <li><Link href="/tools/spl-pdf" className="hover:text-brand-gold transition-colors">Split PDF Pages</Link></li>
+              <li><Link href="/tools/ext-pdf" className="hover:text-brand-gold transition-colors">Extract PDF Pages</Link></li>
+              <li><Link href="/tools/ord-pdf" className="hover:text-brand-gold transition-colors">Reorder PDF Pages</Link></li>
+              <li><Link href="/tools/del-pdf" className="hover:text-brand-gold transition-colors">Delete PDF Pages</Link></li>
               <li><Link href="/tools/red-pdf" className="hover:text-brand-gold transition-colors">PDF Reducer</Link></li>
               <li><Link href="/tools/sgn-pdf" className="hover:text-brand-gold transition-colors">Sign PDF Online</Link></li>
               <li><Link href="/tools/prt-pdf" className="hover:text-brand-gold transition-colors">Protect PDF Password</Link></li>
               <li><Link href="/tools/unl-pdf" className="hover:text-brand-gold transition-colors">Unlock PDF Decrypt</Link></li>
-              <li><Link href="/tools/del-pdf" className="hover:text-brand-gold transition-colors">Delete PDF Pages</Link></li>
               <li><Link href="/tools/rot-pdf" className="hover:text-brand-gold transition-colors">Rotate PDF Pages</Link></li>
               <li><Link href="/tools/res-make" className="hover:text-brand-gold transition-colors">ATS Resume Builder</Link></li>
               <li><Link href="/tools/wtrmk-pdf" className="hover:text-brand-gold transition-colors">PDF Watermark</Link></li>
