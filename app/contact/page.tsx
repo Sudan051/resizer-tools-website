@@ -81,19 +81,27 @@ export default function ContactPage() {
 
         </div>
 
-        {/* Additional Support FAQs */}
+        {/* Additional Support FAQs & Technical Assistance Topics */}
         <div className="space-y-6 pt-4">
           <h2 className="text-lg font-bold text-white tracking-tight flex items-center gap-2">
-            <HelpCircle className="w-5 h-5 text-brand-gold" /> Frequently Asked Questions
+            <HelpCircle className="w-5 h-5 text-brand-gold" /> Frequently Asked Questions &amp; Support Scope
           </h2>
           <div className="space-y-4 text-xs text-brand-muted leading-relaxed font-light">
             <div className="p-4 bg-white/[0.02] border border-white/5 rounded-xl space-y-1.5">
               <h3 className="font-semibold text-white">How do I report a bug or suggest a new tool feature?</h3>
-              <p>Email our technical team directly at Saurabhsudan051@gmail.com with details or screenshots. We review all user suggestions and ship new utility enhancements weekly.</p>
+              <p>Email our technical engineering team directly at Saurabhsudan051@gmail.com with operating system details, browser version, or screenshots. We review all user suggestions and ship new utility enhancements weekly.</p>
             </div>
             <div className="p-4 bg-white/[0.02] border border-white/5 rounded-xl space-y-1.5">
               <h3 className="font-semibold text-white">Are my files uploaded to your servers when I request assistance?</h3>
-              <p>No. Resizer Tools operates 100% locally in your device browser. Our support team never has access to your private files, signatures, or photos.</p>
+              <p>No. Resizer Tools operates 100% locally in your device browser. Our support team never has access to your private files, signatures, or photos. You will never be asked to send sensitive documents.</p>
+            </div>
+            <div className="p-4 bg-white/[0.02] border border-white/5 rounded-xl space-y-1.5">
+              <h3 className="font-semibold text-white">What is the standard response time for inquiries?</h3>
+              <p>We review and respond to inquiries within 24 business hours. For emergency billing or subscription queries, priority handling is applied automatically.</p>
+            </div>
+            <div className="p-4 bg-white/[0.02] border border-white/5 rounded-xl space-y-1.5">
+              <h3 className="font-semibold text-white">Do you offer API access or commercial licenses?</h3>
+              <p>For custom white-label implementations, educational institution licensing, or custom client-side tools integration, contact our business development desk via the email address above.</p>
             </div>
           </div>
         </div>

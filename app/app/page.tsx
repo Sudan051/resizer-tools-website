@@ -167,11 +167,48 @@ export default function AppDownloadPage() {
         </div>
 
         {/* Detailed Application Features & Mobile Architecture */}
-        <div className="pt-8 border-t border-white/5 space-y-6 text-xs text-brand-muted font-light leading-relaxed max-w-3xl mx-auto text-left">
-          <h2 className="text-base font-bold text-white tracking-tight">Why Choose the Resizer Tools Mobile App?</h2>
-          <p>
-            The official Resizer Tools mobile app for iOS and Android is engineered for professionals, students, photographers, and developers who require reliable, offline-ready document and image manipulation. Unlike traditional cloud converters that require stable LTE/5G connections and upload confidential data to remote servers, our mobile apps run native on-device rendering engines.
-          </p>
+        <div className="pt-8 border-t border-white/5 space-y-8 text-xs text-brand-muted font-light leading-relaxed max-w-3xl mx-auto text-left">
+          <div className="space-y-2">
+            <h2 className="text-xl font-bold text-white tracking-tight">Why Choose the Resizer Tools Mobile App?</h2>
+            <p>
+              The official Resizer Tools mobile app for iOS and Android is engineered for professionals, students, photographers, and developers who require reliable, offline-ready document and image manipulation. Unlike traditional cloud converters that require stable LTE/5G connections and upload confidential data to remote servers, our mobile apps run native on-device rendering engines.
+            </p>
+          </div>
+
+          {/* Architecture Comparison Table */}
+          <div className="overflow-x-auto rounded-2xl border border-white/10 bg-white/[0.02]">
+            <table className="w-full text-left text-xs text-neutral-300">
+              <thead className="bg-white/5 text-brand-gold font-mono uppercase text-[10px] tracking-wider border-b border-white/10">
+                <tr>
+                  <th className="py-3 px-4">Feature Capability</th>
+                  <th className="py-3 px-4">Resizer Tools Native App</th>
+                  <th className="py-3 px-4">Cloud Converter Services</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/5 font-light">
+                <tr>
+                  <td className="py-3 px-4 font-medium text-white">Data Privacy &amp; Security</td>
+                  <td className="py-3 px-4 text-emerald-400 font-mono">100% Local Device Storage</td>
+                  <td className="py-3 px-4 text-rose-400">Uploaded to remote cloud</td>
+                </tr>
+                <tr>
+                  <td className="py-3 px-4 font-medium text-white">Offline Functionality</td>
+                  <td className="py-3 px-4 text-emerald-400 font-mono">Full offline operation</td>
+                  <td className="py-3 px-4 text-rose-400">Requires constant internet</td>
+                </tr>
+                <tr>
+                  <td className="py-3 px-4 font-medium text-white">Hardware Acceleration</td>
+                  <td className="py-3 px-4 text-neutral-200">Apple Metal &amp; Android Canvas</td>
+                  <td className="py-3 px-4">Server CPU shared queue</td>
+                </tr>
+                <tr>
+                  <td className="py-3 px-4 font-medium text-white">NFC &amp; Camera Hardware</td>
+                  <td className="py-3 px-4 text-emerald-400 font-mono">Direct hardware sensor access</td>
+                  <td className="py-3 px-4 text-neutral-400">Not supported via web</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
             <div className="p-4 bg-white/[0.02] border border-white/5 rounded-xl space-y-1.5">
@@ -181,6 +218,21 @@ export default function AppDownloadPage() {
             <div className="p-4 bg-white/[0.02] border border-white/5 rounded-xl space-y-1.5">
               <h3 className="font-semibold text-white">Zero Cloud Tracking &amp; Absolute Privacy</h3>
               <p>Your contracts, medical scans, signatures, and personal photos are processed exclusively in sandboxed application memory. No telemetry or file harvesting.</p>
+            </div>
+          </div>
+
+          {/* Mobile FAQ */}
+          <div className="space-y-4 pt-4 border-t border-white/5">
+            <h2 className="text-base font-bold text-white tracking-tight">Frequently Asked Questions</h2>
+            <div className="space-y-3">
+              <div className="p-4 bg-white/[0.02] border border-white/5 rounded-xl space-y-1">
+                <h3 className="text-xs font-bold text-white">Is the mobile app free to download?</h3>
+                <p>Yes, both the Apple App Store and Google Play Store versions are free to download and include our complete core suite of 27 tools.</p>
+              </div>
+              <div className="p-4 bg-white/[0.02] border border-white/5 rounded-xl space-y-1">
+                <h3 className="text-xs font-bold text-white">Can I use the mobile app on airplanes and remote locations?</h3>
+                <p>Yes. All image compression, document scanning, PDF splitting, merging, and password protection routines execute offline on your device processor without requiring cellular data.</p>
+              </div>
             </div>
           </div>
         </div>
