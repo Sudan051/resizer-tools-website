@@ -2,8 +2,9 @@
 
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { 
-  Download, Layers, Sliders, Smartphone, 
-  Tablet, Eye, Plus, Upload, Palette, MoveVertical, Type, Image as ImageIcon, Sparkles, Tag
+  Download, Sliders, Smartphone, 
+  Plus, Upload, Palette, MoveVertical, Type, Image as ImageIcon, Sparkles, Tag,
+  ChevronLeft, ChevronRight
 } from "lucide-react";
 
 export interface PresetSize {
@@ -1053,164 +1054,235 @@ export default function ScreenshotStudioClient() {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-4">
       
-      {/* PRESET SELECTION ROW */}
-      <div className="bg-[#121212] border border-white/10 rounded-3xl p-6 space-y-4 shadow-2xl">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <h2 className="text-sm font-bold uppercase tracking-wider text-brand-gold font-mono flex items-center gap-2">
-              <Sliders className="w-4 h-4" /> 2026 App Store &amp; Play Store Resolution Presets
-            </h2>
-            <p className="text-xs text-brand-muted font-light mt-0.5">
-              Select target specifications for Apple App Store Connect or Google Play Console.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-2.5">
-            <button
-              onClick={applyCurrentStyleToAllSlides}
-              className="flex items-center gap-1.5 bg-brand-gold/15 border border-brand-gold/40 hover:border-brand-gold text-brand-gold font-bold text-xs px-4 py-3 rounded-2xl transition-all cursor-pointer shadow-lg"
-              title="Apply active slide's colors, fonts, zoom, & background to all slides"
-            >
-              <Sparkles className="w-4 h-4 text-brand-gold" /> Sync Style to All Slides
-            </button>
-
-            <button
-              onClick={handleAddNewSlide}
-              className="flex items-center gap-1.5 bg-white/5 border border-white/10 hover:border-brand-gold/40 text-white font-semibold text-xs px-4 py-3 rounded-2xl transition-all cursor-pointer"
-            >
-              <Plus className="w-4 h-4 text-brand-gold" /> Add Screenshot Slide
-            </button>
-
-            <button
-              onClick={downloadAllScreenshots}
-              disabled={isGenerating}
-              className="flex items-center gap-2 bg-gradient-to-r from-brand-gold via-brand-gold-light to-brand-gold-dark text-black font-extrabold text-xs px-6 py-3 rounded-2xl shadow-premium-gold hover:scale-105 transition-transform cursor-pointer disabled:opacity-50"
-            >
-              <Download className="w-4 h-4 stroke-[3]" />
-              {isGenerating ? "Generating PNGs..." : `Export All ${slides.length} Screenshots (PNG)`}
-            </button>
-          </div>
+      {/* TOP COMPACT STUDIO TOOLBAR */}
+      <div className="bg-[#121212]/95 backdrop-blur-md border border-white/10 rounded-2xl p-2.5 sm:px-4 flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-xl">
+        {/* Left: Preset Selector */}
+        <div className="flex items-center gap-2 overflow-x-auto scrollbar-none">
+          <span className="text-[10px] font-mono text-brand-gold uppercase tracking-wider font-bold shrink-0 flex items-center gap-1">
+            <Sliders className="w-3.5 h-3.5" /> Preset:
+          </span>
+          <select
+            value={selectedPreset.id}
+            onChange={(e) => {
+              const p = PRESET_SIZES.find((s) => s.id === e.target.value);
+              if (p) setSelectedPreset(p);
+            }}
+            className="bg-black/60 border border-white/15 rounded-xl px-2.5 py-1 text-xs text-white font-medium focus:outline-none focus:border-brand-gold cursor-pointer"
+          >
+            {PRESET_SIZES.map((preset) => (
+              <option key={preset.id} value={preset.id} className="bg-[#121212] text-white">
+                [{preset.platform}] {preset.name} ({preset.width}×{preset.height})
+              </option>
+            ))}
+          </select>
+          <span className="hidden sm:inline-flex text-[10px] font-mono px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-brand-muted shrink-0">
+            {selectedPreset.width}×{selectedPreset.height} px
+          </span>
         </div>
 
-        {/* Preset Cards Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2.5 pt-2">
-          {PRESET_SIZES.map((preset) => (
+        {/* Center: Slide Sequencer Pills */}
+        <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none py-1">
+          {slides.map((slide, idx) => (
             <button
-              key={preset.id}
-              onClick={() => setSelectedPreset(preset)}
-              className={`p-3 rounded-2xl border text-left transition-all cursor-pointer ${
-                selectedPreset.id === preset.id
-                  ? "bg-brand-gold/15 border-brand-gold text-white shadow-premium-gold scale-[1.02]"
-                  : "bg-white/[0.02] border-white/5 text-brand-muted hover:border-white/20 hover:text-white"
+              key={slide.id}
+              onClick={() => setActiveSlideIndex(idx)}
+              className={`px-3 py-1 rounded-xl border text-xs font-mono font-bold shrink-0 transition-all cursor-pointer flex items-center gap-1.5 ${
+                activeSlideIndex === idx
+                  ? "bg-brand-gold text-black border-brand-gold shadow-md"
+                  : "bg-white/[0.03] border-white/10 text-white hover:border-brand-gold/40"
               }`}
             >
-              <div className="flex items-center justify-between mb-1">
-                <span className={`text-[9px] font-mono font-bold px-1.5 py-0.5 rounded ${
-                  preset.platform === "iOS" ? "bg-blue-500/20 text-blue-400" : "bg-emerald-500/20 text-emerald-400"
-                }`}>
-                  {preset.platform}
+              <span>#{idx + 1}</span>
+              <span className="truncate max-w-[80px] hidden md:inline">{slide.header || "Slide"}</span>
+              {slides.length > 1 && (
+                <span
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDeleteSlide(idx);
+                  }}
+                  className="hover:text-rose-600 p-0.5 font-bold text-xs"
+                  title="Delete slide"
+                >
+                  ×
                 </span>
-                {preset.deviceType === "Phone" ? <Smartphone className="w-3 h-3 opacity-60" /> : <Tablet className="w-3 h-3 opacity-60" />}
-              </div>
-              <div className="text-xs font-bold text-white truncate">{preset.name}</div>
-              <div className="text-[10px] font-mono text-brand-muted mt-0.5">{preset.width}×{preset.height}</div>
+              )}
             </button>
           ))}
+          <button
+            onClick={handleAddNewSlide}
+            className="p-1.5 rounded-xl bg-white/5 border border-white/10 hover:border-brand-gold/40 text-brand-gold hover:text-white transition-all cursor-pointer shrink-0"
+            title="Add new screenshot slide"
+          >
+            <Plus className="w-3.5 h-3.5" />
+          </button>
+        </div>
+
+        {/* Right: Actions */}
+        <div className="flex items-center gap-2 shrink-0">
+          <button
+            onClick={applyCurrentStyleToAllSlides}
+            className="flex items-center gap-1.5 bg-brand-gold/10 border border-brand-gold/30 hover:border-brand-gold text-brand-gold font-bold text-xs px-3 py-1.5 rounded-xl transition-all cursor-pointer"
+            title="Apply active slide's colors, fonts, zoom, & background to all slides"
+          >
+            <Sparkles className="w-3.5 h-3.5" /> <span className="hidden sm:inline">Sync Style</span>
+          </button>
+
+          <button
+            onClick={downloadAllScreenshots}
+            disabled={isGenerating}
+            className="flex items-center gap-1.5 bg-gradient-to-r from-brand-gold via-brand-gold-light to-brand-gold-dark text-black font-extrabold text-xs px-4 py-1.5 rounded-xl shadow-premium-gold hover:scale-105 transition-transform cursor-pointer disabled:opacity-50 shrink-0"
+          >
+            <Download className="w-3.5 h-3.5 stroke-[3]" />
+            <span>{isGenerating ? "Exporting..." : `Export All (${slides.length})`}</span>
+          </button>
         </div>
       </div>
 
-      {/* STUDIO CONTROLS & CANVAS */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      {/* 3-COLUMN STUDIO LAYOUT: LEFT TOOLS | CENTER PREVIEW | RIGHT TOOLS */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
         
-        {/* LEFT COLUMN: ADVANCED CONTROLS */}
-        <div className="lg:col-span-5 space-y-6">
-          
-          {/* SLIDE SELECTOR LIST */}
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-white font-mono flex items-center gap-2">
-                <Layers className="w-4 h-4 text-brand-gold" /> Slides Sequence ({slides.length} Cards)
-              </h3>
-              <button
-                onClick={applyCurrentStyleToAllSlides}
-                className="text-[10px] font-bold text-brand-gold bg-brand-gold/10 hover:bg-brand-gold/20 border border-brand-gold/30 px-2.5 py-1 rounded-xl cursor-pointer flex items-center gap-1 transition-all"
-              >
-                <Sparkles className="w-3 h-3" /> Sync Style to All
-              </button>
-            </div>
-
-            <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
-              {slides.map((slide, idx) => (
-                <button
-                  key={slide.id}
-                  onClick={() => setActiveSlideIndex(idx)}
-                  className={`px-4 py-2.5 rounded-2xl border text-xs font-mono font-bold shrink-0 transition-all cursor-pointer flex items-center gap-2 ${
-                    activeSlideIndex === idx
-                      ? "bg-brand-gold text-black border-brand-gold shadow-lg"
-                      : "bg-white/[0.02] border-white/10 text-white hover:border-brand-gold/40"
-                  }`}
-                >
-                  <span>#{idx + 1}</span>
-                  <span className="truncate max-w-[90px]">{slide.header || "Untitled"}</span>
-                  {slides.length > 1 && (
-                    <span
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDeleteSlide(idx);
-                      }}
-                      className="hover:text-rose-500 p-0.5 font-bold text-sm"
-                      title="Delete this slide"
-                    >
-                      ×
-                    </span>
-                  )}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* ADVANCED CUSTOMIZER PANEL */}
+        {/* ⬅️ LEFT COLUMN: DEVICE, HARDWARE & POSITIONING TOOLS */}
+        <div className="lg:col-span-3 xl:col-span-3 space-y-4 lg:max-h-[calc(100vh-130px)] lg:overflow-y-auto lg:sticky lg:top-4 pr-1 custom-scrollbar">
           {activeSlide && (
-            <div className="p-6 rounded-3xl bg-[#121212] border border-white/10 space-y-6 shadow-2xl">
-              
-              {/* SECTION A: UPLOAD SCREENSHOT & LOGO */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="p-3.5 rounded-2xl bg-white/[0.02] border border-brand-gold/40 space-y-1.5">
-                  <label className="block text-[11px] font-mono font-bold text-white uppercase flex items-center gap-1.5">
-                    <Upload className="w-3.5 h-3.5 text-brand-gold" /> App Screenshot
-                  </label>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageUpload}
-                    className="w-full text-[11px] text-neutral-400 file:mr-2 file:py-1.5 file:px-2.5 file:rounded-lg file:border-0 file:text-[10px] file:font-semibold file:bg-brand-gold/20 file:text-brand-gold file:cursor-pointer"
-                  />
-                </div>
+            <>
+              {/* SECTION 1: UPLOAD SCREENSHOT & LOGO */}
+              <div className="p-4 rounded-2xl bg-[#121212] border border-white/10 space-y-3 shadow-xl text-left">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-brand-gold font-mono flex items-center gap-1.5">
+                  <Upload className="w-3.5 h-3.5" /> 1. Upload Assets
+                </h3>
 
-                <div className="p-3.5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-1.5">
-                  <label className="block text-[11px] font-mono font-bold text-white uppercase flex items-center gap-1.5">
-                    <ImageIcon className="w-3.5 h-3.5 text-brand-gold" /> App Icon / Logo
-                  </label>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleLogoUpload}
-                    className="w-full text-[11px] text-neutral-400 file:mr-2 file:py-1.5 file:px-2.5 file:rounded-lg file:border-0 file:text-[10px] file:font-semibold file:bg-white/10 file:text-white file:cursor-pointer"
-                  />
+                <div className="space-y-2">
+                  <div className="p-2.5 rounded-xl bg-white/[0.02] border border-brand-gold/40 space-y-1">
+                    <label className="block text-[10px] font-mono font-bold text-white uppercase flex items-center gap-1">
+                      <Smartphone className="w-3 h-3 text-brand-gold" /> App Screenshot
+                    </label>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      className="w-full text-[10px] text-neutral-400 file:mr-2 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-[9px] file:font-semibold file:bg-brand-gold/20 file:text-brand-gold file:cursor-pointer"
+                    />
+                    {activeSlide.imageSrc && (
+                      <span className="text-[9px] text-emerald-400 font-mono block">✓ Screenshot Loaded</span>
+                    )}
+                  </div>
+
+                  <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/10 space-y-1">
+                    <label className="block text-[10px] font-mono font-bold text-white uppercase flex items-center gap-1">
+                      <ImageIcon className="w-3 h-3 text-brand-gold" /> App Icon / Logo
+                    </label>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleLogoUpload}
+                      className="w-full text-[10px] text-neutral-400 file:mr-2 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-[9px] file:font-semibold file:bg-white/10 file:text-white file:cursor-pointer"
+                    />
+                    {activeSlide.logoSrc && (
+                      <span className="text-[9px] text-emerald-400 font-mono block">✓ Logo Loaded</span>
+                    )}
+                  </div>
                 </div>
               </div>
 
-              {/* SECTION B: SCREENSHOT POSITION, ZOOM & TILT */}
-              <div className="space-y-3 pt-2 border-t border-white/5">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-brand-gold font-mono flex items-center gap-2">
-                  <MoveVertical className="w-4 h-4" /> Position, Zoom &amp; 3D Tilt
-                </h4>
+              {/* SECTION 2: DEVICE FRAME & HARDWARE BEZEL */}
+              <div className="p-4 rounded-2xl bg-[#121212] border border-white/10 space-y-3 shadow-xl text-left">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-brand-gold font-mono flex items-center gap-1.5">
+                  <Smartphone className="w-3.5 h-3.5" /> 2. Device Frame &amp; Bezel
+                </h3>
 
-                <div className="grid grid-cols-3 gap-3 text-left">
+                <div className="space-y-3">
                   <div>
-                    <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Zoom ({activeSlide.mockupScale}x)</label>
+                    <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Top Display Cutout</label>
+                    <select
+                      value={activeSlide.frameStyle}
+                      onChange={(e) => updateActiveSlide("frameStyle", e.target.value as "island" | "notch" | "pixel_hole" | "borderless")}
+                      className="w-full bg-black/50 border border-white/10 rounded-xl px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-brand-gold font-medium"
+                    >
+                      <option value="island">✨ Dynamic Island (iPhone 16/15 Pro)</option>
+                      <option value="notch">📱 Classic Apple Curved Notch</option>
+                      <option value="pixel_hole">⚫ Android Punch Hole</option>
+                      <option value="borderless">⬛ Borderless Infinity</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <div className="flex justify-between text-[10px] font-mono mb-1">
+                      <span className="text-brand-muted uppercase">Border Width</span>
+                      <span className="text-brand-gold font-bold">{activeSlide.frameBorderWidth}px</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="2"
+                      max="20"
+                      step="1"
+                      value={activeSlide.frameBorderWidth || 8}
+                      onChange={(e) => updateActiveSlide("frameBorderWidth", parseInt(e.target.value))}
+                      className="w-full accent-brand-gold bg-white/10 rounded-lg h-1.5 cursor-pointer"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+                    <ColorPickerField
+                      label="Bezel Frame Color"
+                      value={activeSlide.frameColor}
+                      onChange={(val) => updateActiveSlide("frameColor", val)}
+                      swatches={["#F59E0B", "#1E1E1E", "#D4AF37", "#8A8A8E", "#2563EB", "#E2E8F0"]}
+                    />
+
+                    <ColorPickerField
+                      label="Screen Inner BG"
+                      value={activeSlide.frameInnerBgColor || "#000000"}
+                      onChange={(val) => updateActiveSlide("frameInnerBgColor", val)}
+                      swatches={["#000000", "#0A0A0A", "#1E1E1E", "#FFFFFF"]}
+                    />
+                  </div>
+
+                  <ColorPickerField
+                    label="Glow Shadow Color"
+                    value={activeSlide.frameShadowColor || "rgba(245, 158, 11, 0.35)"}
+                    onChange={(val) => updateActiveSlide("frameShadowColor", val)}
+                    swatches={["rgba(245, 158, 11, 0.35)", "rgba(0, 0, 0, 0.5)", "rgba(16, 185, 129, 0.35)", "rgba(59, 130, 246, 0.35)"]}
+                  />
+
+                  {/* Status Bar Toggles */}
+                  <div className="space-y-1.5 pt-1 border-t border-white/5">
+                    <label className="text-[11px] text-white font-medium flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={activeSlide.showIOSStatusBar !== false}
+                        onChange={(e) => updateActiveSlide("showIOSStatusBar", e.target.checked)}
+                        className="w-3.5 h-3.5 accent-brand-gold rounded cursor-pointer"
+                      />
+                      <span>Render Apple Status Bar (9:41, Battery)</span>
+                    </label>
+
+                    <label className="text-[11px] text-white font-medium flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={activeSlide.cropStatusBar !== false}
+                        onChange={(e) => updateActiveSlide("cropStatusBar", e.target.checked)}
+                        className="w-3.5 h-3.5 accent-brand-gold rounded cursor-pointer"
+                      />
+                      <span>Auto-Crop Raw Screenshot Top Bar</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              {/* SECTION 3: POSITION, ZOOM & 3D TILT */}
+              <div className="p-4 rounded-2xl bg-[#121212] border border-white/10 space-y-3 shadow-xl text-left">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-brand-gold font-mono flex items-center gap-1.5">
+                  <MoveVertical className="w-3.5 h-3.5" /> 3. Zoom, Position &amp; Tilt
+                </h3>
+
+                <div className="space-y-2.5">
+                  <div>
+                    <div className="flex justify-between text-[10px] font-mono mb-1">
+                      <span className="text-brand-muted uppercase">Zoom Factor</span>
+                      <span className="text-brand-gold font-bold">{activeSlide.mockupScale}x</span>
+                    </div>
                     <input
                       type="range"
                       min="0.6"
@@ -1223,7 +1295,10 @@ export default function ScreenshotStudioClient() {
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Y-Offset ({activeSlide.mockupPositionY}px)</label>
+                    <div className="flex justify-between text-[10px] font-mono mb-1">
+                      <span className="text-brand-muted uppercase">Vertical Offset</span>
+                      <span className="text-brand-gold font-bold">{activeSlide.mockupPositionY}px</span>
+                    </div>
                     <input
                       type="range"
                       min="-120"
@@ -1236,7 +1311,10 @@ export default function ScreenshotStudioClient() {
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Tilt Angle ({activeSlide.mockupRotation}°)</label>
+                    <div className="flex justify-between text-[10px] font-mono mb-1">
+                      <span className="text-brand-muted uppercase">3D Tilt Angle</span>
+                      <span className="text-brand-gold font-bold">{activeSlide.mockupRotation}°</span>
+                    </div>
                     <input
                       type="range"
                       min="-20"
@@ -1249,396 +1327,353 @@ export default function ScreenshotStudioClient() {
                   </div>
                 </div>
               </div>
-
-              {/* SECTION C: ASO BACKGROUND STUDIO & FULL COLOR PICKERS */}
-              <div className="space-y-4 pt-2 border-t border-white/5">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-brand-gold font-mono flex items-center gap-2">
-                  <Palette className="w-4 h-4" /> Background Color Studio
-                </h4>
-
-                {/* 1-Click ASO Palette Shortcuts */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pb-1">
-                  <button
-                    onClick={() => {
-                      updateActiveSlide("bgType", "custom_solid");
-                      updateActiveSlide("bgColorPrimary", "#0F172A");
-                      updateActiveSlide("headerColor", "#F59E0B");
-                      updateActiveSlide("subtextColor", "#E2E8F0");
-                      updateActiveSlide("badgeBgColor", "#F59E0B");
-                      updateActiveSlide("badgeTextColor", "#000000");
-                      updateActiveSlide("frameColor", "#F59E0B");
-                    }}
-                    className="p-2.5 rounded-xl bg-[#0F172A] border border-[#F59E0B]/40 hover:border-[#F59E0B] text-left transition-all cursor-pointer"
-                  >
-                    <div className="text-[10px] font-bold text-[#F59E0B]">⭐ Dark Slate</div>
-                    <div className="text-[9px] text-[#E2E8F0]">Executive &amp; Tech</div>
-                  </button>
-
-                  <button
-                    onClick={() => {
-                      updateActiveSlide("bgType", "custom_solid");
-                      updateActiveSlide("bgColorPrimary", "#18181B");
-                      updateActiveSlide("headerColor", "#FAFAFA");
-                      updateActiveSlide("subtextColor", "#A1A1AA");
-                      updateActiveSlide("badgeBgColor", "#d4af37");
-                      updateActiveSlide("badgeTextColor", "#000000");
-                      updateActiveSlide("frameColor", "#d4af37");
-                    }}
-                    className="p-2.5 rounded-xl bg-[#18181B] border border-amber-500/40 hover:border-amber-500 text-left transition-all cursor-pointer"
-                  >
-                    <div className="text-[10px] font-bold text-[#d4af37]">Titanium Gold</div>
-                    <div className="text-[9px] text-zinc-400">Luxury Modern</div>
-                  </button>
-
-                  <button
-                    onClick={() => {
-                      updateActiveSlide("bgType", "custom_solid");
-                      updateActiveSlide("bgColorPrimary", "#064E3B");
-                      updateActiveSlide("headerColor", "#10B981");
-                      updateActiveSlide("subtextColor", "#D1FAE5");
-                      updateActiveSlide("badgeBgColor", "#10B981");
-                      updateActiveSlide("badgeTextColor", "#000000");
-                      updateActiveSlide("frameColor", "#10B981");
-                    }}
-                    className="p-2.5 rounded-xl bg-[#064E3B] border border-emerald-500/40 hover:border-emerald-500 text-left transition-all cursor-pointer"
-                  >
-                    <div className="text-[10px] font-bold text-[#10B981]">Emerald Pro</div>
-                    <div className="text-[9px] text-emerald-200">High Trust Finance</div>
-                  </button>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3 text-left">
-                  <div>
-                    <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Background Mode</label>
-                    <select
-                      value={activeSlide.bgType}
-                      onChange={(e) => updateActiveSlide("bgType", e.target.value as "custom_solid" | "custom_gradient" | "preset")}
-                      className="w-full bg-black/50 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-white focus:outline-none focus:border-brand-gold"
-                    >
-                      <option value="custom_solid">Solid Color</option>
-                      <option value="custom_gradient">Linear Gradient</option>
-                      <option value="preset">Theme Presets</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Overlay Pattern</label>
-                    <select
-                      value={activeSlide.bgPattern}
-                      onChange={(e) => updateActiveSlide("bgPattern", e.target.value as "none" | "grid" | "dots")}
-                      className="w-full bg-black/50 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-white focus:outline-none focus:border-brand-gold"
-                    >
-                      <option value="none">None (Smooth)</option>
-                      <option value="grid">Grid Wireframe</option>
-                      <option value="dots">Dots Polka Mesh</option>
-                    </select>
-                  </div>
-                </div>
-
-                {/* Direct Interactive Background Color Pickers */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3.5 rounded-2xl bg-white/[0.02] border border-white/5">
-                  <ColorPickerField
-                    label="Background Color #1"
-                    value={activeSlide.bgColorPrimary}
-                    onChange={(val) => updateActiveSlide("bgColorPrimary", val)}
-                    swatches={["#0F172A", "#080808", "#064E3B", "#1E1B4B", "#1F1207", "#FFFFFF"]}
-                  />
-
-                  {activeSlide.bgType === "custom_gradient" && (
-                    <ColorPickerField
-                      label="Gradient Color #2"
-                      value={activeSlide.bgColorSecondary}
-                      onChange={(val) => updateActiveSlide("bgColorSecondary", val)}
-                      swatches={["#1E293B", "#18181B", "#022C22", "#0F172A", "#080401", "#E2E8F0"]}
-                    />
-                  )}
-                </div>
-              </div>
-
-              {/* SECTION D: TYPOGRAPHY & TEXT COLOR PICKERS */}
-              <div className="space-y-4 pt-2 border-t border-white/5">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-brand-gold font-mono flex items-center gap-2">
-                  <Type className="w-4 h-4" /> Typography &amp; Font Colors
-                </h4>
-
-                {/* Header Title Input */}
-                <div>
-                  <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Header Title (2-4 Words Recommended)</label>
-                  <input
-                    type="text"
-                    value={activeSlide.header}
-                    onChange={(e) => updateActiveSlide("header", e.target.value)}
-                    placeholder="e.g. YOUR APP TITLE"
-                    className="w-full bg-black/50 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-gold font-bold"
-                  />
-                </div>
-
-                {/* Subtext Input */}
-                <div>
-                  <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Subtext Description (Single Sentence)</label>
-                  <input
-                    type="text"
-                    value={activeSlide.subtext}
-                    onChange={(e) => updateActiveSlide("subtext", e.target.value)}
-                    placeholder="e.g. Describe key app benefit here"
-                    className="w-full bg-black/50 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-gold"
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-3 text-left">
-                  <div>
-                    <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Font Family</label>
-                    <select
-                      value={activeSlide.fontFamily}
-                      onChange={(e) => updateActiveSlide("fontFamily", e.target.value as "sans" | "serif" | "mono" | "display")}
-                      className="w-full bg-black/50 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-white focus:outline-none focus:border-brand-gold"
-                    >
-                      <option value="sans">Apple SF Pro (Modern Sans)</option>
-                      <option value="serif">Luxury Serif</option>
-                      <option value="mono">SF Mono (Geist)</option>
-                      <option value="display">Impact Bold</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Text Alignment</label>
-                    <select
-                      value={activeSlide.textAlign}
-                      onChange={(e) => updateActiveSlide("textAlign", e.target.value as "center" | "left" | "right")}
-                      className="w-full bg-black/50 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-white focus:outline-none focus:border-brand-gold"
-                    >
-                      <option value="center">Center</option>
-                      <option value="left">Left Align</option>
-                      <option value="right">Right Align</option>
-                    </select>
-                  </div>
-                </div>
-
-                {/* Direct Typography Color Pickers */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3.5 rounded-2xl bg-white/[0.02] border border-white/5">
-                  <ColorPickerField
-                    label="Header Title Color"
-                    value={activeSlide.headerColor}
-                    onChange={(val) => updateActiveSlide("headerColor", val)}
-                    swatches={["#F59E0B", "#FFFFFF", "#10B981", "#60A5FA", "#F43F5E", "#FDE047"]}
-                  />
-
-                  <ColorPickerField
-                    label="Subtitle Text Color"
-                    value={activeSlide.subtextColor}
-                    onChange={(val) => updateActiveSlide("subtextColor", val)}
-                    swatches={["#E2E8F0", "#94A3B8", "#D1FAE5", "#FDE047", "#FFFFFF", "#64748B"]}
-                  />
-                </div>
-
-                {/* Font Size Sliders */}
-                <div className="grid grid-cols-2 gap-3 text-left">
-                  <div>
-                    <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Title Size ({activeSlide.headerFontSize || 1.0}x)</label>
-                    <input
-                      type="range"
-                      min="0.6"
-                      max="1.8"
-                      step="0.05"
-                      value={activeSlide.headerFontSize || 1.0}
-                      onChange={(e) => updateActiveSlide("headerFontSize", parseFloat(e.target.value))}
-                      className="w-full accent-brand-gold bg-white/10 rounded-lg h-1.5 cursor-pointer"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Subtitle Size ({activeSlide.subtextFontSize || 1.0}x)</label>
-                    <input
-                      type="range"
-                      min="0.6"
-                      max="1.8"
-                      step="0.05"
-                      value={activeSlide.subtextFontSize || 1.0}
-                      onChange={(e) => updateActiveSlide("subtextFontSize", parseFloat(e.target.value))}
-                      className="w-full accent-brand-gold bg-white/10 rounded-lg h-1.5 cursor-pointer"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* SECTION E: BADGE / FEATURE PILL STUDIO */}
-              <div className="space-y-4 pt-2 border-t border-white/5">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-brand-gold font-mono flex items-center gap-2">
-                  <Tag className="w-4 h-4" /> Feature Pill &amp; Badge Studio
-                </h4>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
-                  <div>
-                    <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Badge Text</label>
-                    <input
-                      type="text"
-                      value={activeSlide.badgeText || ""}
-                      onChange={(e) => updateActiveSlide("badgeText", e.target.value)}
-                      placeholder="e.g. ★ 4.9 RATING or PRO"
-                      className="w-full bg-black/50 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-gold font-bold"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Badge Style</label>
-                    <select
-                      value={activeSlide.badgeStyle || "none"}
-                      onChange={(e) => updateActiveSlide("badgeStyle", e.target.value as "pill_filled" | "pill_bordered" | "neon" | "none")}
-                      className="w-full bg-black/50 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-white focus:outline-none focus:border-brand-gold"
-                    >
-                      <option value="none">Disabled (No Badge)</option>
-                      <option value="pill_filled">Filled Pill</option>
-                      <option value="pill_bordered">Bordered Outline</option>
-                      <option value="neon">Neon Glow Text</option>
-                    </select>
-                  </div>
-                </div>
-
-                {activeSlide.badgeStyle !== "none" && (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3.5 rounded-2xl bg-white/[0.02] border border-white/5">
-                    <ColorPickerField
-                      label="Badge Background Color"
-                      value={activeSlide.badgeBgColor || "#F59E0B"}
-                      onChange={(val) => updateActiveSlide("badgeBgColor", val)}
-                      swatches={["#F59E0B", "#10B981", "#3B82F6", "#EF4444", "#8B5CF6", "#FFFFFF"]}
-                    />
-
-                    <ColorPickerField
-                      label="Badge Text Color"
-                      value={activeSlide.badgeTextColor || "#000000"}
-                      onChange={(val) => updateActiveSlide("badgeTextColor", val)}
-                      swatches={["#000000", "#FFFFFF", "#F59E0B", "#10B981", "#3B82F6"]}
-                    />
-                  </div>
-                )}
-              </div>
-
-              {/* SECTION F: DEVICE FRAME, AUTHENTIC HARDWARE & COLOR PICKERS */}
-              <div className="space-y-4 pt-2 border-t border-white/5">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-brand-gold font-mono flex items-center gap-2">
-                  <Smartphone className="w-4 h-4" /> iOS Device Frame &amp; Hardware Bezel
-                </h4>
-
-                <div className="grid grid-cols-2 gap-3 text-left">
-                  <div>
-                    <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Top Display Cutout</label>
-                    <select
-                      value={activeSlide.frameStyle}
-                      onChange={(e) => updateActiveSlide("frameStyle", e.target.value as "island" | "notch" | "pixel_hole" | "borderless")}
-                      className="w-full bg-black/50 border border-white/10 rounded-xl px-2.5 py-2 text-xs text-white focus:outline-none focus:border-brand-gold font-medium"
-                    >
-                      <option value="island">✨ Dynamic Island (iPhone 16/15 Pro)</option>
-                      <option value="notch">📱 Classic Apple Curved Notch</option>
-                      <option value="pixel_hole">⚫ Android Punch Hole</option>
-                      <option value="borderless">⬛ Borderless Infinity</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Border Width ({activeSlide.frameBorderWidth}px)</label>
-                    <input
-                      type="range"
-                      min="2"
-                      max="20"
-                      step="1"
-                      value={activeSlide.frameBorderWidth || 8}
-                      onChange={(e) => updateActiveSlide("frameBorderWidth", parseInt(e.target.value))}
-                      className="w-full accent-brand-gold bg-white/10 rounded-lg h-1.5 cursor-pointer"
-                    />
-                  </div>
-                </div>
-
-                {/* Direct Frame Color Pickers */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3.5 rounded-2xl bg-white/[0.02] border border-white/5">
-                  <ColorPickerField
-                    label="Bezel Frame Color"
-                    value={activeSlide.frameColor}
-                    onChange={(val) => updateActiveSlide("frameColor", val)}
-                    swatches={["#F59E0B", "#1E1E1E", "#D4AF37", "#8A8A8E", "#2563EB", "#E2E8F0"]}
-                  />
-
-                  <ColorPickerField
-                    label="Screen Inner BG"
-                    value={activeSlide.frameInnerBgColor || "#000000"}
-                    onChange={(val) => updateActiveSlide("frameInnerBgColor", val)}
-                    swatches={["#000000", "#0A0A0A", "#1E1E1E", "#FFFFFF"]}
-                  />
-
-                  <ColorPickerField
-                    label="Glow Shadow Color"
-                    value={activeSlide.frameShadowColor || "rgba(245, 158, 11, 0.35)"}
-                    onChange={(val) => updateActiveSlide("frameShadowColor", val)}
-                    swatches={["rgba(245, 158, 11, 0.35)", "rgba(0, 0, 0, 0.5)", "rgba(16, 185, 129, 0.35)", "rgba(59, 130, 246, 0.35)"]}
-                  />
-                </div>
-
-                {/* Status Bar Controls */}
-                <div className="space-y-2 pt-1">
-                  <div className="flex items-center justify-between bg-white/[0.02] p-3 rounded-xl border border-white/5">
-                    <label className="text-xs text-white font-medium flex items-center gap-2 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={activeSlide.showIOSStatusBar !== false}
-                        onChange={(e) => updateActiveSlide("showIOSStatusBar", e.target.checked)}
-                        className="w-4 h-4 accent-brand-gold rounded cursor-pointer"
-                      />
-                      <span>Render Native Apple Status Bar (9:41, 5G, Battery)</span>
-                    </label>
-                  </div>
-
-                  <div className="flex items-center justify-between bg-white/[0.02] p-3 rounded-xl border border-white/5">
-                    <label className="text-xs text-white font-medium flex items-center gap-2 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={activeSlide.cropStatusBar !== false}
-                        onChange={(e) => updateActiveSlide("cropStatusBar", e.target.checked)}
-                        className="w-4 h-4 accent-brand-gold rounded cursor-pointer"
-                      />
-                      <span>Auto-Crop Raw Screenshot Top Bar</span>
-                    </label>
-                  </div>
-                </div>
-              </div>
-
-            </div>
+            </>
           )}
         </div>
 
-        {/* RIGHT COLUMN: LIVE CANVAS PREVIEW */}
-        <div className="lg:col-span-7 space-y-6 flex flex-col items-center sticky top-6">
-          <div className="w-full flex items-center justify-between bg-[#121212] border border-white/10 rounded-2xl px-5 py-3 shadow-lg">
-            <div className="flex items-center gap-2 text-xs text-brand-muted font-mono truncate">
-              <Eye className="w-4 h-4 text-brand-gold shrink-0" /> Target: <strong className="text-white truncate">{selectedPreset.name}</strong> ({selectedPreset.width}×{selectedPreset.height}px)
+        {/* 🎯 CENTER COLUMN: LIVE CANVAS PREVIEW (NO-SCROLL PROMINENT CENTER) */}
+        <div className="lg:col-span-6 xl:col-span-6 flex flex-col items-center lg:sticky lg:top-4 space-y-2.5">
+          {/* Quick Preview Header */}
+          <div className="w-full flex items-center justify-between bg-[#121212] border border-white/10 rounded-xl px-3 sm:px-4 py-2 shadow-lg">
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setActiveSlideIndex(Math.max(0, activeSlideIndex - 1))}
+                disabled={activeSlideIndex === 0}
+                className="p-1 rounded-lg bg-white/5 hover:bg-white/10 disabled:opacity-30 text-white transition-all cursor-pointer"
+                title="Previous Slide"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+
+              <span className="text-xs font-mono font-bold text-white px-2 py-0.5 rounded-md bg-white/5 border border-white/10">
+                Slide #{activeSlideIndex + 1} / {slides.length}
+              </span>
+
+              <button
+                onClick={() => setActiveSlideIndex(Math.min(slides.length - 1, activeSlideIndex + 1))}
+                disabled={activeSlideIndex === slides.length - 1}
+                className="p-1 rounded-lg bg-white/5 hover:bg-white/10 disabled:opacity-30 text-white transition-all cursor-pointer"
+                title="Next Slide"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
             </div>
 
-            <button
-              onClick={() => downloadSingleScreenshot(activeSlide, activeSlideIndex)}
-              className="flex items-center gap-1.5 text-xs font-bold text-brand-gold hover:underline cursor-pointer shrink-0"
-            >
-              <Download className="w-3.5 h-3.5" /> Export Slide PNG
-            </button>
+            <div className="flex items-center gap-2 truncate">
+              <span className="text-[11px] font-mono text-brand-gold font-medium truncate">
+                {selectedPreset.name}
+              </span>
+              <button
+                onClick={() => downloadSingleScreenshot(activeSlide, activeSlideIndex)}
+                className="flex items-center gap-1 text-[11px] font-bold text-black bg-brand-gold hover:bg-brand-gold-light px-2.5 py-1 rounded-lg transition-colors cursor-pointer shrink-0"
+              >
+                <Download className="w-3 h-3 stroke-[2.5]" />
+                <span className="hidden sm:inline">Export PNG</span>
+              </button>
+            </div>
           </div>
 
-          {/* HTML5 Canvas Render Box */}
-          <div className="w-full bg-[#030303] border border-white/10 rounded-3xl p-6 flex flex-col items-center justify-center min-h-[580px] relative overflow-hidden shadow-2xl">
+          {/* HTML5 Canvas Render Box (fits on screen without scrolling) */}
+          <div className="w-full bg-[#050505] border border-white/10 rounded-3xl p-3 sm:p-5 flex flex-col items-center justify-center min-h-[440px] max-h-[calc(100vh-175px)] relative overflow-hidden shadow-2xl">
             <div className="absolute inset-0 bg-brand-gold/5 blur-3xl pointer-events-none" />
 
-            <div className="relative z-10 flex flex-col items-center">
+            <div className="relative z-10 flex flex-col items-center w-full">
               <canvas
                 ref={canvasRef}
-                className="max-h-[640px] w-auto rounded-2xl border border-white/10 shadow-2xl transition-all duration-300"
+                className="w-auto rounded-2xl border border-white/10 shadow-2xl transition-all duration-300 object-contain"
                 style={{
-                  maxHeight: selectedPreset.deviceType === "Tablet" ? "520px" : "640px",
+                  maxHeight: selectedPreset.deviceType === "Tablet" 
+                    ? "min(460px, calc(100vh - 250px))" 
+                    : "min(580px, calc(100vh - 250px))",
                 }}
               />
 
-              <div className="mt-4 text-center">
-                <span className="text-[11px] font-mono text-brand-muted">
-                  Client-Side High-DPI Render • {selectedPreset.width} × {selectedPreset.height} pixels (Apple App Store Connect &amp; Google Play Specs)
+              <div className="mt-2 text-center">
+                <span className="text-[10px] font-mono text-brand-muted">
+                  High-DPI Client Render • {selectedPreset.width} × {selectedPreset.height} px
                 </span>
               </div>
             </div>
           </div>
+        </div>
+
+        {/* ➡️ RIGHT COLUMN: TYPOGRAPHY, BADGE & BACKGROUND TOOLS */}
+        <div className="lg:col-span-3 xl:col-span-3 space-y-4 lg:max-h-[calc(100vh-130px)] lg:overflow-y-auto lg:sticky lg:top-4 pl-1 custom-scrollbar">
+          {activeSlide && (
+            <>
+              {/* SECTION 4: TYPOGRAPHY & TEXT COLORS */}
+              <div className="p-4 rounded-2xl bg-[#121212] border border-white/10 space-y-3 shadow-xl text-left">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-brand-gold font-mono flex items-center gap-1.5">
+                  <Type className="w-3.5 h-3.5" /> 4. Typography &amp; Copy
+                </h3>
+
+                <div className="space-y-3">
+                  {/* Header Title */}
+                  <div>
+                    <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Header Headline</label>
+                    <input
+                      type="text"
+                      value={activeSlide.header}
+                      onChange={(e) => updateActiveSlide("header", e.target.value)}
+                      placeholder="e.g. YOUR APP TITLE"
+                      className="w-full bg-black/50 border border-white/10 rounded-xl px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-brand-gold font-bold"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    <ColorPickerField
+                      label="Header Color"
+                      value={activeSlide.headerColor}
+                      onChange={(val) => updateActiveSlide("headerColor", val)}
+                      swatches={["#F59E0B", "#FFFFFF", "#10B981", "#60A5FA", "#F43F5E", "#FDE047"]}
+                    />
+
+                    <div>
+                      <div className="flex justify-between text-[10px] font-mono mb-1">
+                        <span className="text-brand-muted uppercase">Size</span>
+                        <span className="text-brand-gold font-bold">{activeSlide.headerFontSize || 1.0}x</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="0.6"
+                        max="1.8"
+                        step="0.05"
+                        value={activeSlide.headerFontSize || 1.0}
+                        onChange={(e) => updateActiveSlide("headerFontSize", parseFloat(e.target.value))}
+                        className="w-full accent-brand-gold bg-white/10 rounded-lg h-1.5 cursor-pointer"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Subtext Description */}
+                  <div className="pt-1 border-t border-white/5">
+                    <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Subtext Description</label>
+                    <input
+                      type="text"
+                      value={activeSlide.subtext}
+                      onChange={(e) => updateActiveSlide("subtext", e.target.value)}
+                      placeholder="e.g. Describe key app benefit here"
+                      className="w-full bg-black/50 border border-white/10 rounded-xl px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-brand-gold"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    <ColorPickerField
+                      label="Subtext Color"
+                      value={activeSlide.subtextColor}
+                      onChange={(val) => updateActiveSlide("subtextColor", val)}
+                      swatches={["#E2E8F0", "#94A3B8", "#D1FAE5", "#FDE047", "#FFFFFF", "#64748B"]}
+                    />
+
+                    <div>
+                      <div className="flex justify-between text-[10px] font-mono mb-1">
+                        <span className="text-brand-muted uppercase">Size</span>
+                        <span className="text-brand-gold font-bold">{activeSlide.subtextFontSize || 1.0}x</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="0.6"
+                        max="1.8"
+                        step="0.05"
+                        value={activeSlide.subtextFontSize || 1.0}
+                        onChange={(e) => updateActiveSlide("subtextFontSize", parseFloat(e.target.value))}
+                        className="w-full accent-brand-gold bg-white/10 rounded-lg h-1.5 cursor-pointer"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2 pt-1 border-t border-white/5">
+                    <div>
+                      <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Font Family</label>
+                      <select
+                        value={activeSlide.fontFamily}
+                        onChange={(e) => updateActiveSlide("fontFamily", e.target.value as "sans" | "serif" | "mono" | "display")}
+                        className="w-full bg-black/50 border border-white/10 rounded-xl px-2 py-1.5 text-xs text-white focus:outline-none focus:border-brand-gold"
+                      >
+                        <option value="sans">Apple SF Pro</option>
+                        <option value="serif">Luxury Serif</option>
+                        <option value="mono">SF Mono</option>
+                        <option value="display">Impact Bold</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Alignment</label>
+                      <select
+                        value={activeSlide.textAlign}
+                        onChange={(e) => updateActiveSlide("textAlign", e.target.value as "center" | "left" | "right")}
+                        className="w-full bg-black/50 border border-white/10 rounded-xl px-2 py-1.5 text-xs text-white focus:outline-none focus:border-brand-gold"
+                      >
+                        <option value="center">Center</option>
+                        <option value="left">Left</option>
+                        <option value="right">Right</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* SECTION 5: FEATURE PILL & BADGES */}
+              <div className="p-4 rounded-2xl bg-[#121212] border border-white/10 space-y-3 shadow-xl text-left">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-brand-gold font-mono flex items-center gap-1.5">
+                  <Tag className="w-3.5 h-3.5" /> 5. Feature Badge Pill
+                </h3>
+
+                <div className="space-y-2.5">
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Badge Text</label>
+                      <input
+                        type="text"
+                        value={activeSlide.badgeText || ""}
+                        onChange={(e) => updateActiveSlide("badgeText", e.target.value)}
+                        placeholder="★ 4.9 RATING"
+                        className="w-full bg-black/50 border border-white/10 rounded-xl px-2 py-1.5 text-xs text-white focus:outline-none focus:border-brand-gold font-bold"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Style</label>
+                      <select
+                        value={activeSlide.badgeStyle || "none"}
+                        onChange={(e) => updateActiveSlide("badgeStyle", e.target.value as "pill_filled" | "pill_bordered" | "neon" | "none")}
+                        className="w-full bg-black/50 border border-white/10 rounded-xl px-2 py-1.5 text-xs text-white focus:outline-none focus:border-brand-gold"
+                      >
+                        <option value="none">Disabled</option>
+                        <option value="pill_filled">Filled Pill</option>
+                        <option value="pill_bordered">Border Outline</option>
+                        <option value="neon">Neon Glow</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {activeSlide.badgeStyle !== "none" && (
+                    <div className="grid grid-cols-2 gap-2 pt-1 border-t border-white/5">
+                      <ColorPickerField
+                        label="Badge BG"
+                        value={activeSlide.badgeBgColor || "#F59E0B"}
+                        onChange={(val) => updateActiveSlide("badgeBgColor", val)}
+                        swatches={["#F59E0B", "#10B981", "#3B82F6", "#EF4444", "#8B5CF6", "#FFFFFF"]}
+                      />
+
+                      <ColorPickerField
+                        label="Badge Text"
+                        value={activeSlide.badgeTextColor || "#000000"}
+                        onChange={(val) => updateActiveSlide("badgeTextColor", val)}
+                        swatches={["#000000", "#FFFFFF", "#F59E0B", "#10B981", "#3B82F6"]}
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* SECTION 6: BACKGROUND STUDIO */}
+              <div className="p-4 rounded-2xl bg-[#121212] border border-white/10 space-y-3 shadow-xl text-left">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-brand-gold font-mono flex items-center gap-1.5">
+                  <Palette className="w-3.5 h-3.5" /> 6. Background Color Studio
+                </h3>
+
+                <div className="space-y-3">
+                  {/* 1-Click ASO Palette Shortcuts */}
+                  <div className="grid grid-cols-3 gap-1.5">
+                    <button
+                      onClick={() => {
+                        updateActiveSlide("bgType", "custom_solid");
+                        updateActiveSlide("bgColorPrimary", "#0F172A");
+                        updateActiveSlide("headerColor", "#F59E0B");
+                        updateActiveSlide("subtextColor", "#E2E8F0");
+                        updateActiveSlide("badgeBgColor", "#F59E0B");
+                        updateActiveSlide("badgeTextColor", "#000000");
+                        updateActiveSlide("frameColor", "#F59E0B");
+                      }}
+                      className="p-2 rounded-xl bg-[#0F172A] border border-[#F59E0B]/40 hover:border-[#F59E0B] text-left transition-all cursor-pointer"
+                    >
+                      <div className="text-[9px] font-bold text-[#F59E0B] truncate">Dark Slate</div>
+                      <div className="text-[8px] text-[#E2E8F0] truncate">Executive</div>
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        updateActiveSlide("bgType", "custom_solid");
+                        updateActiveSlide("bgColorPrimary", "#18181B");
+                        updateActiveSlide("headerColor", "#FAFAFA");
+                        updateActiveSlide("subtextColor", "#A1A1AA");
+                        updateActiveSlide("badgeBgColor", "#d4af37");
+                        updateActiveSlide("badgeTextColor", "#000000");
+                        updateActiveSlide("frameColor", "#d4af37");
+                      }}
+                      className="p-2 rounded-xl bg-[#18181B] border border-amber-500/40 hover:border-amber-500 text-left transition-all cursor-pointer"
+                    >
+                      <div className="text-[9px] font-bold text-[#d4af37] truncate">Gold</div>
+                      <div className="text-[8px] text-zinc-400 truncate">Luxury</div>
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        updateActiveSlide("bgType", "custom_solid");
+                        updateActiveSlide("bgColorPrimary", "#064E3B");
+                        updateActiveSlide("headerColor", "#10B981");
+                        updateActiveSlide("subtextColor", "#D1FAE5");
+                        updateActiveSlide("badgeBgColor", "#10B981");
+                        updateActiveSlide("badgeTextColor", "#000000");
+                        updateActiveSlide("frameColor", "#10B981");
+                      }}
+                      className="p-2 rounded-xl bg-[#064E3B] border border-emerald-500/40 hover:border-emerald-500 text-left transition-all cursor-pointer"
+                    >
+                      <div className="text-[9px] font-bold text-[#10B981] truncate">Emerald</div>
+                      <div className="text-[8px] text-emerald-200 truncate">Finance</div>
+                    </button>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Mode</label>
+                      <select
+                        value={activeSlide.bgType}
+                        onChange={(e) => updateActiveSlide("bgType", e.target.value as "custom_solid" | "custom_gradient" | "preset")}
+                        className="w-full bg-black/50 border border-white/10 rounded-xl px-2 py-1.5 text-xs text-white focus:outline-none focus:border-brand-gold"
+                      >
+                        <option value="custom_solid">Solid Color</option>
+                        <option value="custom_gradient">Linear Gradient</option>
+                        <option value="preset">Theme Preset</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-[10px] font-mono text-brand-muted uppercase mb-1">Pattern</label>
+                      <select
+                        value={activeSlide.bgPattern}
+                        onChange={(e) => updateActiveSlide("bgPattern", e.target.value as "none" | "grid" | "dots")}
+                        className="w-full bg-black/50 border border-white/10 rounded-xl px-2 py-1.5 text-xs text-white focus:outline-none focus:border-brand-gold"
+                      >
+                        <option value="none">None (Smooth)</option>
+                        <option value="grid">Grid Wireframe</option>
+                        <option value="dots">Dots Polka</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2 pt-1 border-t border-white/5">
+                    <ColorPickerField
+                      label="Background Color #1"
+                      value={activeSlide.bgColorPrimary}
+                      onChange={(val) => updateActiveSlide("bgColorPrimary", val)}
+                      swatches={["#0F172A", "#080808", "#064E3B", "#1E1B4B", "#1F1207", "#FFFFFF"]}
+                    />
+
+                    {activeSlide.bgType === "custom_gradient" && (
+                      <ColorPickerField
+                        label="Gradient Color #2"
+                        value={activeSlide.bgColorSecondary}
+                        onChange={(val) => updateActiveSlide("bgColorSecondary", val)}
+                        swatches={["#1E293B", "#18181B", "#022C22", "#0F172A", "#080401", "#E2E8F0"]}
+                      />
+                    )}
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
         </div>
 
       </div>
