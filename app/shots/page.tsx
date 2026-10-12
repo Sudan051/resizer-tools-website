@@ -1,4 +1,3 @@
-import Link from "next/link";
 import ScreenshotStudioClient from "./client";
 import ToolContentSection from "../components/ToolContentSection";
 import SiteFooter from "../components/SiteFooter";
@@ -24,58 +23,28 @@ export default function ShotsPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#080808] text-white selection:bg-brand-gold/30 selection:text-brand-gold-light pt-4 pb-16 px-2 sm:px-4 lg:px-6 relative overflow-hidden">
+    <main className="min-h-screen bg-[#080808] text-white selection:bg-brand-gold/30 selection:text-brand-gold-light p-2 sm:p-3 relative overflow-x-hidden">
       
       {/* Ambiance glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-brand-gold/10 rounded-full blur-[180px] pointer-events-none" />
 
-      <div className="max-w-[1740px] w-full mx-auto space-y-4 relative z-10">
-        
-        {/* Header Navigation */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 pb-3 border-b border-white/10">
-          <div className="flex flex-wrap items-center gap-3">
-            <Link 
-              href="/" 
-              className="inline-flex items-center gap-1.5 text-xs text-brand-muted hover:text-brand-gold transition-colors font-mono"
-            >
-              ← Back to Web Studio
-            </Link>
-            <div className="h-4 w-px bg-white/10 hidden sm:block" />
-            <h1 className="text-lg sm:text-2xl font-extrabold text-white tracking-tight flex items-center gap-2">
-              <span>App Store Screenshot Studio</span>
-              <span className="text-[10px] bg-brand-gold/20 text-brand-gold font-mono px-2 py-0.5 rounded border border-brand-gold/30">PRO</span>
-            </h1>
-            <span className="text-xs text-brand-muted font-light hidden md:inline">
-              • 3-Column Studio: Left &amp; Right Tools, Live Center Preview
-            </span>
-          </div>
-
-          <div className="flex items-center gap-2.5">
-            <Link 
-              href="/app" 
-              className="bg-white/5 border border-white/10 hover:border-brand-gold/40 text-white font-semibold text-xs px-3.5 py-1.5 rounded-xl transition-all"
-            >
-              Download Mobile Apps
-            </Link>
-          </div>
-        </div>
-
-        {/* Client Interactive Generator Canvas */}
+      <div className="max-w-[1920px] w-full mx-auto relative z-10">
+        {/* Full Viewport 3-Column Studio */}
         <ScreenshotStudioClient />
 
         {/* Informational SEO Guide & App Store Specifications */}
-        <div className="pt-12 border-t border-white/10 space-y-8 text-xs text-brand-muted font-light leading-relaxed max-w-4xl mx-auto">
-          <div className="space-y-3 text-left">
-            <h2 className="text-lg font-bold text-white tracking-tight">App Store &amp; Google Play Screenshot Dimensions (2026 Guide)</h2>
+        <div className="mt-8 pt-8 border-t border-white/10 space-y-6 text-xs text-brand-muted font-light leading-relaxed max-w-4xl mx-auto">
+          <div className="space-y-2 text-left">
+            <h2 className="text-base font-bold text-white tracking-tight">App Store &amp; Google Play Screenshot Dimensions (2026 Guide)</h2>
             <p>
               When uploading your app to Apple App Store Connect or Google Play Console, your screenshots must match exact screen dimensions. Clear, well-designed screenshots with device frames and readable titles help showcase your app&apos;s best features and attract more downloads.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
-            <div className="p-4 bg-white/[0.02] border border-white/5 rounded-2xl space-y-2">
-              <h3 className="font-bold text-white font-mono text-xs uppercase tracking-wider text-brand-gold">Apple App Store Specifications</h3>
-              <ul className="list-disc pl-4 space-y-1">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
+            <div className="p-3.5 bg-white/[0.02] border border-white/5 rounded-xl space-y-1.5">
+              <h3 className="font-bold text-white font-mono text-[11px] uppercase tracking-wider text-brand-gold">Apple App Store Specifications</h3>
+              <ul className="list-disc pl-4 space-y-0.5 text-[11px]">
                 <li><strong>6.7&quot; Super Retina (iPhone 16 Pro Max, 15 Pro Max)</strong>: 1290 x 2796 px (Portrait)</li>
                 <li><strong>6.5&quot; Display (iPhone 14 Plus, 11 Pro Max)</strong>: 1242 x 2688 px (Portrait)</li>
                 <li><strong>5.5&quot; Display (iPhone 8 Plus, 7 Plus)</strong>: 1242 x 2208 px (Portrait)</li>
@@ -83,9 +52,9 @@ export default function ShotsPage() {
               </ul>
             </div>
 
-            <div className="p-4 bg-white/[0.02] border border-white/5 rounded-2xl space-y-2">
-              <h3 className="font-bold text-white font-mono text-xs uppercase tracking-wider text-brand-gold">Google Play Store Specifications</h3>
-              <ul className="list-disc pl-4 space-y-1">
+            <div className="p-3.5 bg-white/[0.02] border border-white/5 rounded-xl space-y-1.5">
+              <h3 className="font-bold text-white font-mono text-[11px] uppercase tracking-wider text-brand-gold">Google Play Store Specifications</h3>
+              <ul className="list-disc pl-4 space-y-0.5 text-[11px]">
                 <li><strong>Android Phone Display</strong>: 1080 x 2400 px or 1080 x 1920 px (16:9 / 20:9 ratio)</li>
                 <li><strong>7-inch Tablet Screenshots</strong>: 1200 x 1920 px (minimum 1080 px edge)</li>
                 <li><strong>10-inch Tablet Screenshots</strong>: 1600 x 2560 px (required for Play Tablet feature)</li>
@@ -98,7 +67,7 @@ export default function ShotsPage() {
       </div>
 
       {/* 👑 RICH SEO VALUE, FAQ, RATINGS, HOW-TO & TRUST CONTENT */}
-      <div className="mt-16">
+      <div className="mt-12">
         <ToolContentSection 
           tool={{
             id: shotTool.id,
