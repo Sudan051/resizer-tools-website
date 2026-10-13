@@ -1161,7 +1161,7 @@ export default function ScreenshotStudioClient() {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-24px)] min-h-[580px] max-h-[100vh] space-y-1.5 overflow-hidden">
+    <div className="flex flex-col lg:h-[calc(100vh-20px)] space-y-1.5">
       
       {/* 🚀 TOP ULTRA-COMPACT TOOLBAR (Single Sleek 44px Bar) */}
       <header className="h-11 shrink-0 bg-[#121212] border border-white/10 rounded-xl px-2.5 sm:px-3 flex items-center justify-between gap-2 shadow-lg z-20">
@@ -1259,10 +1259,10 @@ export default function ScreenshotStudioClient() {
       </header>
 
       {/* 3-COLUMN WORKSPACE: LEFT TOOLS | CENTER PREVIEW | RIGHT TOOLS */}
-      <div className="flex-1 flex flex-col lg:flex-row gap-2 overflow-hidden min-h-0">
+      <div className="flex-1 flex flex-col lg:flex-row gap-2 min-h-0 lg:overflow-hidden">
         
         {/* ⬅️ LEFT COLUMN: DEVICE, UPLOADS & POSITIONING (w-[260px] xl:w-[280px]) */}
-        <div className="w-full lg:w-[260px] xl:w-[280px] shrink-0 h-full overflow-y-auto custom-scrollbar space-y-2 pr-1 pb-4">
+        <div className="w-full lg:w-[260px] xl:w-[280px] shrink-0 lg:h-full overflow-y-auto overscroll-contain custom-scrollbar space-y-2 pr-1 pb-4">
           {activeSlide && (
             <>
               {/* SECTION 1: UPLOAD ASSETS */}
@@ -1480,10 +1480,10 @@ export default function ScreenshotStudioClient() {
           )}
         </div>
 
-        {/* 🎯 CENTER COLUMN: PREVIEW VIEWPORT (FITS IN VIEWPORT WITHOUT SCROLLING) */}
-        <div className="flex-1 h-full min-w-0 flex flex-col items-center justify-between p-2 bg-[#050505] border border-white/10 rounded-2xl relative overflow-hidden">
+        {/* 🎯 CENTER COLUMN: PREVIEW VIEWPORT (STATIC / FIXED PINNED ON SCREEN) */}
+        <div className="order-first lg:order-none sticky top-1 lg:top-0 z-30 lg:z-10 flex-1 lg:h-full min-w-0 flex flex-col items-center justify-between p-2 bg-[#050505]/95 backdrop-blur-md border border-white/10 rounded-2xl relative shrink-0 select-none shadow-2xl">
           {/* Quick Preview Navigation Bar */}
-          <div className="w-full flex items-center justify-between bg-[#121212] border border-white/10 rounded-lg px-2.5 py-1 shadow-sm shrink-0 mb-1">
+          <div className="w-full flex items-center justify-between bg-[#121212] border border-white/10 rounded-lg px-2.5 py-1 shadow-sm shrink-0 mb-1 z-10">
             <div className="flex items-center gap-1.5">
               <button
                 onClick={() => setActiveSlideIndex(Math.max(0, activeSlideIndex - 1))}
@@ -1521,29 +1521,29 @@ export default function ScreenshotStudioClient() {
             </button>
           </div>
 
-          {/* HTML5 Canvas Render Box - auto-scales dynamically to fit viewport */}
-          <div className="flex-1 w-full flex items-center justify-center min-h-0 relative overflow-hidden">
+          {/* HTML5 Canvas Render Box - STATIC PINNED & auto-scaled dynamically to fit viewport */}
+          <div className="flex-1 w-full flex items-center justify-center min-h-0 relative overflow-hidden py-1">
             <div className="absolute inset-0 bg-brand-gold/5 blur-3xl pointer-events-none" />
 
             <canvas
               ref={canvasRef}
-              className="rounded-xl border border-white/10 shadow-2xl transition-all duration-300 object-contain"
+              className="rounded-xl border border-white/10 shadow-2xl transition-all duration-300 object-contain mx-auto max-h-[38vh] sm:max-h-[44vh] lg:max-h-[calc(100vh-125px)] w-auto"
               style={{
-                maxHeight: "calc(100vh - 130px)",
                 maxWidth: "100%",
               }}
             />
           </div>
 
-          <div className="text-center pt-0.5 shrink-0">
-            <span className="text-[9px] font-mono text-brand-muted">
-              High-DPI Client Render • 100% Client-Side Memory
+          <div className="text-center pt-0.5 shrink-0 z-10 flex items-center justify-center gap-1.5">
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="text-[9px] font-mono text-brand-gold/90 font-medium">
+              Live Preview (Static &amp; Pinned) • Instant Real-Time Rendering
             </span>
           </div>
         </div>
 
         {/* ➡️ RIGHT COLUMN: TYPOGRAPHY, BADGES & BACKGROUND (w-[260px] xl:w-[280px]) */}
-        <div className="w-full lg:w-[260px] xl:w-[280px] shrink-0 h-full overflow-y-auto custom-scrollbar space-y-2 pl-1 pb-4">
+        <div className="w-full lg:w-[260px] xl:w-[280px] shrink-0 lg:h-full overflow-y-auto overscroll-contain custom-scrollbar space-y-2 pl-1 pb-4">
           {activeSlide && (
             <>
               {/* SECTION 4: TYPOGRAPHY & TEXT COLORS */}
