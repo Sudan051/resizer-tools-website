@@ -567,171 +567,181 @@ export default function ScreenshotStudioClient() {
           // Calculate vertical center for status bar based on cutout
           let statusBarY = innerY + innerH * 0.022;
           if (isNotch) {
-            const notchH = innerH * (isClassicNotch ? 0.033 : 0.036);
-            statusBarY = innerY + notchH * 0.48;
+            const notchH = isClassicNotch ? innerH * 0.038 : innerH * 0.035;
+            statusBarY = innerY + notchH * 0.52;
           } else if (isIsland) {
-            const islandH = innerH * 0.029;
-            const islandY = innerY + innerH * 0.013;
+            // Official Apple Island: 37pt height, located 11pt from top screen edge (iPhone 14/15/16 Pro)
+            const islandH = innerH * 0.0275;
+            const islandY = innerY + innerH * 0.0115;
             statusBarY = islandY + islandH * 0.5;
           }
 
-          // A) DYNAMIC ISLAND (Modern iPhone 15/16 Pro)
+          // A) OFFICIAL APPLE DYNAMIC ISLAND (iPhone 14 Pro, 15, 15 Pro, 16, 16 Pro)
           if (isIsland && preset.deviceType === "Phone") {
-            const islandW = innerW * 0.315;
-            const islandH = innerH * 0.029;
+            // Exact Apple Ratio: 125pt width x 37pt height (pill radius = 18.5pt / perfect capsule)
+            const islandW = innerW * 0.288;
+            const islandH = innerH * 0.0275;
             const islandX = innerX + (innerW - islandW) / 2;
-            const islandY = innerY + innerH * 0.013;
+            const islandY = innerY + innerH * 0.0115;
             const islandR = islandH / 2;
 
             ctx.save();
-            ctx.shadowColor = "rgba(0, 0, 0, 0.45)";
-            ctx.shadowBlur = 8;
+            // OLED Deep Black Pill
             ctx.beginPath();
             ctx.roundRect(islandX, islandY, islandW, islandH, islandR);
             ctx.fillStyle = "#000000";
             ctx.fill();
 
-            // Subtle perimeter metallic rim
-            ctx.strokeStyle = "rgba(255, 255, 255, 0.09)";
+            // Subtle dark metallic edge contour
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.08)";
             ctx.lineWidth = 1;
             ctx.stroke();
 
-            // TrueDepth Camera Lens (Right)
-            const camX = islandX + islandW * 0.73;
+            // Right: Apple TrueDepth Front Camera Lens (Sapphire crystal with deep blue/green AR glare)
+            const camR = islandH * 0.28;
+            const camX = islandX + islandW - islandR - camR * 0.2;
             const camY = islandY + islandH * 0.5;
-            const camR = islandH * 0.24;
+
             ctx.beginPath();
             ctx.arc(camX, camY, camR, 0, Math.PI * 2);
-            ctx.fillStyle = "#0a1324";
+            ctx.fillStyle = "#070b14";
             ctx.fill();
+
+            // Inner optic pupil & AR coating glare
             ctx.beginPath();
-            ctx.arc(camX - camR * 0.3, camY - camR * 0.3, camR * 0.3, 0, Math.PI * 2);
-            ctx.fillStyle = "rgba(96, 165, 250, 0.7)";
+            ctx.arc(camX, camY, camR * 0.65, 0, Math.PI * 2);
+            ctx.fillStyle = "#03060c";
             ctx.fill();
+
             ctx.beginPath();
-            ctx.arc(camX - camR * 0.35, camY - camR * 0.35, camR * 0.14, 0, Math.PI * 2);
+            ctx.arc(camX - camR * 0.28, camY - camR * 0.28, camR * 0.25, 0, Math.PI * 2);
+            ctx.fillStyle = "rgba(56, 189, 248, 0.65)";
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.arc(camX - camR * 0.35, camY - camR * 0.35, camR * 0.1, 0, Math.PI * 2);
             ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
             ctx.fill();
 
-            // Face ID Sensor (Left)
-            const sensorX = islandX + islandW * 0.27;
+            // Left: Face ID Flood Illuminator / Sensor aperture
+            const sensorR = islandH * 0.20;
+            const sensorX = islandX + islandR + sensorR * 0.2;
             const sensorY = islandY + islandH * 0.5;
-            const sensorR = islandH * 0.18;
+
             ctx.beginPath();
             ctx.arc(sensorX, sensorY, sensorR, 0, Math.PI * 2);
             ctx.fillStyle = "#050505";
             ctx.fill();
             ctx.restore();
           } 
-          // B) AUTHENTIC APPLE CURVED NOTCH (iPhone 13/14 Narrow OR iPhone X/XS/11/12 Classic)
+          // B) AUTHENTIC APPLE CURVED NOTCH (iPhone 13/14 Narrow & iPhone X/XS/11/12 Classic)
           else if (isNotch && preset.deviceType === "Phone") {
-            const notchW = innerW * (isClassicNotch ? 0.52 : 0.38);
-            const notchH = innerH * (isClassicNotch ? 0.033 : 0.036);
+            // Official Apple Notch Proportions:
+            // Narrow (iPhone 13/14): ~37% screen width, 35pt depth
+            // Classic (iPhone X/11/12): ~53% screen width, 38pt depth
+            const notchW = isClassicNotch ? innerW * 0.53 : innerW * 0.375;
+            const notchH = isClassicNotch ? innerH * 0.038 : innerH * 0.035;
             const notchX = innerX + (innerW - notchW) / 2;
             const notchY = innerY;
 
-            // Authentic Apple squircle transition curves
-            const rTop = innerW * (isClassicNotch ? 0.026 : 0.022); // Ear transition radius
-            const rBottom = innerW * (isClassicNotch ? 0.038 : 0.032); // Bottom corner radius
-            const taper = innerW * 0.006; // Elegant subtle Apple taper inward
+            // Apple Ear Transition Radii
+            const earR = innerW * (isClassicNotch ? 0.028 : 0.024); // Smooth convex ear curve
+            const cornerR = innerW * (isClassicNotch ? 0.042 : 0.034); // Bottom rounded fillet
 
             ctx.save();
             ctx.beginPath();
-            // Start on screen top boundary in left ear
-            ctx.moveTo(notchX - rTop * 1.5, notchY);
-            // Smooth convex transition into notch
-            ctx.bezierCurveTo(
-              notchX - rTop * 0.45, notchY,
-              notchX + taper * 0.2, notchY + rTop * 0.35,
-              notchX + taper, notchY + rTop
-            );
-            // Left side edge
-            ctx.lineTo(notchX + taper, notchY + notchH - rBottom);
-            // Smooth concave bottom-left corner
-            ctx.bezierCurveTo(
-              notchX + taper, notchY + notchH - rBottom * 0.38,
-              notchX + taper + rBottom * 0.38, notchY + notchH,
-              notchX + taper + rBottom, notchY + notchH
-            );
+            // Start well above top screen edge in left ear so there is no gap
+            ctx.moveTo(notchX - earR * 2, notchY - 4);
+            ctx.lineTo(notchX - earR, notchY);
+            // Apple Smooth Convex Curve into notch
+            ctx.quadraticCurveTo(notchX, notchY, notchX, notchY + earR);
+            // Left vertical side wall
+            ctx.lineTo(notchX, notchY + notchH - cornerR);
+            // Smooth bottom-left concave corner
+            ctx.quadraticCurveTo(notchX, notchY + notchH, notchX + cornerR, notchY + notchH);
             // Bottom horizontal floor
-            ctx.lineTo(notchX + notchW - taper - rBottom, notchY + notchH);
-            // Smooth concave bottom-right corner
-            ctx.bezierCurveTo(
-              notchX + notchW - taper - rBottom * 0.38, notchY + notchH,
-              notchX + notchW - taper, notchY + notchH - rBottom * 0.38,
-              notchX + notchW - taper, notchY + notchH - rBottom
-            );
-            // Right side edge
-            ctx.lineTo(notchX + notchW - taper, notchY + rTop);
-            // Smooth convex transition back up into right ear
-            ctx.bezierCurveTo(
-              notchX + notchW - taper * 0.2, notchY + rTop * 0.35,
-              notchX + notchW + rTop * 0.45, notchY,
-              notchX + notchW + rTop * 1.5, notchY
-            );
+            ctx.lineTo(notchX + notchW - cornerR, notchY + notchH);
+            // Smooth bottom-right concave corner
+            ctx.quadraticCurveTo(notchX + notchW, notchY + notchH, notchX + notchW, notchY + notchH - cornerR);
+            // Right vertical side wall
+            ctx.lineTo(notchX + notchW, notchY + earR);
+            // Apple Smooth Convex Curve out of notch into right ear
+            ctx.quadraticCurveTo(notchX + notchW, notchY, notchX + notchW + earR, notchY);
+            ctx.lineTo(notchX + notchW + earR * 2, notchY - 4);
             ctx.closePath();
+
             ctx.fillStyle = "#000000";
             ctx.fill();
 
             // Speaker Earpiece Mesh
             if (isClassicNotch) {
               // Classic: centered horizontally inside notch
-              const spkW = notchW * 0.32;
-              const spkH = Math.max(6, innerH * 0.005);
+              const spkW = notchW * 0.35;
+              const spkH = Math.max(5, innerH * 0.0045);
               const spkX = notchX + (notchW - spkW) / 2;
-              const spkY = notchY + notchH * 0.16;
+              const spkY = notchY + notchH * 0.22;
               ctx.beginPath();
               ctx.roundRect(spkX, spkY, spkW, spkH, spkH / 2);
-              ctx.fillStyle = "#1c1c1e";
+              ctx.fillStyle = "#1a1a1c";
               ctx.fill();
               ctx.strokeStyle = "#2c2c2e";
               ctx.lineWidth = 1;
               ctx.stroke();
+
+              // Front Camera
+              const camR = innerW * 0.014;
+              const camX = notchX + notchW * 0.76;
+              const camY = notchY + notchH * 0.62;
+              ctx.beginPath();
+              ctx.arc(camX, camY, camR, 0, Math.PI * 2);
+              ctx.fillStyle = "#0b1220";
+              ctx.fill();
+              ctx.beginPath();
+              ctx.arc(camX - camR * 0.3, camY - camR * 0.3, camR * 0.28, 0, Math.PI * 2);
+              ctx.fillStyle = "rgba(56, 189, 248, 0.7)";
+              ctx.fill();
+
+              // Face ID sensor
+              const sensorR = innerW * 0.012;
+              const sensorX = notchX + notchW * 0.22;
+              const sensorY = notchY + notchH * 0.62;
+              ctx.beginPath();
+              ctx.arc(sensorX, sensorY, sensorR, 0, Math.PI * 2);
+              ctx.fillStyle = "#06080e";
+              ctx.fill();
             } else {
-              // Narrow (iPhone 13/14): Micro-slit just above the screen edge in the bezel
-              const spkW = innerW * 0.18;
-              const spkH = Math.max(5, innerH * 0.004);
-              const spkX = innerX + (innerW - spkW) / 2;
-              const spkY = notchY - spkH * 1.1;
+              // Narrow Notch (iPhone 13/14): Speaker moved to upper bezel edge, camera on right
+              const spkW = notchW * 0.42;
+              const spkH = Math.max(4, innerH * 0.0035);
+              const spkX = notchX + (notchW - spkW) / 2;
+              const spkY = notchY + 3;
               ctx.beginPath();
               ctx.roundRect(spkX, spkY, spkW, spkH, spkH / 2);
               ctx.fillStyle = "#1c1c1e";
               ctx.fill();
+
+              // Front Camera (centered right)
+              const camR = innerW * 0.015;
+              const camX = notchX + notchW * 0.68;
+              const camY = notchY + notchH * 0.56;
+              ctx.beginPath();
+              ctx.arc(camX, camY, camR, 0, Math.PI * 2);
+              ctx.fillStyle = "#0b1220";
+              ctx.fill();
+              ctx.beginPath();
+              ctx.arc(camX - camR * 0.3, camY - camR * 0.3, camR * 0.28, 0, Math.PI * 2);
+              ctx.fillStyle = "rgba(56, 189, 248, 0.7)";
+              ctx.fill();
+
+              // Face ID sensor
+              const sensorR = innerW * 0.013;
+              const sensorX = notchX + notchW * 0.32;
+              const sensorY = notchY + notchH * 0.56;
+              ctx.beginPath();
+              ctx.arc(sensorX, sensorY, sensorR, 0, Math.PI * 2);
+              ctx.fillStyle = "#06080e";
+              ctx.fill();
             }
-
-            // Front TrueDepth Camera
-            const camR = innerW * 0.015;
-            const camX = isClassicNotch ? notchX + notchW * 0.74 : notchX + notchW * 0.63;
-            const camY = isClassicNotch ? notchY + notchH * 0.60 : notchY + notchH * 0.52;
-            ctx.beginPath();
-            ctx.arc(camX, camY, camR, 0, Math.PI * 2);
-            ctx.fillStyle = "#0c1322";
-            ctx.fill();
-            ctx.beginPath();
-            ctx.arc(camX, camY, camR * 0.75, 0, Math.PI * 2);
-            ctx.fillStyle = "#08101e";
-            ctx.fill();
-            ctx.beginPath();
-            ctx.arc(camX - camR * 0.3, camY - camR * 0.3, camR * 0.3, 0, Math.PI * 2);
-            ctx.fillStyle = "rgba(96, 165, 250, 0.75)";
-            ctx.fill();
-            ctx.beginPath();
-            ctx.arc(camX - camR * 0.35, camY - camR * 0.35, camR * 0.14, 0, Math.PI * 2);
-            ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
-            ctx.fill();
-
-            // Face ID / Flood Illuminator
-            const sensorR = innerW * 0.012;
-            const sensorX = isClassicNotch ? notchX + notchW * 0.24 : notchX + notchW * 0.37;
-            const sensorY = isClassicNotch ? notchY + notchH * 0.60 : notchY + notchH * 0.52;
-            ctx.beginPath();
-            ctx.arc(sensorX, sensorY, sensorR, 0, Math.PI * 2);
-            ctx.fillStyle = "#080b12";
-            ctx.fill();
-            ctx.beginPath();
-            ctx.arc(sensorX, sensorY, sensorR * 0.5, 0, Math.PI * 2);
-            ctx.fillStyle = "#040508";
-            ctx.fill();
 
             ctx.restore();
           }
