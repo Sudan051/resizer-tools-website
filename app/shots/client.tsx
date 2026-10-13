@@ -1161,10 +1161,10 @@ export default function ScreenshotStudioClient() {
   };
 
   return (
-    <div className="flex flex-col lg:h-[calc(100vh-20px)] space-y-1.5">
+    <div className="flex flex-col space-y-2 relative">
       
       {/* 🚀 TOP ULTRA-COMPACT TOOLBAR (Single Sleek 44px Bar) */}
-      <header className="h-11 shrink-0 bg-[#121212] border border-white/10 rounded-xl px-2.5 sm:px-3 flex items-center justify-between gap-2 shadow-lg z-20">
+      <header className="sticky top-1 z-40 h-11 shrink-0 bg-[#121212]/95 backdrop-blur-md border border-white/10 rounded-xl px-2.5 sm:px-3 flex items-center justify-between gap-2 shadow-xl">
         {/* Left: Back & Title & Preset Dropdown */}
         <div className="flex items-center gap-2 shrink-0">
           <Link
@@ -1259,10 +1259,10 @@ export default function ScreenshotStudioClient() {
       </header>
 
       {/* 3-COLUMN WORKSPACE: LEFT TOOLS | CENTER PREVIEW | RIGHT TOOLS */}
-      <div className="flex-1 flex flex-col lg:flex-row gap-2 min-h-0 lg:overflow-hidden">
+      <div className="flex-1 flex flex-col lg:flex-row items-start gap-2.5 relative">
         
-        {/* ⬅️ LEFT COLUMN: DEVICE, UPLOADS & POSITIONING (w-[260px] xl:w-[280px]) */}
-        <div className="w-full lg:w-[260px] xl:w-[280px] shrink-0 lg:h-full overflow-y-auto overscroll-contain custom-scrollbar space-y-2 pr-1 pb-4">
+        {/* ⬅️ LEFT COLUMN: DEVICE, UPLOADS & POSITIONING (w-[270px] xl:w-[290px]) */}
+        <div className="w-full lg:w-[270px] xl:w-[290px] shrink-0 space-y-2 pb-6">
           {activeSlide && (
             <>
               {/* SECTION 1: UPLOAD ASSETS */}
@@ -1481,7 +1481,7 @@ export default function ScreenshotStudioClient() {
         </div>
 
         {/* 🎯 CENTER COLUMN: PREVIEW VIEWPORT (STATIC / FIXED PINNED ON SCREEN) */}
-        <div className="order-first lg:order-none sticky top-1 lg:top-0 z-30 lg:z-10 flex-1 lg:h-full min-w-0 flex flex-col items-center justify-between p-2 bg-[#050505]/95 backdrop-blur-md border border-white/10 rounded-2xl relative shrink-0 select-none shadow-2xl">
+        <div className="order-first lg:order-none sticky top-14 z-30 self-start flex-1 w-full min-w-0 flex flex-col items-center justify-between p-2.5 bg-[#050505]/95 backdrop-blur-md border border-white/10 rounded-2xl relative select-none shadow-2xl lg:max-h-[calc(100vh-68px)]">
           {/* Quick Preview Navigation Bar */}
           <div className="w-full flex items-center justify-between bg-[#121212] border border-white/10 rounded-lg px-2.5 py-1 shadow-sm shrink-0 mb-1 z-10">
             <div className="flex items-center gap-1.5">
@@ -1527,7 +1527,7 @@ export default function ScreenshotStudioClient() {
 
             <canvas
               ref={canvasRef}
-              className="rounded-xl border border-white/10 shadow-2xl transition-all duration-300 object-contain mx-auto max-h-[38vh] sm:max-h-[44vh] lg:max-h-[calc(100vh-125px)] w-auto"
+              className="rounded-xl border border-white/10 shadow-2xl transition-all duration-300 object-contain mx-auto max-h-[42vh] sm:max-h-[48vh] lg:max-h-[calc(100vh-160px)] w-auto"
               style={{
                 maxWidth: "100%",
               }}
@@ -1542,8 +1542,8 @@ export default function ScreenshotStudioClient() {
           </div>
         </div>
 
-        {/* ➡️ RIGHT COLUMN: TYPOGRAPHY, BADGES & BACKGROUND (w-[260px] xl:w-[280px]) */}
-        <div className="w-full lg:w-[260px] xl:w-[280px] shrink-0 lg:h-full overflow-y-auto overscroll-contain custom-scrollbar space-y-2 pl-1 pb-4">
+        {/* ➡️ RIGHT COLUMN: TYPOGRAPHY, BADGES & BACKGROUND (w-[270px] xl:w-[290px]) */}
+        <div className="w-full lg:w-[270px] xl:w-[290px] shrink-0 space-y-2 pb-6">
           {activeSlide && (
             <>
               {/* SECTION 4: TYPOGRAPHY & TEXT COLORS */}

@@ -23,7 +23,7 @@ export default function ShotsPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#080808] text-white selection:bg-brand-gold/30 selection:text-brand-gold-light p-2 sm:p-3 relative overflow-x-clip">
+    <main className="min-h-screen bg-[#080808] text-white selection:bg-brand-gold/30 selection:text-brand-gold-light p-2 sm:p-3 relative">
       
       {/* Ambiance glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-brand-gold/10 rounded-full blur-[180px] pointer-events-none" />
