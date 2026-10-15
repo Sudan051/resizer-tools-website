@@ -83,7 +83,7 @@ export default function ToolContentSection({ tool }: ToolContentSectionProps) {
             <div>
               <div className="flex items-center justify-center sm:justify-start gap-2">
                 <span className="text-base font-extrabold text-white">4.9 / 5.0</span>
-                <span className="text-xs text-brand-muted font-mono">({ratingCount.toLocaleString()} verified votes)</span>
+                <span className="text-xs text-brand-muted font-mono" suppressHydrationWarning>({ratingCount.toLocaleString("en-US")} verified votes)</span>
               </div>
               <p className="text-xs text-brand-gold font-medium">
                 {hasRated ? "✨ Thank you for rating this tool!" : "Click stars to rate your experience with this tool"}
