@@ -27,6 +27,14 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.resizertools.com",
   },
+  icons: {
+    icon: [
+      { url: "/icon.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-icon.png", sizes: "512x512", type: "image/png" },
+    ],
+  },
   verification: {
     google: "JiXo48Cu40zyZUMU6s9lKuxoD-mvj2R-6K0H4yhk6bQ",
   },
@@ -45,17 +53,26 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Resizer Tools - 26 Free Web-Native Image & PDF Utilities",
+    title: "Resizer Tools - Free Web-Native Image & PDF Utilities Platform",
     description: "Browser-native document & image manipulation with zero server latency. Private, secure, and 100% client-side.",
     url: "https://www.resizertools.com",
     siteName: "Resizer Tools",
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: "https://www.resizertools.com/og-image.jpg",
+        width: 1024,
+        height: 499,
+        alt: "Resizer Tools - PDF, Image, Scan, QR Utilities",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Resizer Tools - Free Web-Native PDF & Image Platform",
     description: "Compress, resize, merge, protect, sign, and watermarks PDFs and images entirely in your browser with zero uploads.",
+    images: ["https://www.resizertools.com/og-image.jpg"],
   },
 };
 
@@ -95,7 +112,7 @@ export default function RootLayout({
                   "@id": "https://www.resizertools.com/#organization",
                   "name": "Resizer Tools",
                   "url": "https://www.resizertools.com",
-                  "logo": "https://www.resizertools.com/icon.svg",
+                  "logo": "https://www.resizertools.com/logo.png",
                   "sameAs": [
                     "https://github.com/Sudan051"
                   ]

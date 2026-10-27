@@ -2436,9 +2436,19 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
         animate={{ y: 0, opacity: 1 }}
         className="fixed top-0 left-0 right-0 z-50 h-16 glass-panel flex items-center justify-between px-6 md:px-12 border-b border-white/5"
       >
-        <Link href="/" className="flex items-center gap-2 font-semibold tracking-wide text-lg">
-          <Sliders className="w-5 h-5 text-brand-gold" />
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-brand-muted">Resizer Tools</span>
+        <Link href="/" className="flex items-center gap-2.5 font-semibold tracking-wide text-lg">
+          <Image 
+            src="/logo.png" 
+            alt="RT Smart Tools Logo" 
+            width={34} 
+            height={34} 
+            className="rounded-lg border border-brand-gold/30 shadow-sm" 
+            priority 
+          />
+          <span className="font-bold tracking-tight">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-brand-gold-light via-brand-gold to-brand-gold-dark font-black">RESIZER</span>{" "}
+            <span className="text-white">TOOLS</span>
+          </span>
         </Link>
         <div className="hidden md:flex items-center gap-6 text-sm text-brand-muted font-medium">
           {/* PDF Tools Dropdown */}
@@ -2528,23 +2538,86 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
         </div>
       </motion.nav>
 
-      {/* 👑 2. Hero Section */}
-      <section className="relative pt-28 pb-12 px-6 flex flex-col items-center text-center overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-brand-gold/5 rounded-full blur-[120px] pointer-events-none" />
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-brand-gold-light mb-6">
-          <ShieldCheck className="w-3.5 h-3.5" /> 100% Private &amp; Browser-Native
+      {/* 2. Hero Section Styled After Official Brand Banner */}
+      <section className="relative pt-24 pb-12 px-4 sm:px-6 flex flex-col items-center text-center overflow-hidden">
+        {/* Subtle Background Glows matching the royal banner */}
+        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-brand-gold/10 rounded-full blur-[140px] pointer-events-none" />
+        
+        {/* Official Brand Showcase Card */}
+        <motion.div 
+          initial={{ opacity: 0, y: 25 }} 
+          animate={{ opacity: 1, y: 0 }} 
+          transition={{ duration: 0.5 }}
+          className="w-full max-w-5xl rounded-3xl bg-gradient-to-b from-[#181818]/90 via-[#101010]/95 to-black/90 border border-brand-gold/30 p-6 sm:p-10 shadow-[0_20px_60px_-15px_rgba(212,175,55,0.25)] backdrop-blur-xl relative overflow-hidden mb-8"
+        >
+          {/* Subtle Ambient Golden Gradients */}
+          <div className="absolute -top-20 -right-20 w-80 h-80 bg-brand-gold/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-10 -left-10 w-60 h-60 bg-brand-gold/5 rounded-full blur-2xl pointer-events-none" />
+
+          <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 relative z-10">
+            {/* Left: Glowing RT Royal Badge */}
+            <motion.div 
+              whileHover={{ scale: 1.03 }}
+              transition={{ duration: 0.3 }}
+              className="relative shrink-0"
+            >
+              <div className="absolute -inset-2 bg-gradient-to-r from-brand-gold-light via-brand-gold to-brand-gold-dark rounded-[38px] blur-md opacity-40 animate-gold-glow" />
+              <div className="relative w-36 h-36 sm:w-44 sm:h-44 rounded-[32px] overflow-hidden border-2 border-brand-gold/60 shadow-2xl bg-black">
+                <Image 
+                  src="/logo.png" 
+                  alt="RT Smart Tools Official App Icon" 
+                  width={200} 
+                  height={200} 
+                  priority 
+                  className="w-full h-full object-cover" 
+                />
+              </div>
+            </motion.div>
+
+            {/* Right: RESIZER TOOLS Typography & 4 Pillar Badges */}
+            <div className="text-center md:text-left space-y-3 max-w-xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-gold/15 border border-brand-gold/35 text-[11px] font-mono font-bold tracking-widest text-brand-gold uppercase">
+                <ShieldCheck className="w-3.5 h-3.5" /> 100% Client-Side Engine
+              </div>
+
+              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight uppercase leading-none">
+                <span className="bg-clip-text text-transparent bg-gradient-to-b from-[#FFF6CC] via-[#D4AF37] to-[#996515] drop-shadow-[0_2px_12px_rgba(212,175,55,0.35)]">
+                  RESIZER TOOLS
+                </span>
+              </h1>
+
+              <p className="text-sm sm:text-lg font-bold tracking-[0.22em] text-white/90 uppercase font-mono">
+                PDF <span className="text-brand-gold">•</span> IMAGE <span className="text-brand-gold">•</span> SCAN <span className="text-brand-gold">•</span> QR
+              </p>
+
+              <p className="text-xs sm:text-sm text-brand-muted font-light tracking-wide">
+                Fast. Offline. Private. <span className="text-white font-medium">Zero server uploads.</span>
+              </p>
+
+              {/* 4 Glowing Quick Pillar Cards from Banner */}
+              <div className="grid grid-cols-4 gap-2.5 pt-3">
+                {[
+                  { label: "Image", id: "image", icon: ImageIcon },
+                  { label: "PDF", id: "pdf", icon: FileText },
+                  { label: "Scan", id: "qr", icon: Smartphone },
+                  { label: "Doc / QR", id: "security", icon: Zap }
+                ].map((pillar) => (
+                  <button
+                    key={pillar.id}
+                    onClick={() => { setActiveCategory(pillar.id); setSearchQuery(""); }}
+                    className="p-2 sm:p-2.5 rounded-xl bg-white/[0.03] border border-brand-gold/30 hover:border-brand-gold hover:bg-brand-gold/15 transition-all flex flex-col items-center justify-center gap-1 group cursor-pointer"
+                  >
+                    <pillar.icon className="w-4 h-4 sm:w-5 sm:h-5 text-brand-gold group-hover:scale-110 transition-transform" />
+                    <span className="text-[10px] sm:text-xs font-mono font-bold text-white group-hover:text-brand-gold-light tracking-tight">{pillar.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
         </motion.div>
-        <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-4xl md:text-7xl font-bold tracking-tight max-w-5xl leading-tight">
-          Resizer Tools: <br />
-          <span className="bg-clip-text text-transparent bg-gold-gradient">{toolsData.length} Free Web Utilities for PDF, Image &amp; Docs</span>
-        </motion.h1>
-        <p className="mt-6 text-brand-muted text-base md:text-xl max-w-3xl font-light leading-relaxed">
-          Compress images, edit PDFs, create App Store screenshots, and generate QR codes—all free and private. <br />
-          <span className="font-semibold text-white">Runs locally in your browser:</span> Your files are processed locally on your device. <span className="text-brand-gold font-semibold underline decoration-brand-gold/30">Zero server uploads. 100% privacy.</span>
-        </p>
 
         {/* INSTANT LIVE SEARCH BAR */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="mt-8 w-full max-w-2xl mx-auto relative z-20">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="w-full max-w-2xl mx-auto relative z-20">
           <div className="relative flex items-center">
             <Search className="w-5 h-5 text-brand-gold absolute left-4 pointer-events-none" />
             <input 
@@ -2570,7 +2643,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
         </motion.div>
         
         {/* Quick Category Access Pills */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="mt-8 flex flex-wrap justify-center gap-2">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }} className="mt-6 flex flex-wrap justify-center gap-2">
           {categories.map((cat) => (
             <a
               key={cat.id}

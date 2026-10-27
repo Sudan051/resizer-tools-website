@@ -2,7 +2,8 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
-import { Sliders, AlertTriangle, RotateCcw } from "lucide-react";
+import Image from "next/image";
+import { AlertTriangle, RotateCcw } from "lucide-react";
 
 export default function Error({
   error,
@@ -29,11 +30,17 @@ export default function Error({
   return (
     <div className="min-h-screen bg-brand-black text-white flex flex-col items-center justify-center px-4 py-16">
       {/* Brand logo */}
-      <Link href="/" className="flex items-center gap-2 mb-12 group">
-        <Sliders className="w-8 h-8 text-brand-gold transition-transform group-hover:rotate-12" />
+      <Link href="/" className="flex items-center gap-2.5 mb-12 group">
+        <Image 
+          src="/logo.png" 
+          alt="RT Smart Tools Logo" 
+          width={40} 
+          height={40} 
+          className="rounded-xl border border-brand-gold/30 shadow-md group-hover:scale-105 transition-transform" 
+        />
         <span className="text-xl font-bold tracking-tight">
-          <span className="text-brand-gold">Resizer</span>{" "}
-          <span className="text-white">Tools</span>
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-brand-gold-light via-brand-gold to-brand-gold-dark font-black">RESIZER</span>{" "}
+          <span className="text-white">TOOLS</span>
         </span>
       </Link>
 

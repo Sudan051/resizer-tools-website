@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import Home from "../../page";
 import { toolsData, getToolSEOContent } from "../../data/tools";
-import { Sliders, Download, ShieldCheck, Zap, Smartphone } from "lucide-react";
+import { Download, ShieldCheck, Zap, Smartphone } from "lucide-react";
 import ToolContentSection from "../../components/ToolContentSection";
 import SiteFooter from "../../components/SiteFooter";
 import ThemeToggle from "../../components/ThemeToggle";
@@ -163,11 +164,21 @@ export default async function ToolPage({ params }: { params: Promise<{ id: strin
         }}
       />
 
-      {/* 🍎 TOP NAVIGATION NAVBAR */}
+      {/* TOP NAVIGATION NAVBAR */}
       <nav className="fixed top-0 left-0 right-0 z-50 h-16 glass-panel flex items-center justify-between px-6 md:px-12 border-b border-white/5">
-        <Link href="/" className="flex items-center gap-2 font-semibold tracking-wide text-lg cursor-pointer">
-          <Sliders className="w-5 h-5 text-brand-gold" />
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-brand-muted">Resizer Tools</span>
+        <Link href="/" className="flex items-center gap-2.5 font-semibold tracking-wide text-lg cursor-pointer">
+          <Image 
+            src="/logo.png" 
+            alt="RT Smart Tools Logo" 
+            width={32} 
+            height={32} 
+            className="rounded-lg border border-brand-gold/30 shadow-sm" 
+            priority 
+          />
+          <span className="font-bold tracking-tight">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-brand-gold-light via-brand-gold to-brand-gold-dark font-black">RESIZER</span>{" "}
+            <span className="text-white">TOOLS</span>
+          </span>
         </Link>
         <div className="hidden md:flex items-center gap-8 text-sm text-brand-muted font-medium">
           <Link href="/#studio" className="hover:text-white transition-colors">All Tools ({toolsData.length})</Link>

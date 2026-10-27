@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Sliders, ShieldCheck, Globe, ImageIcon, FileText, Zap, BookOpen } from "lucide-react";
+import Image from "next/image";
+import { ShieldCheck, Globe, ImageIcon, FileText, Zap, BookOpen } from "lucide-react";
 
 export default function SiteFooter() {
   return (
@@ -11,8 +12,14 @@ export default function SiteFooter() {
           
           {/* Column 1: Brand & Philosophy */}
           <div className="space-y-4 sm:col-span-2 md:col-span-1">
-            <Link href="/" className="flex items-center gap-2 font-bold text-lg text-white">
-              <Sliders className="w-5 h-5 text-brand-gold" />
+            <Link href="/" className="flex items-center gap-2.5 font-bold text-lg text-white">
+              <Image 
+                src="/logo.png" 
+                alt="RT Smart Tools Logo" 
+                width={28} 
+                height={28} 
+                className="rounded-lg border border-brand-gold/30 shadow-sm" 
+              />
               <span className="bg-gradient-to-r from-white via-white to-brand-gold bg-clip-text text-transparent">
                 Resizer Tools
               </span>
