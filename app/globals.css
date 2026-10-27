@@ -90,6 +90,50 @@ html.light .text-white {
   color: #111827 !important;
 }
 
+/* 👑 Preserve Pure Dark Banner Card & White Text in All Themes */
+.dark-banner-card,
+html.light .dark-banner-card {
+  background: linear-gradient(to bottom, rgba(24, 24, 24, 0.95), rgba(16, 16, 16, 0.98), #000000) !important;
+  border-color: rgba(212, 175, 55, 0.35) !important;
+  color: #FFFFFF !important;
+}
+
+.dark-banner-card .text-white,
+.dark-banner-card .text-white\/90,
+.dark-banner-card h1,
+.dark-banner-card h2,
+.dark-banner-card h3,
+.dark-banner-card h4,
+.dark-banner-card p,
+.dark-banner-card span,
+html.light .dark-banner-card .text-white,
+html.light .dark-banner-card .text-white\/90 {
+  color: #FFFFFF !important;
+}
+
+.dark-banner-card .text-brand-muted,
+html.light .dark-banner-card .text-brand-muted {
+  color: #A1A1AA !important;
+}
+
+.dark-banner-card button,
+html.light .dark-banner-card button {
+  color: #FFFFFF !important;
+  background-color: rgba(255, 255, 255, 0.04) !important;
+  border-color: rgba(212, 175, 55, 0.3) !important;
+}
+
+.dark-banner-card button span,
+html.light .dark-banner-card button span {
+  color: #FFFFFF !important;
+}
+
+.dark-banner-card button:hover,
+html.light .dark-banner-card button:hover {
+  background-color: rgba(212, 175, 55, 0.18) !important;
+  border-color: #D4AF37 !important;
+}
+
 html.light .text-brand-muted {
   color: #4B5563 !important;
 }

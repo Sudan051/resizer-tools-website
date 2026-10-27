@@ -2548,7 +2548,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
           initial={{ opacity: 0, y: 25 }} 
           animate={{ opacity: 1, y: 0 }} 
           transition={{ duration: 0.5 }}
-          className="w-full max-w-5xl rounded-3xl bg-gradient-to-b from-[#181818]/90 via-[#101010]/95 to-black/90 border border-brand-gold/30 p-6 sm:p-10 shadow-[0_20px_60px_-15px_rgba(212,175,55,0.25)] backdrop-blur-xl relative overflow-hidden mb-8"
+          className="dark-banner-card w-full max-w-5xl rounded-3xl bg-gradient-to-b from-[#181818]/95 via-[#101010]/98 to-black border border-brand-gold/35 p-6 sm:p-10 shadow-[0_20px_60px_-15px_rgba(212,175,55,0.25)] backdrop-blur-xl relative overflow-hidden mb-8"
         >
           {/* Subtle Ambient Golden Gradients */}
           <div className="absolute -top-20 -right-20 w-80 h-80 bg-brand-gold/10 rounded-full blur-3xl pointer-events-none" />
@@ -2586,12 +2586,12 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                 </span>
               </h1>
 
-              <p className="text-sm sm:text-lg font-bold tracking-[0.22em] text-white/90 uppercase font-mono">
+              <p className="text-sm sm:text-lg font-bold tracking-[0.22em] text-white uppercase font-mono" style={{ color: "#FFFFFF" }}>
                 PDF <span className="text-brand-gold">•</span> IMAGE <span className="text-brand-gold">•</span> SCAN <span className="text-brand-gold">•</span> QR
               </p>
 
-              <p className="text-xs sm:text-sm text-brand-muted font-light tracking-wide">
-                Fast. Offline. Private. <span className="text-white font-medium">Zero server uploads.</span>
+              <p className="text-xs sm:text-sm text-neutral-300 font-light tracking-wide" style={{ color: "#D1D5DB" }}>
+                Fast. Offline. Private. <span className="text-white font-medium" style={{ color: "#FFFFFF" }}>Zero server uploads.</span>
               </p>
 
               {/* 4 Glowing Quick Pillar Cards from Banner */}
@@ -2605,10 +2605,11 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                   <button
                     key={pillar.id}
                     onClick={() => { setActiveCategory(pillar.id); setSearchQuery(""); }}
-                    className="p-2 sm:p-2.5 rounded-xl bg-white/[0.03] border border-brand-gold/30 hover:border-brand-gold hover:bg-brand-gold/15 transition-all flex flex-col items-center justify-center gap-1 group cursor-pointer"
+                    className="p-2 sm:p-2.5 rounded-xl bg-white/[0.04] border border-brand-gold/30 hover:border-brand-gold hover:bg-brand-gold/15 transition-all flex flex-col items-center justify-center gap-1 group cursor-pointer"
+                    style={{ backgroundColor: "rgba(255, 255, 255, 0.04)", borderColor: "rgba(212, 175, 55, 0.35)" }}
                   >
                     <pillar.icon className="w-4 h-4 sm:w-5 sm:h-5 text-brand-gold group-hover:scale-110 transition-transform" />
-                    <span className="text-[10px] sm:text-xs font-mono font-bold text-white group-hover:text-brand-gold-light tracking-tight">{pillar.label}</span>
+                    <span className="text-[10px] sm:text-xs font-mono font-bold text-white group-hover:text-brand-gold-light tracking-tight" style={{ color: "#FFFFFF" }}>{pillar.label}</span>
                   </button>
                 ))}
               </div>
