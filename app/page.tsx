@@ -7,12 +7,11 @@ import { PDFDocument, rgb, degrees } from "pdf-lib";
 import { encryptPDF } from "@pdfsmaller/pdf-encrypt-lite";
 import { decryptPDF } from "@pdfsmaller/pdf-decrypt-lite";
 import { 
-  Download, Sliders, Maximize2, ShieldCheck, Smartphone, 
+  Download, Sliders, ShieldCheck, Smartphone, 
   Briefcase, Cpu, Play, X, Sparkles, Check, Search, ChevronDown, Eye
 } from "lucide-react";
 // 🌐 CONFIGURATION KEYS (Replace with your actual keys)
 const RAZORPAY_KEY_ID: string = "rzp_live_TFRpvE5UpoUDlC"; // e.g. "rzp_live_xxxxxxxxxxxxxx"
-const GOOGLE_ADSENSE_PUB_ID = "ca-pub-5876595914883924"; // e.g. "ca-pub-xxxxxxxxxxxxxxxx"
 
 import { toolsData, categories, Tool, getToolSEOContent } from "./data/tools";
 import SiteFooter from "./components/SiteFooter";
@@ -28,8 +27,6 @@ const realScreenshots = [
 
 
 export default function Home({ initialToolId, isStandaloneToolPage = false }: { initialToolId?: string; isStandaloneToolPage?: boolean } = {}) {
-  const [width, setWidth] = useState(1242);
-  const [height, setHeight] = useState(2688);
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -212,22 +209,9 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
     rzScript.async = true;
     document.body.appendChild(rzScript);
 
-    // 3. Load Google AdSense script if publisher ID is declared
-    let adsScript: HTMLScriptElement | null = null;
-    if (GOOGLE_ADSENSE_PUB_ID && GOOGLE_ADSENSE_PUB_ID.startsWith("ca-pub-")) {
-      adsScript = document.createElement("script");
-      adsScript.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${GOOGLE_ADSENSE_PUB_ID}`;
-      adsScript.crossOrigin = "anonymous";
-      adsScript.async = true;
-      document.head.appendChild(adsScript);
-    }
-
     return () => {
       if (document.body.contains(rzScript)) {
         document.body.removeChild(rzScript);
-      }
-      if (adsScript && document.head.contains(adsScript)) {
-        document.head.removeChild(adsScript);
       }
     };
   }, []);
@@ -2530,6 +2514,8 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
           </div>
 
           <Link href="/blog" className="text-brand-gold hover:text-white font-semibold flex items-center gap-1 transition-colors">Blog 📖</Link>
+          <Link href="/about" className="hover:text-white transition-colors">About Us</Link>
+          <a href="#our-apps" className="hover:text-white transition-colors">Our Apps</a>
           <button onClick={() => setShowSubscription(true)} className="hover:text-white text-brand-gold font-semibold flex items-center gap-1 transition-colors cursor-pointer">Unlock Pro ✨</button>
         </div>
         <button onClick={() => openToolModal({ id: "app_download", title: "Download Utilify App", isAppDownload: true })} className="flex items-center gap-2 bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-semibold text-xs px-4 py-2 rounded-full shadow-premium-gold hover:scale-105 transition-transform cursor-pointer">
@@ -2538,7 +2524,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
       </motion.nav>
 
       {/* 👑 2. Hero Section */}
-      <section className="relative pt-36 pb-20 px-6 flex flex-col items-center text-center overflow-hidden">
+      <section className="relative pt-28 pb-12 px-6 flex flex-col items-center text-center overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-brand-gold/5 rounded-full blur-[120px] pointer-events-none" />
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-brand-gold-light mb-6">
           <ShieldCheck className="w-3.5 h-3.5" /> 100% Private &amp; Browser-Native
@@ -2578,19 +2564,22 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
           </div>
         </motion.div>
         
-        {/* HERO SMARTPHONE MOCKUP */}
-        <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="mt-16 w-72 aspect-[1242/2688] bg-brand-obsidian rounded-[44px] p-2 border-[4px] border-white/10 shadow-2xl shadow-brand-gold/10 relative">
-          <div className="absolute top-4 left-1/2 -translate-x-1/2 w-28 h-5 bg-black rounded-full z-10" />
-          <div className="w-full h-full bg-black/40 rounded-[34px] flex items-center justify-center overflow-hidden p-1 relative">
-            <Image 
-              src="/Home.png" 
-              alt="App Dashboard Mockup" 
-              width={280} 
-              height={606} 
-              priority 
-              className="w-full h-full object-fill rounded-[24px]" 
-            />
-          </div>
+        {/* Quick Category Access Pills */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="mt-8 flex flex-wrap justify-center gap-2">
+          {categories.map((cat) => (
+            <a
+              key={cat.id}
+              href="#studio"
+              onClick={() => { setActiveCategory(cat.id); setSearchQuery(""); }}
+              className={`px-4 py-2 rounded-full text-xs font-medium tracking-wide transition-all cursor-pointer border ${
+                cat.id === "all" 
+                  ? "bg-brand-gold/15 border-brand-gold/30 text-brand-gold hover:bg-brand-gold hover:text-black" 
+                  : "bg-white/[0.03] border-white/10 text-brand-muted hover:text-white hover:border-brand-gold/30"
+              }`}
+            >
+              {cat.label}
+            </a>
+          ))}
         </motion.div>
       </section>
 
@@ -2624,31 +2613,8 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
         </div>
       </section>
 
-      {/* 📊 3. Interactive Slider Demo */}
-      <section id="demo" className="py-20 px-6 max-w-5xl mx-auto scroll-mt-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center bg-brand-obsidian/40 border border-white/5 rounded-3xl p-8 backdrop-blur-md">
-          <div className="space-y-6">
-            <div className="flex items-center gap-2 text-brand-gold font-medium text-sm tracking-wider uppercase"><Sliders className="w-4 h-4" /> Dimension Engine</div>
-            <div>
-              <div className="flex justify-between text-sm mb-2 font-mono"><span className="text-brand-muted">Target Width:</span><span className="text-brand-gold-light font-bold">{width} px</span></div>
-              <input type="range" min="400" max="2000" value={width} onChange={(e) => setWidth(Number(e.target.value))} className="w-full accent-brand-gold bg-white/10 rounded-lg h-1.5 cursor-pointer appearance-none" />
-            </div>
-            <div>
-              <div className="flex justify-between text-sm mb-2 font-mono"><span className="text-brand-muted">Target Height:</span><span className="text-brand-gold-light font-bold">{height} px</span></div>
-              <input type="range" min="600" max="3000" value={height} onChange={(e) => setHeight(Number(e.target.value))} className="w-full accent-brand-gold bg-white/10 rounded-lg h-1.5 cursor-pointer appearance-none" />
-            </div>
-          </div>
-          <div className="h-64 bg-black/50 border border-white/10 rounded-2xl flex items-center justify-center p-4">
-            <motion.div animate={{ width: Math.min(width / 6, 220), height: Math.min(height / 12, 220) }} className="bg-gold-gradient rounded-xl flex flex-col items-center justify-center text-black font-bold p-2 shadow-2xl">
-              <Maximize2 className="w-5 h-5 mb-1 opacity-70" />
-              <span className="text-[10px] font-mono tracking-tighter">{width}×{height}</span>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
       {/* ⚡ 4. Workspace Directory Grid with Organized Studio Sections */}
-      <section id="studio" className="py-24 px-6 max-w-6xl mx-auto scroll-mt-16 border-t border-white/5">
+      <section id="studio" className="py-16 px-6 max-w-6xl mx-auto scroll-mt-16">
         <div className="text-center mb-12">
           <p className="text-brand-gold font-mono tracking-widest text-xs uppercase mb-2 font-bold">Organized Utility Hub</p>
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight">Browse Free Web PDF &amp; Image Tools</h2>
@@ -2947,81 +2913,97 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
           </div>
         </section>
 
-      {/* 🎬 5. Visual Media Gallery */}
-      <section id="gallery" className="py-24 px-6 max-w-6xl mx-auto scroll-mt-16 border-t border-white/5">
+      {/* 📲 5. Our Apps — Download Utilify Mobile */}
+      <section id="our-apps" className="py-24 px-6 max-w-6xl mx-auto scroll-mt-16 border-t border-white/5">
         <div className="text-center mb-16">
-          <p className="text-brand-gold font-mono tracking-widest text-xs uppercase mb-2">Production Design</p>
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Official App Store Core Walkthroughs</h2>
-          <p className="text-brand-muted text-xs md:text-sm mt-2 font-light">Swipe horizontally to view full-frame 1242 × 2688 px presentation layouts.</p>
+          <p className="text-brand-gold font-mono tracking-widest text-xs uppercase mb-2 font-bold">Our Apps</p>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight">Download Utilify — Your Offline Toolkit</h2>
+          <p className="text-brand-muted mt-3 max-w-2xl mx-auto text-sm font-light leading-relaxed">
+            All {toolsData.length} tools available natively on your phone with offline support, NFC, and hardware-level security. 
+            No internet required — your files never leave your device.
+          </p>
         </div>
-        
-        <div className="flex gap-6 overflow-x-auto pb-8 pt-4 px-2 scrollbar-none snap-x snap-mandatory scroll-smooth">
-          {realScreenshots.map((screenshot, i) => (
-            <div key={i} className="w-[280px] sm:w-[320px] shrink-0 bg-brand-obsidian/30 border border-white/5 rounded-3xl p-4 flex flex-col justify-between hover:border-brand-gold/20 transition-all duration-300 shadow-xl snap-center">
-              
-              <div className="w-full aspect-[1242/2688] overflow-hidden rounded-2xl relative bg-black/80 flex items-center justify-center border border-white/5 p-1">
+
+        {/* App Showcase: Phone Mockup + Features */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
+          {/* Phone Mockup */}
+          <div className="flex justify-center">
+            <div className="w-64 aspect-[1242/2688] bg-brand-obsidian rounded-[44px] p-2 border-[4px] border-white/10 shadow-2xl shadow-brand-gold/10 relative">
+              <div className="absolute top-4 left-1/2 -translate-x-1/2 w-28 h-5 bg-black rounded-full z-10" />
+              <div className="w-full h-full bg-black/40 rounded-[34px] flex items-center justify-center overflow-hidden p-1 relative">
                 <Image 
-                  src={screenshot.src} 
-                  alt={screenshot.headline} 
-                  width={320} 
-                  height={693} 
-                  className="w-full h-full object-cover object-top rounded-xl group-hover:scale-[1.01] transition-transform duration-500" 
+                  src="/Home.png" 
+                  alt="Utilify Mobile App — All-in-One Utility Dashboard" 
+                  width={280} 
+                  height={606} 
+                  className="w-full h-full object-fill rounded-[24px]" 
                 />
               </div>
-
-              <div className="w-full text-left mt-4">
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="text-[10px] font-mono bg-brand-gold/10 text-brand-gold border border-brand-gold/20 px-2 py-0.5 rounded-full">Core 0{i+1}</span>
-                  <span className="text-[10px] text-brand-muted font-mono uppercase tracking-widest">1242 × 2688 px</span>
-                </div>
-                <h3 className="text-sm font-semibold text-white group-hover:text-brand-gold-light transition-colors">{screenshot.headline}</h3>
-                <p className="text-xs text-brand-muted font-light mt-0.5">{screenshot.sub}</p>
-              </div>
             </div>
-          ))}
-        </div>
-      </section>
+          </div>
 
-      {/* 📱 6. Ultimate 26-Tool Visual Matrix Showcase */}
-      <section id="showcase" className="py-24 px-6 max-w-6xl mx-auto scroll-mt-16 border-t border-white/5">
-        <div className="text-center mb-12">
-          <p className="text-brand-gold font-mono tracking-widest text-xs uppercase mb-2">Full Viewport Matrix</p>
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Complete {toolsData.length}-Tool Interface Tour</h2>
-          <p className="text-brand-muted mt-2 text-sm font-light">Every single localized runtime view mapped side-by-side.</p>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-          {toolsData.map((tool, idx) => {
-            const imageSrc = (tool.src === "/placeholder.png" || !tool.src) 
-              ? "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop" 
-              : tool.src;
-
-            return (
-              <div key={idx} onClick={() => openToolModal(tool)} className="bg-brand-obsidian/20 border border-white/5 rounded-2xl p-2.5 flex flex-col justify-between hover:border-brand-gold/20 transition-all duration-300 shadow-md group cursor-pointer">
-                
-                <div className="w-full aspect-[1242/2688] overflow-hidden rounded-xl relative bg-black/90 flex items-center justify-center border border-white/5 p-1">
-                  <Image 
-                    src={imageSrc} 
-                    alt={tool.title} 
-                    width={150} 
-                    height={325} 
-                    className={`w-full h-full object-contain rounded-lg transition-transform duration-300 ${tool.src === "/placeholder.png" ? "opacity-30 blur-[1px] group-hover:scale-105" : "group-hover:scale-[1.02]"}`} 
-                  />
-                  {tool.src === "/placeholder.png" && (
-                    <div className="absolute inset-0 flex items-center justify-center p-2 text-center bg-black/40">
-                      <tool.icon className="w-6 h-6 text-brand-gold/40" />
-                    </div>
-                  )}
+          {/* Features & Download */}
+          <div className="space-y-6">
+            <div className="space-y-4">
+              {[
+                { emoji: "🔒", title: "100% Offline Engine", desc: "Process images, PDFs, and documents without any internet connection. Your data stays on your device." },
+                { emoji: "⚡", title: "Native Hardware Speed", desc: "Leverages your phone's GPU and CPU for instant processing — no server round-trips or upload waits." },
+                { emoji: "📱", title: "NFC & Deep OS Access", desc: "Read/Write NFC tags, scan documents with native camera, and access hardware features unavailable on web." },
+                { emoji: "🛡️", title: "Zero Data Collection", desc: "No analytics, no tracking, no ads in the app. Your files are processed in device memory and immediately released." }
+              ].map((feature, i) => (
+                <div key={i} className="flex items-start gap-4 p-4 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-brand-gold/20 transition-colors">
+                  <span className="text-2xl shrink-0">{feature.emoji}</span>
+                  <div>
+                    <h4 className="text-sm font-bold text-white">{feature.title}</h4>
+                    <p className="text-xs text-brand-muted font-light mt-1 leading-relaxed">{feature.desc}</p>
+                  </div>
                 </div>
-                <div className="mt-3 px-1 text-left">
-                  <p className="text-[11px] font-semibold text-white tracking-tight truncate group-hover:text-brand-gold-light transition-colors">{tool.title}</p>
-                  <p className="text-[9px] text-brand-muted font-mono uppercase tracking-tighter mt-0.5">
-                    {tool.src === "/placeholder.png" ? "Blueprint Mode" : "Live Interface"}
-                  </p>
+              ))}
+            </div>
+
+            {/* Download Buttons */}
+            <div className="flex flex-wrap gap-3 pt-4">
+              <Link 
+                href="/app" 
+                className="flex items-center gap-2 bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-bold text-sm px-6 py-3 rounded-full shadow-premium-gold hover:scale-105 transition-transform"
+              >
+                <Download className="w-4 h-4 stroke-[3]" /> Download for iOS
+              </Link>
+              <Link 
+                href="/app" 
+                className="flex items-center gap-2 bg-white/5 border border-white/10 text-white font-semibold text-sm px-6 py-3 rounded-full hover:bg-white/10 transition-colors"
+              >
+                <Download className="w-4 h-4" /> Download for Android
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* App Screenshots Carousel */}
+        <div className="space-y-8">
+          <div className="text-center">
+            <h3 className="text-xl font-bold text-white tracking-tight">App Store Screenshots</h3>
+            <p className="text-xs text-brand-muted mt-1 font-light">Swipe to explore our app interface across key features</p>
+          </div>
+          <div className="flex gap-6 overflow-x-auto pb-8 pt-4 px-2 scrollbar-none snap-x snap-mandatory scroll-smooth">
+            {realScreenshots.map((screenshot, i) => (
+              <div key={i} className="w-[220px] sm:w-[260px] shrink-0 bg-brand-obsidian/30 border border-white/5 rounded-3xl p-3 flex flex-col justify-between hover:border-brand-gold/20 transition-all duration-300 shadow-xl snap-center">
+                <div className="w-full aspect-[1242/2688] overflow-hidden rounded-2xl relative bg-black/80 flex items-center justify-center border border-white/5 p-1">
+                  <Image 
+                    src={screenshot.src} 
+                    alt={screenshot.headline} 
+                    width={260} 
+                    height={563} 
+                    className="w-full h-full object-cover object-top rounded-xl" 
+                  />
+                </div>
+                <div className="w-full text-left mt-3">
+                  <h4 className="text-xs font-semibold text-white">{screenshot.headline}</h4>
+                  <p className="text-[10px] text-brand-muted font-light mt-0.5">{screenshot.sub}</p>
                 </div>
               </div>
-            );
-          })}
+            ))}
+          </div>
         </div>
       </section>
 

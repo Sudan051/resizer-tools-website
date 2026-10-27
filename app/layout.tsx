@@ -71,6 +71,11 @@ export default function RootLayout({
     >
       <head>
         <meta name="google-site-verification" content="JiXo48Cu40zyZUMU6s9lKuxoD-mvj2R-6K0H4yhk6bQ" />
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5876595914883924"
+          crossOrigin="anonymous"
+        />
       </head>
       <body className="min-h-full flex flex-col">
         <script
