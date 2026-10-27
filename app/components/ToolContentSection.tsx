@@ -101,51 +101,73 @@ export default function ToolContentSection({ tool }: ToolContentSectionProps) {
           </div>
         </div>
 
-        {/* 💎 2. CORE VALUE PROPOSITION & BENEFIT CARDS */}
+        {/* 💎 2. CORE VALUE PROPOSITION & IN-DEPTH TECHNICAL OVERVIEW */}
         <section className="space-y-6 text-left">
-          <div className="space-y-2">
+          <div className="space-y-3">
             <span className="text-[11px] font-mono uppercase tracking-widest text-brand-gold font-bold flex items-center gap-1.5">
               <Sparkles className="w-3.5 h-3.5" /> Built For Privacy &amp; Performance
             </span>
             <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
               Why Professionals Rely on {tool.title}
             </h2>
-            <p className="text-xs sm:text-sm text-neutral-400 font-light max-w-3xl">
-              Unlike traditional cloud utilities that transfer your confidential documents over the network, Resizer Tools executes all transformations in zero-trust, local browser memory.
-            </p>
+            {seo.overview && seo.overview.length > 0 ? (
+              <div className="space-y-3 text-xs sm:text-sm text-neutral-300 font-light leading-relaxed max-w-4xl">
+                {seo.overview.map((para, pIdx) => (
+                  <p key={pIdx}>{para}</p>
+                ))}
+              </div>
+            ) : (
+              <p className="text-xs sm:text-sm text-neutral-400 font-light max-w-3xl">
+                Unlike traditional cloud utilities that transfer your confidential documents over the network, Resizer Tools executes all transformations in zero-trust, local browser memory.
+              </p>
+            )}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-            <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/5 hover:border-brand-gold/30 transition-all space-y-3 group">
-              <div className="w-12 h-12 rounded-2xl bg-brand-gold/10 border border-brand-gold/25 flex items-center justify-center text-brand-gold group-hover:scale-110 transition-transform">
-                <Zap className="w-6 h-6" />
-              </div>
-              <h3 className="text-base font-bold text-white tracking-tight">Instant Local Processing</h3>
-              <p className="text-xs text-neutral-400 leading-relaxed font-light">
-                No server upload queues, network timeouts, or bandwidth throttling. Operations complete in milliseconds directly on your CPU/GPU.
-              </p>
+          {seo.features && seo.features.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-left">
+              {seo.features.map((feat, fIdx) => (
+                <div key={fIdx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-brand-gold/30 transition-all space-y-2 group">
+                  <div className="w-8 h-8 rounded-xl bg-brand-gold/10 border border-brand-gold/25 flex items-center justify-center text-brand-gold text-xs font-mono font-bold">
+                    0{fIdx + 1}
+                  </div>
+                  <h3 className="text-sm font-bold text-white tracking-tight">{feat.title}</h3>
+                  <p className="text-xs text-neutral-400 leading-relaxed font-light">{feat.desc}</p>
+                </div>
+              ))}
             </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+              <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/5 hover:border-brand-gold/30 transition-all space-y-3 group">
+                <div className="w-12 h-12 rounded-2xl bg-brand-gold/10 border border-brand-gold/25 flex items-center justify-center text-brand-gold group-hover:scale-110 transition-transform">
+                  <Zap className="w-6 h-6" />
+                </div>
+                <h3 className="text-base font-bold text-white tracking-tight">Instant Local Processing</h3>
+                <p className="text-xs text-neutral-400 leading-relaxed font-light">
+                  No server upload queues, network timeouts, or bandwidth throttling. Operations complete in milliseconds directly on your CPU/GPU.
+                </p>
+              </div>
 
-            <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/5 hover:border-brand-gold/30 transition-all space-y-3 group">
-              <div className="w-12 h-12 rounded-2xl bg-brand-gold/10 border border-brand-gold/25 flex items-center justify-center text-brand-gold group-hover:scale-110 transition-transform">
-                <Layers className="w-6 h-6" />
+              <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/5 hover:border-brand-gold/30 transition-all space-y-3 group">
+                <div className="w-12 h-12 rounded-2xl bg-brand-gold/10 border border-brand-gold/25 flex items-center justify-center text-brand-gold group-hover:scale-110 transition-transform">
+                  <Layers className="w-6 h-6" />
+                </div>
+                <h3 className="text-base font-bold text-white tracking-tight">High Fidelity &amp; Lossless Precision</h3>
+                <p className="text-xs text-neutral-400 leading-relaxed font-light">
+                  Native HTML5 Canvas rendering and WebAssembly vector compilation preserve vector clarity, font glyphs, and color profiles accurately.
+                </p>
               </div>
-              <h3 className="text-base font-bold text-white tracking-tight">High Fidelity &amp; Lossless Precision</h3>
-              <p className="text-xs text-neutral-400 leading-relaxed font-light">
-                Native HTML5 Canvas rendering and WebAssembly vector compilation preserve vector clarity, font glyphs, and color profiles accurately.
-              </p>
-            </div>
 
-            <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/5 hover:border-brand-gold/30 transition-all space-y-3 group">
-              <div className="w-12 h-12 rounded-2xl bg-brand-gold/10 border border-brand-gold/25 flex items-center justify-center text-brand-gold group-hover:scale-110 transition-transform">
-                <ShieldCheck className="w-6 h-6" />
+              <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/5 hover:border-brand-gold/30 transition-all space-y-3 group">
+                <div className="w-12 h-12 rounded-2xl bg-brand-gold/10 border border-brand-gold/25 flex items-center justify-center text-brand-gold group-hover:scale-110 transition-transform">
+                  <ShieldCheck className="w-6 h-6" />
+                </div>
+                <h3 className="text-base font-bold text-white tracking-tight">Zero-Log Data Privacy</h3>
+                <p className="text-xs text-neutral-400 leading-relaxed font-light">
+                  Financial records, tax returns, passport scans, and contracts remain strictly confined to your physical machine with no remote database persistence.
+                </p>
               </div>
-              <h3 className="text-base font-bold text-white tracking-tight">Zero-Log Data Privacy</h3>
-              <p className="text-xs text-neutral-400 leading-relaxed font-light">
-                Financial records, tax returns, passport scans, and contracts remain strictly confined to your physical machine with no remote database persistence.
-              </p>
             </div>
-          </div>
+          )}
         </section>
 
         {/* 📖 3. STEP-BY-STEP "HOW TO USE" GUIDE */}

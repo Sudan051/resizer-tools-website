@@ -13,6 +13,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1.0,
     },
     {
+      url: "https://www.resizertools.com/about",
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
+    },
+    {
       url: "https://www.resizertools.com/privacy",
       lastModified: new Date(),
       changeFrequency: "monthly" as const,

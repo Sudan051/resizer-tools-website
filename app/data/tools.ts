@@ -4,6 +4,7 @@ import {
   Split, Trash2, FolderSync, RotateCw, PenTool, Droplet, 
   Lock, Unlock, Sliders, Cpu as NfcCpu
 } from "lucide-react";
+import { TOOL_CONTENT } from "./toolContent";
 
 export interface Tool {
   id: string;
@@ -62,66 +63,51 @@ export const categories = [
 ];
 
 export interface SEOContent {
+  overview: string[];
   steps: string[];
   faq: { q: string; a: string }[];
+  features: { title: string; desc: string }[];
 }
 
 export function getToolSEOContent(tool: { id: string; title: string; subtitle?: string; desc?: string }): SEOContent {
-  const steps: string[] = [
-    `Click the upload box or drag and drop your file directly into ${tool.title}.`,
-    `Adjust the options to fit your needs—such as size, quality, page order, or format.`,
-    `Check the instant preview on screen to make sure everything looks right.`,
-    `Click download to save your new file immediately to your computer or phone.`
-  ];
+  const normalizedId = tool.id.replace(/-/g, "_");
+  const deepContent = TOOL_CONTENT[normalizedId] || TOOL_CONTENT[tool.id];
 
-  const faq: { q: string; a: string }[] = [
-    { 
-      q: `Are my files uploaded to any servers?`, 
-      a: `No. ${tool.title} runs 100% locally inside your web browser. Your images, PDFs, signatures, and personal documents never leave your device, ensuring complete privacy.` 
-    },
-    { 
-      q: `Is ${tool.title} really free to use?`, 
-      a: `Yes, it's completely free. You don't need to sign up for an account, provide a credit card, or worry about hidden daily limits or watermarks.` 
-    },
-    { 
-      q: `Can I use this tool offline?`, 
-      a: `Yes! Once this page loads in your browser, you can disconnect from Wi-Fi or mobile data and keep using ${tool.title} without any interruptions.` 
-    },
-    { 
-      q: `Which browsers and devices are supported?`, 
-      a: `${tool.title} works smoothly on modern web browsers including Google Chrome, Apple Safari, Mozilla Firefox, and Microsoft Edge across Windows, Mac, iPhone, iPad, and Android devices.` 
-    },
-    { 
-      q: `Why is local browser processing better for privacy and speed?`, 
-      a: `Most online tools upload your files to remote servers, which takes time and exposes your private documents to third parties. Resizer Tools does all the work directly in your browser memory, so it is faster and 100% private.` 
-    },
-    { 
-      q: `Is there any limit on how many files I can process?`, 
-      a: `There are no arbitrary daily quotas. You can process as many files as you need, whenever you need.` 
-    },
-    { 
-      q: `Are my sensitive business or legal documents safe?`, 
-      a: `Yes. Because your files are processed entirely on your local machine and never sent over the internet, your contracts, invoices, and personal records remain strictly in your hands.` 
-    }
-  ];
-
-  if (tool.id === "img_comp" || tool.id === "img-comp") {
-    faq.push({
-      q: "What image formats can I compress?",
-      a: "You can compress JPG, PNG, WebP, and HEIC images with full control over quality and target file size."
-    });
-  } else if (tool.id === "mrg_pdf" || tool.id === "mrg-pdf") {
-    faq.push({
-      q: "Can I change the order of pages before merging?",
-      a: "Yes, you can easily arrange your files in any sequence before combining them into a single PDF."
-    });
-  } else if (tool.id === "res_make" || tool.id === "res-make") {
-    faq.push({
-      q: "Is the resume format compatible with ATS job portals?",
-      a: "Yes. The builder creates clean, standard single-column PDFs that ATS systems (like Workday, Greenhouse, and Lever) can read without formatting glitches."
-    });
+  if (deepContent) {
+    return deepContent;
   }
 
-  return { steps, faq };
+  return {
+    overview: [
+      `${tool.title} is an open client-side web utility provided by Resizer Tools. It runs entirely inside your browser memory without uploading any files to remote servers.`,
+      `Designed for speed, data privacy, and cross-platform reliability, your data is processed locally with zero external network transmission.`
+    ],
+    steps: [
+      `Select or drag-and-drop your source file directly into ${tool.title}.`,
+      `Configure the desired options, quality parameters, or layout targets.`,
+      `Inspect the real-time preview to verify your changes.`,
+      `Download the processed output immediately to your device.`
+    ],
+    faq: [
+      {
+        q: `Are my files uploaded to any servers when using ${tool.title}?`,
+        a: `No. ${tool.title} runs 100% locally in your web browser. Your files never leave your device, ensuring complete confidentiality.`
+      },
+      {
+        q: `Is ${tool.title} free to use?`,
+        a: `Yes, it is completely free with no registration, email requirements, or daily file limits.`
+      },
+      {
+        q: `Can I use this tool offline?`,
+        a: `Yes! Once loaded, our Service Worker caches the code so you can continue using ${tool.title} even without an internet connection.`
+      }
+    ],
+    features: [
+      { title: "Zero Server Uploads", desc: "Processed 100% locally in browser memory" },
+      { title: "Free & Unlimited", desc: "No daily limits, credits, or registration required" },
+      { title: "Offline Capable", desc: "Works seamlessly without an active internet connection" },
+      { title: "Cross-Platform", desc: "Compatible with modern desktop and mobile browsers" }
+    ]
+  };
 }
 

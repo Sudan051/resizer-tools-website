@@ -54,21 +54,39 @@ export default function PrivacyPage() {
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-lg font-bold text-white tracking-tight">3. AdMob & AdSense Analytics</h2>
+            <h2 className="text-lg font-bold text-white tracking-tight">3. Google AdSense &amp; Third-Party Advertising Policy</h2>
             <p>
-              To support free utility development, Resizer Tools imports third-party advertising services (Google AdMob and AdSense). These advertising frameworks may collect and share:
+              To maintain free, unrestricted access to all 28 digital utilities without mandatory paid subscriptions, Resizer Tools displays online advertisements served by Google AdSense and third-party advertising partners.
             </p>
-            <ul className="list-disc pl-6 space-y-1.5">
-              <li>**Device and Advertising IDs**: Used to serve, target, and measure personalized or non-personalized ads.</li>
-              <li>**Diagnostics and Crash Logs**: ephemerally collected to analyze code stability, load speed, and runtime app crashes.</li>
+            <p>
+              Under Google&apos;s AdSense Program Policies, we provide the following mandatory disclosures regarding advertising technologies and data practices:
+            </p>
+            <ul className="list-disc pl-6 space-y-2 text-xs">
+              <li>
+                <strong>Third-Party Vendors &amp; Google Cookies:</strong> Third-party vendors, including Google, use cookies and web beacons to serve advertisements based on a user&apos;s prior visits to this website or other websites across the internet.
+              </li>
+              <li>
+                <strong>DoubleClick DART Cookie:</strong> Google&apos;s use of advertising cookies (such as the DoubleClick cookie) enables it and its partners to serve ads to our users based on their navigation history across Resizer Tools and other sites on the World Wide Web.
+              </li>
+              <li>
+                <strong>Personalized Advertising Opt-Out:</strong> Users may opt out of personalized advertising by visiting <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer" className="text-brand-gold hover:underline">Google Ads Settings</a>.
+              </li>
+              <li>
+                <strong>Third-Party Network Opt-Out:</strong> Alternatively, users may opt out of third-party vendors&apos; use of cookies for interest-based advertising by visiting the <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer" className="text-brand-gold hover:underline">Digital Advertising Alliance (aboutads.info)</a> or the <a href="https://optout.networkadvertising.org/" target="_blank" rel="noopener noreferrer" className="text-brand-gold hover:underline">Network Advertising Initiative (NAI) opt-out portal</a>.
+              </li>
             </ul>
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-lg font-bold text-white tracking-tight">4. Browser Local Storage &amp; Cookie Policy</h2>
+            <h2 className="text-lg font-bold text-white tracking-tight">4. Browser Local Storage &amp; Cookie Disclosure</h2>
             <p>
-              We use `localStorage` (a client-side storage API inside your web browser) purely to remember if you have activated a Pro subscription so that we do not show you advertisements during subsequent visits. No tracking data, personally identifiable information, or persistent third-party cookies are saved by Resizer Tools.
+              Resizer Tools itself does not set tracking cookies or create persistent user surveillance profiles. We utilize standard browser <code className="text-brand-gold-light">localStorage</code> exclusively for client-side configuration preferences:
             </p>
+            <ul className="list-disc pl-6 space-y-1.5 text-xs">
+              <li>Remembering whether an ad-free Pro subscription has been verified on your browser session.</li>
+              <li>Preserving non-sensitive UI settings such as theme preferences and canvas zoom scales.</li>
+              <li>No personal information, uploaded files, or document contents are ever stored in cookies or transferred to external analytics databases.</li>
+            </ul>
           </section>
 
           <section className="space-y-3">

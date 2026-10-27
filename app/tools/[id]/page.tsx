@@ -171,6 +171,7 @@ export default async function ToolPage({ params }: { params: Promise<{ id: strin
         <div className="hidden md:flex items-center gap-8 text-sm text-brand-muted font-medium">
           <Link href="/#studio" className="hover:text-white transition-colors">All Tools ({toolsData.length})</Link>
           <Link href="/blog" className="text-brand-gold hover:text-white font-semibold flex items-center gap-1 transition-colors">Blog &amp; Guides 📖</Link>
+          <Link href="/about" className="hover:text-white transition-colors">About Us</Link>
           <Link href="/app" className="hover:text-white transition-colors">Mobile App</Link>
         </div>
         <Link 
