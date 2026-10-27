@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Sliders, ShieldCheck, Globe } from "lucide-react";
+import { Sliders, ShieldCheck, Globe, ImageIcon, FileText, Zap, BookOpen } from "lucide-react";
 
 export default function SiteFooter() {
   return (
@@ -34,8 +34,8 @@ export default function SiteFooter() {
 
           {/* Column 2: Popular Image Utilities */}
           <div className="space-y-3">
-            <h4 className="text-xs font-bold font-mono text-white uppercase tracking-wider flex items-center gap-1.5">
-              <span className="text-brand-gold">🖼️</span> Image Utilities
+            <h4 className="text-xs font-bold font-mono text-white uppercase tracking-wider flex items-center gap-2">
+              <ImageIcon className="w-3.5 h-3.5 text-brand-gold" /> Image Utilities
             </h4>
             <ul className="space-y-2 text-xs text-neutral-400">
               <li><Link href="/tools/img-comp" className="hover:text-brand-gold transition-colors">Image Compressor</Link></li>
@@ -51,8 +51,8 @@ export default function SiteFooter() {
 
           {/* Column 3: Advanced PDF Studio */}
           <div className="space-y-3">
-            <h4 className="text-xs font-bold font-mono text-white uppercase tracking-wider flex items-center gap-1.5">
-              <span className="text-brand-gold">📄</span> PDF Studio
+            <h4 className="text-xs font-bold font-mono text-white uppercase tracking-wider flex items-center gap-2">
+              <FileText className="w-3.5 h-3.5 text-brand-gold" /> PDF Studio
             </h4>
             <ul className="space-y-2 text-xs text-neutral-400">
               <li><Link href="/tools/mrg-pdf" className="hover:text-brand-gold transition-colors">Merge PDF Files</Link></li>
@@ -74,11 +74,11 @@ export default function SiteFooter() {
 
           {/* Column 4: Generators & Productivity */}
           <div className="space-y-3">
-            <h4 className="text-xs font-bold font-mono text-white uppercase tracking-wider flex items-center gap-1.5">
-              <span className="text-brand-gold">⚡</span> Generators &amp; Tools
+            <h4 className="text-xs font-bold font-mono text-white uppercase tracking-wider flex items-center gap-2">
+              <Zap className="w-3.5 h-3.5 text-brand-gold" /> Generators &amp; Tools
             </h4>
             <ul className="space-y-2 text-xs text-neutral-400">
-              <li><Link href="/shots" className="hover:text-brand-gold transition-colors font-medium text-brand-gold">Screenshot Studio 🚀</Link></li>
+              <li><Link href="/shots" className="hover:text-brand-gold transition-colors font-medium text-brand-gold">Screenshot Studio</Link></li>
               <li><Link href="/tools/shot-gen" className="hover:text-brand-gold transition-colors">Screenshot Generator</Link></li>
               <li><Link href="/tools/qr-gen" className="hover:text-brand-gold transition-colors">QR Code Generator</Link></li>
               <li><Link href="/tools/qr-scan" className="hover:text-brand-gold transition-colors">QR Matrix Scanner</Link></li>
@@ -92,11 +92,11 @@ export default function SiteFooter() {
 
           {/* Column 5: Knowledge Guides & Legal */}
           <div className="space-y-3">
-            <h4 className="text-xs font-bold font-mono text-white uppercase tracking-wider flex items-center gap-1.5">
-              <span className="text-brand-gold">📚</span> Guides &amp; Legal
+            <h4 className="text-xs font-bold font-mono text-white uppercase tracking-wider flex items-center gap-2">
+              <BookOpen className="w-3.5 h-3.5 text-brand-gold" /> Guides &amp; Legal
             </h4>
             <ul className="space-y-2 text-xs text-neutral-400">
-              <li><Link href="/about" className="hover:text-brand-gold transition-colors font-medium text-brand-gold">About Us ℹ️</Link></li>
+              <li><Link href="/about" className="hover:text-brand-gold transition-colors font-medium text-brand-gold">About Us</Link></li>
               <li><Link href="/blog" className="hover:text-brand-gold transition-colors font-medium text-white">All Knowledge Guides</Link></li>
               <li><Link href="/blog/image-compression-guide-2026" className="hover:text-brand-gold transition-colors">Image Compression 2026</Link></li>
               <li><Link href="/blog/client-side-pdf-security" className="hover:text-brand-gold transition-colors">Zero-Upload PDF Security</Link></li>

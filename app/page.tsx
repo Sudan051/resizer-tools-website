@@ -8,13 +8,15 @@ import { encryptPDF } from "@pdfsmaller/pdf-encrypt-lite";
 import { decryptPDF } from "@pdfsmaller/pdf-decrypt-lite";
 import { 
   Download, Sliders, ShieldCheck, Smartphone, 
-  Briefcase, Cpu, Play, X, Sparkles, Check, Search, ChevronDown, Eye
+  Briefcase, Cpu, Play, X, Sparkles, Check, Search, ChevronDown, Eye,
+  FileText, ImageIcon, Lock, ArrowUpRight, WifiOff, Zap, Shield, BookOpen
 } from "lucide-react";
 // 🌐 CONFIGURATION KEYS (Replace with your actual keys)
 const RAZORPAY_KEY_ID: string = "rzp_live_TFRpvE5UpoUDlC"; // e.g. "rzp_live_xxxxxxxxxxxxxx"
 
 import { toolsData, categories, Tool, getToolSEOContent } from "./data/tools";
 import SiteFooter from "./components/SiteFooter";
+import ThemeToggle from "./components/ThemeToggle";
 
 const realScreenshots = [
   { src: "/Home.png", headline: "Ultimate All-In-One Utilities", sub: "Image, PDF, QR, NFC Integrated" },
@@ -2445,7 +2447,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
               PDF Tools <ChevronDown className="w-3.5 h-3.5 text-brand-gold" />
             </button>
             <div className="absolute top-full left-0 w-64 bg-brand-obsidian/95 border border-brand-gold/20 rounded-2xl p-3 shadow-2xl backdrop-blur-xl opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-all duration-200 grid grid-cols-1 gap-1 z-50">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-brand-gold px-2 py-1">📄 PDF Studio</span>
+              <span className="text-[10px] font-mono uppercase tracking-wider text-brand-gold px-2 py-1 flex items-center gap-1.5"><FileText className="w-3 h-3" /> PDF Studio</span>
               {[
                 { id: "mrg_pdf", name: "Merge PDF Documents" },
                 { id: "mk_pdf", name: "PDF Maker & Designer" },
@@ -2460,7 +2462,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
               ].map((item) => (
                 <Link key={item.id} href={`/tools/${item.id.replace(/_/g, "-")}`} className="text-xs text-neutral-300 hover:text-brand-gold hover:bg-white/5 px-2.5 py-1.5 rounded-lg transition-colors flex items-center justify-between">
                   <span>{item.name}</span>
-                  <span className="text-[9px] font-mono text-brand-gold/60">🔗</span>
+                  <ArrowUpRight className="w-3 h-3 text-brand-gold/60" />
                 </Link>
               ))}
             </div>
@@ -2472,7 +2474,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
               Image Tools <ChevronDown className="w-3.5 h-3.5 text-brand-gold" />
             </button>
             <div className="absolute top-full left-0 w-64 bg-brand-obsidian/95 border border-brand-gold/20 rounded-2xl p-3 shadow-2xl backdrop-blur-xl opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-all duration-200 grid grid-cols-1 gap-1 z-50">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-brand-gold px-2 py-1">🖼️ Image Studio</span>
+              <span className="text-[10px] font-mono uppercase tracking-wider text-brand-gold px-2 py-1 flex items-center gap-1.5"><ImageIcon className="w-3 h-3" /> Image Studio</span>
               {[
                 { id: "img_comp", name: "Image Compressor" },
                 { id: "img_res", name: "Image Resizer" },
@@ -2483,7 +2485,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
               ].map((item) => (
                 <Link key={item.id} href={`/tools/${item.id.replace(/_/g, "-")}`} className="text-xs text-neutral-300 hover:text-brand-gold hover:bg-white/5 px-2.5 py-1.5 rounded-lg transition-colors flex items-center justify-between">
                   <span>{item.name}</span>
-                  <span className="text-[9px] font-mono text-brand-gold/60">🔗</span>
+                  <ArrowUpRight className="w-3 h-3 text-brand-gold/60" />
                 </Link>
               ))}
             </div>
@@ -2495,7 +2497,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
               Security & Studios <ChevronDown className="w-3.5 h-3.5 text-brand-gold" />
             </button>
             <div className="absolute top-full left-0 w-64 bg-brand-obsidian/95 border border-brand-gold/20 rounded-2xl p-3 shadow-2xl backdrop-blur-xl opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-all duration-200 grid grid-cols-1 gap-1 z-50">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-brand-gold px-2 py-1">🔒 Security & Studios</span>
+              <span className="text-[10px] font-mono uppercase tracking-wider text-brand-gold px-2 py-1 flex items-center gap-1.5"><Lock className="w-3 h-3" /> Security &amp; Studios</span>
               {[
                 { id: "shot_gen", name: "App Store Screenshot Studio" },
                 { id: "prt_pdf", name: "Protect PDF (Password)" },
@@ -2507,20 +2509,23 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
               ].map((item) => (
                 <Link key={item.id} href={`/tools/${item.id.replace(/_/g, "-")}`} className="text-xs text-neutral-300 hover:text-brand-gold hover:bg-white/5 px-2.5 py-1.5 rounded-lg transition-colors flex items-center justify-between">
                   <span>{item.name}</span>
-                  <span className="text-[9px] font-mono text-brand-gold/60">🔗</span>
+                  <ArrowUpRight className="w-3 h-3 text-brand-gold/60" />
                 </Link>
               ))}
             </div>
           </div>
 
-          <Link href="/blog" className="text-brand-gold hover:text-white font-semibold flex items-center gap-1 transition-colors">Blog 📖</Link>
+          <Link href="/blog" className="text-brand-gold hover:text-white font-semibold flex items-center gap-1 transition-colors">Blog</Link>
           <Link href="/about" className="hover:text-white transition-colors">About Us</Link>
           <a href="#our-apps" className="hover:text-white transition-colors">Our Apps</a>
-          <button onClick={() => setShowSubscription(true)} className="hover:text-white text-brand-gold font-semibold flex items-center gap-1 transition-colors cursor-pointer">Unlock Pro ✨</button>
+          <button onClick={() => setShowSubscription(true)} className="hover:text-white text-brand-gold font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"><Sparkles className="w-3.5 h-3.5" /> Unlock Pro</button>
         </div>
-        <button onClick={() => openToolModal({ id: "app_download", title: "Download Utilify App", isAppDownload: true })} className="flex items-center gap-2 bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-semibold text-xs px-4 py-2 rounded-full shadow-premium-gold hover:scale-105 transition-transform cursor-pointer">
-          <Download className="w-3.5 h-3.5 stroke-[3]" /> Download App
-        </button>
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
+          <button onClick={() => openToolModal({ id: "app_download", title: "Download Utilify App", isAppDownload: true })} className="flex items-center gap-2 bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-semibold text-xs px-4 py-2 rounded-full shadow-premium-gold hover:scale-105 transition-transform cursor-pointer">
+            <Download className="w-3.5 h-3.5 stroke-[3]" /> Download App
+          </button>
+        </div>
       </motion.nav>
 
       {/* 👑 2. Hero Section */}
@@ -2535,10 +2540,10 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
         </motion.h1>
         <p className="mt-6 text-brand-muted text-base md:text-xl max-w-3xl font-light leading-relaxed">
           Compress images, edit PDFs, create App Store screenshots, and generate QR codes—all free and private. <br />
-          <span className="font-semibold text-white">🔒 Runs in your browser:</span> Your files are processed locally on your device. <span className="text-brand-gold font-semibold underline decoration-brand-gold/30">Zero server uploads. 100% privacy.</span>
+          <span className="font-semibold text-white">Runs locally in your browser:</span> Your files are processed locally on your device. <span className="text-brand-gold font-semibold underline decoration-brand-gold/30">Zero server uploads. 100% privacy.</span>
         </p>
 
-        {/* 🔍 INSTANT LIVE SEARCH BAR */}
+        {/* INSTANT LIVE SEARCH BAR */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="mt-8 w-full max-w-2xl mx-auto relative z-20">
           <div className="relative flex items-center">
             <Search className="w-5 h-5 text-brand-gold absolute left-4 pointer-events-none" />
@@ -2583,13 +2588,13 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
         </motion.div>
       </section>
 
-      {/* 🔒 2.5 Security Assurance Section (High Conversion Trust Banner) */}
+      {/* Security Assurance Section */}
       <section className="py-10 px-6 max-w-5xl mx-auto">
         <div className="relative rounded-3xl bg-gradient-to-br from-brand-obsidian/80 to-brand-obsidian/30 border border-brand-gold/20 p-8 md:p-12 overflow-hidden shadow-2xl flex flex-col md:flex-row items-center justify-between gap-8 backdrop-blur-md">
           <div className="absolute top-0 right-0 w-64 h-64 bg-brand-gold/5 rounded-full blur-3xl pointer-events-none" />
           <div className="space-y-4 text-left max-w-xl">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-gold/10 border border-brand-gold/20 text-xs font-mono font-bold tracking-wider text-brand-gold uppercase">
-              🛡️ Privacy First
+              <Shield className="w-3.5 h-3.5" /> Privacy First
             </span>
             <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
               Your Files Never Leave Your Device
@@ -2600,12 +2605,12 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
           </div>
           <div className="grid grid-cols-2 gap-4 w-full md:w-auto shrink-0">
             <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4 text-left flex flex-col justify-between max-w-[200px]">
-              <span className="text-2xl mb-1">🔌</span>
+              <WifiOff className="w-5 h-5 text-brand-gold mb-2" />
               <h3 className="text-xs font-bold text-white uppercase tracking-wider">Works Offline</h3>
               <p className="text-[10px] text-brand-muted mt-1 leading-normal">Disconnect your internet and keep editing, compressing, or watermarking files without interruption.</p>
             </div>
             <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4 text-left flex flex-col justify-between max-w-[200px]">
-              <span className="text-2xl mb-1">🚀</span>
+              <Zap className="w-5 h-5 text-brand-gold mb-2" />
               <h3 className="text-xs font-bold text-white uppercase tracking-wider">Zero Upload Lag</h3>
               <p className="text-[10px] text-brand-muted mt-1 leading-normal">No waiting for slow uploads. Process your documents and photos instantly using your own device hardware.</p>
             </div>
@@ -2644,7 +2649,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
           <div className="space-y-6">
             <div className="flex items-center justify-between pb-4 border-b border-white/10">
               <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                🔍 Search Results ({searchedTools.length})
+                <Search className="w-5 h-5 text-brand-gold" /> Search Results ({searchedTools.length})
               </h3>
               <span className="text-xs font-mono text-brand-gold">Matching &quot;{searchQuery}&quot;</span>
             </div>
@@ -2685,19 +2690,19 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
           /* 4 Categorized Studio Blocks */
           <div className="space-y-16">
             
-            {/* 📄 SECTION 1: PDF Manipulation Studio */}
+            {/* SECTION 1: PDF Manipulation Studio */}
             {(activeCategory === "all" || activeCategory === "pdf") && (
               <div className="space-y-6">
                 <div className="flex items-center justify-between pb-4 border-b border-white/10">
                   <div>
                     <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                      <span className="p-2 rounded-xl bg-brand-gold/10 border border-brand-gold/20 text-brand-gold text-sm">📄</span> 
+                      <span className="p-2 rounded-xl bg-brand-gold/10 border border-brand-gold/20 text-brand-gold flex items-center justify-center"><FileText className="w-4 h-4" /></span> 
                       PDF Manipulation &amp; Editing Studio
                     </h3>
                     <p className="text-xs text-brand-muted mt-1 font-light">Create, merge, split, extract, reorder, compress, and watermark PDF documents 100% client-side.</p>
                   </div>
-                  <span className="text-xs font-mono bg-brand-gold/10 text-brand-gold border border-brand-gold/20 px-3 py-1 rounded-full font-bold">
-                    10 Tools • 🔒 Client-Side
+                  <span className="text-xs font-mono bg-brand-gold/10 text-brand-gold border border-brand-gold/20 px-3 py-1 rounded-full font-bold flex items-center gap-1.5">
+                    <Lock className="w-3 h-3" /> 10 Tools • Client-Side
                   </span>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -2729,19 +2734,19 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
               </div>
             )}
 
-            {/* 🖼️ SECTION 2: Image Processing & Format Studio */}
+            {/* SECTION 2: Image Processing & Format Studio */}
             {(activeCategory === "all" || activeCategory === "image") && (
               <div className="space-y-6 pt-6">
                 <div className="flex items-center justify-between pb-4 border-b border-white/10">
                   <div>
                     <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                      <span className="p-2 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm">🖼️</span> 
+                      <span className="p-2 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center"><ImageIcon className="w-4 h-4" /></span> 
                       Image Processing &amp; Format Studio
                     </h3>
                     <p className="text-xs text-brand-muted mt-1 font-light">Down-sample, resize, convert formats, and assemble photo print grids natively.</p>
                   </div>
-                  <span className="text-xs font-mono bg-blue-500/10 text-blue-400 border border-blue-500/20 px-3 py-1 rounded-full font-bold">
-                    6 Tools • ⚡ Web Canvas API
+                  <span className="text-xs font-mono bg-blue-500/10 text-blue-400 border border-blue-500/20 px-3 py-1 rounded-full font-bold flex items-center gap-1.5">
+                    <Zap className="w-3 h-3" /> 6 Tools • Web Canvas API
                   </span>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -2773,19 +2778,19 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
               </div>
             )}
 
-            {/* 🔒 SECTION 3: Security, Signatures & Documents */}
+            {/* SECTION 3: Security, Signatures & Documents */}
             {(activeCategory === "all" || activeCategory === "security") && (
               <div className="space-y-6 pt-6">
                 <div className="flex items-center justify-between pb-4 border-b border-white/10">
                   <div>
                     <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                      <span className="p-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm">🔒</span> 
+                      <span className="p-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center"><Lock className="w-4 h-4" /></span> 
                       Security, Signatures &amp; Professional Documents
                     </h3>
                     <p className="text-xs text-brand-muted mt-1 font-light">Encrypt, unlock, digital signatures, invoice compilation, and ATS resumes.</p>
                   </div>
-                  <span className="text-xs font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-3 py-1 rounded-full font-bold">
-                    6 Tools • 🛡️ Zero Upload Privacy
+                  <span className="text-xs font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-3 py-1 rounded-full font-bold flex items-center gap-1.5">
+                    <Shield className="w-3 h-3" /> 6 Tools • Zero Upload Privacy
                   </span>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -2817,19 +2822,19 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
               </div>
             )}
 
-            {/* ⚡ SECTION 4: Generators, Scanners & App Studios */}
+            {/* SECTION 4: Generators, Scanners & App Studios */}
             {(activeCategory === "all" || activeCategory === "app" || activeCategory === "qr") && (
               <div className="space-y-6 pt-6">
                 <div className="flex items-center justify-between pb-4 border-b border-white/10">
                   <div>
                     <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                      <span className="p-2 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 text-sm">⚡</span> 
+                      <span className="p-2 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center"><Zap className="w-4 h-4" /></span> 
                       Generators, Scanners &amp; Marketing Studios
                     </h3>
                     <p className="text-xs text-brand-muted mt-1 font-light">App Store screenshots, QR code creation, document scanning, and NFC chip tools.</p>
                   </div>
-                  <span className="text-xs font-mono bg-purple-500/10 text-purple-400 border border-purple-500/20 px-3 py-1 rounded-full font-bold">
-                    5 Tools • 🚀 App Store Ready
+                  <span className="text-xs font-mono bg-purple-500/10 text-purple-400 border border-purple-500/20 px-3 py-1 rounded-full font-bold flex items-center gap-1.5">
+                    <Smartphone className="w-3 h-3" /> 5 Tools • App Store Ready
                   </span>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -2946,13 +2951,15 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
           <div className="space-y-6">
             <div className="space-y-4">
               {[
-                { emoji: "🔒", title: "100% Offline Engine", desc: "Process images, PDFs, and documents without any internet connection. Your data stays on your device." },
-                { emoji: "⚡", title: "Native Hardware Speed", desc: "Leverages your phone's GPU and CPU for instant processing — no server round-trips or upload waits." },
-                { emoji: "📱", title: "NFC & Deep OS Access", desc: "Read/Write NFC tags, scan documents with native camera, and access hardware features unavailable on web." },
-                { emoji: "🛡️", title: "Zero Data Collection", desc: "No analytics, no tracking, no ads in the app. Your files are processed in device memory and immediately released." }
+                { icon: Lock, title: "100% Offline Engine", desc: "Process images, PDFs, and documents without any internet connection. Your data stays on your device." },
+                { icon: Zap, title: "Native Hardware Speed", desc: "Leverages your phone's GPU and CPU for instant processing — no server round-trips or upload waits." },
+                { icon: Smartphone, title: "NFC & Deep OS Access", desc: "Read/Write NFC tags, scan documents with native camera, and access hardware features unavailable on web." },
+                { icon: ShieldCheck, title: "Zero Data Collection", desc: "No analytics, no tracking, no ads in the app. Your files are processed in device memory and immediately released." }
               ].map((feature, i) => (
                 <div key={i} className="flex items-start gap-4 p-4 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-brand-gold/20 transition-colors">
-                  <span className="text-2xl shrink-0">{feature.emoji}</span>
+                  <div className="p-2.5 rounded-xl bg-brand-gold/10 border border-brand-gold/25 text-brand-gold shrink-0 mt-0.5">
+                    <feature.icon className="w-5 h-5" />
+                  </div>
                   <div>
                     <h4 className="text-sm font-bold text-white">{feature.title}</h4>
                     <p className="text-xs text-brand-muted font-light mt-1 leading-relaxed">{feature.desc}</p>
@@ -3082,16 +3089,16 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
               <p className="text-xs text-brand-muted font-light mb-4">Have an idea for a new tool or found a bug? We&apos;d love to hear from you.</p>
               
               <div className="space-y-3.5 text-left">
-                {/* 🚀 Upcoming Feature Announcement */}
+                {/* Upcoming Feature Announcement */}
                 <div className="p-3.5 rounded-2xl bg-brand-gold/[0.03] border border-brand-gold/15 text-left">
                   <div className="flex items-center gap-2 text-brand-gold text-[10px] font-mono font-bold uppercase tracking-wider mb-1">
-                    <span>🚀</span> What&apos;s Coming Next
+                    <Sparkles className="w-3.5 h-3.5 text-brand-gold" /> What&apos;s Coming Next
                   </div>
                   <p className="text-[11px] text-brand-muted leading-relaxed font-light">
                     We are working on **Audio &amp; Video tools** (compressors, cutters, and converters) in our upcoming release.
                   </p>
                   <p className="text-[10px] text-brand-gold-light mt-1.5 font-medium">
-                    💬 What specific tools would help your daily workflow? Let us know below!
+                    What specific tools would help your daily workflow? Let us know below!
                   </p>
                 </div>
 
@@ -4420,7 +4427,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                             href="/shots/" 
                             className="inline-flex items-center gap-2 bg-gradient-to-r from-brand-gold via-brand-gold-light to-brand-gold-dark text-black font-extrabold text-xs px-6 py-3 rounded-xl shadow-premium-gold hover:scale-105 transition-transform"
                           >
-                            Open Fullscreen Screenshot Studio 🚀
+                            Open Fullscreen Screenshot Studio <ArrowUpRight className="w-4 h-4 stroke-[3]" />
                           </Link>
                         </div>
                       </div>
@@ -4428,12 +4435,12 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                   </div>
                 )}
 
-                {/* 🔒 Browser-Native Trust & Security Guide inside the active Workspace */}
+                {/* Browser-Native Trust & Security Guide inside the active Workspace */}
                 {activeTool && (
                   <div className="mt-8 pt-6 border-t border-white/5 space-y-6 text-left">
                     <div className="space-y-3">
-                      <h4 className="text-xs font-bold text-white tracking-wider uppercase flex items-center gap-1.5">
-                        <span className="text-brand-gold">📖</span> How to use {activeTool.title}
+                      <h4 className="text-xs font-bold text-white tracking-wider uppercase flex items-center gap-2">
+                        <BookOpen className="w-3.5 h-3.5 text-brand-gold" /> How to use {activeTool.title}
                       </h4>
                       <ol className="list-decimal pl-4 space-y-1.5 text-[11px] text-brand-muted font-light">
                         {getToolSEOContent(activeTool).steps.map((step, idx) => (
@@ -4445,8 +4452,8 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                     </div>
 
                     <div className="space-y-3">
-                      <h4 className="text-xs font-bold text-white tracking-wider uppercase flex items-center gap-1.5">
-                        <span className="text-brand-gold">🛡️</span> Privacy Assurance FAQ
+                      <h4 className="text-xs font-bold text-white tracking-wider uppercase flex items-center gap-2">
+                        <Shield className="w-3.5 h-3.5 text-brand-gold" /> Privacy Assurance FAQ
                       </h4>
                       <div className="space-y-3 pl-1">
                         {getToolSEOContent(activeTool).faq.map((item, idx) => (
@@ -4505,7 +4512,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                 onClick={handleInstallPWA}
                 className="bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-extrabold text-xs px-3.5 py-2 rounded-xl shadow-premium-gold hover:scale-[1.02] transition-all cursor-pointer whitespace-nowrap"
               >
-                Install Now 🚀
+                Install Now
               </button>
               <button 
                 onClick={() => setShowPwaPrompt(false)}

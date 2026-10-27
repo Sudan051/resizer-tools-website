@@ -86,7 +86,7 @@ export default function ToolContentSection({ tool }: ToolContentSectionProps) {
                 <span className="text-xs text-brand-muted font-mono" suppressHydrationWarning>({ratingCount.toLocaleString("en-US")} verified votes)</span>
               </div>
               <p className="text-xs text-brand-gold font-medium">
-                {hasRated ? "✨ Thank you for rating this tool!" : "Click stars to rate your experience with this tool"}
+                {hasRated ? "Thank you for rating this tool!" : "Click stars to rate your experience with this tool"}
               </p>
             </div>
           </div>

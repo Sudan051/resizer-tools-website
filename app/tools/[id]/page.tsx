@@ -5,6 +5,7 @@ import { toolsData, getToolSEOContent } from "../../data/tools";
 import { Sliders, Download, ShieldCheck, Zap, Smartphone } from "lucide-react";
 import ToolContentSection from "../../components/ToolContentSection";
 import SiteFooter from "../../components/SiteFooter";
+import ThemeToggle from "../../components/ThemeToggle";
 
 export const dynamic = "force-static";
 
@@ -170,22 +171,25 @@ export default async function ToolPage({ params }: { params: Promise<{ id: strin
         </Link>
         <div className="hidden md:flex items-center gap-8 text-sm text-brand-muted font-medium">
           <Link href="/#studio" className="hover:text-white transition-colors">All Tools ({toolsData.length})</Link>
-          <Link href="/blog" className="text-brand-gold hover:text-white font-semibold flex items-center gap-1 transition-colors">Blog &amp; Guides 📖</Link>
+          <Link href="/blog" className="text-brand-gold hover:text-white font-semibold flex items-center gap-1 transition-colors">Blog &amp; Guides</Link>
           <Link href="/about" className="hover:text-white transition-colors">About Us</Link>
           <Link href="/app" className="hover:text-white transition-colors">Mobile App</Link>
         </div>
-        <Link 
-          href="/app" 
-          className="flex items-center gap-2 bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-semibold text-xs px-4 py-2 rounded-full shadow-premium-gold hover:scale-105 transition-transform cursor-pointer"
-        >
-          <Download className="w-3.5 h-3.5 stroke-[3]" /> Download App
-        </Link>
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
+          <Link 
+            href="/app" 
+            className="flex items-center gap-2 bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-semibold text-xs px-4 py-2 rounded-full shadow-premium-gold hover:scale-105 transition-transform cursor-pointer"
+          >
+            <Download className="w-3.5 h-3.5 stroke-[3]" /> Download App
+          </Link>
+        </div>
       </nav>
 
-      {/* 👑 SEO HERO SECTION ABOVE WORKSPACE (HIGHLIGHTED TITLE) */}
+      {/* SEO HERO SECTION ABOVE WORKSPACE */}
       <header className="pt-28 pb-8 px-6 text-center max-w-4xl mx-auto space-y-4 relative z-10">
         <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-brand-gold/15 border border-brand-gold/35 text-brand-gold font-mono text-xs uppercase font-bold tracking-wider">
-          ⚡ FREE {tool.category?.toUpperCase() || "ONLINE"} UTILITY
+          <Zap className="w-3.5 h-3.5 text-brand-gold" /> FREE {tool.category?.toUpperCase() || "ONLINE"} UTILITY
         </div>
 
         <h1 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
