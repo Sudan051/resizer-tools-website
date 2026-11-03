@@ -14,33 +14,33 @@ export async function GET() {
 ## Available Utility Tools
 
 ### Image Tools
-- Image Compressor (https://www.resizertools.com/tools/img-comp): Reduce image file size (JPEG, PNG, WebP) without losing quality.
-- Image Resizer (https://www.resizertools.com/tools/img-res): Resize images by exact pixels, percentages, or aspect ratios.
-- Passport Photo Sheet Generator (https://www.resizertools.com/tools/prnt-sheet): Arrange passport photos into printable grid sheets.
-- Image Format Converter (https://www.resizertools.com/tools/img-conv): Convert between HEIC, WebP, PNG, and JPEG formats locally.
-- Image to PDF (https://www.resizertools.com/tools/img-pdf): Convert multiple images into a single PDF document.
-- PDF to Images (https://www.resizertools.com/tools/pdf-imgs): Convert PDF pages to high-res PNG/JPG images.
+- Image Compressor (https://www.resizertools.com/image-compressor): Reduce image file size (JPEG, PNG, WebP) without losing quality.
+- Image Resizer (https://www.resizertools.com/image-resizer): Resize images by exact pixels, percentages, or aspect ratios.
+- Passport Photo Sheet Generator (https://www.resizertools.com/print-photo-sheet): Arrange passport photos into printable grid sheets.
+- Image Format Converter (https://www.resizertools.com/image-converter): Convert between HEIC, WebP, PNG, and JPEG formats locally.
+- Image to PDF (https://www.resizertools.com/image-to-pdf): Convert multiple images into a single PDF document.
+- PDF to Images (https://www.resizertools.com/pdf-images): Convert PDF pages to high-res PNG/JPG images.
 
 ### PDF Editing & Security Tools
-- PDF Reducer / Compressor (https://www.resizertools.com/tools/red-pdf): Downscale and compress PDF files.
-- Merge PDF (https://www.resizertools.com/tools/mrg-pdf): Combine multiple PDF documents into one single file.
-- Split PDF (https://www.resizertools.com/tools/spl-pdf): Extract specific page ranges or split every page into separate PDFs.
-- Rotate PDF (https://www.resizertools.com/tools/rot-pdf): Permanently rotate individual or all pages inside a PDF.
-- Sign PDF (https://www.resizertools.com/tools/sgn-pdf): Draw, upload, or place digital signatures onto PDF documents.
-- PDF Watermark (https://www.resizertools.com/tools/wtrmk-pdf): Add custom text watermarks onto PDF pages.
-- Protect PDF (https://www.resizertools.com/tools/prt-pdf): Protect PDF documents with AES password encryption.
-- Unlock PDF (https://www.resizertools.com/tools/unl-pdf): Remove password protection from authorized PDF files.
-- Extract PDF Pages (https://www.resizertools.com/tools/ext-pdf): Pull specific pages out of a PDF into a new document.
-- Delete PDF Pages (https://www.resizertools.com/tools/del-pdf): Remove unwanted pages from PDF files.
-- Reorder PDF Pages (https://www.resizertools.com/tools/ord-pdf): Drag and rearrange PDF page order.
-- PDF Page Numbers (https://www.resizertools.com/tools/num-pdf): Add custom page numbers to PDF documents.
+- PDF Reducer / Compressor (https://www.resizertools.com/pdf-reducer): Downscale and compress PDF files.
+- Merge PDF (https://www.resizertools.com/merge-pdf): Combine multiple PDF documents into one single file.
+- Split PDF (https://www.resizertools.com/split-pdf): Extract specific page ranges or split every page into separate PDFs.
+- Rotate PDF (https://www.resizertools.com/rotate-pdf-pages): Permanently rotate individual or all pages inside a PDF.
+- Sign PDF (https://www.resizertools.com/sign-pdf): Draw, upload, or place digital signatures onto PDF documents.
+- PDF Watermark (https://www.resizertools.com/pdf-watermark): Add custom text watermarks onto PDF pages.
+- Protect PDF (https://www.resizertools.com/protect-pdf): Protect PDF documents with AES password encryption.
+- Unlock PDF (https://www.resizertools.com/unlock-pdf): Remove password protection from authorized PDF files.
+- Extract PDF Pages (https://www.resizertools.com/extract-pdf-pages): Pull specific pages out of a PDF into a new document.
+- Delete PDF Pages (https://www.resizertools.com/delete-pdf-pages): Remove unwanted pages from PDF files.
+- Reorder PDF Pages (https://www.resizertools.com/reorder-pdf-pages): Drag and rearrange PDF page order.
+- PDF Page Numbers (https://www.resizertools.com/pdf-page-numbers): Add custom page numbers to PDF documents.
 
 ### Advanced Utilities & Hardware Connectors
-- QR Code Generator (https://www.resizertools.com/tools/qr-gen): Create customized high-density vector QR codes.
-- Digital Signature Creator (https://www.resizertools.com/tools/sig-cr): Draw and export transparent PNG signatures.
-- Invoice Generator (https://www.resizertools.com/tools/inv-mk): Create professional printable PDF invoices.
-- ATS Resume Builder (https://www.resizertools.com/tools/res-make): Build ATS-compliant professional PDF resumes.
-- App Store Screenshot Studio (https://www.resizertools.com/shots): Design App Store & Google Play marketing screenshots.
+- QR Code Generator (https://www.resizertools.com/qr-code-generator): Create customized high-density vector QR codes.
+- Digital Signature Creator (https://www.resizertools.com/signature-creator): Draw and export transparent PNG signatures.
+- Invoice Generator (https://www.resizertools.com/invoice-maker): Create professional printable PDF invoices.
+- ATS Resume Builder (https://www.resizertools.com/resume-builder): Build ATS-compliant professional PDF resumes.
+- App Store Screenshot Studio (https://www.resizertools.com/screenshot-generator): Design App Store & Google Play marketing screenshots.
 
 ## Knowledge Base & Technical Blog
 - Blog Hub: https://www.resizertools.com/blog

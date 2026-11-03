@@ -22,26 +22,24 @@ function runAudit() {
   const toolsDataPath = path.join(ROOT_DIR, 'app/data/tools.ts');
   const toolsDataContent = fs.readFileSync(toolsDataPath, 'utf8');
   
-  // Extract tool IDs
-  const idRegex = /id:\s*["']([^"']+)["']/g;
-  const toolIds = [];
+  // Extract tools (id and slug)
+  const toolEntryRegex = /id:\s*["']([^"']+)["'],\s*slug:\s*["']([^"']+)["']/g;
+  const tools = [];
   let match;
-  while ((match = idRegex.exec(toolsDataContent)) !== null) {
-    if (!toolIds.includes(match[1]) && !['all', 'image', 'scanner', 'pdf', 'generator', 'nfc'].includes(match[1])) {
-      toolIds.push(match[1]);
-    }
+  while ((match = toolEntryRegex.exec(toolsDataContent)) !== null) {
+    tools.push({ id: match[1], slug: match[2] });
   }
 
-  console.log(`✅ Detected ${toolIds.length} tools defined in tools.ts:`);
-  console.log(`   ${toolIds.join(', ')}\n`);
+  console.log(`✅ Detected ${tools.length} tools defined in tools.ts:`);
+  console.log(`   ${tools.map(t => `${t.id} -> /${t.slug}`).join(', ')}\n`);
 
   // 2. Check Sitemap
   const sitemapPath = path.join(ROOT_DIR, 'app/sitemap.ts');
   const sitemapContent = fs.readFileSync(sitemapPath, 'utf8');
-  if (!sitemapContent.includes('toolsData.map') && !sitemapContent.includes('/tools/')) {
-    errors.push('Sitemap does not dynamically map toolsData to /tools/ URLs.');
+  if (!sitemapContent.includes('toolsData.map')) {
+    errors.push('Sitemap does not dynamically map toolsData URLs.');
   } else {
-    console.log('✅ Sitemap correctly indexes dynamic /tools/ routes.');
+    console.log('✅ Sitemap correctly indexes dynamic root tool routes.');
   }
 
   // 3. Check Homepage Integration & Grid
@@ -49,12 +47,12 @@ function runAudit() {
   const homepageContent = fs.readFileSync(homepagePath, 'utf8');
 
   // Verify critical tools are in Homepage grid/categories
-  const criticalTools = ['mk_pdf', 'ext_pdf', 'ord_pdf', 'mrg_pdf', 'spl_pdf'];
-  criticalTools.forEach((toolId) => {
-    if (!homepageContent.includes(`"${toolId}"`) && !homepageContent.includes(`'${toolId}'`)) {
-      errors.push(`Homepage is missing tool '${toolId}' in its tool lists / categories.`);
+  const criticalTools = tools.filter(t => ['mk_pdf', 'ext_pdf', 'ord_pdf', 'mrg_pdf', 'spl_pdf'].includes(t.id));
+  criticalTools.forEach((tool) => {
+    if (!homepageContent.includes(`"${tool.id}"`) && !homepageContent.includes(`'${tool.id}'`)) {
+      errors.push(`Homepage is missing tool '${tool.id}' in its tool lists / categories.`);
     } else {
-      console.log(`✅ Homepage contains '${toolId}'`);
+      console.log(`✅ Homepage contains '${tool.id}'`);
     }
   });
 
@@ -62,12 +60,11 @@ function runAudit() {
   const footerPath = path.join(ROOT_DIR, 'app/components/SiteFooter.tsx');
   const footerContent = fs.readFileSync(footerPath, 'utf8');
 
-  criticalTools.forEach((toolId) => {
-    const slug = toolId.replace(/_/g, '-');
-    if (!footerContent.includes(`/tools/${slug}`)) {
-      errors.push(`SiteFooter is missing link for '/tools/${slug}'.`);
+  criticalTools.forEach((tool) => {
+    if (!footerContent.includes(`/${tool.slug}`)) {
+      errors.push(`SiteFooter is missing link for '/${tool.slug}'.`);
     } else {
-      console.log(`✅ SiteFooter links to '/tools/${slug}'`);
+      console.log(`✅ SiteFooter links to '/${tool.slug}'`);
     }
   });
 
@@ -110,14 +107,13 @@ function runAudit() {
   let minLinks = 999;
   let weakestTools = [];
 
-  toolIds.forEach((id) => {
-    const slug = id.replace(/_/g, '-');
+  tools.forEach(({ id, slug }) => {
     let incomingLinkCount = 0;
 
-    if (homepageContent.includes(`"${id}"`) || homepageContent.includes(`'${id}'`) || homepageContent.includes(`/tools/${slug}`)) {
+    if (homepageContent.includes(`"${id}"`) || homepageContent.includes(`'${id}'`) || homepageContent.includes(`/${slug}`)) {
       incomingLinkCount += 2;
     }
-    if (footerContent.includes(`/tools/${slug}`)) {
+    if (footerContent.includes(`/${slug}`)) {
       incomingLinkCount += 1;
     }
     incomingLinkCount += 1; // Sitemap

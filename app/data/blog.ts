@@ -51,7 +51,7 @@ When optimizing imagery, choosing between lossless and lossy compression determi
 
 Traditional online image compressors require uploading photos to remote cloud servers for batch processing. This exposes personal metadata, GPS EXIF coordinates, and sensitive paperwork to external data leaks.
 
-Using **[Image Compressor](/tools/img-comp)** on Resizer Tools, your images are decoded and re-encoded entirely inside your device's browser memory using HTML5 Canvas and WebAssembly. No photos are ever uploaded, cached, or transferred across external networks.
+Using **[Image Compressor](/image-compressor)** on Resizer Tools, your images are decoded and re-encoded entirely inside your device's browser memory using HTML5 Canvas and WebAssembly. No photos are ever uploaded, cached, or transferred across external networks.
     `
   },
   {
@@ -87,7 +87,7 @@ Modern browser engines (Chromium, WebKit, Gecko) possess native computing power 
 
 1. **Zero Server Transit**: Your PDF file never leaves your computer or smartphone storage.
 2. **Instant Processing Speeds**: Eliminates upload and download network latency, enabling instantaneous document merging and signing.
-3. **True Confidentiality**: Even when disconnected from the internet, tools like **[Protect PDF](/tools/prt-pdf)** and **[Merge PDF](/tools/mrg-pdf)** work seamlessly in offline browser environments.
+3. **True Confidentiality**: Even when disconnected from the internet, tools like **[Protect PDF](/protect-pdf)** and **[Merge PDF](/merge-pdf)** work seamlessly in offline browser environments.
 
 ---
 
@@ -136,7 +136,7 @@ Modern ATS parsers match candidate resumes against target job descriptions using
 
 ## 3. Generating Your ATS-Formatted Resume
 
-Using the **[ATS Resume Builder](/tools/res-make)** on Resizer Tools, you can generate clean, ATS-compliant PDF resumes with verified font hierarchies, optimized margins, and semantic section tags for 100% parse accuracy.
+Using the **[ATS Resume Builder](/resume-builder)** on Resizer Tools, you can generate clean, ATS-compliant PDF resumes with verified font hierarchies, optimized margins, and semantic section tags for 100% parse accuracy.
     `
   },
   {
@@ -171,13 +171,13 @@ The Web NFC API enables web applications running on Chromium Android browsers to
 
 1. **Instant Digital Business Cards**: Program your vCard profile or portfolio URL onto a sleek wooden or metal NFC card in seconds.
 2. **Home Automation Triggers**: Encode WiFi credentials or automated task URLs onto discreet NFC stickers around your office.
-3. **Zero Software Installation**: Program and audit contactless tags directly inside the web browser using our **[Web NFC Studio](/tools/nfc-tl)**.
+3. **Zero Software Installation**: Program and audit contactless tags directly using browser and mobile native tools.
 
 ---
 
 ## 3. Securing Contactless Interactions
 
-Always audit unknown NFC tags and QR codes before granting device permissions. Use dedicated offline scanners like **[QR Scanner](/tools/qr-scan)** to preview the target payload in secure memory before executing system actions.
+Always audit unknown NFC tags and QR codes before granting device permissions. Use dedicated offline camera scanners to preview the target payload in secure memory before executing system actions.
     `
   },
   {
@@ -219,7 +219,7 @@ To reduce file size without turning your document blurry, employ these structura
 
 ## 3. Compressing Privately in Your Browser
 
-With **[Compress PDF](/tools/red-pdf)** on Resizer Tools, your PDF is analyzed and downscaled in browser memory with customizable compression levels (Extreme, Recommended, and Low). Your documents remain private and zero bytes are transmitted over external networks.
+With **[Compress PDF](/pdf-reducer)** on Resizer Tools, your PDF is analyzed and downscaled in browser memory with customizable compression levels (Extreme, Recommended, and Low). Your documents remain private and zero bytes are transmitted over external networks.
     `
   },
   {
@@ -257,7 +257,7 @@ Despite its technological superiority, HEIC is frequently rejected by government
 
 ## 3. How to Convert HEIC to JPG Privately
 
-Instead of uploading personal photos to random online converters, use the **[Image Converter](/tools/img-conv)** on Resizer Tools. The converter utilizes client-side decoding libraries to transform HEIC files into high-quality JPEG or PNG files directly in your web browser.
+Instead of uploading personal photos to random online converters, use the **[Image Converter](/image-converter)** on Resizer Tools. The converter utilizes client-side decoding libraries to transform HEIC files into high-quality JPEG or PNG files directly in your web browser.
     `
   },
   {
@@ -300,7 +300,7 @@ For an electronic signature to hold up under legal scrutiny, it must satisfy fou
 
 ## 3. Signing Documents Privately in Your Browser
 
-With the **[Sign PDF](/tools/sgn-pdf)** tool on Resizer Tools, you can draw smooth vector signatures, insert initials, and stamp verification dates onto contracts in browser memory without sending private legal documents to third-party cloud servers.
+With the **[Sign PDF](/sign-pdf)** tool on Resizer Tools, you can draw smooth vector signatures, insert initials, and stamp verification dates onto contracts in browser memory without sending private legal documents to third-party cloud servers.
     `
   },
   {
@@ -336,7 +336,7 @@ Most international passport authorities (US State Department, Schengen, Indian P
 Creating your own professional passport photo sheet takes just 3 simple steps:
 
 1. **Capture the Portrait**: Stand 4–5 feet away from a plain white wall facing a natural light source (such as a window).
-2. **Crop to Exact Dimensions**: Use the **[Passport Photo Sheet](/tools/prnt-sheet)** generator on Resizer Tools to align the biometric head guides.
+2. **Crop to Exact Dimensions**: Use the **[Passport Photo Sheet](/print-photo-sheet)** generator on Resizer Tools to align the biometric head guides.
 3. **Generate 4x6 Print Grid**: The tool automatically arranges 6 to 8 passport photos onto a standard 4x6 inch (10x15cm) photo canvas ready for immediate home printing or local pharmacy 10-cent prints.
 
 ---
@@ -376,7 +376,8 @@ Consolidating distinct document files is beneficial across numerous professional
 
 ## 2. How to Merge PDF Files Step-by-Step
 
-Using the browser-native **[Merge PDF](/tools/mrg-pdf)** utility on Resizer Tools is fast and intuitive:
+Using the browser-native **[Merge PDF](/merge-pdf)** utility on Resizer Tools is fast and intuitive:
+
 
 1. **Select or Drag Files**: Drop all PDF files you wish to combine into the interactive workspace.
 2. **Reorder Pages Visually**: Drag and drop thumbnail tiles to adjust the chronological sequence of your documents.
@@ -423,8 +424,8 @@ Protect yourself and your organization against QR-based fraud with these essenti
 
 1. **Inspect Physical Stickers Carefully**: Always verify that a QR code is printed directly on the official signage rather than pasted as an overlay sticker.
 2. **Preview Full URLs Before Opening**: Ensure the destination domain matches the authentic company URL before entering passwords or payment details.
-3. **Avoid Dynamic QR Redirect Gateways**: Use permanent static QR codes generated by tools like **[QR Generator](/tools/qr-gen)** that encode destination URLs directly into matrix pixels without third-party tracking middlemen.
-4. **Use Client-Side Matrix Decoders**: When inspecting suspicious codes on desktop or mobile, utilize **[QR Scanner](/tools/qr-scan)** on Resizer Tools to decode the raw payload safely in isolated browser memory.
+3. **Avoid Dynamic QR Redirect Gateways**: Use permanent static QR codes generated by tools like **[QR Generator](/qr-code-generator)** that encode destination URLs directly into matrix pixels without third-party tracking middlemen.
+4. **Inspect Raw Matrix Payloads**: When inspecting suspicious codes on desktop or mobile, verify the decoded destination domain carefully before opening.
 
 ---
 

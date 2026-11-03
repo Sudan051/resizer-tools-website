@@ -40,7 +40,13 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
   // Interactive tools states
   const [activeTool, setActiveTool] = useState<Tool | null>(() => {
     if (initialToolId) {
-      const tool = toolsData.find((t) => t.id === initialToolId || t.id.replace(/_/g, "-") === initialToolId || t.id.replace(/-/g, "_") === initialToolId);
+      const tool = toolsData.find(
+        (t) =>
+          t.slug === initialToolId ||
+          t.id === initialToolId ||
+          t.id.replace(/_/g, "-") === initialToolId ||
+          t.id.replace(/-/g, "_") === initialToolId
+      );
       if (tool) return tool as Tool;
     }
     return null;
@@ -1523,7 +1529,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
 
           {/* Workspace Body */}
           <div className="flex-1 space-y-6 text-left">
-            {(activeTool.isAppDownload || !["img_comp", "img-comp", "img_res", "img-res", "doc_scan", "doc-scan", "sig_cr", "sig-cr", "qr_gen", "qr-gen", "mrg_pdf", "mrg-pdf", "spl_pdf", "spl-pdf", "rot_pdf", "rot-pdf", "num_pdf", "num-pdf", "wtrmk_pdf", "wtrmk-pdf", "inv_mk", "inv-mk", "res_make", "res-make", "red_pdf", "red-pdf", "del_pdf", "del-pdf", "ext_pdf", "ext-pdf", "ord_pdf", "ord-pdf", "sgn_pdf", "sgn-pdf", "pdf_imgs", "pdf-imgs", "prt_pdf", "prt-pdf", "unl_pdf", "unl-pdf", "img_pdf", "img-pdf", "img_conv", "img-conv", "prnt_sheet", "prnt-sheet", "mk_pdf", "mk-pdf", "shot_gen", "shot-gen"].includes(activeTool.id)) ? (
+            {(activeTool.isAppDownload || !["img_comp", "img-comp", "img_res", "img-res", "sig_cr", "sig-cr", "qr_gen", "qr-gen", "mrg_pdf", "mrg-pdf", "spl_pdf", "spl-pdf", "rot_pdf", "rot-pdf", "num_pdf", "num-pdf", "wtrmk_pdf", "wtrmk-pdf", "inv_mk", "inv-mk", "res_make", "res-make", "red_pdf", "red-pdf", "del_pdf", "del-pdf", "ext_pdf", "ext-pdf", "ord_pdf", "ord-pdf", "sgn_pdf", "sgn-pdf", "pdf_imgs", "pdf-imgs", "prt_pdf", "prt-pdf", "unl_pdf", "unl-pdf", "img_pdf", "img-pdf", "img_conv", "img-conv", "prnt_sheet", "prnt-sheet", "mk_pdf", "mk-pdf", "shot_gen", "shot-gen"].includes(activeTool.id)) ? (
               <div className="text-center py-6 space-y-6">
                 <div className="w-16 h-16 rounded-2xl bg-brand-gold/10 border border-brand-gold/25 flex items-center justify-center mx-auto text-brand-gold animate-pulse">
                   {activeTool.isAppDownload ? <Download className="w-8 h-8" /> : <Smartphone className="w-8 h-8" />}
@@ -2470,7 +2476,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                 { id: "num_pdf", name: "Add Page Numbers" },
                 { id: "wtrmk_pdf", name: "Add PDF Watermark" },
               ].map((item) => (
-                <Link key={item.id} href={`/tools/${item.id.replace(/_/g, "-")}`} className="text-xs text-neutral-300 hover:text-brand-gold hover:bg-white/5 px-2.5 py-1.5 rounded-lg transition-colors flex items-center justify-between">
+                <Link key={item.id} href={`/${toolsData.find(t => t.id === item.id)?.slug || item.id}`} className="text-xs text-neutral-300 hover:text-brand-gold hover:bg-white/5 px-2.5 py-1.5 rounded-lg transition-colors flex items-center justify-between">
                   <span>{item.name}</span>
                   <ArrowUpRight className="w-3 h-3 text-brand-gold/60" />
                 </Link>
@@ -2493,7 +2499,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                 { id: "prnt_sheet", name: "Print Photo Sheet" },
                 { id: "id_cam", name: "ID Photo Camera" },
               ].map((item) => (
-                <Link key={item.id} href={`/tools/${item.id.replace(/_/g, "-")}`} className="text-xs text-neutral-300 hover:text-brand-gold hover:bg-white/5 px-2.5 py-1.5 rounded-lg transition-colors flex items-center justify-between">
+                <Link key={item.id} href={`/${toolsData.find(t => t.id === item.id)?.slug || item.id}`} className="text-xs text-neutral-300 hover:text-brand-gold hover:bg-white/5 px-2.5 py-1.5 rounded-lg transition-colors flex items-center justify-between">
                   <span>{item.name}</span>
                   <ArrowUpRight className="w-3 h-3 text-brand-gold/60" />
                 </Link>
@@ -2517,7 +2523,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                 { id: "inv_mk", name: "Corporate Invoice Maker" },
                 { id: "res_make", name: "ATS Resume Builder" },
               ].map((item) => (
-                <Link key={item.id} href={`/tools/${item.id.replace(/_/g, "-")}`} className="text-xs text-neutral-300 hover:text-brand-gold hover:bg-white/5 px-2.5 py-1.5 rounded-lg transition-colors flex items-center justify-between">
+                <Link key={item.id} href={`/${toolsData.find(t => t.id === item.id)?.slug || item.id}`} className="text-xs text-neutral-300 hover:text-brand-gold hover:bg-white/5 px-2.5 py-1.5 rounded-lg transition-colors flex items-center justify-between">
                   <span>{item.name}</span>
                   <ArrowUpRight className="w-3 h-3 text-brand-gold/60" />
                 </Link>
@@ -2664,29 +2670,29 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
 
       {/* Security Assurance Section */}
       <section className="py-10 px-6 max-w-5xl mx-auto">
-        <div className="relative rounded-3xl bg-gradient-to-br from-brand-obsidian/80 to-brand-obsidian/30 border border-brand-gold/20 p-8 md:p-12 overflow-hidden shadow-2xl flex flex-col md:flex-row items-center justify-between gap-8 backdrop-blur-md">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-brand-gold/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="privacy-assurance-card relative rounded-3xl p-8 md:p-12 overflow-hidden shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-8 md:gap-10 border transition-all">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-brand-gold/10 rounded-full blur-3xl pointer-events-none" />
           <div className="space-y-4 text-left max-w-xl">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-gold/10 border border-brand-gold/20 text-xs font-mono font-bold tracking-wider text-brand-gold uppercase">
-              <Shield className="w-3.5 h-3.5" /> Privacy First
+            <span className="privacy-card-badge inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-mono font-bold tracking-wider uppercase">
+              <Shield className="w-4 h-4 text-brand-gold" /> Privacy First
             </span>
-            <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
+            <h2 className="privacy-card-heading text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
               Your Files Never Leave Your Device
             </h2>
-            <p className="text-sm text-brand-muted leading-relaxed font-light">
-              Unlike typical online converters that upload your confidential files to remote servers, Resizer Tools works <strong className="text-white font-semibold">100% locally in your browser memory</strong>. Faster processing, zero upload waits, and complete data privacy.
+            <p className="privacy-card-text text-base sm:text-lg leading-relaxed font-normal">
+              Unlike typical online converters that upload your confidential files to remote servers, Resizer Tools works <strong className="font-bold underline decoration-brand-gold/50 underline-offset-4">100% locally in your browser memory</strong>. Faster processing, zero upload waits, and complete data privacy.
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-4 w-full md:w-auto shrink-0">
-            <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4 text-left flex flex-col justify-between max-w-[200px]">
-              <WifiOff className="w-5 h-5 text-brand-gold mb-2" />
-              <h3 className="text-xs font-bold text-white uppercase tracking-wider">Works Offline</h3>
-              <p className="text-[10px] text-brand-muted mt-1 leading-normal">Disconnect your internet and keep editing, compressing, or watermarking files without interruption.</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full lg:w-auto shrink-0">
+            <div className="privacy-card-sub rounded-2xl p-5 text-left flex flex-col justify-between sm:w-[220px]">
+              <WifiOff className="w-6 h-6 text-brand-gold mb-3" />
+              <h3 className="privacy-card-subtitle text-sm sm:text-base font-bold uppercase tracking-wider">Works Offline</h3>
+              <p className="privacy-card-subdesc text-xs sm:text-sm mt-1.5 leading-relaxed">Disconnect your internet and keep editing, compressing, or watermarking files without interruption.</p>
             </div>
-            <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-4 text-left flex flex-col justify-between max-w-[200px]">
-              <Zap className="w-5 h-5 text-brand-gold mb-2" />
-              <h3 className="text-xs font-bold text-white uppercase tracking-wider">Zero Upload Lag</h3>
-              <p className="text-[10px] text-brand-muted mt-1 leading-normal">No waiting for slow uploads. Process your documents and photos instantly using your own device hardware.</p>
+            <div className="privacy-card-sub rounded-2xl p-5 text-left flex flex-col justify-between sm:w-[220px]">
+              <Zap className="w-6 h-6 text-brand-gold mb-3" />
+              <h3 className="privacy-card-subtitle text-sm sm:text-base font-bold uppercase tracking-wider">Zero Upload Lag</h3>
+              <p className="privacy-card-subdesc text-xs sm:text-sm mt-1.5 leading-relaxed">No waiting for slow uploads. Process your documents and photos instantly using your own device hardware.</p>
             </div>
           </div>
         </div>
@@ -2735,7 +2741,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {searchedTools.map((tool) => (
-                  <Link key={tool.id} href={`/tools/${tool.id.replace(/_/g, "-")}`} className="block group h-full">
+                  <Link key={tool.id} href={`/${tool.slug}`} className="block group h-full">
                     <motion.div 
                       whileHover={{ y: -6, borderColor: "rgba(212, 175, 55, 0.4)" }}
                       className="p-6 rounded-2xl bg-brand-obsidian/40 border border-white/5 transition-all group-hover:border-brand-gold/40 relative overflow-hidden flex flex-col justify-between cursor-pointer h-full"
@@ -2781,7 +2787,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {toolsData.filter(t => ["mrg_pdf", "mk_pdf", "spl_pdf", "ext_pdf", "ord_pdf", "red_pdf", "del_pdf", "rot_pdf", "num_pdf", "wtrmk_pdf"].includes(t.id)).map((tool) => (
-                    <Link key={tool.id} href={`/tools/${tool.id.replace(/_/g, "-")}`} className="block group h-full">
+                    <Link key={tool.id} href={`/${tool.slug}`} className="block group h-full">
                       <motion.div 
                         whileHover={{ y: -6, borderColor: "rgba(212, 175, 55, 0.4)", boxShadow: "0 12px 30px -10px rgba(212, 175, 55, 0.25)" }}
                         transition={{ duration: 0.25 }}
@@ -2825,7 +2831,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {toolsData.filter(t => ["img_comp", "img_res", "img_pdf", "img_conv", "prnt_sheet", "id_cam"].includes(t.id)).map((tool) => (
-                    <Link key={tool.id} href={`/tools/${tool.id.replace(/_/g, "-")}`} className="block group h-full">
+                    <Link key={tool.id} href={`/${tool.slug}`} className="block group h-full">
                       <motion.div 
                         whileHover={{ y: -6, borderColor: "rgba(56, 189, 248, 0.4)", boxShadow: "0 12px 30px -10px rgba(56, 189, 248, 0.2)" }}
                         transition={{ duration: 0.25 }}
@@ -2869,7 +2875,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {toolsData.filter(t => ["prt_pdf", "unl_pdf", "sgn_pdf", "sig_cr", "inv_mk", "res_make"].includes(t.id)).map((tool) => (
-                    <Link key={tool.id} href={`/tools/${tool.id.replace(/_/g, "-")}`} className="block group h-full">
+                    <Link key={tool.id} href={`/${tool.slug}`} className="block group h-full">
                       <motion.div 
                         whileHover={{ y: -6, borderColor: "rgba(74, 222, 128, 0.4)", boxShadow: "0 12px 30px -10px rgba(74, 222, 128, 0.2)" }}
                         transition={{ duration: 0.25 }}
@@ -2897,7 +2903,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
             )}
 
             {/* SECTION 4: Generators, Scanners & App Studios */}
-            {(activeCategory === "all" || activeCategory === "app" || activeCategory === "qr") && (
+            {(activeCategory === "all" || activeCategory === "generator" || activeCategory === "scanner" || activeCategory === "nfc") && (
               <div className="space-y-6 pt-6">
                 <div className="flex items-center justify-between pb-4 border-b border-white/10">
                   <div>
@@ -2913,7 +2919,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {toolsData.filter(t => ["shot_gen", "qr_gen", "qr_scan", "doc_scan", "nfc_tl"].includes(t.id)).map((tool) => (
-                    <Link key={tool.id} href={`/tools/${tool.id.replace(/_/g, "-")}`} className="block group h-full">
+                    <Link key={tool.id} href={`/${tool.slug}`} className="block group h-full">
                       <motion.div 
                         whileHover={{ y: -6, borderColor: "rgba(168, 85, 247, 0.4)", boxShadow: "0 12px 30px -10px rgba(168, 85, 247, 0.2)" }}
                         transition={{ duration: 0.25 }}
@@ -3493,7 +3499,7 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
               <div className="flex-1 overflow-y-auto pr-1 scrollbar-none space-y-6">
                 
                 {/* 📳 CASE A: App Download / App-Level Redirect prompt */}
-                {(activeTool.isAppDownload || !["img_comp", "img-comp", "img_res", "img-res", "doc_scan", "doc-scan", "sig_cr", "sig-cr", "qr_gen", "qr-gen", "mrg_pdf", "mrg-pdf", "spl_pdf", "spl-pdf", "rot_pdf", "rot-pdf", "num_pdf", "num-pdf", "wtrmk_pdf", "wtrmk-pdf", "inv_mk", "inv-mk", "res_make", "res-make", "red_pdf", "red-pdf", "del_pdf", "del-pdf", "ext_pdf", "ext-pdf", "ord_pdf", "ord-pdf", "sgn_pdf", "sgn-pdf", "pdf_imgs", "pdf-imgs", "prt_pdf", "prt-pdf", "unl_pdf", "unl-pdf", "img_pdf", "img-pdf", "img_conv", "img-conv", "prnt_sheet", "prnt-sheet", "mk_pdf", "mk-pdf", "shot_gen", "shot-gen"].includes(activeTool.id)) ? (
+                {(activeTool.isAppDownload || !["img_comp", "img-comp", "img_res", "img-res", "sig_cr", "sig-cr", "qr_gen", "qr-gen", "mrg_pdf", "mrg-pdf", "spl_pdf", "spl-pdf", "rot_pdf", "rot-pdf", "num_pdf", "num-pdf", "wtrmk_pdf", "wtrmk-pdf", "inv_mk", "inv-mk", "res_make", "res-make", "red_pdf", "red-pdf", "del_pdf", "del-pdf", "ext_pdf", "ext-pdf", "ord_pdf", "ord-pdf", "sgn_pdf", "sgn-pdf", "pdf_imgs", "pdf-imgs", "prt_pdf", "prt-pdf", "unl_pdf", "unl-pdf", "img_pdf", "img-pdf", "img_conv", "img-conv", "prnt_sheet", "prnt-sheet", "mk_pdf", "mk-pdf", "shot_gen", "shot-gen"].includes(activeTool.id)) ? (
                   <div className="text-center py-6 space-y-6">
                     <div className="w-16 h-16 rounded-2xl bg-brand-gold/10 border border-brand-gold/25 flex items-center justify-center mx-auto text-brand-gold animate-pulse">
                       {activeTool.isAppDownload ? <Download className="w-8 h-8" /> : <Smartphone className="w-8 h-8" />}

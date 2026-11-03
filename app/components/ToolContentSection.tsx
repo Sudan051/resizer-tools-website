@@ -423,7 +423,7 @@ export default function ToolContentSection({ tool }: ToolContentSectionProps) {
             {relatedTools.map((rel) => (
               <Link
                 key={rel.id}
-                href={`/tools/${rel.id.replace(/_/g, "-")}`}
+                href={`/${rel.slug}`}
                 className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-brand-gold/40 hover:bg-white/[0.04] transition-all group flex flex-col justify-between"
               >
                 <div className="space-y-2.5">
