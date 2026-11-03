@@ -214,7 +214,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             </div>
             <div>
               <h3 className="text-base font-bold text-white">Try Resizer Tools Web Workspace</h3>
-              <p className="text-xs text-brand-muted font-light">Explore 27+ browser-native, offline PDF and image utilities.</p>
+              <p className="text-xs text-brand-muted font-light">Explore 41+ browser-native, offline PDF and image utilities.</p>
             </div>
           </div>
 

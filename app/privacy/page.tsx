@@ -56,7 +56,7 @@ export default function PrivacyPage() {
           <section className="space-y-3">
             <h2 className="text-lg font-bold text-white tracking-tight">3. Google AdSense &amp; Third-Party Advertising Policy</h2>
             <p>
-              To maintain free, unrestricted access to all 28 digital utilities without mandatory paid subscriptions, Resizer Tools displays online advertisements served by Google AdSense and third-party advertising partners.
+              To maintain free, unrestricted access to all 41 digital utilities without mandatory paid subscriptions, Resizer Tools displays online advertisements served by Google AdSense and third-party advertising partners.
             </p>
             <p>
               Under Google&apos;s AdSense Program Policies, we provide the following mandatory disclosures regarding advertising technologies and data practices:

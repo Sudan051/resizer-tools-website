@@ -968,5 +968,398 @@ export const TOOL_CONTENT: Record<string, ToolDeepContent> = {
       { title: "ASO Color Studio", desc: "Luxury dark-gold, titanium, and custom gradient marketing palettes" },
       { title: "Batch PNG Export", desc: "Export entire slide sequences in seconds with zero cloud uploads" }
     ]
+  },
+
+  jpg_png: {
+    overview: [
+      "The JPG to PNG Converter provides instantaneous, client-side conversion of compressed JPEG photos into lossless PNG format. Perfect for web designers, digital artists, and developers requiring transparent alpha channels or crisp vector-like raster graphics.",
+      "By utilizing browser-native HTML5 Canvas decoding and lossless PNG rasterization, images preserve sharp contrast, color fidelity, and structural pixel clarity without data compression artifacts."
+    ],
+    steps: [
+      "Upload or drag-and-drop your JPG or JPEG image into the tool.",
+      "The tool automatically parses image dimensions, color profiles, and channels.",
+      "Click Convert to PNG to execute lossless rasterization locally in browser memory.",
+      "Download your converted PNG file immediately with zero server latency."
+    ],
+    faq: [
+      {
+        q: "Why should I convert a JPG to a PNG?",
+        a: "PNG format uses lossless compression, meaning editing, re-saving, and overlaying graphics will never cause quality degradation or JPEG compression artifacts."
+      },
+      {
+        q: "Will converting JPG to PNG increase the image resolution?",
+        a: "Converting JPG to PNG preserves the exact original resolution and prevents further loss, but it cannot invent data that was already compressed out of the original JPG."
+      },
+      {
+        q: "Are my images uploaded to any remote server?",
+        a: "No. The conversion pipeline operates 100% locally on your device via HTML5 Canvas. Your photos never leave your device."
+      }
+    ],
+    features: [
+      { title: "Lossless PNG Output", desc: "Preserves sharp contours and pristine color depth" },
+      { title: "Zero Server Uploads", desc: "Decoded and converted 100% in local browser memory" },
+      { title: "Unlimited Free Use", desc: "No file size restrictions, daily quotas, or sign-ups" },
+      { title: "High-DPI Support", desc: "Handles 4K, 8K, and camera RAW JPEG exports seamlessly" }
+    ]
+  },
+
+  png_jpg: {
+    overview: [
+      "The PNG to JPG Converter downsamples large PNG files into lightweight, universal JPEG format. Ideal for meeting strict portal upload limits (passport, visa, government forms) and optimizing website load speeds.",
+      "Transparent areas in PNGs are automatically and cleanly composited over a solid white background, preventing the jarring black transparency boxes that plague basic online converters."
+    ],
+    steps: [
+      "Upload or drag-and-drop your PNG image into the upload area.",
+      "Adjust the quality slider (recommended 85%–95% for crisp photo fidelity).",
+      "Click Convert to JPG to blend alpha channels and encode high-efficiency JPEG data.",
+      "Download your lightweight JPG image immediately to your device."
+    ],
+    faq: [
+      {
+        q: "How does the converter handle transparent backgrounds in PNGs?",
+        a: "Since JPEG does not support transparency, our converter composites transparent pixels onto a clean, solid white canvas, ensuring photos look natural without black artifacts."
+      },
+      {
+        q: "By how much will file size decrease?",
+        a: "PNG to JPG conversion typically reduces file size by 50% to 85%, making files easy to send via email or upload to web applications."
+      },
+      {
+        q: "Is there any risk of privacy leaks?",
+        a: "None. All image encoding runs directly on your GPU/CPU via local browser APIs with zero network requests."
+      }
+    ],
+    features: [
+      { title: "Smart Alpha Compositing", desc: "Blends transparent backgrounds seamlessly into crisp white" },
+      { title: "Custom JPEG Quality", desc: "Fine-tune compression ratios between 70% and 100%" },
+      { title: "Massive Size Reduction", desc: "Shrink heavy graphics by up to 85% for web and email" },
+      { title: "Complete Privacy", desc: "Zero cloud processing; 100% local device execution" }
+    ]
+  },
+
+  webp_jpg: {
+    overview: [
+      "The WebP to JPG Converter turns next-generation Google WebP images into universal JPG format. While WebP is great for web browsing, many desktop editors, email clients, and government portals do not support it.",
+      "Convert downloaded WebP images in milliseconds so you can easily view, attach, print, or edit them in standard photo viewers and legacy software."
+    ],
+    steps: [
+      "Upload or drag-and-drop your .webp file into the conversion zone.",
+      "Choose your desired output quality preset.",
+      "Click Convert to JPG to export standard JPEG photo bytes.",
+      "Download your universal JPG file instantly."
+    ],
+    faq: [
+      {
+        q: "Why do downloaded web images often end up as WebP?",
+        a: "Modern websites use WebP to save bandwidth. However, many photo editors and official submission portals still require standard JPG format."
+      },
+      {
+        q: "Can I convert multiple WebP files?",
+        a: "Yes, you can convert as many WebP images as you want with zero daily quotas or wait times."
+      }
+    ],
+    features: [
+      { title: "Universal Compatibility", desc: "Converts modern WebP into widely supported JPG format" },
+      { title: "Instant Conversion", desc: "Near-instantaneous rendering on your local hardware" },
+      { title: "EXIF & Metadata Safety", desc: "Strips unneeded metadata while retaining visual sharpness" },
+      { title: "Client-Side Engine", desc: "Runs offline and without server uploads" }
+    ]
+  },
+
+  webp_png: {
+    overview: [
+      "The WebP to PNG Converter extracts graphics, logos, and photos from WebP containers into transparent, lossless PNG files. Ideal for graphic designers extracting assets for Photoshop, Canva, or Illustrator.",
+      "Transparent alpha channels are preserved with 100% fidelity, allowing clean integration into presentations, videos, and composite artwork."
+    ],
+    steps: [
+      "Select your source .webp graphic from your device.",
+      "Inspect the live resolution and transparency channel preview.",
+      "Click Convert to PNG to rasterize lossless PNG bytes.",
+      "Download your transparent PNG graphic directly."
+    ],
+    faq: [
+      {
+        q: "Does WebP to PNG preserve transparency?",
+        a: "Yes. Full 8-bit alpha transparency is strictly preserved, ensuring logos, stickers, and icons remain transparent."
+      },
+      {
+        q: "Is image quality preserved during conversion?",
+        a: "Yes, PNG uses lossless encoding, so no further compression artifacts are introduced."
+      }
+    ],
+    features: [
+      { title: "Alpha Channel Preservation", desc: "Retains 100% transparent backgrounds for design assets" },
+      { title: "Lossless Compression", desc: "Zero quality degradation or visual distortion" },
+      { title: "Privacy Guaranteed", desc: "Processes locally on your computer with zero uploads" },
+      { title: "Fast & Free", desc: "Unlimited conversions with no watermarks or registrations" }
+    ]
+  },
+
+  pdf_word: {
+    overview: [
+      "The PDF to Word Converter transforms static PDF contracts, reports, and forms into fully editable Microsoft Word documents (.docx / .doc). Retain text formatting, paragraphs, headings, and table structures.",
+      "Unlike cloud-based converters that upload confidential business agreements to remote servers, our client-side engine parses text and generates native Word document formatting directly in your browser memory."
+    ],
+    steps: [
+      "Upload your PDF document into the converter.",
+      "The client-side engine parses text streams, headings, and page boundaries.",
+      "Click Convert to Word to generate a structured Microsoft Word document.",
+      "Download your editable .doc / .docx file and edit immediately in Word or Google Docs."
+    ],
+    faq: [
+      {
+        q: "Can I edit the converted document in Microsoft Word and Google Docs?",
+        a: "Yes. The exported file complies with standard Microsoft Word and Office document specifications, opening seamlessly in Microsoft 365, Word, Google Docs, Apple Pages, and LibreOffice."
+      },
+      {
+        q: "Are my confidential contracts or financial PDFs secure?",
+        a: "Yes. Processing occurs 100% client-side inside your browser sandbox. No file data is ever transmitted over the network."
+      },
+      {
+        q: "Is there a limit on PDF page count?",
+        a: "Because processing leverages your computer's RAM, you can comfortably convert multi-page documents without cloud queue limits."
+      }
+    ],
+    features: [
+      { title: "Fully Editable Output", desc: "Exports native text, headings, and tables for MS Word" },
+      { title: "Zero Server Uploads", desc: "Client-side processing safeguards confidential documents" },
+      { title: "Universal Compatibility", desc: "Opens in Microsoft Word, Google Docs, and LibreOffice" },
+      { title: "100% Free & Unlimited", desc: "No email requirement, paywalls, or daily caps" }
+    ]
+  },
+
+  pdf_excel: {
+    overview: [
+      "The PDF to Excel Converter extracts tabular data, bank statements, invoices, and financial reports from PDF files into organized Microsoft Excel spreadsheets (.xlsx / .csv).",
+      "Eliminate manual data entry and copying-pasting. The parser detects column boundaries, numbers, and currency values, outputting clean, formula-ready spreadsheet rows."
+    ],
+    steps: [
+      "Upload your PDF containing tables, receipts, or financial data.",
+      "The tool scans for structured columns, numeric entries, and row dividers.",
+      "Click Convert to Excel to format tabular data into spreadsheet cells.",
+      "Download your Excel workbook or CSV file ready for analysis."
+    ],
+    faq: [
+      {
+        q: "Will numbers and decimal points be preserved in separate columns?",
+        a: "Yes. Tabular columns and numerical values are cleanly segregated into dedicated spreadsheet columns for easy calculation and formulas."
+      },
+      {
+        q: "Can I open the exported spreadsheet in Google Sheets?",
+        a: "Yes. The generated files are 100% compatible with Microsoft Excel, Google Sheets, Apple Numbers, and LibreOffice Calc."
+      },
+      {
+        q: "Are bank statements and financial files safe?",
+        a: "Yes. Data is parsed entirely in your browser memory with zero server uploads, ensuring financial privacy."
+      }
+    ],
+    features: [
+      { title: "Automated Table Detection", desc: "Converts PDF text rows and columns into spreadsheet cells" },
+      { title: "Formula-Ready Data", desc: "Preserves numbers, dates, and currency values for analysis" },
+      { title: "Financial Grade Privacy", desc: "Runs locally in browser RAM with zero network logging" },
+      { title: "Works with Excel & Sheets", desc: "Exports universally compatible .csv and .xlsx formats" }
+    ]
+  },
+
+  word_pdf: {
+    overview: [
+      "The Word to PDF Converter transforms Microsoft Word documents, resumes, and text files into standardized, read-only PDF documents. Ensure consistent formatting across all devices, operating systems, and printers.",
+      "Prevent fonts from shifting, margins from altering, and formatting from breaking when sending contracts, proposals, or job applications to clients and hiring managers."
+    ],
+    steps: [
+      "Upload your Word document (.docx, .doc) or text file.",
+      "Configure page margins, orientation (Portrait/Landscape), and font styling.",
+      "Click Generate PDF to render document pages via our client-side PDF engine.",
+      "Download your standardized, professional PDF document immediately."
+    ],
+    faq: [
+      {
+        q: "Why convert a Word document to PDF before sending?",
+        a: "Word documents can render differently depending on installed fonts and Word versions. A PDF locks formatting in place so it looks identical on every screen."
+      },
+      {
+        q: "Does this tool work on mobile devices?",
+        a: "Yes, you can convert Word files to PDF directly from iPhones, iPads, Android devices, Macs, and Windows PCs."
+      }
+    ],
+    features: [
+      { title: "Rock-Solid Formatting", desc: "Locks layout, fonts, and pagination permanently" },
+      { title: "Print-Ready Output", desc: "Generates high-resolution vector PDF pages" },
+      { title: "Device-Wide Privacy", desc: "Converts locally on your hardware without cloud uploads" },
+      { title: "Instant Download", desc: "Zero waiting queues, ads barriers, or sign-up forms" }
+    ]
+  },
+
+  excel_pdf: {
+    overview: [
+      "The Excel to PDF Converter turns spreadsheets, budgets, schedules, and financial models into clean, printable PDF documents. Choose pagination boundaries and fit wide tables neatly onto standard pages.",
+      "Perfect for creating board presentations, client invoices, and audit-ready financial statements that cannot be accidentally modified or distorted."
+    ],
+    steps: [
+      "Upload your Excel spreadsheet (.xlsx, .xls, .csv) into the converter.",
+      "Select page orientation (Landscape recommended for wide tables) and margin fit.",
+      "Click Convert to PDF to render clean tabular gridlines and headers.",
+      "Download your executive-ready PDF spreadsheet instantly."
+    ],
+    faq: [
+      {
+        q: "How can I prevent wide Excel tables from getting cut off?",
+        a: "Our converter automatically scales wide table columns and offers Landscape orientation to fit complex datasets onto standard paper sheets."
+      },
+      {
+        q: "Are proprietary financial models and formulas kept private?",
+        a: "Yes. Processing runs entirely in your local browser sandbox. No proprietary company data is ever uploaded to external servers."
+      }
+    ],
+    features: [
+      { title: "Fit-to-Page Scaling", desc: "Prevents table columns from breaking across page borders" },
+      { title: "Landscape & Portrait", desc: "Flexible orientation options for wide or tall data models" },
+      { title: "Executive Polish", desc: "Renders clean borders, alternating row fills, and headers" },
+      { title: "100% Client-Side", desc: "Confidential financial data never leaves your computer" }
+    ]
+  },
+
+  crp_img: {
+    overview: [
+      "The Crop Image tool allows you to easily crop and trim photos, graphics, and screenshots online with custom aspect ratio boxes or exact pixel bounds.",
+      "Ideal for creating 1:1 square profile avatars, 16:9 YouTube banners, or official passport and visa cutouts 100% locally in your browser memory."
+    ],
+    steps: [
+      "Upload or drag-and-drop your image into the crop tool.",
+      "Choose an aspect ratio (1:1 Square, 4:3, 16:9, or Freeform).",
+      "Click Crop Image to render the trimmed image on canvas.",
+      "Download your cropped image instantly."
+    ],
+    faq: [
+      {
+        q: "Can I crop images for passport or visa applications?",
+        a: "Yes. Choose square or standard passport aspect ratios to crop photos to official specifications."
+      },
+      {
+        q: "Are cropped images saved on your servers?",
+        a: "No. Cropping is performed locally on your device via HTML5 Canvas. Your photos never leave your device."
+      }
+    ],
+    features: [
+      { title: "Multiple Aspect Ratios", desc: "Pre-set 1:1, 4:3, 16:9, and freeform crop dimensions" },
+      { title: "Lossless Canvas Precision", desc: "Trims exact pixels with zero quality reduction" },
+      { title: "Zero Server Uploads", desc: "Runs 100% locally in browser memory" },
+      { title: "Universal Format Support", desc: "Works with JPG, PNG, WebP, and mobile photos" }
+    ]
+  },
+
+  pdf_txt: {
+    overview: [
+      "The PDF to Text Converter extracts all raw text, sentences, paragraphs, and tables from PDF documents into a clean, downloadable plain text (.txt) file.",
+      "Eliminate tedious copy-pasting. Easily extract transcripts, legal clauses, research notes, and articles in one click."
+    ],
+    steps: [
+      "Upload your PDF document into the text extractor.",
+      "The client-side engine parses textual content and paragraph breaks across all pages.",
+      "Click Extract Text to preview the parsed content.",
+      "Download your clean .txt text file directly."
+    ],
+    faq: [
+      {
+        q: "Can I extract text from multi-page PDFs?",
+        a: "Yes. The tool parses every page in sequence, separating pages with clear headers."
+      },
+      {
+        q: "Are my confidential PDF documents private?",
+        a: "Yes. Text parsing happens entirely inside your browser memory without cloud processing."
+      }
+    ],
+    features: [
+      { title: "Fast Plain Text Extraction", desc: "Converts PDF pages into clean .txt format" },
+      { title: "Preserves Paragraph Order", desc: "Maintains logical reading flow and section headers" },
+      { title: "100% Private & Secure", desc: "Zero network transmission of confidential documents" },
+      { title: "Unlimited Pages", desc: "Process small or large documents with no limits" }
+    ]
+  },
+
+  txt_pdf: {
+    overview: [
+      "The Text to PDF Converter turns plain text notes, articles, meeting minutes, and code snippets into clean, paginated, professional PDF documents.",
+      "Featuring automatic word wrapping, generous margins, and sequential page numbering, your notes look executive and ready for printing."
+    ],
+    steps: [
+      "Type or paste your text content into the editor, or upload a .txt file.",
+      "Adjust layout options and document title.",
+      "Click Generate PDF to build vector PDF pages in your browser.",
+      "Download your formatted PDF file immediately."
+    ],
+    faq: [
+      {
+        q: "Does Text to PDF support long multi-page documents?",
+        a: "Yes. The client-side engine automatically splits long text across multiple pages with margins."
+      },
+      {
+        q: "Is there any watermark on the PDF?",
+        a: "No. Generated PDFs are 100% clean and free of watermarks or branding."
+      }
+    ],
+    features: [
+      { title: "Automatic Pagination", desc: "Splits long text across clean A4 pages seamlessly" },
+      { title: "Vector Typography", desc: "Crisp, scalable Helvetica font rendering" },
+      { title: "Instant Generation", desc: "Builds PDFs in milliseconds on your device" },
+      { title: "Zero Data Logging", desc: "Your personal notes remain completely private" }
+    ]
+  },
+
+  bar_gen: {
+    overview: [
+      "The Barcode Generator creates standard high-resolution Code 128 barcodes from any text, SKU number, or product code. Download ready-to-print PNG barcodes for retail, inventory, or asset tracking.",
+      "Generated mathematically on HTML5 Canvas, barcodes feature crisp, high-contrast black-and-white bars readable by all handheld scanners and smartphone barcode apps."
+    ],
+    steps: [
+      "Enter your barcode text, SKU, serial number, or product code.",
+      "The tool calculates Code 128 checksums and bar widths in real-time.",
+      "Inspect the live barcode preview with human-readable numbers underneath.",
+      "Click Download Barcode PNG to save your printable vector barcode."
+    ],
+    faq: [
+      {
+        q: "Which barcode format is generated?",
+        a: "It generates standard Code 128 barcodes, the most widely accepted linear barcode format worldwide for shipping, inventory, and retail."
+      },
+      {
+        q: "Will physical barcode scanners read these barcodes?",
+        a: "Yes. The high-contrast black-and-white lines adhere strictly to ISO Code 128 specifications for 100% scanner readability."
+      }
+    ],
+    features: [
+      { title: "Standard Code 128", desc: "Universal linear barcode format compatible with all scanners" },
+      { title: "High-DPI Export", desc: "Crystal clear lines for laser and thermal barcode printers" },
+      { title: "Instant Live Preview", desc: "Generates barcodes in real-time as you type" },
+      { title: "100% Free & Local", desc: "No limits or subscriptions; runs entirely on your device" }
+    ]
+  },
+
+  pwd_gen: {
+    overview: [
+      "The Password Generator produces cryptographically secure, unpredictable passwords to safeguard your online accounts, banking, and sensitive credentials.",
+      "Powered by the browser's native window.crypto API, entropy is gathered from your hardware rather than predictable pseudorandom math, ensuring military-grade security."
+    ],
+    steps: [
+      "Select your desired password length using the slider (12 to 32 characters recommended).",
+      "Toggle character sets: Uppercase (A-Z), Lowercase (a-z), Numbers (0-9), and Symbols (!@#$%).",
+      "Click Generate Password to draw random cryptographic bytes from your hardware.",
+      "Click Copy to copy the password securely to your clipboard."
+    ],
+    faq: [
+      {
+        q: "Are generated passwords sent to any server?",
+        a: "Never. Passwords are generated strictly in temporary browser memory via window.crypto.getRandomValues and are never transmitted over the internet."
+      },
+      {
+        q: "How strong are these passwords against brute force attacks?",
+        a: "A 16-character password with mixed characters has over 95 bits of entropy, requiring billions of years for modern supercomputers to crack."
+      }
+    ],
+    features: [
+      { title: "Hardware Cryptography", desc: "Uses window.crypto for true entropy and unguessable keys" },
+      { title: "Custom Length & Symbols", desc: "Adjust length from 8 to 64 characters with character toggles" },
+      { title: "One-Click Copy", desc: "Instant clipboard copy with secure auto-clear" },
+      { title: "Zero Network Logging", desc: "Generated 100% locally in device RAM" }
+    ]
   }
 };

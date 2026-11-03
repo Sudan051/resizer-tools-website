@@ -16,12 +16,20 @@ export async function GET() {
 ### Image Tools
 - Image Compressor (https://www.resizertools.com/image-compressor): Reduce image file size (JPEG, PNG, WebP) without losing quality.
 - Image Resizer (https://www.resizertools.com/image-resizer): Resize images by exact pixels, percentages, or aspect ratios.
+- JPG to PNG Converter (https://www.resizertools.com/jpg-to-png): Convert JPG photos to lossless, transparent PNG format.
+- PNG to JPG Converter (https://www.resizertools.com/png-to-jpg): Convert PNG graphics to compressed JPG with white background.
+- WebP to JPG Converter (https://www.resizertools.com/webp-to-jpg): Convert Google WebP images to universal JPG format.
+- WebP to PNG Converter (https://www.resizertools.com/webp-to-png): Convert WebP images to transparent, lossless PNG.
 - Passport Photo Sheet Generator (https://www.resizertools.com/print-photo-sheet): Arrange passport photos into printable grid sheets.
 - Image Format Converter (https://www.resizertools.com/image-converter): Convert between HEIC, WebP, PNG, and JPEG formats locally.
 - Image to PDF (https://www.resizertools.com/image-to-pdf): Convert multiple images into a single PDF document.
 - PDF to Images (https://www.resizertools.com/pdf-images): Convert PDF pages to high-res PNG/JPG images.
 
-### PDF Editing & Security Tools
+### PDF Editing & Conversion Tools
+- PDF to Word Converter (https://www.resizertools.com/pdf-to-word): Convert PDF documents to editable Microsoft Word (.docx / .doc) files.
+- PDF to Excel Converter (https://www.resizertools.com/pdf-to-excel): Extract tables and numbers from PDF into Excel (.xlsx / .csv).
+- Word to PDF Converter (https://www.resizertools.com/word-to-pdf): Convert Word documents (.docx, .doc) to formatted PDF documents.
+- Excel to PDF Converter (https://www.resizertools.com/excel-to-pdf): Convert spreadsheets (.xlsx, .csv) to printable PDF documents.
 - PDF Reducer / Compressor (https://www.resizertools.com/pdf-reducer): Downscale and compress PDF files.
 - Merge PDF (https://www.resizertools.com/merge-pdf): Combine multiple PDF documents into one single file.
 - Split PDF (https://www.resizertools.com/split-pdf): Extract specific page ranges or split every page into separate PDFs.

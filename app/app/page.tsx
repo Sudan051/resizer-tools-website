@@ -49,7 +49,7 @@ export default function AppDownloadPage() {
           </div>
 
           <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight">
-            Carry 27 Studio Tools <br />
+            Carry All 41+ Studio Tools <br />
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-brand-gold via-brand-gold-light to-brand-gold-dark">
               Right in Your Pocket
             </span>

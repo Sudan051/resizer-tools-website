@@ -56,7 +56,7 @@ export default function ToolContentSection({ tool }: ToolContentSectionProps) {
     <div className="w-full bg-[#080808] text-white border-t border-white/5 py-16 px-4 sm:px-6 relative z-10">
       <div className="max-w-5xl mx-auto space-y-16">
 
-        {/* 🌟 1. INTERACTIVE RATING & TRUST METRICS BAR */}
+        {/* � 1. INTERACTIVE RATING & TRUST METRICS BAR */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 p-6 rounded-3xl bg-gradient-to-r from-white/[0.03] to-white/[0.01] border border-white/10 shadow-2xl backdrop-blur-xl">
           <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
             <div className="flex items-center gap-1">
@@ -101,7 +101,7 @@ export default function ToolContentSection({ tool }: ToolContentSectionProps) {
           </div>
         </div>
 
-        {/* 💎 2. CORE VALUE PROPOSITION & IN-DEPTH TECHNICAL OVERVIEW */}
+        {/* � 2. CORE VALUE PROPOSITION & IN-DEPTH TECHNICAL OVERVIEW */}
         <section className="space-y-6 text-left">
           <div className="space-y-3">
             <span className="text-[11px] font-mono uppercase tracking-widest text-brand-gold font-bold flex items-center gap-1.5">
@@ -170,7 +170,7 @@ export default function ToolContentSection({ tool }: ToolContentSectionProps) {
           )}
         </section>
 
-        {/* 📖 3. STEP-BY-STEP "HOW TO USE" GUIDE */}
+        {/* � 3. STEP-BY-STEP "HOW TO USE" GUIDE */}
         <section className="space-y-8 text-left bg-gradient-to-b from-white/[0.02] to-transparent p-8 md:p-10 rounded-3xl border border-white/5">
           <div className="space-y-2">
             <span className="text-[11px] font-mono uppercase tracking-widest text-brand-gold font-bold flex items-center gap-1.5">
@@ -210,7 +210,7 @@ export default function ToolContentSection({ tool }: ToolContentSectionProps) {
           </div>
         </section>
 
-        {/* 📊 4. TECHNICAL SPECIFICATIONS & BROWSER COMPATIBILITY MATRIX */}
+        {/* � 4. TECHNICAL SPECIFICATIONS & BROWSER COMPATIBILITY MATRIX */}
         <section className="space-y-6 text-left">
           <div className="space-y-2">
             <span className="text-[11px] font-mono uppercase tracking-widest text-brand-gold font-bold flex items-center gap-1.5">
@@ -264,7 +264,7 @@ export default function ToolContentSection({ tool }: ToolContentSectionProps) {
           </div>
         </section>
 
-        {/* 💼 5. PRACTICAL REAL-WORLD USE CASES */}
+        {/* � 5. PRACTICAL REAL-WORLD USE CASES */}
         <section className="space-y-6 text-left">
           <div className="space-y-2">
             <span className="text-[11px] font-mono uppercase tracking-widest text-brand-gold font-bold flex items-center gap-1.5">
@@ -321,7 +321,7 @@ export default function ToolContentSection({ tool }: ToolContentSectionProps) {
           </div>
         </section>
 
-        {/* 🛡️ 6. YOUR PRIVACY, OUR CORE COMMITMENT TRUST SECTION */}
+        {/* �️ 6. YOUR PRIVACY, OUR CORE COMMITMENT TRUST SECTION */}
         <section className="p-8 md:p-10 rounded-3xl bg-gradient-to-r from-brand-gold/10 via-brand-obsidian to-black border border-brand-gold/25 text-left flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="space-y-4 max-w-2xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-gold/20 text-brand-gold font-mono text-[10px] font-bold uppercase tracking-wider">
@@ -360,7 +360,7 @@ export default function ToolContentSection({ tool }: ToolContentSectionProps) {
           </div>
         </section>
 
-        {/* ❓ 7. INTERACTIVE ACCORDION FAQ SECTION */}
+        {/* 7. INTERACTIVE ACCORDION FAQ SECTION */}
         <section className="space-y-6 text-left">
           <div className="space-y-2">
             <span className="text-[11px] font-mono uppercase tracking-widest text-brand-gold font-bold flex items-center gap-1.5">
@@ -407,7 +407,7 @@ export default function ToolContentSection({ tool }: ToolContentSectionProps) {
           </div>
         </section>
 
-        {/* 🔗 8. RELATED TOOLS INTERNAL LINKING GRID */}
+        {/* � 8. RELATED TOOLS INTERNAL LINKING GRID */}
         <section className="space-y-6 text-left pt-6 border-t border-white/5">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>

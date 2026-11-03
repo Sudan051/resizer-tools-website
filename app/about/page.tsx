@@ -149,7 +149,7 @@ export default function AboutPage() {
             </div>
             <h3 className="text-lg font-bold text-white">Zero Paywalls &amp; No Registration</h3>
             <p className="text-xs text-neutral-400 font-light leading-relaxed">
-              We do not force user account creation, capture email addresses, or impose arbitrary daily file quotas. All 28 utility tools are freely accessible to everyone worldwide.
+              We do not force user account creation, capture email addresses, or impose arbitrary daily file quotas. All 41 utility tools are freely accessible to everyone worldwide.
             </p>
           </div>
         </section>
@@ -261,7 +261,7 @@ export default function AboutPage() {
             href="/contact"
             className="inline-flex items-center gap-2 bg-gradient-to-r from-brand-gold to-brand-gold-dark text-black font-extrabold text-xs px-6 py-3 rounded-full shadow-premium-gold hover:scale-105 transition-transform shrink-0"
           >
-            Contact Our Team 📬
+            Contact Our Team
           </Link>
         </section>
 

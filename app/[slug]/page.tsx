@@ -219,12 +219,12 @@ export default async function ToolSlugPage({ params }: { params: Promise<{ slug:
         </div>
       </header>
 
-      {/* 🛠 INTERACTIVE TOOL WORKSPACE CONTAINER */}
+      {/* � INTERACTIVE TOOL WORKSPACE CONTAINER */}
       <main className="relative z-10">
         <Home initialToolId={tool.id} isStandaloneToolPage={true} />
       </main>
 
-      {/* 👑 RICH SEO VALUE, FAQ, RATINGS, HOW-TO & TRUST CONTENT */}
+      {/* � RICH SEO VALUE, FAQ, RATINGS, HOW-TO & TRUST CONTENT */}
       <ToolContentSection 
         tool={{
           id: tool.id,
@@ -235,7 +235,7 @@ export default async function ToolSlugPage({ params }: { params: Promise<{ slug:
         }} 
       />
 
-      {/* 🔻 GLOBAL LUXURY SITE FOOTER */}
+      {/* � GLOBAL LUXURY SITE FOOTER */}
       <SiteFooter />
 
     </div>

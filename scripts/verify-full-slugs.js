@@ -127,7 +127,7 @@ async function runFullAudit() {
   console.log(`   - 404 Security Protection: ${randomPass} / ${randomSlugs.length}`);
 
   if (failCount === 0) {
-    console.log(`\n🚀 100% OK REPORT: All 28 full slugs are production-ready to go live!\n`);
+    console.log(`\n🚀 100% OK REPORT: All ${tools.length} full slugs are production-ready to go live!\n`);
   } else {
     console.log(`\n⚠️ Issues detected. Review above report.\n`);
   }

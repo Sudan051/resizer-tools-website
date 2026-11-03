@@ -1163,7 +1163,7 @@ export default function ScreenshotStudioClient() {
   return (
     <div className="flex flex-col space-y-2 relative">
       
-      {/* 🚀 TOP ULTRA-COMPACT TOOLBAR (Single Sleek 44px Bar) */}
+      {/* TOP ULTRA-COMPACT TOOLBAR (Single Sleek 44px Bar) */}
       <header className="sticky top-1 z-40 h-11 shrink-0 bg-[#121212]/95 backdrop-blur-md border border-white/10 rounded-xl px-2.5 sm:px-3 flex items-center justify-between gap-2 shadow-xl">
         {/* Left: Back & Title & Preset Dropdown */}
         <div className="flex items-center gap-2 shrink-0">
@@ -1193,7 +1193,7 @@ export default function ScreenshotStudioClient() {
             >
               {PRESET_SIZES.map((preset) => (
                 <option key={preset.id} value={preset.id} className="bg-[#121212] text-white">
-                  {preset.platform === "iOS" ? "🍏" : "🤖"} {preset.name} ({preset.width}×{preset.height})
+                  [{preset.platform}] {preset.name} ({preset.width}×{preset.height})
                 </option>
               ))}
             </select>
@@ -1318,11 +1318,11 @@ export default function ScreenshotStudioClient() {
                       onChange={(e) => updateActiveSlide("frameStyle", e.target.value as "island" | "notch" | "notch_classic" | "pixel_hole" | "borderless")}
                       className="w-full bg-black/50 border border-white/10 rounded-lg px-2 py-1 text-[11px] text-white focus:outline-none focus:border-brand-gold font-medium"
                     >
-                      <option value="notch">📱 Apple Curved Notch (iPhone 13 / 14)</option>
-                      <option value="notch_classic">📱 Classic Apple Notch (iPhone X / XS / 11 / 12)</option>
-                      <option value="island">✨ Dynamic Island (iPhone 16 / 15 / 14 Pro)</option>
-                      <option value="pixel_hole">⚫ Android Punch Hole</option>
-                      <option value="borderless">⬛ Full Screen (Borderless)</option>
+                      <option value="notch">Apple Curved Notch (iPhone 13 / 14)</option>
+                      <option value="notch_classic">Classic Apple Notch (iPhone X / XS / 11 / 12)</option>
+                      <option value="island">Dynamic Island (iPhone 16 / 15 / 14 Pro)</option>
+                      <option value="pixel_hole">Android Punch Hole</option>
+                      <option value="borderless">Full Screen (Borderless)</option>
                     </select>
                   </div>
 
@@ -1480,7 +1480,7 @@ export default function ScreenshotStudioClient() {
           )}
         </div>
 
-        {/* 🎯 CENTER COLUMN: PREVIEW VIEWPORT (STATIC / FIXED PINNED ON SCREEN) */}
+        {/* CENTER COLUMN: PREVIEW VIEWPORT (STATIC / FIXED PINNED ON SCREEN) */}
         <div className="order-first lg:order-none sticky top-14 z-30 self-start flex-1 w-full min-w-0 flex flex-col items-center justify-between p-2.5 bg-[#050505]/95 backdrop-blur-md border border-white/10 rounded-2xl relative select-none shadow-2xl lg:max-h-[calc(100vh-68px)]">
           {/* Quick Preview Navigation Bar */}
           <div className="w-full flex items-center justify-between bg-[#121212] border border-white/10 rounded-lg px-2.5 py-1 shadow-sm shrink-0 mb-1 z-10">

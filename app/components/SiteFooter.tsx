@@ -47,6 +47,11 @@ export default function SiteFooter() {
             <ul className="space-y-2 text-xs text-neutral-400">
               <li><Link href="/image-compressor" className="hover:text-brand-gold transition-colors">Image Compressor</Link></li>
               <li><Link href="/image-resizer" className="hover:text-brand-gold transition-colors">Image Resizer</Link></li>
+              <li><Link href="/crop-image" className="hover:text-brand-gold transition-colors">Crop Image</Link></li>
+              <li><Link href="/jpg-to-png" className="hover:text-brand-gold transition-colors">JPG to PNG</Link></li>
+              <li><Link href="/png-to-jpg" className="hover:text-brand-gold transition-colors">PNG to JPG</Link></li>
+              <li><Link href="/webp-to-jpg" className="hover:text-brand-gold transition-colors">WebP to JPG</Link></li>
+              <li><Link href="/webp-to-png" className="hover:text-brand-gold transition-colors">WebP to PNG</Link></li>
               <li><Link href="/image-to-pdf" className="hover:text-brand-gold transition-colors">Image to PDF</Link></li>
               <li><Link href="/image-converter" className="hover:text-brand-gold transition-colors">Image Converter</Link></li>
               <li><Link href="/pdf-images" className="hover:text-brand-gold transition-colors">PDF to Image</Link></li>
@@ -63,6 +68,12 @@ export default function SiteFooter() {
             </h4>
             <ul className="space-y-2 text-xs text-neutral-400">
               <li><Link href="/merge-pdf" className="hover:text-brand-gold transition-colors">Merge PDF Files</Link></li>
+              <li><Link href="/pdf-to-word" className="hover:text-brand-gold transition-colors">PDF to Word</Link></li>
+              <li><Link href="/pdf-to-excel" className="hover:text-brand-gold transition-colors">PDF to Excel</Link></li>
+              <li><Link href="/word-to-pdf" className="hover:text-brand-gold transition-colors">Word to PDF</Link></li>
+              <li><Link href="/excel-to-pdf" className="hover:text-brand-gold transition-colors">Excel to PDF</Link></li>
+              <li><Link href="/pdf-to-text" className="hover:text-brand-gold transition-colors">PDF to Text</Link></li>
+              <li><Link href="/text-to-pdf" className="hover:text-brand-gold transition-colors">Text to PDF</Link></li>
               <li><Link href="/pdf-maker" className="hover:text-brand-gold transition-colors">PDF Maker</Link></li>
               <li><Link href="/split-pdf" className="hover:text-brand-gold transition-colors">Split PDF Pages</Link></li>
               <li><Link href="/extract-pdf-pages" className="hover:text-brand-gold transition-colors">Extract PDF Pages</Link></li>
@@ -85,6 +96,8 @@ export default function SiteFooter() {
               <Zap className="w-3.5 h-3.5 text-brand-gold" /> Generators &amp; Tools
             </h4>
             <ul className="space-y-2 text-xs text-neutral-400">
+              <li><Link href="/barcode-generator" className="hover:text-brand-gold transition-colors font-medium text-white">Barcode Generator</Link></li>
+              <li><Link href="/password-generator" className="hover:text-brand-gold transition-colors font-medium text-white">Password Generator</Link></li>
               <li><Link href="/shots" className="hover:text-brand-gold transition-colors font-medium text-brand-gold">Screenshot Studio</Link></li>
               <li><Link href="/screenshot-generator" className="hover:text-brand-gold transition-colors">Screenshot Generator</Link></li>
               <li><Link href="/qr-code-generator" className="hover:text-brand-gold transition-colors">QR Code Generator</Link></li>

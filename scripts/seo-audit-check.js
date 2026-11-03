@@ -130,7 +130,7 @@ function runAudit() {
 
   console.log(`   Minimum incoming internal links per tool: ${minLinks} (Target: >= 3)`);
   if (weakestTools.length === 0) {
-    console.log('   ✅ All 28 tools exceed minimum internal link density (0 weak link pages).');
+    console.log(`   ✅ All ${tools.length} tools exceed minimum internal link density (0 weak link pages).`);
   }
 
   // Final Summary

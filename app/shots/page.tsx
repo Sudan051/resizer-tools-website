@@ -66,7 +66,7 @@ export default function ShotsPage() {
 
       </div>
 
-      {/* 👑 RICH SEO VALUE, FAQ, RATINGS, HOW-TO & TRUST CONTENT */}
+      {/* RICH SEO VALUE, FAQ, RATINGS, HOW-TO & TRUST CONTENT */}
       <div className="mt-12">
         <ToolContentSection 
           tool={{
@@ -79,7 +79,7 @@ export default function ShotsPage() {
         />
       </div>
 
-      {/* 🔻 GLOBAL LUXURY SITE FOOTER */}
+      {/* GLOBAL SITE FOOTER */}
       <SiteFooter />
 
     </main>
