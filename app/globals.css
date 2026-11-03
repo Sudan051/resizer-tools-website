@@ -92,15 +92,15 @@ html.light .text-white {
 
 /* 🛡️ Privacy Assurance Section - High Contrast & High Legibility */
 .privacy-assurance-card {
-  background: linear-gradient(135deg, rgba(22, 22, 22, 0.95), rgba(14, 14, 14, 0.98)) !important;
-  border-color: rgba(212, 175, 55, 0.3) !important;
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5) !important;
+  background: linear-gradient(135deg, #13151A, #0D0F12) !important;
+  border-color: rgba(212, 175, 55, 0.35) !important;
+  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.6) !important;
 }
 
 .privacy-assurance-card .privacy-card-badge {
-  background-color: rgba(212, 175, 55, 0.15) !important;
-  border: 1px solid rgba(212, 175, 55, 0.35) !important;
-  color: #F3E5AB !important;
+  background-color: rgba(212, 175, 55, 0.18) !important;
+  border: 1px solid rgba(212, 175, 55, 0.4) !important;
+  color: #FDE047 !important;
 }
 
 .privacy-assurance-card .privacy-card-heading {
@@ -108,16 +108,16 @@ html.light .text-white {
 }
 
 .privacy-assurance-card .privacy-card-text {
-  color: #E2E8F0 !important;
+  color: #F8FAFC !important;
 }
 
 .privacy-assurance-card .privacy-card-text strong {
-  color: #F3E5AB !important;
+  color: #FDE047 !important;
 }
 
 .privacy-assurance-card .privacy-card-sub {
-  background-color: rgba(255, 255, 255, 0.05) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
 }
 
 .privacy-assurance-card .privacy-card-subtitle {
@@ -125,20 +125,20 @@ html.light .text-white {
 }
 
 .privacy-assurance-card .privacy-card-subdesc {
-  color: #CBD5E1 !important;
+  color: #E2E8F0 !important;
 }
 
 /* ☀️ Light Mode: Pure Crisp High-Contrast Legibility */
 html.light .privacy-assurance-card {
-  background: linear-gradient(135deg, #FFFFFF, #F8FAFC) !important;
+  background: #FFFFFF !important;
   border-color: rgba(212, 175, 55, 0.45) !important;
-  box-shadow: 0 12px 36px -8px rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.08) !important;
 }
 
 html.light .privacy-assurance-card .privacy-card-badge {
-  background-color: rgba(212, 175, 55, 0.12) !important;
-  border: 1px solid rgba(212, 175, 55, 0.45) !important;
-  color: #9A7007 !important;
+  background-color: rgba(212, 175, 55, 0.15) !important;
+  border: 1px solid rgba(212, 175, 55, 0.5) !important;
+  color: #854D0E !important;
 }
 
 html.light .privacy-assurance-card .privacy-card-heading {
@@ -146,7 +146,7 @@ html.light .privacy-assurance-card .privacy-card-heading {
 }
 
 html.light .privacy-assurance-card .privacy-card-text {
-  color: #334155 !important;
+  color: #1E293B !important;
 }
 
 html.light .privacy-assurance-card .privacy-card-text strong {
@@ -154,9 +154,9 @@ html.light .privacy-assurance-card .privacy-card-text strong {
 }
 
 html.light .privacy-assurance-card .privacy-card-sub {
-  background-color: #F1F5F9 !important;
-  border: 1px solid rgba(0, 0, 0, 0.08) !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03) !important;
+  background-color: #F8FAFC !important;
+  border: 1px solid #CBD5E1 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
 }
 
 html.light .privacy-assurance-card .privacy-card-subtitle {
@@ -164,7 +164,7 @@ html.light .privacy-assurance-card .privacy-card-subtitle {
 }
 
 html.light .privacy-assurance-card .privacy-card-subdesc {
-  color: #475569 !important;
+  color: #334155 !important;
 }
 
 /* 👑 Preserve Pure Dark Banner Card & White Text in All Themes */

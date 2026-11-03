@@ -2669,30 +2669,30 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
       </section>
 
       {/* Security Assurance Section */}
-      <section className="py-10 px-6 max-w-5xl mx-auto">
-        <div className="privacy-assurance-card relative rounded-3xl p-8 md:p-12 overflow-hidden shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-8 md:gap-10 border transition-all">
+      <section className="py-12 px-6 max-w-5xl mx-auto">
+        <div className="privacy-assurance-card relative rounded-3xl p-8 sm:p-10 md:p-12 overflow-hidden shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-8 md:gap-10 border transition-all">
           <div className="absolute top-0 right-0 w-64 h-64 bg-brand-gold/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="space-y-4 text-left max-w-xl">
-            <span className="privacy-card-badge inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-mono font-bold tracking-wider uppercase">
+          <div className="space-y-5 text-left max-w-xl">
+            <span className="privacy-card-badge inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs sm:text-sm font-mono font-bold tracking-wider uppercase">
               <Shield className="w-4 h-4 text-brand-gold" /> Privacy First
             </span>
-            <h2 className="privacy-card-heading text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
+            <h2 className="privacy-card-heading text-2xl sm:text-3xl md:text-4xl lg:text-[38px] font-black tracking-tight leading-snug">
               Your Files Never Leave Your Device
             </h2>
-            <p className="privacy-card-text text-base sm:text-lg leading-relaxed font-normal">
-              Unlike typical online converters that upload your confidential files to remote servers, Resizer Tools works <strong className="font-bold underline decoration-brand-gold/50 underline-offset-4">100% locally in your browser memory</strong>. Faster processing, zero upload waits, and complete data privacy.
+            <p className="privacy-card-text text-base sm:text-lg md:text-xl leading-relaxed font-normal">
+              Unlike typical online converters that upload your confidential files to remote servers, Resizer Tools works <strong className="font-bold underline decoration-brand-gold/60 underline-offset-4">100% locally in your browser memory</strong>. Faster processing, zero upload waits, and complete data privacy.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full lg:w-auto shrink-0">
-            <div className="privacy-card-sub rounded-2xl p-5 text-left flex flex-col justify-between sm:w-[220px]">
-              <WifiOff className="w-6 h-6 text-brand-gold mb-3" />
+            <div className="privacy-card-sub rounded-2xl p-6 text-left flex flex-col justify-between sm:w-[230px]">
+              <WifiOff className="w-7 h-7 text-brand-gold mb-3" />
               <h3 className="privacy-card-subtitle text-sm sm:text-base font-bold uppercase tracking-wider">Works Offline</h3>
-              <p className="privacy-card-subdesc text-xs sm:text-sm mt-1.5 leading-relaxed">Disconnect your internet and keep editing, compressing, or watermarking files without interruption.</p>
+              <p className="privacy-card-subdesc text-xs sm:text-sm mt-2 leading-relaxed font-medium">Disconnect your internet and keep editing, compressing, or watermarking files without interruption.</p>
             </div>
-            <div className="privacy-card-sub rounded-2xl p-5 text-left flex flex-col justify-between sm:w-[220px]">
-              <Zap className="w-6 h-6 text-brand-gold mb-3" />
+            <div className="privacy-card-sub rounded-2xl p-6 text-left flex flex-col justify-between sm:w-[230px]">
+              <Zap className="w-7 h-7 text-brand-gold mb-3" />
               <h3 className="privacy-card-subtitle text-sm sm:text-base font-bold uppercase tracking-wider">Zero Upload Lag</h3>
-              <p className="privacy-card-subdesc text-xs sm:text-sm mt-1.5 leading-relaxed">No waiting for slow uploads. Process your documents and photos instantly using your own device hardware.</p>
+              <p className="privacy-card-subdesc text-xs sm:text-sm mt-2 leading-relaxed font-medium">No waiting for slow uploads. Process your documents and photos instantly using your own device hardware.</p>
             </div>
           </div>
         </div>
