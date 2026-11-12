@@ -17,7 +17,7 @@ export default function FormSolutionPrivacyPage() {
       <div className="max-w-3xl mx-auto bg-white border border-neutral-200 rounded-3xl p-8 sm:p-12 shadow-sm space-y-10">
         
         {/* Navigation back */}
-        <Link href="/" className="inline-flex items-center gap-2 text-xs text-neutral-500 hover:text-amber-600 transition-colors font-medium">
+        <Link href="/" className="inline-flex items-center gap-2 text-xs text-blue-600 underline hover:text-blue-800 transition-colors font-medium">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Home
         </Link>
 
@@ -101,8 +101,11 @@ export default function FormSolutionPrivacyPage() {
             <p className="text-neutral-600">
               If you have any questions or feedback regarding this Privacy Policy, please contact developer support directly:
             </p>
-            <p className="font-mono text-amber-700 bg-amber-50 border border-amber-200 px-3 py-2 rounded-lg w-fit text-xs font-semibold">
-              Email: Saurabhsudan051@gmail.com
+            <p className="font-mono text-xs">
+              Email: <a href="mailto:Saurabhsudan051@gmail.com" className="text-blue-600 underline font-semibold hover:text-blue-800">Saurabhsudan051@gmail.com</a>
+            </p>
+            <p className="text-xs text-neutral-500 pt-2">
+              Also view our <Link href="/form-solution/terms" className="text-blue-600 underline font-medium hover:text-blue-800">Terms of Service</Link>.
             </p>
           </section>
         </div>
