@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Shield, ArrowLeft } from "lucide-react";
-import SiteFooter from "../../components/SiteFooter";
 
 export const dynamic = "force-static";
 
@@ -102,7 +101,11 @@ export default function FormSolutionPrivacyPage() {
           </section>
         </div>
 
-        <SiteFooter />
+        {/* Clean, dedicated App Store compliant footer */}
+        <footer className="border-t border-white/10 pt-8 pb-12 text-center text-xs text-neutral-400 space-y-2">
+          <p className="text-white font-medium">© 2026 Form Solution (iOS). Developed by Saurabh Kumar Sharma.</p>
+          <p className="text-neutral-500 font-mono text-[11px]">Strict 100% On-Device Privacy Architecture • Zero Server Storage</p>
+        </footer>
       </div>
     </main>
   );
