@@ -181,6 +181,14 @@ export const TOOL_CONTENT: Record<string, ToolDeepContent> = {
       {
         q: "Can I adjust brightness and contrast after capturing?",
         a: "Yes. Built-in adjustment controls let you balance exposure, enhance contrast, and remove subtle facial shadows before saving."
+      },
+      {
+        q: "What lighting conditions work best for taking passport photos with my device camera?",
+        a: "Even, diffused natural daylight without harsh direct sunlight or deep facial shadows gives the cleanest results. Stand approximately 3 to 4 feet away from a plain, light-colored background wall."
+      },
+      {
+        q: "Are photos taken with this camera tool accepted for official government applications?",
+        a: "Yes, provided you follow your target country's guidelines: maintain a neutral facial expression, look directly into the lens, avoid glare on spectacles, and keep head-to-frame ratios aligned with official passport templates."
       }
     ],
     features: [
@@ -214,6 +222,14 @@ export const TOOL_CONTENT: Record<string, ToolDeepContent> = {
       {
         q: "Can I print different photos on the same sheet?",
         a: "Yes. You can duplicate a single photo across all grid slots or upload multiple individual photos for family members on the same sheet."
+      },
+      {
+        q: "Can I print this passport photo sheet on standard 4x6 photo paper or A4 sheets?",
+        a: "Yes. The generated grid is optimized for standard 4x6 inch (10x15cm) photo studio paper as well as standard A4 sheets. When printing, select 100% scale (no scaling) in your printer settings."
+      },
+      {
+        q: "How many passport photos fit on a single 4x6 sheet?",
+        a: "A standard 4x6 inch layout fits up to 6 standard 2x2 inch (51x51mm) or 8 standard 35x45mm passport photos comfortably with clean cutting borders."
       }
     ],
     features: [
@@ -247,6 +263,14 @@ export const TOOL_CONTENT: Record<string, ToolDeepContent> = {
       {
         q: "Does this scanner record or track the QR codes I inspect?",
         a: "No. Decoded information is processed purely in your browser session and is never logged to any remote database."
+      },
+      {
+        q: "Can this scanner read damaged, low-contrast, or inverted QR codes?",
+        a: "Yes. Our decoding engine applies adaptive thresholding and contrast boosting to recover matrix payloads even from dimly lit, angled, or partially crumpled physical QR prints."
+      },
+      {
+        q: "Does scanning a QR code automatically open suspicious web links?",
+        a: "No. The scanner decodes and displays the raw destination payload as readable text first, allowing you to inspect the URL domain before deciding to open it."
       }
     ],
     features: [
@@ -280,6 +304,14 @@ export const TOOL_CONTENT: Record<string, ToolDeepContent> = {
       {
         q: "Can I scan multiple document pages into one file?",
         a: "Yes. You can process sequential pages and then use our Image to PDF tool to merge them into a single organized PDF document."
+      },
+      {
+        q: "How does the document scanner enhance text readability on photographed documents?",
+        a: "It applies dynamic thresholding and perspective correction to flatten curved receipt pages and boost contrast between black ink and paper, simulating flatbed desktop scanners."
+      },
+      {
+        q: "Can I scan multiple receipts or invoices in sequence?",
+        a: "Yes. You can capture multiple document pages in succession, crop each frame independently, and export the consolidated sequence as a multi-page PDF."
       }
     ],
     features: [
@@ -350,6 +382,14 @@ export const TOOL_CONTENT: Record<string, ToolDeepContent> = {
       {
         q: "Is my text content logged or transmitted to an external server?",
         a: "No. All text compilation is handled locally inside your browser's memory heap with zero server communication."
+      },
+      {
+        q: "Can I customize fonts, text sizes, and margins in PDF Maker?",
+        a: "Yes. You can select heading styles, body typography sizes, line heights, and margins to produce clean, executive-quality memos, reports, and documentation."
+      },
+      {
+        q: "Does PDF Maker produce searchable vector text?",
+        a: "Yes. The output is a genuine vector PDF with embeddable font glyphs, making all text fully selectable, copyable, and searchable in Adobe Acrobat and web browsers."
       }
     ],
     features: [
@@ -420,6 +460,14 @@ export const TOOL_CONTENT: Record<string, ToolDeepContent> = {
       {
         q: "Is there a limit on how large of a PDF I can split?",
         a: "Because processing leverages your device's local memory, you can split massive 200+ page documents without encountering remote server timeouts."
+      },
+      {
+        q: "Can I split a PDF into individual single-page files or custom page ranges?",
+        a: "Both options are supported. You can extract specific page ranges (e.g., pages 3 to 7) or divide an entire multi-page document into individual single-page PDFs."
+      },
+      {
+        q: "Does splitting a PDF reduce the resolution of embedded images?",
+        a: "No. Splitting operates at the binary PDF object level, extracting page descriptors directly without recompressing or rasterizing embedded photos and graphics."
       }
     ],
     features: [
@@ -453,6 +501,14 @@ export const TOOL_CONTENT: Record<string, ToolDeepContent> = {
       {
         q: "Is it possible to recover pages after deletion?",
         a: "Once you download the new PDF, the deleted pages are not in that file. However, your original source file on your computer remains completely untouched."
+      },
+      {
+        q: "Can I delete multiple non-consecutive pages from a PDF at once?",
+        a: "Yes. Enter comma-separated page numbers or ranges (e.g., 1, 4, 7-10) to remove multiple unwanted pages or blank sheets in a single operation."
+      },
+      {
+        q: "Does removing pages alter document bookmarks or text layers?",
+        a: "Only the page streams for deleted pages are removed; remaining page dictionaries, text layers, vector stamps, and embedded assets remain intact."
       }
     ],
     features: [
@@ -486,6 +542,14 @@ export const TOOL_CONTENT: Record<string, ToolDeepContent> = {
       {
         q: "Can I extract pages from encrypted PDFs?",
         a: "You must first unlock the PDF using our Unlock PDF tool if it has an open password, after which extraction works normally."
+      },
+      {
+        q: "What is the difference between splitting a PDF and extracting pages?",
+        a: "Splitting divides an entire document into multiple sections, while extracting pulls only your chosen target sheets into a brand-new standalone PDF without altering the original file."
+      },
+      {
+        q: "Can I reorder pages while extracting them?",
+        a: "Yes. The extracted document respects the exact sequence you specify, allowing you to rearrange pages and extract simultaneously."
       }
     ],
     features: [
@@ -519,6 +583,14 @@ export const TOOL_CONTENT: Record<string, ToolDeepContent> = {
       {
         q: "Can I rotate pages while reordering them?",
         a: "Yes, you can adjust page order and then use our Rotate PDF tool to correct any sideways or inverted scans."
+      },
+      {
+        q: "How do I rearrange the page sequence of my PDF file?",
+        a: "Upload your document, inspect the visual page thumbnails, and specify the new page order (e.g., 3, 1, 2, 4) to reconstruct the document in your preferred flow."
+      },
+      {
+        q: "Can I duplicate certain pages while organizing?",
+        a: "Yes. Repeating a page index in your target sequence (e.g., 1, 2, 2, 3) duplicates specific sheets, such as authorization covers or sign-off forms."
       }
     ],
     features: [
@@ -552,6 +624,14 @@ export const TOOL_CONTENT: Record<string, ToolDeepContent> = {
       {
         q: "Will the rotation stay permanent when opened in Adobe Acrobat or Apple Preview?",
         a: "Yes. The rotation tag conforms to ISO 32000 PDF standards and will be rendered permanently across all PDF readers, mobile viewers, and printers."
+      },
+      {
+        q: "Can I rotate only specific upside-down pages instead of the whole document?",
+        a: "Yes. You can apply 90°, 180°, or 270° clockwise rotation either to the entire PDF or selectively to individual landscape or portrait sheets."
+      },
+      {
+        q: "Is the rotation saved permanently when I download the file?",
+        a: "Yes. The rotation matrix angle is written directly into the PDF page dictionary, ensuring the correct orientation is preserved across all PDF viewers and printers."
       }
     ],
     features: [
@@ -622,6 +702,14 @@ export const TOOL_CONTENT: Record<string, ToolDeepContent> = {
       {
         q: "Can I watermark only specific pages in a document?",
         a: "You can apply the watermark universally across all pages or target specific page ranges for draft review."
+      },
+      {
+        q: "Can I customize the opacity, rotation angle, and color of the watermark?",
+        a: "Yes. You can adjust transparency from faint 10% background stamps to prominent 80% marks, choose gold, red, or gray text colors, and angle stamps at 45° across pages."
+      },
+      {
+        q: "Does adding a watermark overwrite or corrupt existing PDF text?",
+        a: "No. Watermarks are rendered as a separate semi-transparent vector layer on top of your content without modifying the underlying text or graphics."
       }
     ],
     features: [
@@ -655,6 +743,14 @@ export const TOOL_CONTENT: Record<string, ToolDeepContent> = {
       {
         q: "Does this tool work for multi-page PDF documents?",
         a: "Yes. The converter processes all pages sequentially, allowing you to preview and download each page individually or download all pages in a single ZIP file."
+      },
+      {
+        q: "What DPI resolution are PDF pages rendered at when converting to images?",
+        a: "Pages are rasterized at high resolution (up to 300 DPI equivalent), ensuring crisp, sharp text that is readable even when zoomed in on mobile displays."
+      },
+      {
+        q: "Can I choose between PNG and JPG for the exported page images?",
+        a: "Yes. Choose PNG for maximum sharpness and lossless diagram rendering, or JPG for smaller file sizes suitable for quick email attachments."
       }
     ],
     features: [
@@ -688,6 +784,14 @@ export const TOOL_CONTENT: Record<string, ToolDeepContent> = {
       {
         q: "Will the password protection work on smartphones and tablets?",
         a: "Yes. The encrypted PDF will prompt for the password on any standard iOS, Android, macOS, Windows, or Linux PDF viewer."
+      },
+      {
+        q: "What encryption standard does Protect PDF use?",
+        a: "The tool utilizes industry-standard AES encryption to lock your PDF document, preventing unauthorized viewing without the correct password."
+      },
+      {
+        q: "Can I set both an open password and a permissions password?",
+        a: "Yes. You can restrict unauthorized opening, printing, copying text, or editing form fields by applying cryptographic password controls."
       }
     ],
     features: [
@@ -721,6 +825,14 @@ export const TOOL_CONTENT: Record<string, ToolDeepContent> = {
       {
         q: "Will unlocking the PDF alter its text, images, or formatting?",
         a: "No. The document's internal vector text, fonts, and images remain identical; only the encryption wrapper is safely stripped."
+      },
+      {
+        q: "Can Unlock PDF decrypt a file if I don't know the password?",
+        a: "No. For legal and security compliance, you must provide the correct password once to verify authorization, after which the password requirement is permanently stripped from the file."
+      },
+      {
+        q: "Why would I want to remove a password from my own PDF?",
+        a: "Removing password restrictions is essential when archiving personal documents, submitting files to portals that reject encrypted PDFs, or printing in bulk."
       }
     ],
     features: [
@@ -754,6 +866,14 @@ export const TOOL_CONTENT: Record<string, ToolDeepContent> = {
       {
         q: "Are my client names, addresses, or revenue amounts saved on your server?",
         a: "No. All financial calculations and PDF rendering happen locally in your browser memory. We never store or analyze your commercial transactions."
+      },
+      {
+        q: "Can I add custom tax rates like GST or VAT to my invoices?",
+        a: "Yes. You can specify custom GST, VAT, or sales tax percentages, and the invoice calculator automatically computes line totals, subtotal, tax amount, and grand total."
+      },
+      {
+        q: "Does Invoice Maker store my clients' financial information or business records?",
+        a: "No. All invoice generation runs strictly in local browser memory. No business names, pricing, client emails, or totals are transmitted to or stored on any server."
       }
     ],
     features: [
@@ -824,6 +944,14 @@ export const TOOL_CONTENT: Record<string, ToolDeepContent> = {
       {
         q: "Are legal documents safe to number with this tool?",
         a: "Yes. Because processing executes 100% locally in your browser memory, confidential court exhibits and filings are never uploaded to the cloud."
+      },
+      {
+        q: "Where are page numbers positioned on the PDF pages?",
+        a: "You can position page numbers at the bottom center, bottom right, top center, or top right of each sheet, formatted as 'Page X of Y' or simple digits."
+      },
+      {
+        q: "Can I skip numbering on the cover page?",
+        a: "Yes. You can configure the numbering offset to start on page 2 or any custom sheet, keeping cover pages clean and professional."
       }
     ],
     features: [
@@ -857,6 +985,14 @@ export const TOOL_CONTENT: Record<string, ToolDeepContent> = {
       {
         q: "Can I print these QR codes on business cards and posters?",
         a: "Yes. You can export high-resolution PNG or vector images that maintain sharp edges when scaled to large poster formats."
+      },
+      {
+        q: "What is the difference between static and dynamic QR codes?",
+        a: "Static QR codes encode the destination text or URL directly into the pixel matrix with zero middlemen or redirection servers. They never expire and require no subscription."
+      },
+      {
+        q: "What error correction level should I choose for printed QR codes?",
+        a: "For flyers, business cards, and outdoor banners, High (Level H) error correction is recommended so the code remains scannable even if up to 30% is smudged or covered."
       }
     ],
     features: [
@@ -890,6 +1026,14 @@ export const TOOL_CONTENT: Record<string, ToolDeepContent> = {
       {
         q: "Can I use an Apple Pencil or stylus to sign?",
         a: "Yes. Our HTML5 canvas captures high-resolution stylus touch events for authentic, smooth penmanship on iPads and touch laptops."
+      },
+      {
+        q: "How do I export my drawn signature as a transparent PNG?",
+        a: "Once you draw your signature on the smooth canvas with mouse or touch, click Export PNG. The background is 100% transparent, ready to paste onto contracts."
+      },
+      {
+        q: "Can I use this digital signature on legally binding contracts?",
+        a: "Yes. Electronic signatures created with intent are recognized under the US ESIGN Act, EU eIDAS, and the Indian Information Technology Act for common commercial contracts."
       }
     ],
     features: [
@@ -923,6 +1067,14 @@ export const TOOL_CONTENT: Record<string, ToolDeepContent> = {
       {
         q: "Is any data stored when reading my NFC tags?",
         a: "No. Tag serial numbers and NDEF records are displayed in your active browser session and are never transmitted to external analytics servers."
+      },
+      {
+        q: "Which devices support Web NFC for reading and writing tags?",
+        a: "Web NFC is supported on modern Android smartphones running Chrome or Edge with an active NFC antenna. iOS devices require our native mobile app."
+      },
+      {
+        q: "What types of NFC tags can I program with this tool?",
+        a: "You can read and write standard NDEF-compatible NFC tags (NTAG213, NTAG215, NTAG216) with website URLs, Wi-Fi credentials, vCard contact info, and custom text."
       }
     ],
     features: [
@@ -993,6 +1145,14 @@ export const TOOL_CONTENT: Record<string, ToolDeepContent> = {
       {
         q: "Are my images uploaded to any remote server?",
         a: "No. The conversion pipeline operates 100% locally on your device via HTML5 Canvas. Your photos never leave your device."
+      },
+      {
+        q: "Does converting JPG to PNG improve image quality?",
+        a: "Converting to PNG prevents further compression loss during future edits. However, it cannot restore detail already discarded by the original JPEG compression."
+      },
+      {
+        q: "Why is the converted PNG file larger than the original JPG?",
+        a: "PNG is a lossless format that records pixel data with exact mathematical fidelity, whereas JPG uses lossy compression to discard visual information for smaller size."
       }
     ],
     features: [
@@ -1026,6 +1186,14 @@ export const TOOL_CONTENT: Record<string, ToolDeepContent> = {
       {
         q: "Is there any risk of privacy leaks?",
         a: "None. All image encoding runs directly on your GPU/CPU via local browser APIs with zero network requests."
+      },
+      {
+        q: "Will PNG to JPG conversion cause any visible loss in detail?",
+        a: "At quality settings between 85% and 95%, visual differences are virtually indistinguishable to the human eye while reducing file size by up to 80%."
+      },
+      {
+        q: "Is this tool suitable for compressing screenshots for email?",
+        a: "Yes! High-resolution desktop and mobile screenshots saved as heavy PNGs (3-10MB) typically shrink to 200-500KB when converted to JPG."
       }
     ],
     features: [
@@ -1055,6 +1223,14 @@ export const TOOL_CONTENT: Record<string, ToolDeepContent> = {
       {
         q: "Can I convert multiple WebP files?",
         a: "Yes, you can convert as many WebP images as you want with zero daily quotas or wait times."
+      },
+      {
+        q: "Can I convert animated WebP files with this tool?",
+        a: "The tool converts the primary high-resolution frame of the WebP into a clean, standard JPEG photograph ready for desktop viewing and printing."
+      },
+      {
+        q: "Will converting WebP to JPG work on mobile browsers like iPhone Safari?",
+        a: "Yes. Both iOS Safari and Android Chrome have native WebP canvas decoding support, allowing instant in-browser conversion on mobile devices."
       }
     ],
     features: [
@@ -1084,6 +1260,14 @@ export const TOOL_CONTENT: Record<string, ToolDeepContent> = {
       {
         q: "Is image quality preserved during conversion?",
         a: "Yes, PNG uses lossless encoding, so no further compression artifacts are introduced."
+      },
+      {
+        q: "Is WebP to PNG conversion truly lossless?",
+        a: "Yes. The decoded bitmap pixels from the WebP container are repacked into a lossless PNG raster stream with zero compression artifacts."
+      },
+      {
+        q: "Can I use the converted PNG in graphic design applications like Canva and Photoshop?",
+        a: "Yes. Standard PNG format is universally supported across Adobe Photoshop, Illustrator, Canva, Figma, CorelDRAW, and all modern web browsers."
       }
     ],
     features: [
@@ -1117,6 +1301,14 @@ export const TOOL_CONTENT: Record<string, ToolDeepContent> = {
       {
         q: "Is there a limit on PDF page count?",
         a: "Because processing leverages your computer's RAM, you can comfortably convert multi-page documents without cloud queue limits."
+      },
+      {
+        q: "Does this tool work on scanned PDFs or image-only documents?",
+        a: "Native text-layer PDFs convert with high formatting fidelity. Scanned documents will convert the embedded page images into Word document pages."
+      },
+      {
+        q: "Can I convert large PDF manuals or books into Word?",
+        a: "Yes. Because processing runs in your computer's browser memory without upload bandwidth bottlenecks, multi-page reports convert swiftly."
       }
     ],
     features: [
@@ -1150,6 +1342,14 @@ export const TOOL_CONTENT: Record<string, ToolDeepContent> = {
       {
         q: "Are bank statements and financial files safe?",
         a: "Yes. Data is parsed entirely in your browser memory with zero server uploads, ensuring financial privacy."
+      },
+      {
+        q: "How does the converter identify tables in a PDF?",
+        a: "Our parsing engine analyzes horizontal and vertical text alignments, spacing gaps, and numeric delimiters to reconstruct tabular grids accurately."
+      },
+      {
+        q: "Are dates, currency symbols, and percentages preserved in Excel?",
+        a: "Yes. Text and numeric cells retain their original formatting, currency tags, and decimal points so you can immediately run SUM, AVERAGE, and VLOOKUP formulas."
       }
     ],
     features: [
@@ -1179,6 +1379,14 @@ export const TOOL_CONTENT: Record<string, ToolDeepContent> = {
       {
         q: "Does this tool work on mobile devices?",
         a: "Yes, you can convert Word files to PDF directly from iPhones, iPads, Android devices, Macs, and Windows PCs."
+      },
+      {
+        q: "What document formats can I convert to PDF?",
+        a: "You can convert Microsoft Word .docx, .doc, Rich Text Format (.rtf), and plain text documents into clean, paginated PDF files."
+      },
+      {
+        q: "Will fonts and layout remain identical when converted from Word to PDF?",
+        a: "Yes. The converter formats text, paragraph spacing, line wraps, and headings into standardized PDF vector layout that renders identically on any device."
       }
     ],
     features: [
@@ -1208,6 +1416,14 @@ export const TOOL_CONTENT: Record<string, ToolDeepContent> = {
       {
         q: "Are proprietary financial models and formulas kept private?",
         a: "Yes. Processing runs entirely in your local browser sandbox. No proprietary company data is ever uploaded to external servers."
+      },
+      {
+        q: "How does the tool prevent wide Excel spreadsheets from getting cut off on PDF pages?",
+        a: "The layout engine scales columns intelligently to fit standard portrait or landscape page widths, avoiding truncated numbers or orphan columns."
+      },
+      {
+        q: "Can I convert multi-sheet Excel workbooks to PDF?",
+        a: "Yes. Tabular sheets and data grids are paginated with clear headers and row dividers into a consolidated, presentation-ready PDF."
       }
     ],
     features: [
@@ -1237,6 +1453,14 @@ export const TOOL_CONTENT: Record<string, ToolDeepContent> = {
       {
         q: "Are cropped images saved on your servers?",
         a: "No. Cropping is performed locally on your device via HTML5 Canvas. Your photos never leave your device."
+      },
+      {
+        q: "What preset aspect ratios are available for image cropping?",
+        a: "You can choose 1:1 Square (Instagram profile, passport), 4:5 Portrait (Instagram feed), 16:9 Widescreen (YouTube thumbnail, presentation), or Freeform custom dimensions."
+      },
+      {
+        q: "Does cropping reduce image resolution or blur the subject?",
+        a: "No. Cropping only removes pixels outside your selected bounding box. The cropped area retains its exact original pixel density and sharpness."
       }
     ],
     features: [
@@ -1266,6 +1490,14 @@ export const TOOL_CONTENT: Record<string, ToolDeepContent> = {
       {
         q: "Are my confidential PDF documents private?",
         a: "Yes. Text parsing happens entirely inside your browser memory without cloud processing."
+      },
+      {
+        q: "What is the benefit of extracting plain text from a PDF?",
+        a: "Extracting plain text produces a lightweight .txt file that is easy to index, search, translate, import into databases, or analyze with AI language models."
+      },
+      {
+        q: "Does PDF to Text preserve paragraph breaks and bullet points?",
+        a: "Yes. Line feeds, paragraph breaks, and standard bullet characters are retained in logical reading order."
       }
     ],
     features: [
@@ -1295,6 +1527,14 @@ export const TOOL_CONTENT: Record<string, ToolDeepContent> = {
       {
         q: "Is there any watermark on the PDF?",
         a: "No. Generated PDFs are 100% clean and free of watermarks or branding."
+      },
+      {
+        q: "Can I format headings, lists, and bold text in Text to PDF?",
+        a: "Yes. The editor supports Markdown and formatted paragraphs, automatically paginating long notes into clean multi-page executive PDF documents."
+      },
+      {
+        q: "What page sizes and margins does Text to PDF use?",
+        a: "Documents are generated using standard A4 / US Letter dimensions with clean 40px margins and readable executive typography."
       }
     ],
     features: [
@@ -1324,6 +1564,14 @@ export const TOOL_CONTENT: Record<string, ToolDeepContent> = {
       {
         q: "Will physical barcode scanners read these barcodes?",
         a: "Yes. The high-contrast black-and-white lines adhere strictly to ISO Code 128 specifications for 100% scanner readability."
+      },
+      {
+        q: "Which barcode formats can I generate with this tool?",
+        a: "You can generate Code 128 (universal alphanumeric), EAN-13 (international retail), UPC-A (US retail), and Code 39 for inventory tracking."
+      },
+      {
+        q: "Are generated barcodes readable by physical handheld laser scanners?",
+        a: "Yes. Barcodes are rendered with mathematically precise bar-and-space ratios at high DPI, ensuring reliable reading by handheld lasers and smartphone cameras."
       }
     ],
     features: [
@@ -1353,6 +1601,14 @@ export const TOOL_CONTENT: Record<string, ToolDeepContent> = {
       {
         q: "How strong are these passwords against brute force attacks?",
         a: "A 16-character password with mixed characters has over 95 bits of entropy, requiring billions of years for modern supercomputers to crack."
+      },
+      {
+        q: "How random and cryptographically secure are the generated passwords?",
+        a: "Passwords are generated using window.crypto.getRandomValues(), the browser's hardware-backed cryptographic random number generator, ensuring maximum entropy."
+      },
+      {
+        q: "Are generated passwords sent or logged to any remote server?",
+        a: "Never. Passwords are produced purely inside your local browser memory and are wiped when the tab closes. We have zero knowledge of your passwords."
       }
     ],
     features: [

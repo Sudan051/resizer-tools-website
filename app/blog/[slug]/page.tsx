@@ -143,7 +143,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 <ul key={idx} className="list-disc pl-6 space-y-2 text-brand-muted">
                   {items.map((item, i) => (
                     <li key={i} dangerouslySetInnerHTML={{ 
-                      __html: item.replace(/^[-*\d.]+\s*/, "").replace(/\*\*(.*?)\*\*/g, '<strong class="text-white font-medium">$1</strong>').replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="text-brand-gold hover:underline font-mono">$1</a>')
+                      __html: item.replace(/^[-*\d.]+\s*/, "").replace(/\*\*(.*?)\*\*/g, '<strong class="text-white font-medium">$1</strong>').replace(/`([^`]+)`/g, '<code class="px-1.5 py-0.5 rounded bg-white/10 text-brand-gold font-mono text-xs">$1</code>').replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="text-brand-gold hover:underline font-mono">$1</a>')
                     }} />
                   ))}
                 </ul>
@@ -181,7 +181,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 key={idx} 
                 className="text-sm leading-relaxed font-light text-brand-muted"
                 dangerouslySetInnerHTML={{
-                  __html: paragraph.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white font-medium">$1</strong>').replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="text-brand-gold hover:underline font-mono font-medium">$1</a>')
+                  __html: paragraph.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white font-medium">$1</strong>').replace(/`([^`]+)`/g, '<code class="px-1.5 py-0.5 rounded bg-white/10 text-brand-gold font-mono text-xs">$1</code>').replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="text-brand-gold hover:underline font-mono font-medium">$1</a>')
                 }}
               />
             );

@@ -117,6 +117,8 @@ export default function SiteFooter() {
             </h4>
             <ul className="space-y-2 text-xs text-neutral-400">
               <li><Link href="/about" className="hover:text-brand-gold transition-colors font-medium text-brand-gold">About Us</Link></li>
+              <li><Link href="/editorial" className="hover:text-brand-gold transition-colors font-medium text-brand-gold">Editorial &amp; Testing Policy</Link></li>
+              <li><Link href="/help" className="hover:text-brand-gold transition-colors font-medium text-brand-gold">Help Center &amp; FAQ</Link></li>
               <li><Link href="/blog" className="hover:text-brand-gold transition-colors font-medium text-white">All Knowledge Guides</Link></li>
               <li><Link href="/blog/image-compression-guide-2026" className="hover:text-brand-gold transition-colors">Image Compression 2026</Link></li>
               <li><Link href="/blog/client-side-pdf-security" className="hover:text-brand-gold transition-colors">Zero-Upload PDF Security</Link></li>
@@ -142,6 +144,10 @@ export default function SiteFooter() {
 
           <div className="flex items-center gap-4 text-[11px]">
             <Link href="/about" className="hover:text-white transition-colors">About</Link>
+            <span className="text-white/20">•</span>
+            <Link href="/editorial" className="hover:text-white transition-colors">Editorial</Link>
+            <span className="text-white/20">•</span>
+            <Link href="/help" className="hover:text-white transition-colors">Help</Link>
             <span className="text-white/20">•</span>
             <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
             <span className="text-white/20">•</span>

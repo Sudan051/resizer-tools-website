@@ -3323,6 +3323,8 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
 
           <Link href="/blog" className="text-brand-gold hover:text-white font-semibold flex items-center gap-1 transition-colors">Blog</Link>
           <Link href="/about" className="hover:text-white transition-colors">About Us</Link>
+          <Link href="/editorial" className="hover:text-white transition-colors">Editorial</Link>
+          <Link href="/help" className="hover:text-white transition-colors">Help Center</Link>
           <a href="#our-apps" className="hover:text-white transition-colors">Our Apps</a>
           <button onClick={() => setShowSubscription(true)} className="hover:text-white text-brand-gold font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"><Sparkles className="w-3.5 h-3.5" /> Unlock Pro</button>
         </div>
@@ -3456,6 +3458,91 @@ export default function Home({ initialToolId, isStandaloneToolPage = false }: { 
             </a>
           ))}
         </motion.div>
+      </section>
+
+      {/* How It Works - 3-Step Visual Section */}
+      <section className="py-20 px-6 max-w-6xl mx-auto border-t border-white/5">
+        <div className="text-center mb-14">
+          <p className="text-brand-gold font-mono tracking-widest text-xs uppercase mb-2 font-bold">Simple, Fast, Private</p>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight">How Resizer Tools Works</h2>
+          <p className="text-brand-muted mt-4 max-w-2xl mx-auto text-sm font-light leading-relaxed">
+            Unlike traditional online converters that upload your sensitive files to remote cloud servers, Resizer Tools processes everything directly inside your web browser. Your documents, images, and PDFs never leave your device.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {[
+            {
+              step: "01",
+              title: "Select Your File",
+              desc: "Choose any PDF, image, or document from your computer. Drag and drop or click to browse. Resizer Tools supports JPG, PNG, WebP, PDF, Word, Excel, and many more formats. There is no file size limit and no registration required."
+            },
+            {
+              step: "02",
+              title: "Process Locally in Browser",
+              desc: "Your file is processed entirely inside your browser using modern JavaScript APIs like Canvas, PDF-lib, and WebCrypto. Nothing is uploaded to any server. The processing happens on your own device hardware, which means faster results and complete privacy."
+            },
+            {
+              step: "03",
+              title: "Download Your Result",
+              desc: "Once processing is complete, download the output file instantly. Whether you compressed a PDF, converted an image, or generated a barcode, your result is ready in seconds. No watermarks, no email required, no daily limits."
+            }
+          ].map((item) => (
+            <div key={item.step} className="relative bg-white/[0.02] border border-white/5 rounded-2xl p-6 hover:border-brand-gold/30 transition-all group">
+              <div className="text-4xl font-black text-brand-gold/20 font-mono mb-4 group-hover:text-brand-gold/40 transition-colors">{item.step}</div>
+              <h3 className="text-lg font-bold text-white mb-3">{item.title}</h3>
+              <p className="text-sm text-brand-muted font-light leading-relaxed">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-12 text-center">
+          <p className="text-sm text-brand-muted font-light leading-relaxed max-w-3xl mx-auto">
+            Resizer Tools is built with a privacy-first philosophy. Every single tool on our platform runs 100% client-side, meaning your files are never transmitted over the internet. We use browser-native technologies including the HTML5 Canvas API for image manipulation, the PDF-lib library for PDF operations, and the Web Crypto API for secure encryption. This approach eliminates upload waiting times, removes server dependency, and ensures your confidential documents remain on your device at all times.
+          </p>
+        </div>
+      </section>
+
+      {/* Our Commitment to Quality Content */}
+      <section className="py-16 px-6 max-w-5xl mx-auto border-t border-white/5">
+        <div className="text-center mb-10">
+          <p className="text-brand-gold font-mono tracking-widest text-xs uppercase mb-2 font-bold">Expert-Built Tools</p>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Built for Real People, Not Just Algorithms</h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-6 space-y-3">
+            <h3 className="text-base font-bold text-white flex items-center gap-2">
+              <BookOpen className="w-4 h-4 text-brand-gold" /> Original Educational Guides
+            </h3>
+            <p className="text-sm text-brand-muted font-light leading-relaxed">
+              Every article in our knowledge base is written by our development team from firsthand experience building browser-native tools. We cover practical topics like image format comparisons, PDF security best practices, and social media sizing guides with real-world examples and tested recommendations.
+            </p>
+          </div>
+          <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-6 space-y-3">
+            <h3 className="text-base font-bold text-white flex items-center gap-2">
+              <Shield className="w-4 h-4 text-brand-gold" /> Verified Tool Accuracy
+            </h3>
+            <p className="text-sm text-brand-muted font-light leading-relaxed">
+              Each tool undergoes manual testing across Chrome, Firefox, Safari, and Edge browsers on both desktop and mobile devices. We verify output quality, file integrity, and edge cases including large files, corrupted inputs, and uncommon format variants to ensure reliable results every time.
+            </p>
+          </div>
+          <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-6 space-y-3">
+            <h3 className="text-base font-bold text-white flex items-center gap-2">
+              <Eye className="w-4 h-4 text-brand-gold" /> Transparent Privacy Model
+            </h3>
+            <p className="text-sm text-brand-muted font-light leading-relaxed">
+              We believe users deserve to know exactly how their data is handled. Our tools are open about their architecture: no hidden server calls, no analytics on file content, no third-party data sharing. Your browser is the processor, and your device is the storage. Period.
+            </p>
+          </div>
+          <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-6 space-y-3">
+            <h3 className="text-base font-bold text-white flex items-center gap-2">
+              <Zap className="w-4 h-4 text-brand-gold" /> Regular Updates and Maintenance
+            </h3>
+            <p className="text-sm text-brand-muted font-light leading-relaxed">
+              Our toolset is actively maintained with quarterly content reviews, performance optimizations, and new feature additions. We track browser API changes, update our processing engines, and expand our knowledge base with fresh guides to help users get the most from every tool.
+            </p>
+          </div>
+        </div>
       </section>
 
       {/* Security Assurance Section */}

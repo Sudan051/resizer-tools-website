@@ -184,6 +184,8 @@ export default async function ToolSlugPage({ params }: { params: Promise<{ slug:
           <Link href="/#studio" className="hover:text-white transition-colors">All Tools ({toolsData.length})</Link>
           <Link href="/blog" className="text-brand-gold hover:text-white font-semibold flex items-center gap-1 transition-colors">Blog &amp; Guides</Link>
           <Link href="/about" className="hover:text-white transition-colors">About Us</Link>
+          <Link href="/editorial" className="hover:text-white transition-colors">Editorial</Link>
+          <Link href="/help" className="hover:text-white transition-colors">Help</Link>
           <Link href="/app" className="hover:text-white transition-colors">Mobile App</Link>
         </div>
         <div className="flex items-center gap-3">
