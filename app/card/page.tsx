@@ -5,6 +5,7 @@ import {
   Sparkles, Layers, Smartphone, CheckCircle2, Apple 
 } from "lucide-react";
 import SiteFooter from "../components/SiteFooter";
+import SiteHeader from "../components/SiteHeader";
 
 export const dynamic = "force-static";
 
@@ -18,7 +19,9 @@ export const metadata = {
 
 export default function DigitalCardPage() {
   return (
-    <main className="min-h-screen bg-[#080808] text-white selection:bg-brand-gold/30 selection:text-brand-gold-light py-12 px-4 flex flex-col items-center justify-center relative overflow-hidden">
+    <div className="min-h-screen bg-[#080808] text-white selection:bg-brand-gold/30 selection:text-brand-gold-light flex flex-col">
+      <SiteHeader currentPath="/card" />
+      <main className="flex-1 py-12 px-4 flex flex-col items-center justify-center relative overflow-hidden">
       
       {/* Glow background ambiance */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] bg-brand-gold/10 rounded-full blur-[140px] pointer-events-none" />
@@ -56,7 +59,7 @@ export default function DigitalCardPage() {
         {/* Product Value Proposition Box */}
         <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2 text-left">
           <h2 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-brand-gold" /> Resizer Tools (26-in-1 Suite)
+            <ShieldCheck className="w-4 h-4 text-brand-gold" /> Resizer Tools (41-in-1 Suite)
           </h2>
           <p className="text-[11px] text-brand-muted leading-relaxed font-light">
             100% Client-side PDF & Image utilities. Compresses images, edits PDFs, signs documents, and scans QR/NFC <strong className="text-white">with zero server uploads</strong>.
@@ -158,6 +161,7 @@ export default function DigitalCardPage() {
       <div className="w-full mt-16">
         <SiteFooter />
       </div>
-    </main>
+      </main>
+    </div>
   );
 }

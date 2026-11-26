@@ -1,79 +1,46 @@
+import { blogPosts } from "../data/blog";
+import { toolsData } from "../data/tools";
+
 export const dynamic = "force-static";
 
 export async function GET() {
-  const content = `# Resizer Tools (resizertools.com) - 100% Client-Side PDF & Image Utility Suite
+  const toolLines = toolsData
+    .map((t) => `- ${t.title} (https://www.resizertools.com/${t.slug}): ${t.desc}`)
+    .join("\n");
 
-> Resizer Tools is a free, privacy-first suite of 28 browser-native web utilities for image compression, image downscaling, PDF compilation, document signing, PDF protection, screenshot generation, and offline QR/NFC tools. All file processing runs 100% locally in browser memory via HTML5 Canvas API, WebCrypto API, and pdf-lib. Zero files or document metadata are ever uploaded to external servers.
+  const blogLines = blogPosts
+    .map((p) => `- ${p.title} (https://www.resizertools.com/blog/${p.slug}): ${p.excerpt}`)
+    .join("\n");
+
+  const content = `# Resizer Tools (https://www.resizertools.com) - 100% Client-Side PDF & Image Utility Suite
+
+> Resizer Tools is a free, privacy-first suite of ${toolsData.length} browser-native web utilities for image compression, image resizing, PDF compilation, document signing, PDF protection, screenshot generation, and local QR/NFC utilities. All file processing runs 100% locally in browser memory via HTML5 Canvas API, WebCrypto API, Web NFC API, and pdf-lib. Zero files or document metadata are ever uploaded to external servers.
 
 ## Core Security & Architecture Guarantees
 - Zero Server Uploads: Files never leave the user's local device memory.
-- 100% Offline Capability: Once the page is loaded, users can turn off Wi-Fi and continue processing files.
+- 100% Offline Capability: Once loaded, users can disconnect from Wi-Fi and continue processing files locally.
 - Zero Upload Lag: Processing speed depends on local CPU/GPU, eliminating network bandwidth delays.
-- Privacy Compliance: GDPR and Razorpay audit compliant with zero tracking of confidential file content.
+- Privacy Compliance: Designed under GDPR and CCPA data-minimization standards with transparent browser processing.
 
-## Available Utility Tools
+## All ${toolsData.length} Browser-Native Utility Tools
+${toolLines}
 
-### Image Tools
-- Image Compressor (https://www.resizertools.com/image-compressor): Reduce image file size (JPEG, PNG, WebP) without losing quality.
-- Image Resizer (https://www.resizertools.com/image-resizer): Resize images by exact pixels, percentages, or aspect ratios.
-- JPG to PNG Converter (https://www.resizertools.com/jpg-to-png): Convert JPG photos to lossless, transparent PNG format.
-- PNG to JPG Converter (https://www.resizertools.com/png-to-jpg): Convert PNG graphics to compressed JPG with white background.
-- WebP to JPG Converter (https://www.resizertools.com/webp-to-jpg): Convert Google WebP images to universal JPG format.
-- WebP to PNG Converter (https://www.resizertools.com/webp-to-png): Convert WebP images to transparent, lossless PNG.
-- Passport Photo Sheet Generator (https://www.resizertools.com/print-photo-sheet): Arrange passport photos into printable grid sheets.
-- Image Format Converter (https://www.resizertools.com/image-converter): Convert between HEIC, WebP, PNG, and JPEG formats locally.
-- Image to PDF (https://www.resizertools.com/image-to-pdf): Convert multiple images into a single PDF document.
-- PDF to Images (https://www.resizertools.com/pdf-images): Convert PDF pages to high-res PNG/JPG images.
-
-### PDF Editing & Conversion Tools
-- PDF to Word Converter (https://www.resizertools.com/pdf-to-word): Convert PDF documents to editable Microsoft Word (.docx / .doc) files.
-- PDF to Excel Converter (https://www.resizertools.com/pdf-to-excel): Extract tables and numbers from PDF into Excel (.xlsx / .csv).
-- Word to PDF Converter (https://www.resizertools.com/word-to-pdf): Convert Word documents (.docx, .doc) to formatted PDF documents.
-- Excel to PDF Converter (https://www.resizertools.com/excel-to-pdf): Convert spreadsheets (.xlsx, .csv) to printable PDF documents.
-- PDF Reducer / Compressor (https://www.resizertools.com/pdf-reducer): Downscale and compress PDF files.
-- Merge PDF (https://www.resizertools.com/merge-pdf): Combine multiple PDF documents into one single file.
-- Split PDF (https://www.resizertools.com/split-pdf): Extract specific page ranges or split every page into separate PDFs.
-- Rotate PDF (https://www.resizertools.com/rotate-pdf-pages): Permanently rotate individual or all pages inside a PDF.
-- Sign PDF (https://www.resizertools.com/sign-pdf): Draw, upload, or place digital signatures onto PDF documents.
-- PDF Watermark (https://www.resizertools.com/pdf-watermark): Add custom text watermarks onto PDF pages.
-- Protect PDF (https://www.resizertools.com/protect-pdf): Protect PDF documents with AES password encryption.
-- Unlock PDF (https://www.resizertools.com/unlock-pdf): Remove password protection from authorized PDF files.
-- Extract PDF Pages (https://www.resizertools.com/extract-pdf-pages): Pull specific pages out of a PDF into a new document.
-- Delete PDF Pages (https://www.resizertools.com/delete-pdf-pages): Remove unwanted pages from PDF files.
-- Reorder PDF Pages (https://www.resizertools.com/reorder-pdf-pages): Drag and rearrange PDF page order.
-- PDF Page Numbers (https://www.resizertools.com/pdf-page-numbers): Add custom page numbers to PDF documents.
-
-### Advanced Utilities & Hardware Connectors
-- QR Code Generator (https://www.resizertools.com/qr-code-generator): Create customized high-density vector QR codes.
-- Digital Signature Creator (https://www.resizertools.com/signature-creator): Draw and export transparent PNG signatures.
-- Invoice Generator (https://www.resizertools.com/invoice-maker): Create professional printable PDF invoices.
-- ATS Resume Builder (https://www.resizertools.com/resume-builder): Build ATS-compliant professional PDF resumes.
-- App Store Screenshot Studio (https://www.resizertools.com/screenshot-generator): Design App Store & Google Play marketing screenshots.
-
-## Knowledge Base & Technical Blog
+## Knowledge Base & Technical Guides (${blogPosts.length} Articles)
 - Blog Hub: https://www.resizertools.com/blog
-- Image Compression Guide 2026: https://www.resizertools.com/blog/image-compression-guide-2026
-- Client-Side PDF Security Whitepaper: https://www.resizertools.com/blog/client-side-pdf-security
-- ATS Resume Optimization Guide: https://www.resizertools.com/blog/ats-resume-optimization-guide
-- Web NFC & QR Privacy: https://www.resizertools.com/blog/nfc-and-qr-code-privacy
-- How to Compress PDF Without Losing Quality: https://www.resizertools.com/blog/how-to-compress-pdf-without-losing-quality
-- HEIC to JPG Conversion Explained: https://www.resizertools.com/blog/heic-to-jpg-conversion-explained
-- Digital Signature Legal Validity Guide: https://www.resizertools.com/blog/digital-signature-legal-validity-guide
-- Passport Photo Sheet Guide: https://www.resizertools.com/blog/how-to-create-passport-photo-sheet
-- Merge PDF Files Offline: https://www.resizertools.com/blog/how-to-merge-pdf-files-offline
-- QR Code Security Practices: https://www.resizertools.com/blog/qr-code-security-best-practices
+${blogLines}
 
-## Official Resources & Links
+## Official Resources & Trust Pages
 - Web App Homepage: https://www.resizertools.com
-- Interactive Founder Digital Card: https://www.resizertools.com/card
+- About Us: https://www.resizertools.com/about
+- Editorial & Testing Policy: https://www.resizertools.com/editorial
+- Help Center & FAQ: https://www.resizertools.com/help
 - Mobile App Download Page: https://www.resizertools.com/app
-- Apple App Store iOS App: https://apps.apple.com/us/app/resizer-tools-pdf-image-qr/id6785073828
-- Google Play Store Android App: https://play.google.com/store/apps/details?id=com.resizertools.app
 - Privacy Policy: https://www.resizertools.com/privacy
 - Terms of Service: https://www.resizertools.com/terms
-- Creator / Developer: Saurabh Kumar Sharma (iOS Engineer & Founder)
+- Refund & Cancellation Policy: https://www.resizertools.com/refund
+- Contact & Support: https://www.resizertools.com/contact
+- Creator / Engineer: Saurabh Kumar Sharma
 - Support Contact: Saurabhsudan051@gmail.com
-- LinkedIn: https://www.linkedin.com/in/pandit-saurabh-kumar-sharma/
 `;
 
   return new Response(content, {

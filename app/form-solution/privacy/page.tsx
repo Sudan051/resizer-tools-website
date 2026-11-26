@@ -6,6 +6,10 @@ export const dynamic = "force-static";
 export const metadata = {
   title: "Privacy Policy - Form Solution (iOS)",
   description: "Learn how Form Solution protects your privacy with 100% on-device processing for document scanning, image compression, and digital signatures.",
+  robots: {
+    index: false,
+    follow: false,
+  },
   alternates: {
     canonical: "https://www.resizertools.com/form-solution/privacy",
   },

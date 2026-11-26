@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Mail, MapPin, ArrowLeft, PhoneCall, HelpCircle } from "lucide-react";
 import SiteFooter from "../components/SiteFooter";
+import SiteHeader from "../components/SiteHeader";
 
 export const dynamic = "force-static";
 
@@ -14,7 +15,9 @@ export const metadata = {
 
 export default function ContactPage() {
   return (
-    <main className="min-h-screen bg-[#080808] text-white selection:bg-brand-gold/30 selection:text-brand-gold-light pt-20 px-6">
+    <div className="min-h-screen bg-[#080808] text-white selection:bg-brand-gold/30 selection:text-brand-gold-light">
+      <SiteHeader currentPath="/contact" />
+      <main className="py-12 px-6">
       <div className="max-w-3xl mx-auto space-y-12">
         
         {/* Navigation back */}
@@ -111,6 +114,7 @@ export default function ContactPage() {
       <div className="mt-16">
         <SiteFooter />
       </div>
-    </main>
+      </main>
+    </div>
   );
 }

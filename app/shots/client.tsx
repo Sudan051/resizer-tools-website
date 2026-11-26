@@ -1542,7 +1542,7 @@ export default function ScreenshotStudioClient() {
           </div>
         </div>
 
-        {/* ➡️ RIGHT COLUMN: TYPOGRAPHY, BADGES & BACKGROUND (w-[270px] xl:w-[290px]) */}
+        {/* RIGHT COLUMN: TYPOGRAPHY, BADGES & BACKGROUND (w-[270px] xl:w-[290px]) */}
         <div className="w-full lg:w-[270px] xl:w-[290px] shrink-0 space-y-2 pb-6">
           {activeSlide && (
             <>

@@ -22,7 +22,7 @@ export interface Tool {
 }
 
 export const toolsData: Tool[] = [
-  // �️ IMAGE TOOLS
+  // ️ IMAGE TOOLS
   { id: "img_comp", slug: "image-compressor", title: "Compress Image", subtitle: "Best tool to compress image size using slider", desc: "Compress JPG, PNG, and WebP image size easily using slider. Reduce file size without losing quality.", icon: ArrowDownCircle, category: "image", src: "/Pro.png", isAppOnly: false },
   { id: "img_res", slug: "image-resizer", title: "Resize Image", subtitle: "The fastest tool to resize image dimensions and quality", desc: "Resize image dimensions by pixels or percentage. Perfect for passport photos, social media, and web uploads.", icon: Crop, category: "image", src: "/utilify-image.jpg", isAppOnly: false },
   { id: "crp_img", slug: "crop-image", title: "Crop Image", subtitle: "Crop images online to custom size or aspect ratio", desc: "You can easily crop images using crop box online. Choose 1:1 square, 16:9, or custom dimensions.", icon: Crop, category: "image", src: "/utilify-image.jpg", isAppOnly: false },
@@ -33,9 +33,9 @@ export const toolsData: Tool[] = [
   { id: "img_pdf", slug: "image-to-pdf", title: "Image to PDF", subtitle: "Convert multiple images into a PDF file", desc: "Combine one or more JPG, PNG, or WebP photos into a clean, easy-to-share PDF document online.", icon: ImageIcon, category: "converter", src: "/utilify-pdf.jpg", isAppOnly: false },
   { id: "img_conv", slug: "image-converter", title: "Image Converter", subtitle: "Switch between PNG, JPG, WebP & HEIC", desc: "Easily convert images between all popular formats online. Fast, simple, and runs completely on your device.", icon: RefreshCw, category: "converter", src: "/utilify-image.jpg", isAppOnly: false },
   { id: "prnt_sheet", slug: "print-photo-sheet", title: "Passport Photo Sheet", subtitle: "Arrange multiple passport photos on one page", desc: "Fit multiple passport or wallet-sized photos onto a standard A4 or 4x6 grid sheet ready for printing.", icon: Grid, category: "image", src: "/utilify-camera.jpg", isAppOnly: false },
-  { id: "id_cam", slug: "id-photo-camera", title: "ID Photo Camera", subtitle: "Take passport and visa photos easily", desc: "Take and crop standardized passport, visa, and ID photos directly using camera frames on your phone.", icon: Camera, category: "image", src: "/utilify-camera.jpg", isAppOnly: true },
+  { id: "id_cam", slug: "id-photo-camera", title: "ID Photo Camera", subtitle: "Take passport and visa photos easily", desc: "Take and crop standardized passport, visa, and ID photos directly using camera frames on your phone or browser.", icon: Camera, category: "image", src: "/utilify-camera.jpg", isAppOnly: false },
 
-  // � PDF TOOLS
+  // PDF TOOLS
   { id: "mrg_pdf", slug: "merge-pdf", title: "Merge PDF", subtitle: "Merge multiple PDF files into a single PDF", desc: "Combine multiple PDF files into one document in your preferred order. Fast, secure, and easy to organize.", icon: Copy, category: "pdf", src: "/utilify-pdf.jpg", isAppOnly: false },
   { id: "spl_pdf", slug: "split-pdf", title: "Split PDF", subtitle: "Split pages or specify page range from PDF", desc: "Split pages into a fixed range or specify custom page ranges from the PDF file.", icon: Split, category: "pdf", src: "/utilify-pdf.jpg", isAppOnly: false },
   { id: "red_pdf", slug: "pdf-reducer", title: "Compress PDF", subtitle: "Best tool to compress PDF size using slider", desc: "Reduce PDF file size easily so you can email documents or upload them to portals without hitting size limits.", icon: Percent, category: "pdf", src: "/utilify-pdf.jpg", isAppOnly: false },
@@ -66,10 +66,10 @@ export const toolsData: Tool[] = [
   { id: "res_make", slug: "resume-builder", title: "ATS Resume Builder", subtitle: "Build clean, job-ready ATS resumes online", desc: "Create a modern, recruiter-friendly single-column resume formatted to pass ATS screening with ease.", icon: FileText, category: "generator", src: "/utilify-pdf.jpg", isAppOnly: false },
   { id: "shot_gen", slug: "screenshot-generator", title: "App Store Screenshot Studio", subtitle: "Design App Store & Google Play screenshots", desc: "Create gorgeous marketing screenshots for iPhone and Android with custom backgrounds and device frames.", icon: Sliders, category: "generator", src: "/utilify-dashboard.jpg", isAppOnly: false },
 
-  // � SCANNERS & HARDWARE
-  { id: "qr_scan", slug: "qr-scanner", title: "QR Scanner", subtitle: "Scan and read QR codes quickly", desc: "Scan QR codes instantly using your device camera or uploaded image to open links and text.", icon: QrCode, category: "scanner", src: "/QRPowerScan.png", isAppOnly: true },
-  { id: "doc_scan", slug: "document-scanner", title: "Document Scanner", subtitle: "Scan physical documents with edge detection", desc: "Straighten, enhance contrast, and convert receipts and documents into crisp digital scans.", icon: FileText, category: "scanner", src: "/utilify-scan.jpg", isAppOnly: true },
-  { id: "nfc_tl", slug: "nfc-tools", title: "NFC Tools", subtitle: "Read and write NFC tags with your phone", desc: "Program and scan NFC tags easily to launch URLs, trigger automations, or store contact information.", icon: NfcCpu, category: "nfc", src: "/NFC Command.png", isAppOnly: true }
+  // SCANNERS & HARDWARE
+  { id: "qr_scan", slug: "qr-scanner", title: "QR Scanner", subtitle: "Scan and read QR codes quickly", desc: "Scan QR codes instantly using your device camera or uploaded image to open links and text.", icon: QrCode, category: "scanner", src: "/QRPowerScan.png", isAppOnly: false },
+  { id: "doc_scan", slug: "document-scanner", title: "Document Scanner", subtitle: "Scan physical documents with edge detection", desc: "Straighten, enhance contrast, and convert receipts and documents into crisp digital scans.", icon: FileText, category: "scanner", src: "/utilify-scan.jpg", isAppOnly: false },
+  { id: "nfc_tl", slug: "nfc-tools", title: "NFC Tools", subtitle: "Read and write NFC tags with your phone", desc: "Program and scan NFC tags easily or build NDEF payloads for links, Wi-Fi credentials, and text notes.", icon: NfcCpu, category: "nfc", src: "/NFC Command.png", isAppOnly: false }
 ];
 
 export const categories = [
@@ -78,7 +78,7 @@ export const categories = [
   { id: "image", label: "Image Tools" },
   { id: "converter", label: "Converter Tools" },
   { id: "generator", label: "Smart Utilities" },
-  { id: "scanner", label: "Scanners & App" }
+  { id: "scanner", label: "Scanners & NFC" }
 ];
 
 export interface SEOContent {

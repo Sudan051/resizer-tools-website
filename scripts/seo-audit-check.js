@@ -43,7 +43,7 @@ function runAudit() {
   }
 
   // 3. Check Homepage Integration & Grid
-  const homepagePath = path.join(ROOT_DIR, 'app/page.tsx');
+  const homepagePath = path.join(ROOT_DIR, 'app/components/WorkspaceHome.tsx');
   const homepageContent = fs.readFileSync(homepagePath, 'utf8');
 
   // Verify critical tools are in Homepage grid/categories
@@ -131,6 +131,75 @@ function runAudit() {
   console.log(`   Minimum incoming internal links per tool: ${minLinks} (Target: >= 3)`);
   if (weakestTools.length === 0) {
     console.log(`   ✅ All ${tools.length} tools exceed minimum internal link density (0 weak link pages).`);
+  }
+
+  // 8. Check AdSense & Content Quality Invariants
+  console.log('\n🔍 Checking AdSense Readiness & Content Quality Invariants...');
+
+  // No doorway tools with isAppOnly: true
+  if (toolsDataContent.includes('isAppOnly: true')) {
+    errors.push('Found isAppOnly: true doorway tool in app/data/tools.ts.');
+  } else {
+    console.log('✅ 0 App-Only doorway pages (all 41 utilities provide interactive web workspaces).');
+  }
+
+  // Check blog post depth (>= 900 words each) and internal links
+  const blogContent = fs.readFileSync(path.join(ROOT_DIR, 'app/data/blog.ts'), 'utf8');
+  const postChunks = blogContent.split(/\n  \{\n\s+slug:/).slice(1);
+  let thinPosts = [];
+  const validSlugs = new Set([
+    '/', '/about', '/editorial', '/help', '/privacy', '/terms', '/refund', '/contact', '/card', '/shots', '/app', '/blog',
+    ...tools.map((t) => `/${t.slug}`),
+  ]);
+  const allBlogSlugs = [];
+  postChunks.forEach((chunk) => {
+    const sMatch = chunk.match(/^\s*"([^"]+)"/);
+    const slug = sMatch ? sMatch[1] : 'unknown';
+    allBlogSlugs.push(`/blog/${slug}`);
+    validSlugs.add(`/blog/${slug}`);
+    const bodyMatch = chunk.match(/content:\s*`([\s\S]*?)`\n\s*\}/);
+    const body = bodyMatch ? bodyMatch[1] : '';
+    const words = body.trim().split(/\s+/).filter(Boolean).length;
+    if (words < 900) {
+      thinPosts.push(`${slug} (${words} words)`);
+    }
+  });
+  if (thinPosts.length > 0) {
+    errors.push(`Thin blog posts (<900 words): ${thinPosts.join(', ')}`);
+  } else {
+    console.log(`✅ All ${postChunks.length} blog guides exceed 900+ words (0 thin articles).`);
+  }
+
+  const brokenBlogLinks = [...blogContent.matchAll(/\[[^\]]+\]\(([^)]+)\)/g)]
+    .map((m) => m[1])
+    .filter((href) => href.startsWith('/') && !validSlugs.has(href.split('#')[0].replace(/\/$/, '') || '/'));
+  if (brokenBlogLinks.length > 0) {
+    errors.push(`Broken internal links in blog.ts: ${brokenBlogLinks.join(', ')}`);
+  } else {
+    console.log('✅ 0 broken internal links in blog articles.');
+  }
+
+  // Verify no 404 icon.svg, fake aggregateRating, verified votes, Test Mode, or literal **markdown** in JSX
+  const jsxCheckFiles = [
+    'app/page.tsx', 'app/components/WorkspaceHome.tsx', 'app/[slug]/page.tsx', 'app/about/page.tsx', 'app/editorial/page.tsx',
+    'app/blog/[slug]/page.tsx', 'app/privacy/page.tsx', 'app/terms/page.tsx', 'app/refund/page.tsx',
+    'app/components/ToolContentSection.tsx', 'app/app/page.tsx'
+  ];
+  jsxCheckFiles.forEach((rel) => {
+    const src = fs.readFileSync(path.join(ROOT_DIR, rel), 'utf8');
+    if (src.includes('icon.svg')) errors.push(`Broken /icon.svg reference in ${rel}`);
+    if (src.includes('aggregateRating')) errors.push(`Fabricated aggregateRating schema in ${rel}`);
+    if (src.includes('verified votes')) errors.push(`Fabricated vote count in ${rel}`);
+    if (src.includes('Test Mode')) errors.push(`Staging Test Mode banner in ${rel}`);
+    if (/\*\*[^*\n]{2,60}\*\*/.test(src)) errors.push(`Literal markdown **bold** syntax in JSX of ${rel}`);
+  });
+  console.log('✅ Verified 0 broken schema images, 0 fake ratings, 0 staging notices, and clean JSX markup.');
+
+  // Verify ToolContentSection renders all FAQs into SSR DOM (FAQPage schema compliance)
+  if (toolSectionContent.includes('{isOpen &&')) {
+    errors.push('ToolContentSection hides collapsed FAQ answers from DOM (violates Google FAQPage visibility rules).');
+  } else {
+    console.log('✅ All tool FAQ answers are rendered in initial SSR HTML DOM.');
   }
 
   // Final Summary

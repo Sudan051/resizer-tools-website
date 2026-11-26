@@ -78,7 +78,7 @@ export default function EditorialPolicyPage() {
           "@id": "https://www.resizertools.com/#organization",
           "name": "Resizer Tools",
           "url": "https://www.resizertools.com",
-          "logo": "https://www.resizertools.com/icon.svg",
+          "logo": "https://www.resizertools.com/logo.png",
         },
         "author": {
           "@type": "Person",
@@ -146,8 +146,8 @@ export default function EditorialPolicyPage() {
           </h1>
 
           <p className="text-base sm:text-lg text-brand-muted font-light leading-relaxed max-w-3xl">
-            Resizer Tools provides 41 client-side image, PDF, and document utilities trusted by
-            millions of professionals worldwide. To maintain unquestionable reliability, this
+            Resizer Tools provides 41 client-side image, PDF, and document utilities designed for
+            privacy-conscious professionals, creators, and everyday users worldwide. To maintain unquestionable reliability, this
             policy defines our technical review processes, automated accuracy benchmarking,
             cross-browser compatibility methodology, and our foundational zero-upload privacy
             invariant.

@@ -80,12 +80,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  const blogRoutes = blogPosts.map((post) => ({
-    url: `https://www.resizertools.com/blog/${post.slug}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.7,
-  }));
+  const blogRoutes = blogPosts.map((post) => {
+    const parsedDate = Date.parse(post.date);
+    return {
+      url: `https://www.resizertools.com/blog/${post.slug}`,
+      lastModified: Number.isNaN(parsedDate) ? new Date("2026-11-16") : new Date(parsedDate),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    };
+  });
 
   const toolRoutes = toolsData.map((tool) => ({
     url: `https://www.resizertools.com/${tool.slug}`,

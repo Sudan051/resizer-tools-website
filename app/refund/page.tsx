@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { HelpCircle, ArrowLeft } from "lucide-react";
 import SiteFooter from "../components/SiteFooter";
+import SiteHeader from "../components/SiteHeader";
 
 export const dynamic = "force-static";
 
@@ -14,7 +15,9 @@ export const metadata = {
 
 export default function RefundPage() {
   return (
-    <main className="min-h-screen bg-[#080808] text-white selection:bg-brand-gold/30 selection:text-brand-gold-light pt-20 px-6">
+    <div className="min-h-screen bg-[#080808] text-white selection:bg-brand-gold/30 selection:text-brand-gold-light">
+      <SiteHeader currentPath="/refund" />
+      <main className="py-12 px-6">
       <div className="max-w-3xl mx-auto space-y-12">
         
         {/* Navigation back */}
@@ -49,18 +52,18 @@ export default function RefundPage() {
               Since we provide instant, client-side digital utilities and immediate ad-removal benefits upon payment confirmation:
             </p>
             <ul className="list-disc pl-6 space-y-1.5">
-              <li>**Standard Subscriptions**: Monthly or annual membership payments are generally non-refundable once active, and we do not provide prorated refunds for partial-month usage.</li>
-              <li>**Billing Errors &amp; Duplicate Charges**: If you believe you were charged in error, billed twice for the same billing cycle, or encountered a payment gateway error, please contact us within **7 calendar days** of the transaction. We will verify your transaction logs and issue a full refund immediately.</li>
+              <li><strong className="text-white font-semibold">Standard Subscriptions</strong>: Monthly or annual membership payments are generally non-refundable once active, and we do not provide prorated refunds for partial-month usage.</li>
+              <li><strong className="text-white font-semibold">Billing Errors &amp; Duplicate Charges</strong>: If you believe you were charged in error, billed twice for the same billing cycle, or encountered a payment gateway error, please contact us within <strong className="text-white font-semibold">7 calendar days</strong> of the transaction. We will verify your transaction logs and issue a full refund immediately.</li>
             </ul>
           </section>
 
           <section className="space-y-3">
             <h2 className="text-lg font-bold text-white tracking-tight">3. How to Request a Refund</h2>
             <p>
-              For refund inquiries, billing assistance, or payment cancellation requests, please email our support desk at **Saurabhsudan051@gmail.com**. Please include your payment ID, billing email, and date of transaction.
+              For refund inquiries, billing assistance, or payment cancellation requests, please email our support desk at <a href="mailto:Saurabhsudan051@gmail.com" className="text-brand-gold font-semibold hover:underline">Saurabhsudan051@gmail.com</a>. Please include your payment ID, billing email, and date of transaction.
             </p>
             <p>
-              All verified refunds are processed back to the original payment source (UPI, Debit/Credit Card, Netbanking, or Google Play balance) within **5-7 business days** in accordance with banking settlement timelines.
+              All verified refunds are processed back to the original payment source (UPI, Debit/Credit Card, Netbanking, or Google Play balance) within <strong className="text-white font-semibold">5-7 business days</strong> in accordance with banking settlement timelines.
             </p>
           </section>
 
@@ -77,6 +80,7 @@ export default function RefundPage() {
       <div className="mt-16">
         <SiteFooter />
       </div>
-    </main>
+      </main>
+    </div>
   );
 }

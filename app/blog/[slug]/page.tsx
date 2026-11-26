@@ -4,8 +4,23 @@ import { notFound } from "next/navigation";
 import { blogPosts } from "../../data/blog";
 import { ArrowLeft, Clock, User, Calendar, Layers } from "lucide-react";
 import SiteFooter from "../../components/SiteFooter";
+import SiteHeader from "../../components/SiteHeader";
 
 export const dynamic = "force-static";
+
+function toIsoDate(humanDate: string): string {
+  const parsed = Date.parse(humanDate);
+  if (Number.isNaN(parsed)) return "2026-11-16";
+  return new Date(parsed).toISOString().split("T")[0];
+}
+
+function formatInlineMarkdown(raw: string): string {
+  return raw
+    .replace(/\*\*(.*?)\*\*/g, '<strong class="text-white font-semibold">$1</strong>')
+    .replace(/\*([^*]+)\*/g, '<em class="italic">$1</em>')
+    .replace(/`([^`]+)`/g, '<code class="px-1.5 py-0.5 rounded bg-white/10 text-brand-gold font-mono text-xs">$1</code>')
+    .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="text-brand-gold hover:underline font-mono font-medium">$1</a>');
+}
 
 export async function generateStaticParams() {
   return blogPosts.map((post) => ({
@@ -22,6 +37,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     };
   }
 
+  const isoDate = toIsoDate(post.date);
+
   return {
     title: `${post.title} | Resizer Tools Blog`,
     description: post.excerpt,
@@ -34,6 +51,22 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       url: `https://www.resizertools.com/blog/${post.slug}`,
       siteName: "Resizer Tools Knowledge Base",
       type: "article",
+      publishedTime: isoDate,
+      authors: [post.author],
+      images: [
+        {
+          url: "https://www.resizertools.com/og-image.jpg",
+          width: 1024,
+          height: 499,
+          alt: post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      images: ["https://www.resizertools.com/og-image.jpg"],
     },
   };
 }
@@ -46,10 +79,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     notFound();
   }
 
-  // Pick 4 related articles dynamically
+  // Pick 3 related articles dynamically for balanced 3-column grid
   const currentIndex = blogPosts.findIndex((p) => p.slug === post.slug);
   const otherPosts = blogPosts.filter((p) => p.slug !== post.slug);
-  const relatedPosts = otherPosts.slice(currentIndex % (otherPosts.length - 3), (currentIndex % (otherPosts.length - 3)) + 4);
+  const startIdx = otherPosts.length > 3 ? currentIndex % (otherPosts.length - 2) : 0;
+  const relatedPosts = otherPosts.slice(startIdx, startIdx + 3);
+  const isoDate = toIsoDate(post.date);
 
   const blogSchema = {
     "@context": "https://schema.org",
@@ -58,30 +93,32 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     "mainEntityOfPage": `https://www.resizertools.com/blog/${post.slug}`,
     "headline": post.title,
     "description": post.excerpt,
-    "image": "https://www.resizertools.com/icon.svg",
-    "datePublished": "2026-08-19",
-    "dateModified": "2026-08-31",
+    "image": "https://www.resizertools.com/og-image.jpg",
+    "datePublished": isoDate,
+    "dateModified": isoDate,
     "author": {
       "@type": "Person",
       "name": post.author,
-      "url": "https://www.resizertools.com"
+      "url": "https://www.resizertools.com/about"
     },
     "publisher": {
       "@type": "Organization",
       "name": "Resizer Tools",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://www.resizertools.com/icon.svg"
+        "url": "https://www.resizertools.com/logo.png"
       }
     }
   };
 
   return (
-    <main className="min-h-screen bg-[#080808] text-white selection:bg-brand-gold/30 selection:text-brand-gold-light py-16 px-4 sm:px-6">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema) }}
-      />
+    <div className="min-h-screen bg-[#080808] text-white selection:bg-brand-gold/30 selection:text-brand-gold-light">
+      <SiteHeader currentPath="/blog" />
+      <main className="py-12 px-4 sm:px-6">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema).replace(/</g, "\\u003c") }}
+        />
       <div className="max-w-3xl mx-auto space-y-10">
         
         {/* Navigation */}
@@ -139,19 +176,25 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             }
             if (paragraph.startsWith("- ") || paragraph.startsWith("1. ")) {
               const items = paragraph.split("\n");
+              const isOrdered = /^\d+\.\s/.test(paragraph);
+              const ListTag = isOrdered ? "ol" : "ul";
+              const listClass = isOrdered ? "list-decimal pl-6 space-y-2 text-brand-muted" : "list-disc pl-6 space-y-2 text-brand-muted";
               return (
-                <ul key={idx} className="list-disc pl-6 space-y-2 text-brand-muted">
+                <ListTag key={idx} className={listClass}>
                   {items.map((item, i) => (
-                    <li key={i} dangerouslySetInnerHTML={{ 
-                      __html: item.replace(/^[-*\d.]+\s*/, "").replace(/\*\*(.*?)\*\*/g, '<strong class="text-white font-medium">$1</strong>').replace(/`([^`]+)`/g, '<code class="px-1.5 py-0.5 rounded bg-white/10 text-brand-gold font-mono text-xs">$1</code>').replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="text-brand-gold hover:underline font-mono">$1</a>')
-                    }} />
+                    <li
+                      key={i}
+                      dangerouslySetInnerHTML={{
+                        __html: formatInlineMarkdown(item.replace(/^[-*\d.]+\s*/, ""))
+                      }}
+                    />
                   ))}
-                </ul>
+                </ListTag>
               );
             }
             if (paragraph.startsWith("|")) {
               // Markdown Table rendering
-              const rows = paragraph.trim().split("\n").filter(r => !r.includes(":---"));
+              const rows = paragraph.trim().split("\n").filter(r => !/^\|[\s:|-]+\|$/.test(r.trim()));
               if (rows.length === 0) return null;
               const headers = rows[0].split("|").filter(Boolean).map(h => h.trim());
               const bodyRows = rows.slice(1).map(r => r.split("|").filter(Boolean).map(c => c.trim()));
@@ -161,13 +204,17 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                   <table className="w-full text-left text-xs font-mono">
                     <thead>
                       <tr className="border-b border-white/10 text-brand-gold">
-                        {headers.map((h, i) => <th key={i} className="p-3 uppercase font-bold">{h}</th>)}
+                        {headers.map((h, i) => (
+                          <th key={i} className="p-3 uppercase font-bold" dangerouslySetInnerHTML={{ __html: formatInlineMarkdown(h) }} />
+                        ))}
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-white/5 text-brand-muted">
                       {bodyRows.map((r, i) => (
                         <tr key={i} className="hover:bg-white/[0.02]">
-                          {r.map((c, j) => <td key={j} className="p-3">{c}</td>)}
+                          {r.map((c, j) => (
+                            <td key={j} className="p-3" dangerouslySetInnerHTML={{ __html: formatInlineMarkdown(c) }} />
+                          ))}
                         </tr>
                       ))}
                     </tbody>
@@ -181,7 +228,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 key={idx} 
                 className="text-sm leading-relaxed font-light text-brand-muted"
                 dangerouslySetInnerHTML={{
-                  __html: paragraph.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white font-medium">$1</strong>').replace(/`([^`]+)`/g, '<code class="px-1.5 py-0.5 rounded bg-white/10 text-brand-gold font-mono text-xs">$1</code>').replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="text-brand-gold hover:underline font-mono font-medium">$1</a>')
+                  __html: formatInlineMarkdown(paragraph)
                 }}
               />
             );
@@ -239,6 +286,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       <div className="mt-16">
         <SiteFooter />
       </div>
-    </main>
+      </main>
+    </div>
   );
 }

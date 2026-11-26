@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { FileText, ArrowLeft } from "lucide-react";
 import SiteFooter from "../components/SiteFooter";
+import SiteHeader from "../components/SiteHeader";
 
 export const dynamic = "force-static";
 
@@ -14,7 +15,9 @@ export const metadata = {
 
 export default function TermsPage() {
   return (
-    <main className="min-h-screen bg-[#080808] text-white selection:bg-brand-gold/30 selection:text-brand-gold-light pt-20 px-6">
+    <div className="min-h-screen bg-[#080808] text-white selection:bg-brand-gold/30 selection:text-brand-gold-light">
+      <SiteHeader currentPath="/terms" />
+      <main className="py-12 px-6">
       <div className="max-w-3xl mx-auto space-y-12">
         
         {/* Navigation back */}
@@ -36,7 +39,7 @@ export default function TermsPage() {
           <section className="space-y-3">
             <h2 className="text-lg font-bold text-white tracking-tight">1. Agreement to Terms</h2>
             <p>
-              By accessing and utilizing `resizertools.com` and its associated tools, you agree to comply with and be bound by these Terms and Conditions. If you do not agree with any part of these terms, you must discontinue using our services immediately.
+              By accessing and utilizing <code className="text-brand-gold">resizertools.com</code> and its associated tools, you agree to comply with and be bound by these Terms and Conditions. If you do not agree with any part of these terms, you must discontinue using our services immediately.
             </p>
           </section>
 
@@ -75,7 +78,7 @@ export default function TermsPage() {
           <section className="space-y-3">
             <h2 className="text-lg font-bold text-white tracking-tight">6. Contact and Ownership</h2>
             <p>
-              Resizer Tools is owned and operated by SAURABH KUMAR SHARMA. For legal inquiries or support requests, please contact us at **Saurabhsudan051@gmail.com**.
+              Resizer Tools is owned and operated by SAURABH KUMAR SHARMA. For legal inquiries or support requests, please contact us at <a href="mailto:Saurabhsudan051@gmail.com" className="text-brand-gold font-semibold hover:underline">Saurabhsudan051@gmail.com</a>.
             </p>
           </section>
         </div>
@@ -85,6 +88,7 @@ export default function TermsPage() {
       <div className="mt-16">
         <SiteFooter />
       </div>
-    </main>
+      </main>
+    </div>
   );
 }

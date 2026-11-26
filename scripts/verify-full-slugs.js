@@ -25,7 +25,7 @@ let failCount = 0;
 
 // Read critical files for presence of slugs
 const footerContent = fs.readFileSync(path.join(ROOT_DIR, 'app/components/SiteFooter.tsx'), 'utf8');
-const pageContent = fs.readFileSync(path.join(ROOT_DIR, 'app/page.tsx'), 'utf8');
+const pageContent = fs.readFileSync(path.join(ROOT_DIR, 'app/components/WorkspaceHome.tsx'), 'utf8');
 
 // Function to check HTTP status
 function checkUrl(pathname) {

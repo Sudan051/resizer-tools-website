@@ -2,9 +2,10 @@ import Link from "next/link";
 import { 
   Apple, ShieldCheck, CheckCircle2, ArrowLeft, 
   Sparkles, Lock, Zap, QrCode, 
-  Star, Smartphone, Camera 
+  Smartphone, Camera 
 } from "lucide-react";
 import SiteFooter from "../components/SiteFooter";
+import SiteHeader from "../components/SiteHeader";
 
 export const dynamic = "force-static";
 
@@ -21,7 +22,9 @@ export default function AppDownloadPage() {
   const androidAppUrl = "https://play.google.com/store/apps/details?id=com.resizertools.app";
 
   return (
-    <main className="min-h-screen bg-[#080808] text-white selection:bg-brand-gold/30 selection:text-brand-gold-light py-16 px-4 sm:px-6 flex flex-col items-center justify-center relative overflow-hidden">
+    <div className="min-h-screen bg-[#080808] text-white selection:bg-brand-gold/30 selection:text-brand-gold-light flex flex-col">
+      <SiteHeader currentPath="/app" />
+      <main className="flex-1 py-12 px-4 sm:px-6 flex flex-col items-center justify-center relative overflow-hidden">
       
       {/* Glow background ambiance */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-gold/10 rounded-full blur-[180px] pointer-events-none" />
@@ -59,15 +62,11 @@ export default function AppDownloadPage() {
             Experience 100% offline PDF compilation, 120FPS camera document scanning, and Web NFC tag programming with absolute privacy. Zero server uploads guaranteed.
           </p>
 
-          {/* Social Proof Rating */}
+          {/* Honest Architectural Assurance */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-white/[0.03] border border-white/10 text-xs text-brand-muted font-mono">
-            <div className="flex items-center text-amber-400">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-3.5 h-3.5 fill-amber-400" />
-              ))}
-            </div>
-            <span className="text-white font-bold">4.9/5 Rating</span>
-            <span>• 100% Client-Side Safe</span>
+            <ShieldCheck className="w-4 h-4 text-brand-gold" />
+            <span className="text-white font-bold">100% On-Device Execution</span>
+            <span>• Zero Server Uploads</span>
           </div>
         </div>
 
@@ -119,7 +118,7 @@ export default function AppDownloadPage() {
               <ShieldCheck className="w-5 h-5 text-brand-gold" /> Built for Mobile-First Productivity
             </h2>
             <p className="text-xs text-brand-muted font-light">
-              Why millions choose Resizer Tools over standard cloud converters.
+              Why privacy-focused professionals choose Resizer Tools over standard cloud converters.
             </p>
           </div>
 
@@ -227,7 +226,7 @@ export default function AppDownloadPage() {
             <div className="space-y-3">
               <div className="p-4 bg-white/[0.02] border border-white/5 rounded-xl space-y-1">
                 <h3 className="text-xs font-bold text-white">Is the mobile app free to download?</h3>
-                <p>Yes, both the Apple App Store and Google Play Store versions are free to download and include our complete core suite of 27 tools.</p>
+                <p>Yes, both the Apple App Store and Google Play Store versions are free to download and include our complete core utility suite.</p>
               </div>
               <div className="p-4 bg-white/[0.02] border border-white/5 rounded-xl space-y-1">
                 <h3 className="text-xs font-bold text-white">Can I use the mobile app on airplanes and remote locations?</h3>
@@ -242,6 +241,7 @@ export default function AppDownloadPage() {
       <div className="w-full mt-16">
         <SiteFooter />
       </div>
-    </main>
+      </main>
+    </div>
   );
 }

@@ -52,9 +52,29 @@ html.light body {
   color: #111827 !important;
 }
 
-html.light .bg-brand-black {
+html.light .bg-brand-black,
+html.light .bg-\[\#080808\],
+html.light .bg-\[\#0A0A0A\],
+html.light .bg-\[\#0a0a0a\] {
   background-color: #F8F9FB !important;
   color: #111827 !important;
+}
+
+html.light .bg-\[\#121212\],
+html.light .bg-\[\#141414\],
+html.light .bg-\[\#181818\],
+html.light .bg-black,
+html.light .bg-black\/40,
+html.light .bg-black\/30,
+html.light .bg-black\/20,
+html.light nav.bg-black\/85,
+html.light .from-\[\#141414\],
+html.light .from-brand-black {
+  background-color: #FFFFFF !important;
+  --tw-gradient-from: #FFFFFF !important;
+  --tw-gradient-via: #F8FAFC !important;
+  --tw-gradient-to: #F1F5F9 !important;
+  border-color: rgba(0, 0, 0, 0.09) !important;
 }
 
 html.light .bg-brand-obsidian,
@@ -215,9 +235,31 @@ html.light .text-brand-muted {
   color: #4B5563 !important;
 }
 
+html.light .text-brand-gold {
+  color: #9A6B06 !important;
+}
+
+html.light .text-brand-gold-light {
+  color: #785103 !important;
+}
+
+html.light .dark-banner-card .text-brand-gold,
+html.light .bg-black .text-brand-gold {
+  color: #D4AF37 !important;
+}
+
+html.light .text-neutral-200,
 html.light .text-neutral-300,
 html.light .text-neutral-400 {
   color: #374151 !important;
+}
+
+html.light .text-emerald-400 {
+  color: #047857 !important;
+}
+
+html.light .text-blue-400 {
+  color: #1D4ED8 !important;
 }
 
 /* Light Mode Borders & Surface Accents */

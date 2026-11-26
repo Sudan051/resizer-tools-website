@@ -67,7 +67,7 @@ const faqList: FAQItem[] = [
     category: "General Platform",
     question: "What is Resizer Tools and how does it work?",
     answer: [
-      "Resizer Tools (www.resizertools.com) is a modern, privacy-first web utilities suite built for fast document editing, image compression, file format conversion, and productivity workflows. Our suite includes over thirty specialized tools, ranging from PDF merging and page organization to image cropping, passport photo sheet generation, QR code creation, and digital signature authoring.",
+      "Resizer Tools (www.resizertools.com) is a modern, privacy-first web utilities suite built for fast document editing, image compression, file format conversion, and productivity workflows. Our suite includes 41 specialized tools, ranging from PDF merging and page organization to image cropping, passport photo sheet generation, QR code creation, and digital signature authoring.",
       "Unlike traditional online conversion websites that require you to upload your files to a remote cloud server for processing, Resizer Tools operates entirely inside your device's web browser. By leveraging cutting-edge web standards such as WebAssembly (WASM), HTML5 Canvas, and modern JavaScript Web Workers, all calculations and file transformations occur locally on your machine. Your files never travel across the internet, ensuring unmatched processing speed and absolute data confidentiality.",
     ],
   },

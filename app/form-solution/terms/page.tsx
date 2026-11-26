@@ -6,6 +6,10 @@ export const dynamic = "force-static";
 export const metadata = {
   title: "Terms of Service - Form Solution (iOS)",
   description: "Terms and conditions for using Form Solution - Document Scanner, Image Compressor, and Signature Maker.",
+  robots: {
+    index: false,
+    follow: false,
+  },
   alternates: {
     canonical: "https://www.resizertools.com/form-solution/terms",
   },

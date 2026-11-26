@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { 
   Star, ShieldCheck, Zap, Lock, 
-  ChevronDown, ChevronUp, CheckCircle2, ArrowRight, 
+  ChevronDown, CheckCircle2, ArrowRight, 
   Sparkles, Layers, Globe, Check
 } from "lucide-react";
 import { toolsData, getToolSEOContent } from "../data/tools";
@@ -21,23 +21,105 @@ interface ToolContentSectionProps {
   tool: SerializableTool;
 }
 
+function getCategorySpecs(tool: SerializableTool) {
+  const cat = (tool.category || "utility").toLowerCase();
+  const id = tool.id.toLowerCase();
+
+  if (id === "pwd_gen") {
+    return {
+      formats: "Cryptographic UTF-8 Character Sets (A-Z, a-z, 0-9, Symbols)",
+      formatNote: "Configurable entropy length from 8 to 64 characters",
+      engine: "Web Crypto API (window.crypto.getRandomValues CSPRNG)",
+      engineNote: "Hardware-backed pseudorandom number entropy inside RAM",
+      useCases: [
+        { title: "Enterprise & Cloud Access Credentials", body: `Create high-entropy 20+ character administrator keys with ${tool.title} without exposing raw secrets to third-party password APIs.` },
+        { title: "API Tokens & Webhook Signing Keys", body: "Generate URL-safe or full-symbol authentication secrets locally in memory during server provisioning and DevOps configuration." },
+      ],
+    };
+  }
+  if (id === "qr_gen" || id === "bar_gen") {
+    return {
+      formats: id === "bar_gen" ? "Code-128 & Printable High-DPI PNG Bitmap" : "ISO/IEC 18004 Static Matrix PNG (URL, Wi-Fi, Text, vCard)",
+      formatNote: "Direct crisp contrast export without dynamic tracking redirects",
+      engine: "Client-Side Canvas 2D Encoder",
+      engineNote: "Deterministic static barcode/QR rendering in browser memory",
+      useCases: [
+        { title: "Retail Packaging & Logistics Labeling", body: `Produce scannable monochrome matrix labels with ${tool.title} ready for thermal printers, product packaging, and inventory SKUs.` },
+        { title: "Privacy-First Offline Sharing", body: "Encode direct destination URLs and Wi-Fi SSIDs without routing users through analytics redirect trackers or expiring links." },
+      ],
+    };
+  }
+  if (cat === "nfc") {
+    return {
+      formats: "NDEF Records (URI, Plain Text, Wi-Fi Credentials) • NTAG213/215/216",
+      formatNote: "Real-time payload byte-length validation against chip limits",
+      engine: "W3C Web NFC API (NDEFReader) + NDEF Calculator",
+      engineNote: "Direct NDEF programming on Chrome Android & inspection on desktop",
+      useCases: [
+        { title: "Contactless Business Cards & Event Badges", body: `Validate NTAG213/215 payload capacities and write portfolio URLs directly onto physical NFC cards with ${tool.title}.` },
+        { title: "Office & Smart Workspace Automation", body: "Audit NDEF payloads and estimate byte consumption before flashing smart tags for desk triggers or guest Wi-Fi access." },
+      ],
+    };
+  }
+  if (cat === "pdf") {
+    return {
+      formats: "PDF 1.4 – 1.7 Standards, AcroForm Dictionaries, Vector Page Trees",
+      formatNote: "Structural object-stream manipulation and AES encryption support",
+      engine: "Pure Client-Side PDF-Lib + WebCrypto Sandbox",
+      engineNote: "Zero cloud upload; modifies xref tables and content streams in RAM",
+      useCases: [
+        { title: "Legal Contracts & Confidential Regulatory Filings", body: `Process NDAs, tax returns, and board packets with ${tool.title} under strict zero-upload GDPR and internal compliance rules.` },
+        { title: "Academic & Portal File Compliance", body: "Meet strict 1MB–5MB portal upload limits, reorganize scanned page order, or strip blank covers instantly in offline tabs." },
+      ],
+    };
+  }
+  if (cat === "converter") {
+    return {
+      formats: "Cross-Format Pipelines (PDF, DOC/TXT, CSV/Excel, JPG, PNG, WebP)",
+      formatNote: "Preserves tabular structure, resolution, and transparent alpha where supported",
+      engine: "HTML5 Canvas Decoder + Document Stream Parser",
+      engineNote: "Runs format transcoding locally with zero cloud queueing latency",
+      useCases: [
+        { title: "Accounting Data Extraction & Reporting", body: `Transform read-only statements and spreadsheets with ${tool.title} directly on your workstation without risking financial leakages.` },
+        { title: "Universal Document & Web Compatibility", body: "Convert restricted camera formats or multi-image batches into universally readable PDFs, JPEGs, or editable document files." },
+      ],
+    };
+  }
+  if (cat === "scanner") {
+    return {
+      formats: "Live Camera Video Streams, PNG/JPEG Document Snapshots, QR Codes",
+      formatNote: "Adaptive contrast calibration and native BarcodeDetector decoding",
+      engine: "MediaDevices Camera API + HTML5 Canvas Image Filters",
+      engineNote: "Real-time frame processing without transmitting video frames externally",
+      useCases: [
+        { title: "Expense Receipts & Whiteboard Digitization", body: `Clean up skewed shadows and enhance text legibility with ${tool.title} before archiving receipts or study notes locally.` },
+        { title: "Secure Link Auditing Before Opening", body: "Inspect decoded QR payloads in sandboxed plain text before navigating to unfamiliar URLs or joining external Wi-Fi networks." },
+      ],
+    };
+  }
+  return {
+    formats: "JPEG, PNG, WebP, GIF, BMP, HEIC & Standard Print Aspect Grids",
+    formatNote: "Preserves pixel clarity, EXIF orientation, and target DPI budgets",
+    engine: "Hardware-Accelerated HTML5 Canvas 2D & Offscreen Buffers",
+    engineNote: "Direct GPU bicubic resampling inside isolated browser memory",
+    useCases: [
+      { title: "Web Core Web Vitals & E-Commerce Optimization", body: `Optimize hero imagery and product catalogs with ${tool.title} to shrink LCP transfer budgets and speed up mobile page loads.` },
+      { title: "Official Exam, Visa & Passport Portals", body: "Dial in exact pixel dimensions, 2x2 inch / 35x45mm biometric ratios, and KB ceilings required by online application portals." },
+    ],
+  };
+}
+
 export default function ToolContentSection({ tool }: ToolContentSectionProps) {
   const [userRating, setUserRating] = useState<number | null>(null);
   const [hoverRating, setHoverRating] = useState<number | null>(null);
-  const [ratingCount, setRatingCount] = useState<number>(348920);
   const [hasRated, setHasRated] = useState<boolean>(false);
-  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
   const seo = getToolSEOContent(tool);
+  const specs = getCategorySpecs(tool);
 
   const handleRate = (rating: number) => {
     setUserRating(rating);
     setHasRated(true);
-    setRatingCount((prev) => prev + 1);
-  };
-
-  const toggleFaq = (idx: number) => {
-    setOpenFaqIndex(openFaqIndex === idx ? null : idx);
   };
 
   // Contextual related tools with rotating window to ensure balanced link distribution across all tools
@@ -56,7 +138,7 @@ export default function ToolContentSection({ tool }: ToolContentSectionProps) {
     <div className="w-full bg-[#080808] text-white border-t border-white/5 py-16 px-4 sm:px-6 relative z-10">
       <div className="max-w-5xl mx-auto space-y-16">
 
-        {/* � 1. INTERACTIVE RATING & TRUST METRICS BAR */}
+        {/* 1. INTERACTIVE RATING & TRUST METRICS BAR */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 p-6 rounded-3xl bg-gradient-to-r from-white/[0.03] to-white/[0.01] border border-white/10 shadow-2xl backdrop-blur-xl">
           <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
             <div className="flex items-center gap-1">
@@ -82,11 +164,13 @@ export default function ToolContentSection({ tool }: ToolContentSectionProps) {
             </div>
             <div>
               <div className="flex items-center justify-center sm:justify-start gap-2">
-                <span className="text-base font-extrabold text-white">4.9 / 5.0</span>
-                <span className="text-xs text-brand-muted font-mono" suppressHydrationWarning>({ratingCount.toLocaleString("en-US")} verified votes)</span>
+                <span className="text-base font-extrabold text-white">Rate this utility</span>
+                {hasRated && (
+                  <span className="text-xs text-brand-gold font-mono font-bold">(Rated {userRating}.0 / 5.0)</span>
+                )}
               </div>
-              <p className="text-xs text-brand-gold font-medium">
-                {hasRated ? "Thank you for rating this tool!" : "Click stars to rate your experience with this tool"}
+              <p className="text-xs text-brand-muted font-medium">
+                {hasRated ? "Thank you for rating this tool!" : "Click stars to rate your user experience"}
               </p>
             </div>
           </div>
@@ -101,7 +185,7 @@ export default function ToolContentSection({ tool }: ToolContentSectionProps) {
           </div>
         </div>
 
-        {/* � 2. CORE VALUE PROPOSITION & IN-DEPTH TECHNICAL OVERVIEW */}
+        {/* 2. CORE VALUE PROPOSITION & IN-DEPTH TECHNICAL OVERVIEW */}
         <section className="space-y-6 text-left">
           <div className="space-y-3">
             <span className="text-[11px] font-mono uppercase tracking-widest text-brand-gold font-bold flex items-center gap-1.5">
@@ -170,7 +254,7 @@ export default function ToolContentSection({ tool }: ToolContentSectionProps) {
           )}
         </section>
 
-        {/* � 3. STEP-BY-STEP "HOW TO USE" GUIDE */}
+        {/* 3. STEP-BY-STEP "HOW TO USE" GUIDE */}
         <section className="space-y-8 text-left bg-gradient-to-b from-white/[0.02] to-transparent p-8 md:p-10 rounded-3xl border border-white/5">
           <div className="space-y-2">
             <span className="text-[11px] font-mono uppercase tracking-widest text-brand-gold font-bold flex items-center gap-1.5">
@@ -210,7 +294,7 @@ export default function ToolContentSection({ tool }: ToolContentSectionProps) {
           </div>
         </section>
 
-        {/* � 4. TECHNICAL SPECIFICATIONS & BROWSER COMPATIBILITY MATRIX */}
+        {/* 4. TECHNICAL SPECIFICATIONS & BROWSER COMPATIBILITY MATRIX */}
         <section className="space-y-6 text-left">
           <div className="space-y-2">
             <span className="text-[11px] font-mono uppercase tracking-widest text-brand-gold font-bold flex items-center gap-1.5">
@@ -240,9 +324,9 @@ export default function ToolContentSection({ tool }: ToolContentSectionProps) {
                   <td className="py-3.5 px-4 sm:px-6">Zero bytes dispatched to external cloud servers</td>
                 </tr>
                 <tr>
-                  <td className="py-3.5 px-4 sm:px-6 font-medium text-white">Supported Formats</td>
-                  <td className="py-3.5 px-4 sm:px-6 font-mono text-neutral-200">PDF, PNG, JPEG, WebP, SVG, HEIC</td>
-                  <td className="py-3.5 px-4 sm:px-6">Standard MIME-type validation &amp; binary integrity checks</td>
+                  <td className="py-3.5 px-4 sm:px-6 font-medium text-white">Supported Input / Output</td>
+                  <td className="py-3.5 px-4 sm:px-6 font-mono text-neutral-200">{specs.formats}</td>
+                  <td className="py-3.5 px-4 sm:px-6">{specs.formatNote}</td>
                 </tr>
                 <tr>
                   <td className="py-3.5 px-4 sm:px-6 font-medium text-white">Offline Capability (PWA)</td>
@@ -250,9 +334,9 @@ export default function ToolContentSection({ tool }: ToolContentSectionProps) {
                   <td className="py-3.5 px-4 sm:px-6">Fully functional with no active network or Wi-Fi connection</td>
                 </tr>
                 <tr>
-                  <td className="py-3.5 px-4 sm:px-6 font-medium text-white">Hardware Acceleration</td>
-                  <td className="py-3.5 px-4 sm:px-6 font-mono text-neutral-200">WebGL &amp; OffscreenCanvas API</td>
-                  <td className="py-3.5 px-4 sm:px-6">Direct GPU rasterization for high-resolution graphics</td>
+                  <td className="py-3.5 px-4 sm:px-6 font-medium text-white">Processing Architecture</td>
+                  <td className="py-3.5 px-4 sm:px-6 font-mono text-neutral-200">{specs.engine}</td>
+                  <td className="py-3.5 px-4 sm:px-6">{specs.engineNote}</td>
                 </tr>
                 <tr>
                   <td className="py-3.5 px-4 sm:px-6 font-medium text-white">Memory Lifecycle</td>
@@ -264,64 +348,54 @@ export default function ToolContentSection({ tool }: ToolContentSectionProps) {
           </div>
         </section>
 
-        {/* � 5. PRACTICAL REAL-WORLD USE CASES */}
+        {/* 5. PRACTICAL REAL-WORLD USE CASES */}
         <section className="space-y-6 text-left">
           <div className="space-y-2">
             <span className="text-[11px] font-mono uppercase tracking-widest text-brand-gold font-bold flex items-center gap-1.5">
               <Layers className="w-3.5 h-3.5" /> Professional Workflows
             </span>
             <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-              Practical Use Cases &amp; Common Scenarios
+              Practical Use Cases for {tool.title}
             </h2>
             <p className="text-xs sm:text-sm text-neutral-400 font-light">
-              See how different professionals, businesses, and everyday users streamline their digital asset workflows with {tool.title}.
+              See how different professionals, businesses, and everyday users streamline their digital workflows with {tool.title}.
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {specs.useCases.map((uc, uIdx) => (
+              <div key={uIdx} className="p-6 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2">
+                <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-brand-gold"></span>
+                  {uc.title}
+                </h3>
+                <p className="text-xs text-neutral-400 font-light leading-relaxed">
+                  {uc.body}
+                </p>
+              </div>
+            ))}
             <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2">
               <h3 className="text-sm font-bold text-white flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-brand-gold"></span>
-                Legal, Accounting &amp; Confidential Records
+                Remote Teams &amp; Low-Connectivity Travel
               </h3>
               <p className="text-xs text-neutral-400 font-light leading-relaxed">
-                Review, sign, redact, and reorganize client tax forms, contracts, and financial statements without violating data-handling compliance rules or GDPR regulations.
+                Execute {tool.title.toLowerCase()} operations cleanly on laptops, tablets, or smartphones during flights or restricted corporate VPN environments without cloud uploads.
               </p>
             </div>
-
             <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2">
               <h3 className="text-sm font-bold text-white flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-brand-gold"></span>
-                Job Seekers &amp; ATS Resume Optimization
+                Compliance-Strict GDPR &amp; Zero-Log Auditing
               </h3>
               <p className="text-xs text-neutral-400 font-light leading-relaxed">
-                Ensure CVs and portfolios adhere strictly to standard single-column formats and target file size limits accepted by modern recruitment applicant tracking systems.
-              </p>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2">
-              <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-brand-gold"></span>
-                Web Developers &amp; E-Commerce Merchandisers
-              </h3>
-              <p className="text-xs text-neutral-400 font-light leading-relaxed">
-                Compress product catalog imagery, convert raw graphics into modern WebP formats, and resize responsive thumbnails to achieve top Core Web Vitals (LCP) performance scores.
-              </p>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2">
-              <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-brand-gold"></span>
-                Remote Teams &amp; Mobile Field Operations
-              </h3>
-              <p className="text-xs text-neutral-400 font-light leading-relaxed">
-                Convert, scan, and reorder multi-page documents directly in the field on low-connectivity mobile devices with immediate PDF generation and no cloud round-trips.
+                Maintain 100% data ownership when handling regulated records—your files remain in volatile browser RAM and never traverse third-party storage servers.
               </p>
             </div>
           </div>
         </section>
 
-        {/* �️ 6. YOUR PRIVACY, OUR CORE COMMITMENT TRUST SECTION */}
+        {/* ️ 6. YOUR PRIVACY, OUR CORE COMMITMENT TRUST SECTION */}
         <section className="p-8 md:p-10 rounded-3xl bg-gradient-to-r from-brand-gold/10 via-brand-obsidian to-black border border-brand-gold/25 text-left flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="space-y-4 max-w-2xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-gold/20 text-brand-gold font-mono text-[10px] font-bold uppercase tracking-wider">
@@ -375,39 +449,30 @@ export default function ToolContentSection({ tool }: ToolContentSectionProps) {
           </div>
 
           <div className="space-y-3">
-            {seo.faq.map((item, idx) => {
-              const isOpen = openFaqIndex === idx;
-              return (
-                <div
-                  key={idx}
-                  className="rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/10 transition-colors overflow-hidden"
-                >
-                  <button
-                    type="button"
-                    onClick={() => toggleFaq(idx)}
-                    className="w-full p-5 text-left flex items-center justify-between gap-4 cursor-pointer focus:outline-none"
-                    aria-expanded={isOpen}
-                  >
-                    <span className="text-sm font-bold text-white flex items-center gap-2.5">
-                      <span className="text-brand-gold font-mono text-xs">Q{idx + 1}.</span> {item.q}
-                    </span>
-                    <div className="p-1 rounded-lg bg-white/5 text-brand-muted shrink-0">
-                      {isOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-                    </div>
-                  </button>
+            {seo.faq.map((item, idx) => (
+              <details
+                key={idx}
+                open={idx < 2}
+                className="group rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/10 transition-colors overflow-hidden"
+              >
+                <summary className="w-full p-5 text-left flex items-center justify-between gap-4 cursor-pointer list-none select-none focus:outline-none">
+                  <span className="text-sm font-bold text-white flex items-center gap-2.5">
+                    <span className="text-brand-gold font-mono text-xs">Q{idx + 1}.</span> {item.q}
+                  </span>
+                  <div className="p-1 rounded-lg bg-white/5 text-brand-muted shrink-0">
+                    <ChevronDown className="w-4 h-4 transition-transform duration-200 group-open:rotate-180" />
+                  </div>
+                </summary>
 
-                  {isOpen && (
-                    <div className="px-5 pb-5 pt-1 text-xs text-neutral-300 font-light leading-relaxed border-t border-white/5 animate-fadeIn">
-                      <p>{item.a}</p>
-                    </div>
-                  )}
+                <div className="px-5 pb-5 pt-2 text-xs text-neutral-300 font-light leading-relaxed border-t border-white/5">
+                  <p>{item.a}</p>
                 </div>
-              );
-            })}
+              </details>
+            ))}
           </div>
         </section>
 
-        {/* � 8. RELATED TOOLS INTERNAL LINKING GRID */}
+        {/* 8. RELATED TOOLS INTERNAL LINKING GRID */}
         <section className="space-y-6 text-left pt-6 border-t border-white/5">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>

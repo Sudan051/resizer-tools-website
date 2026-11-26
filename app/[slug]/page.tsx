@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import Home from "../page";
+import WorkspaceHome from "../components/WorkspaceHome";
 import { toolsData, getToolSEOContent, findTool } from "../data/tools";
 import { Download, ShieldCheck, Zap, Smartphone } from "lucide-react";
 import ToolContentSection from "../components/ToolContentSection";
@@ -86,14 +86,6 @@ export default async function ToolSlugPage({ params }: { params: Promise<{ slug:
       "@type": "Offer",
       "price": "0",
       "priceCurrency": "USD"
-    },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.9",
-      "ratingCount": "128",
-      "reviewCount": "128",
-      "bestRating": "5",
-      "worstRating": "1"
     }
   };
 
@@ -221,12 +213,12 @@ export default async function ToolSlugPage({ params }: { params: Promise<{ slug:
         </div>
       </header>
 
-      {/* � INTERACTIVE TOOL WORKSPACE CONTAINER */}
+      {/* INTERACTIVE TOOL WORKSPACE CONTAINER */}
       <main className="relative z-10">
-        <Home initialToolId={tool.id} isStandaloneToolPage={true} />
+        <WorkspaceHome initialToolId={tool.id} isStandaloneToolPage={true} />
       </main>
 
-      {/* � RICH SEO VALUE, FAQ, RATINGS, HOW-TO & TRUST CONTENT */}
+      {/* RICH SEO VALUE, FAQ, RATINGS, HOW-TO & TRUST CONTENT */}
       <ToolContentSection 
         tool={{
           id: tool.id,
@@ -237,7 +229,7 @@ export default async function ToolSlugPage({ params }: { params: Promise<{ slug:
         }} 
       />
 
-      {/* � GLOBAL LUXURY SITE FOOTER */}
+      {/* GLOBAL LUXURY SITE FOOTER */}
       <SiteFooter />
 
     </div>

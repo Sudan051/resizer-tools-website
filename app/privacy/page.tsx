@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Shield, ArrowLeft } from "lucide-react";
 import SiteFooter from "../components/SiteFooter";
+import SiteHeader from "../components/SiteHeader";
 
 export const dynamic = "force-static";
 
@@ -14,7 +15,9 @@ export const metadata = {
 
 export default function PrivacyPage() {
   return (
-    <main className="min-h-screen bg-[#080808] text-white selection:bg-brand-gold/30 selection:text-brand-gold-light py-20 px-6">
+    <div className="min-h-screen bg-[#080808] text-white selection:bg-brand-gold/30 selection:text-brand-gold-light">
+      <SiteHeader currentPath="/privacy" />
+      <main className="py-12 px-6">
       <div className="max-w-3xl mx-auto space-y-12">
         
         {/* Navigation back */}
@@ -36,7 +39,7 @@ export default function PrivacyPage() {
           <section className="space-y-3">
             <h2 className="text-lg font-bold text-white tracking-tight">1. Client-Side Guarantee (Zero Server Uploads)</h2>
             <p>
-              At Resizer Tools, privacy is our core architectural pillar. All utility operations—including image compression, resizing, PDF compiling, split-merge actions, and visual document signatures—run **100% locally in your browser memory**. 
+              At Resizer Tools, privacy is our core architectural pillar. All utility operations—including image compression, resizing, PDF compiling, split-merge actions, and visual document signatures—run <strong className="text-white font-semibold">100% locally in your browser memory</strong>. 
             </p>
             <p>
               No document, image, signature path, or file metadata is ever uploaded, cached, or transmitted to any server database. Your private files never leave your device.
@@ -44,12 +47,12 @@ export default function PrivacyPage() {
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-lg font-bold text-white tracking-tight">2. Information Collection & Usage</h2>
+            <h2 className="text-lg font-bold text-white tracking-tight">2. Information Collection &amp; Usage</h2>
             <p>
               Because we operate entirely client-side, we do not require user account creation. We do not collect, request, or store your name, email address, physical location, payment account numbers, or files.
             </p>
             <p>
-              Any premium billing triggers are handled directly through **Razorpay** and **Google Play In-App Billing**, ensuring absolute security. Resizer Tools does not store your financial details.
+              Any optional billing triggers are handled directly through <strong className="text-white font-semibold">Razorpay</strong>, <strong className="text-white font-semibold">Apple App Store</strong>, and <strong className="text-white font-semibold">Google Play In-App Billing</strong>, ensuring absolute security. Resizer Tools does not store your financial details.
             </p>
           </section>
 
@@ -115,6 +118,7 @@ export default function PrivacyPage() {
       <div className="mt-16">
         <SiteFooter />
       </div>
-    </main>
+      </main>
+    </div>
   );
 }

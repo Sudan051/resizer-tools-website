@@ -2,6 +2,7 @@ import Link from "next/link";
 import { blogPosts } from "../data/blog";
 import { ArrowLeft, BookOpen, Clock, User, ArrowRight, ShieldCheck } from "lucide-react";
 import SiteFooter from "../components/SiteFooter";
+import SiteHeader from "../components/SiteHeader";
 
 export const dynamic = "force-static";
 
@@ -15,7 +16,9 @@ export const metadata = {
 
 export default function BlogIndexPage() {
   return (
-    <main className="min-h-screen bg-[#080808] text-white selection:bg-brand-gold/30 selection:text-brand-gold-light pt-16 px-4 sm:px-6">
+    <div className="min-h-screen bg-[#080808] text-white selection:bg-brand-gold/30 selection:text-brand-gold-light">
+      <SiteHeader currentPath="/blog" />
+      <main className="pt-12 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto space-y-12">
         
         {/* Navigation */}
@@ -93,6 +96,7 @@ export default function BlogIndexPage() {
       <div className="mt-16">
         <SiteFooter />
       </div>
-    </main>
+      </main>
+    </div>
   );
 }

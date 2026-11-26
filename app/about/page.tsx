@@ -5,6 +5,7 @@ import {
   Sparkles, Code2, FileCheck, CheckCircle2, HeartHandshake
 } from "lucide-react";
 import SiteFooter from "../components/SiteFooter";
+import SiteHeader from "../components/SiteHeader";
 
 export const dynamic = "force-static";
 
@@ -43,7 +44,7 @@ export default function AboutPage() {
         "@id": "https://www.resizertools.com/#organization",
         "name": "Resizer Tools",
         "url": "https://www.resizertools.com",
-        "logo": "https://www.resizertools.com/icon.svg",
+        "logo": "https://www.resizertools.com/logo.png",
         "founder": {
           "@type": "Person",
           "name": "Saurabh Kumar Sharma",
@@ -64,11 +65,13 @@ export default function AboutPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#080808] text-white selection:bg-brand-gold/30 selection:text-brand-gold-light pt-20 px-4 sm:px-6 relative">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutSchema) }}
-      />
+    <div className="min-h-screen bg-[#080808] text-white selection:bg-brand-gold/30 selection:text-brand-gold-light relative">
+      <SiteHeader currentPath="/about" />
+      <main className="pt-10 px-4 sm:px-6 relative">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutSchema).replace(/</g, "\\u003c") }}
+        />
 
       <div className="max-w-4xl mx-auto space-y-16">
         
@@ -270,6 +273,7 @@ export default function AboutPage() {
       <div className="mt-20">
         <SiteFooter />
       </div>
-    </main>
+      </main>
+    </div>
   );
 }
